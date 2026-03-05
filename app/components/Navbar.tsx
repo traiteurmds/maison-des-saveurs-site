@@ -47,9 +47,7 @@ export default function Navbar() {
       }`}>
         <Link
           href="/"
-          className={`nav-logo nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
-            pathname === "/" ? "font-semibold" : "font-medium"
-          }`}
+          className="nav-logo nav-logo-brand nav-link-underline"
         >
           Maison Des Saveurs
         </Link>
