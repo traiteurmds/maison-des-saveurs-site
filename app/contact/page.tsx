@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
 // Couleurs en dur pour garantir la visibilité partout
@@ -15,14 +16,21 @@ const colors = {
 } as const;
 
 export default function ContactPage() {
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
 
     const form = e.target as HTMLFormElement & {
       name: HTMLInputElement;
       email: HTMLInputElement;
       message: HTMLTextAreaElement;
     };
+
+    setLoading(true);
+    setSent(false);
 
     try {
       await emailjs.send(
@@ -36,12 +44,14 @@ export default function ContactPage() {
         "JzBCJK41sDIKxSKXQ"
       );
 
-      alert("Votre demande a été envoyée avec succès.");
+      setSent(true);
       form.reset();
-
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("EmailJS error:", error);
-      alert("Erreur lors de l'envoi");
+      setSent(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -247,32 +257,33 @@ export default function ContactPage() {
                 }}
               />
             </div>
-            <button
-              type="submit"
-              style={{
-                marginTop: "0.75rem",
-                padding: "1rem 2rem",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                color: colors.white,
-                backgroundColor: colors.terracotta,
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "background-color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = colors.terracottaHover;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = colors.terracotta;
-              }}
-            >
-              Envoyer la demande
-            </button>
+
+            {!sent && (
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-3 inline-flex items-center justify-center gap-2 rounded-md bg-terracotta px-8 py-4 text-xs font-medium tracking-[0.15em] text-white uppercase transition-all duration-200 ease-out hover:bg-terracotta/90 disabled:cursor-not-allowed disabled:opacity-60"
+                style={{
+                  letterSpacing: "0.15em",
+                }}
+              >
+                {loading ? (
+                  <>
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-transparent" />
+                    Envoi en cours...
+                  </>
+                ) : (
+                  "Envoyer la demande"
+                )}
+              </button>
+            )}
           </form>
+
+          {sent && (
+            <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 shadow-sm transition-all duration-300 ease-out">
+              Votre demande a été envoyée avec succès. Nous vous répondrons sous 24h.
+            </div>
+          )}
         </div>
       </section>
 
