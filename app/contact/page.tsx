@@ -25,22 +25,36 @@ export default function ContactPage() {
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement & {
+    const form = e.target as HTMLFormElement & {
       name: HTMLInputElement;
       email: HTMLInputElement;
       message: HTMLTextAreaElement;
     };
 
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    // Log des paramètres envoyés à EmailJS pour vérification
+    // eslint-disable-next-line no-console
+    console.log("EmailJS send payload:", {
+      serviceId: "service_abcd123",
+      templateId: "template_tcbmdth",
+      name,
+      email,
+      message,
+    });
+
     try {
       await emailjs.send(
-        "service_id",
-        "template_id",
+        "service_abcd123",
+        "template_tcbmdth",
         {
-          name: form.name.value,
-          email: form.email.value,
-          message: form.message.value,
+          name,
+          email,
+          message,
         },
-        "public_key"
+        "JzBCJK41sDIKxSKXQ"
       );
 
       setStatus({
