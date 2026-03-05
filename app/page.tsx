@@ -80,7 +80,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero — deep green luxury gradient + parallax + grain */}
+      {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F1F18] text-white">
         <motion.div
           className="absolute inset-0 hero-gradient-layer"
@@ -186,7 +186,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services preview */}
+      {/* Services */}
       <section className="bg-beige py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -255,7 +255,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Avis clients premium */}
+      {/* Reviews — Avis clients (section affichée sous MenuSection) */}
       <section className="border-t border-deep-green/10 bg-beige py-24">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
           <motion.div
@@ -315,7 +315,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Notre menu — cartes interactives + modal */}
+      {/* MenuSection — Notre menu (cartes interactives + modal, affiché sous Services) */}
       <section className="border-t border-deep-green/10 bg-beige-dark py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
@@ -447,7 +447,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Contact — CTA vers page contact */}
       <section className="relative overflow-hidden bg-deep-green py-24" aria-labelledby="cta-contact">
         <div className="absolute inset-0 bg-gradient-to-b from-terracotta/5 to-transparent pointer-events-none" aria-hidden />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
