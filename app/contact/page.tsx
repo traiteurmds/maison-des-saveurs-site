@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
 // Couleurs en dur pour garantir la visibilité partout
@@ -15,15 +14,8 @@ const colors = {
   placeholder: "rgba(31, 58, 46, 0.5)",
 } as const;
 
-type StatusState =
-  | { type: "success"; message: string }
-  | { type: "error"; message: string }
-  | null;
-
 export default function ContactPage() {
-  const [status, setStatus] = useState<StatusState>(null);
-
-  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement & {
       name: HTMLInputElement;
@@ -35,18 +27,8 @@ export default function ContactPage() {
     const email = form.email.value;
     const message = form.message.value;
 
-    // Log des paramètres envoyés à EmailJS pour vérification
-    // eslint-disable-next-line no-console
-    console.log("EmailJS send payload:", {
-      serviceId: "service_abcd123",
-      templateId: "template_tcbmdth",
-      name,
-      email,
-      message,
-    });
-
-    try {
-      await emailjs.send(
+    emailjs
+      .send(
         "service_abcd123",
         "template_tcbmdth",
         {
@@ -54,25 +36,17 @@ export default function ContactPage() {
           email,
           message,
         },
-        "JzBCJK41sDIKxSKXQ"
-      );
-
-      setStatus({
-        type: "success",
-        message:
-          "Votre demande a été envoyée avec succès.",
+        "re_e5zvKJgw_LPcScLFvu6VT6BJY57xiugcf"
+      )
+      .then(() => {
+        alert("Message envoyé !");
+        form.reset();
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("EmailJS error:", error);
+        alert("Erreur lors de l'envoi");
       });
-      form.reset();
-    } catch (error) {
-      // Log pour faciliter le debug en local et sur Vercel
-      // eslint-disable-next-line no-console
-      console.error("EmailJS error:", error);
-      setStatus({
-        type: "error",
-        message:
-          "Une erreur est survenue. Merci de réessayer.",
-      });
-    }
   };
 
   return (
@@ -139,7 +113,7 @@ export default function ContactPage() {
       >
         <div style={{ maxWidth: "32rem", margin: "0 auto" }}>
           <form
-            onSubmit={sendEmail}
+            onSubmit={handleSubmit}
             style={{
               backgroundColor: colors.white,
               padding: "2.5rem",
@@ -277,19 +251,6 @@ export default function ContactPage() {
                 }}
               />
             </div>
-            {status && (
-              <p
-                aria-live="polite"
-                style={{
-                  marginTop: "0.5rem",
-                  fontSize: "0.9rem",
-                  color: status.type === "success" ? "#1F3A2E" : "#b00020",
-                }}
-              >
-                {status.message}
-              </p>
-            )}
-
             <button
               type="submit"
               style={{
