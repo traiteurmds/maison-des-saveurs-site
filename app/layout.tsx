@@ -5,6 +5,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
 import WhatsAppButton from "./components/WhatsAppButton";
+import DevBanner from "./components/DevBanner";
+import MaintenancePage from "./components/MaintenancePage";
+import { MAINTENANCE_MODE } from "./config/maintenance";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -108,9 +111,21 @@ export default function RootLayout({
     email: "contact.mds.traiteur@gmail.com",
   };
 
+  if (MAINTENANCE_MODE) {
+    return (
+      <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
+        <body className="antialiased">
+          <MaintenancePage />
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
       <body className="antialiased">
+        <DevBanner />
+        <div className="h-10" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

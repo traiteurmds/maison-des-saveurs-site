@@ -21,10 +21,6 @@ const sectionVariants = {
 export default function Home() {
   return (
     <>
-      {/* Dev server test: delete this block once Fast Refresh is confirmed working */}
-      <div className="bg-red-600 p-4 text-center text-2xl font-bold text-white">
-        TEST RELOAD WORKING
-      </div>
       <VisionHero />
 
       <AppleScrollStory />
