@@ -45,6 +45,15 @@ html {
   scroll-padding-top: 5.5rem;
 }
 
+/* Hide scrollbar for horizontal galleries (keep scroll) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Selection */
 ::selection {
   background-color: #C46A4A;
