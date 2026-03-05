@@ -1,30 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import emailjs from "@emailjs/browser";
 
-// Couleurs en dur pour garantir la visibilité partout
 const colors = {
   dark: "#1F3A2E",
   terracotta: "#C46A4A",
-  terracottaHover: "#A85A3A",
   beige: "#F8F5F0",
   beigeDark: "#EDE8E0",
   white: "#FFFFFF",
   border: "rgba(31, 58, 46, 0.25)",
-  placeholder: "rgba(31, 58, 46, 0.5)",
 } as const;
+
+const inputBaseStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "0.75rem 1rem",
+  fontSize: "1rem",
+  color: colors.dark,
+  backgroundColor: colors.white,
+  border: `2px solid ${colors.border}`,
+  borderRadius: "8px",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  fontFamily: "var(--font-cormorant), Georgia, serif",
+  fontSize: "0.875rem",
+  fontWeight: 500,
+  color: colors.dark,
+  marginBottom: "0.5rem",
+};
+
+const COOLDOWN_MS = 10_000;
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [name, setName] = useState("");
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [eventDate, setEventDate] = useState("");
   const [message, setMessage] = useState("");
+
+  const inCooldown = cooldownUntil !== null;
+  const canSubmit = !loading && !inCooldown;
+
+  const resetForm = useCallback(() => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+    setEventDate("");
+    setMessage("");
+  }, []);
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (loading) return;
+    if (!canSubmit) return;
 
     setLoading(true);
     setSent(false);
@@ -34,22 +70,21 @@ export default function ContactPage() {
         "service_abcd123",
         "template_tcbmdth",
         {
-          name,
+          first_name: firstName,
+          last_name: lastName,
           email,
+          phone,
+          event_date: eventDate,
           message,
         },
         "JzBCJK41sDIKxSKXQ"
       );
 
       setSent(true);
-      setName("");
-      setEmail("");
-      setMessage("");
-
-      // Laisser visible le check/toast quelques secondes puis revenir à l'état normal
-      setTimeout(() => {
-        setSent(false);
-      }, 4000);
+      resetForm();
+      setCooldownUntil(Date.now() + COOLDOWN_MS);
+      setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
+      setTimeout(() => setSent(false), 4000);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("EmailJS error:", error);
@@ -58,6 +93,16 @@ export default function ContactPage() {
       setLoading(false);
     }
   };
+
+  const focusStyle = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.target.style.borderColor = colors.terracotta;
+    e.target.style.boxShadow = `0 0 0 3px ${colors.terracotta}40`;
+  }, []);
+
+  const blurStyle = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.target.style.borderColor = colors.border;
+    e.target.style.boxShadow = "none";
+  }, []);
 
   return (
     <div style={{ paddingTop: "6rem", minHeight: "100vh" }} className="contact-page">
@@ -74,7 +119,7 @@ export default function ContactPage() {
           animation: toast-in 0.3s ease-out;
         }
       `}</style>
-      {/* Hero */}
+
       <section
         style={{
           padding: "4rem 1.5rem",
@@ -121,7 +166,6 @@ export default function ContactPage() {
         </p>
       </section>
 
-      {/* Formulaire dans une carte blanche */}
       <section
         style={{
           padding: "4rem 1.5rem",
@@ -142,63 +186,39 @@ export default function ContactPage() {
             }}
           >
             <div>
-              <label
-                htmlFor="name"
-                style={{
-                  display: "block",
-                  fontFamily: "var(--font-cormorant), Georgia, serif",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: colors.dark,
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Nom *
-              </label>
+              <label htmlFor="firstName" style={labelStyle}>Prénom *</label>
               <input
-                id="name"
+                id="firstName"
                 type="text"
-                name="name"
+                name="firstName"
                 required
-                placeholder="Votre nom"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "0.75rem 1rem",
-                  fontSize: "1rem",
-                  color: colors.dark,
-                  backgroundColor: colors.white,
-                  border: `2px solid ${colors.border}`,
-                  borderRadius: "8px",
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = colors.terracotta;
-                  e.target.style.boxShadow = `0 0 0 3px ${colors.terracotta}40`;
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = colors.border;
-                  e.target.style.boxShadow = "none";
-                }}
+                placeholder="Prénom"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                style={inputBaseStyle}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
               />
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                style={{
-                  display: "block",
-                  fontFamily: "var(--font-cormorant), Georgia, serif",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: colors.dark,
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Email *
-              </label>
+              <label htmlFor="lastName" style={labelStyle}>Nom *</label>
+              <input
+                id="lastName"
+                type="text"
+                name="lastName"
+                required
+                placeholder="Nom"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                style={inputBaseStyle}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" style={labelStyle}>Email *</label>
               <input
                 id="email"
                 type="email"
@@ -207,42 +227,45 @@ export default function ContactPage() {
                 placeholder="vous@exemple.fr"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "0.75rem 1rem",
-                  fontSize: "1rem",
-                  color: colors.dark,
-                  backgroundColor: colors.white,
-                  border: `2px solid ${colors.border}`,
-                  borderRadius: "8px",
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = colors.terracotta;
-                  e.target.style.boxShadow = `0 0 0 3px ${colors.terracotta}40`;
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = colors.border;
-                  e.target.style.boxShadow = "none";
-                }}
+                style={inputBaseStyle}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
               />
             </div>
 
             <div>
-              <label
-                htmlFor="message"
-                style={{
-                  display: "block",
-                  fontFamily: "var(--font-cormorant), Georgia, serif",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: colors.dark,
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Message *
-              </label>
+              <label htmlFor="phone" style={labelStyle}>Numéro de téléphone *</label>
+              <input
+                id="phone"
+                type="tel"
+                name="phone"
+                required
+                placeholder="06 12 34 56 78"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                style={inputBaseStyle}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="eventDate" style={labelStyle}>Date de l&apos;événement *</label>
+              <input
+                id="eventDate"
+                type="date"
+                name="eventDate"
+                required
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+                style={inputBaseStyle}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" style={labelStyle}>Message *</label>
               <textarea
                 id="message"
                 name="message"
@@ -252,50 +275,29 @@ export default function ContactPage() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 style={{
-                  width: "100%",
-                  padding: "0.75rem 1rem",
-                  fontSize: "1rem",
-                  color: colors.dark,
-                  backgroundColor: colors.white,
-                  border: `2px solid ${colors.border}`,
-                  borderRadius: "8px",
-                  outline: "none",
+                  ...inputBaseStyle,
                   resize: "vertical",
                   minHeight: "120px",
-                  boxSizing: "border-box",
                 }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = colors.terracotta;
-                  e.target.style.boxShadow = `0 0 0 3px ${colors.terracotta}40`;
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = colors.border;
-                  e.target.style.boxShadow = "none";
-                }}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
               />
             </div>
 
-            {!sent && (
-              <button
-                type="submit"
-                disabled={loading}
-                className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C46A4A] to-[#1F3A2E] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {loading ? (
-                  <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-transparent" />
-                    Envoi en cours...
-                  </>
-                ) : sent ? (
-                  <>
-                    <span className="text-base">✓</span>
-                    Envoyé
-                  </>
-                ) : (
-                  "Envoyer la demande"
-                )}
-              </button>
-            )}
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C46A4A] to-[#1F3A2E] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading ? (
+                <>
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-transparent" />
+                  Envoi en cours...
+                </>
+              ) : (
+                "Envoyer la demande"
+              )}
+            </button>
           </form>
 
           {sent && (
@@ -304,18 +306,15 @@ export default function ContactPage() {
               aria-live="polite"
               className="toast-enter fixed right-4 top-4 z-50 flex max-w-xs items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 text-sm text-emerald-900 shadow-xl ring-1 ring-emerald-100"
             >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-base text-white shadow-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-base text-white shadow-sm">
                 ✓
               </span>
-              <p className="text-sm">
-                Votre demande a été envoyée avec succès. Nous vous répondrons sous 24h.
-              </p>
+              <p className="text-sm font-medium">Demande envoyée</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Pied de page contact */}
       <section
         style={{
           padding: "3rem 1.5rem",
