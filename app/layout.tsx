@@ -17,6 +17,8 @@ const outfit = Outfit({
   weight: ["300", "400", "500", "600"],
 });
 
+const SITE_URL = "https://mds-traiteur.fr";
+
 export const metadata: Metadata = {
   title: "Maison Des Saveurs | Traiteur mariage Lyon & Traiteur événementiel Villeurbanne",
   description:
@@ -28,9 +30,33 @@ export const metadata: Metadata = {
     "traiteur mariage Villeurbanne",
     "réception mariage Lyon",
   ],
+  metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: "/logo-share.png",
+  },
   openGraph: {
-    locale: "fr_FR",
     type: "website",
+    locale: "fr_FR",
+    url: SITE_URL,
+    siteName: "Maison Des Saveurs",
+    title: "Maison Des Saveurs | Traiteur mariage Lyon & Traiteur événementiel Villeurbanne",
+    description:
+      "Traiteur mariage Lyon et traiteur événementiel Villeurbanne. Cuisine d'exception pour mariages et événements privés. Réceptions sur mesure à Lyon et alentours.",
+    images: [
+      {
+        url: "/logo-share.png",
+        width: 1200,
+        height: 630,
+        alt: "Maison Des Saveurs - Traiteur mariage Lyon",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Maison Des Saveurs | Traiteur mariage Lyon & Traiteur événementiel Villeurbanne",
+    description:
+      "Traiteur mariage Lyon et traiteur événementiel Villeurbanne. Cuisine d'exception pour mariages et événements privés.",
+    images: ["/logo-share.png"],
   },
 };
 
