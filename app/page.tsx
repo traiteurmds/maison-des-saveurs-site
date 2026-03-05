@@ -9,19 +9,19 @@ const homeServices = [
     title: "Traiteur mariages Lyon",
     desc: "Nous accompagnons tous les mariages à Lyon et dans ses alentours, quels que soient vos traditions, votre culture ou le style de votre réception. Chaque mariage est unique, et nous mettons tout notre savoir-faire au service de votre union pour créer une expérience culinaire exceptionnelle. De la réception au dessert, nous assurons une prestation complète, élégante et parfaitement maîtrisée, afin que le repas de votre plus beau jour reste gravé dans les mémoires.",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
-    imageAlt: "Traiteur mariage marocain Lyon - buffet et prestation mariage",
+    imageAlt: "Poulet olives citron confit mariage marocain Lyon - traiteur mariage buffet événementiel Lyon",
   },
   {
     title: "Traiteur Événements",
     desc: "Anniversaires, fêtes familiales, événements associatifs ou célébrations spéciales : nous vous accompagnons pour tous vos moments importants. Nous nous adaptons à votre lieu, à votre nombre d'invités et à votre budget afin de proposer une prestation sur mesure, généreuse et élégante. Chaque événement est pensé pour rassembler vos proches autour d'une cuisine authentique et mémorable.",
     image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=600&q=80",
-    imageAlt: "Buffet mini salés événement Lyon - traiteur anniversaire",
+    imageAlt: "Mini burgers et buffet marocain Lyon - buffet mini salés événement Lyon traiteur",
   },
   {
     title: "Traiteur Professionnel",
     desc: "Repas d'entreprise, événements internes, célébrations professionnelles ou rassemblements d'équipe : Maison Des Saveurs se déplace directement dans vos locaux ou sur le lieu de votre choix. Nous organisons des prestations adaptées à vos besoins afin de réunir vos collaborateurs autour d'un moment convivial et fédérateur à travers le repas. Buffet, service à table ou formule personnalisée, nous assurons une organisation sérieuse et raffinée.",
     image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80",
-    imageAlt: "Traiteur entreprise Lyon - buffet marocain traiteur Lyon",
+    imageAlt: "Buffet marocain Lyon traiteur entreprise - buffet événementiel Lyon",
   },
 ];
 
@@ -153,6 +153,8 @@ export default function Home() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    quality={80}
+                    loading="lazy"
                   />
                   <div
                     className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent"
@@ -186,17 +188,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section SEO — zone géographique et prestations */}
+      {/* Section SEO — ~120 mots traiteur marocain Lyon, mariages, anniversaires, événements, entreprises */}
       <section className="bg-beige-dark border-t border-deep-green/10 py-16" aria-labelledby="prestations-seo">
         <div className="mx-auto max-w-4xl px-6">
           <h2 id="prestations-seo" className="sr-only">
-            Traiteur marocain halal Lyon et métropole
+            Traiteur marocain Lyon, mariages, anniversaires, événements et entreprises
           </h2>
-          <p className="text-center font-serif text-lg leading-relaxed text-deep-green md:text-xl">
-            Nous proposons nos services de traiteur marocain halal à Lyon, Villeurbanne, Bron, Vénissieux, Vaulx-en-Velin et dans toute la métropole lyonnaise.
-          </p>
-          <p className="mt-6 font-serif text-sm font-semibold uppercase tracking-widest text-terracotta">
-            Prestations :
+          <div className="space-y-4 text-center text-deep-green/90">
+            <p className="font-serif text-lg leading-relaxed md:text-xl">
+              Nous proposons nos services de traiteur marocain halal à Lyon, Villeurbanne, Bron, Vénissieux, Vaulx-en-Velin et dans toute la métropole lyonnaise.
+            </p>
+            <p className="leading-relaxed">
+              <strong className="text-deep-green">Maison des Saveurs</strong> est votre traiteur marocain à Lyon pour les <strong>mariages</strong>, les <strong>anniversaires</strong>, les <strong>événements</strong> privés ou professionnels et les réceptions en <strong>entreprise</strong>. Notre buffet événementiel Lyon allie cuisine traditionnelle marocaine, ingrédients de qualité et épices du Maroc. Que ce soit pour un mariage, un anniversaire, un séminaire ou un cocktail d&apos;entreprise, nous créons des buffets gourmands et des prestations sur mesure. Traiteur Lyon et Villeurbanne depuis des années, nous assurons un service élégant et une cuisine faite maison pour tous vos événements dans la métropole lyonnaise.
+            </p>
+          </div>
+          <p className="mt-6 font-serif text-sm font-semibold uppercase tracking-widest text-terracotta text-center">
+            Prestations
           </p>
           <ul className="mt-3 flex flex-wrap justify-center gap-x-8 gap-y-1 text-deep-green/90">
             <li>Traiteur mariage marocain</li>

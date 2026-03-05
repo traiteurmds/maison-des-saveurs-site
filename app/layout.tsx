@@ -25,8 +25,11 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title:
-    "Maison des Saveurs | Traiteur Marocain Halal à Lyon – Mariage, Buffet & Événements",
+  title: {
+    default:
+      "Maison des Saveurs | Traiteur Lyon – Traiteur Marocain Lyon, Buffet Événementiel Lyon",
+    template: "%s | Maison des Saveurs",
+  },
   description:
     "Maison des Saveurs est un traiteur marocain halal à Lyon spécialisé dans les buffets gourmands, mariages, anniversaires et événements professionnels. Cuisine marocaine traditionnelle faite maison avec des ingrédients de qualité.",
   keywords: [
@@ -78,9 +81,41 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://mds-traiteur.fr/#organization",
+    name: "MDS Traiteur",
+    alternateName: "Maison des Saveurs",
+    description:
+      "Traiteur marocain halal à Lyon et Villeurbanne. Spécialiste mariages, buffets événementiels et événements entreprise.",
+    url: "https://mds-traiteur.fr",
+    areaServed: [
+      { "@type": "City", name: "Lyon" },
+      { "@type": "City", name: "Villeurbanne" },
+      { "@type": "AdministrativeArea", name: "Métropole de Lyon" },
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Lyon",
+      addressRegion: "Auvergne-Rhône-Alpes",
+      addressCountry: "FR",
+    },
+    serviceType: ["Traiteur", "Catering", "Traiteur mariage", "Buffet événementiel"],
+    image: "https://mds-traiteur.fr/logo-share.png",
+    telephone: "+33758639734",
+    email: "contact.mds.traiteur@gmail.com",
+  };
+
   return (
     <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
         <Navbar />
         <main className="min-h-screen">
           <PageTransition>{children}</PageTransition>

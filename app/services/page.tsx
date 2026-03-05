@@ -11,7 +11,7 @@ const services = [
       "Nous accompagnons tous les mariages à Lyon et dans ses alentours, quels que soient vos traditions, votre culture ou le style de votre réception. Chaque mariage est unique, et nous mettons tout notre savoir-faire au service de votre union pour créer une expérience culinaire exceptionnelle. De la réception au dessert, nous assurons une prestation complète, élégante et parfaitement maîtrisée, afin que le repas de votre plus beau jour reste gravé dans les mémoires.",
     image:
       "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80",
-    imageAlt: "Traiteur mariage marocain Lyon - plat gastronomique élégant, présentation raffinée",
+    imageAlt: "Poulet olives citron confit mariage marocain Lyon - buffet marocain traiteur Lyon",
   },
   {
     title: "Traiteur Événements",
@@ -19,7 +19,7 @@ const services = [
       "Anniversaires, fêtes familiales, événements associatifs ou célébrations spéciales : nous vous accompagnons pour tous vos moments importants. Nous nous adaptons à votre lieu, à votre nombre d'invités et à votre budget afin de proposer une prestation sur mesure, généreuse et élégante. Chaque événement est pensé pour rassembler vos proches autour d'une cuisine authentique et mémorable.",
     image:
       "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80",
-    imageAlt: "Buffet marocain traiteur Lyon - buffet mini salés événement Lyon, canapés et finger food",
+    imageAlt: "Mini burgers buffet marocain Lyon - buffet mini salés événement Lyon canapés finger food",
   },
   {
     title: "Traiteur Professionnel",
@@ -27,7 +27,7 @@ const services = [
       "Repas d'entreprise, événements internes, célébrations professionnelles ou rassemblements d'équipe : Maison Des Saveurs se déplace directement dans vos locaux ou sur le lieu de votre choix. Nous organisons des prestations adaptées à vos besoins afin de réunir vos collaborateurs autour d'un moment convivial et fédérateur à travers le repas. Buffet, service à table ou formule personnalisée, nous assurons une organisation sérieuse et raffinée.",
     image:
       "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80",
-    imageAlt: "Traiteur entreprise Lyon - buffet anniversaire et événement professionnel",
+    imageAlt: "Buffet événementiel Lyon traiteur entreprise - buffet marocain Lyon",
   },
 ];
 
@@ -85,6 +85,8 @@ export default function ServicesPage() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={80}
+                    loading="lazy"
                   />
                   <div
                     className="absolute inset-0 bg-gradient-to-t from-deep-green/10 to-transparent"
