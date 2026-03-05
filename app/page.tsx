@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import VisionHero from "./components/VisionHero";
-import AppleScrollShowcase from "./components/AppleScrollShowcase";
+import AppleScrollStory from "./components/AppleScrollStory";
 import ParallaxFoodGallery from "./components/ParallaxFoodGallery";
 import Menu3DExperience from "./components/Menu3DExperience";
+import EventGallery from "./components/EventGallery";
 import LuxuryTestimonials from "./components/LuxuryTestimonials";
+import ContactCTA from "./components/ContactCTA";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 48 },
@@ -21,7 +23,7 @@ export default function Home() {
     <>
       <VisionHero />
 
-      <AppleScrollShowcase />
+      <AppleScrollStory />
 
       <motion.div
         variants={sectionVariants}
@@ -47,7 +49,25 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
       >
+        <EventGallery />
+      </motion.div>
+
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+      >
         <LuxuryTestimonials />
+      </motion.div>
+
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+      >
+        <ContactCTA />
       </motion.div>
     </>
   );

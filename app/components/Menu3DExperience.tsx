@@ -91,7 +91,7 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenCategory(cat)}
-                className="relative aspect-[4/3] w-full max-w-md cursor-pointer overflow-hidden rounded-3xl border border-deep-green/10 bg-white shadow-[0_25px_60px_rgba(15,31,24,0.12)] transition-transform duration-300 ease-out will-change-transform"
+                className="relative aspect-[4/3] w-full max-w-md cursor-pointer overflow-hidden rounded-3xl border border-deep-green/10 bg-white shadow-[0_25px_60px_rgba(15,31,24,0.12)] transition-all duration-500 ease-out will-change-transform hover:shadow-[0_32px_72px_rgba(15,31,24,0.2)]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
@@ -154,7 +154,7 @@ export default function Menu3DExperience() {
                 </p>
                 <Link
                   href="/contact"
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 hover:bg-terracotta/90 hover:shadow-xl"
+                  className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-500 hover:-translate-y-1 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-terracotta/25"
                 >
                   Demander un devis
                 </Link>

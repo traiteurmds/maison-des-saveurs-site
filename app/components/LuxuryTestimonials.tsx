@@ -30,7 +30,7 @@ export default function LuxuryTestimonials() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.65, delay: 0.12 * index, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -8 }}
-              className="flex flex-col justify-between rounded-3xl bg-white p-8 shadow-[0_20px_55px_rgba(15,31,24,0.1)] transition-shadow duration-300 hover:shadow-[0_32px_70px_rgba(15,31,24,0.2)]"
+              className="flex flex-col justify-between rounded-3xl bg-white p-8 shadow-[0_20px_55px_rgba(15,31,24,0.1)] transition-all duration-500 hover:shadow-[0_32px_70px_rgba(15,31,24,0.22)]"
             >
               <div>
                 <p className="text-2xl leading-none text-amber-400" aria-hidden>★★★★★</p>

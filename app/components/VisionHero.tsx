@@ -63,18 +63,30 @@ export default function VisionHero() {
           transition={{ duration: 0.9, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="mt-14 flex flex-wrap justify-center gap-5"
         >
-          <Link
-            href="/services"
-            className="inline-flex items-center justify-center rounded-full border-2 border-[#F8F5F0] px-10 py-4 font-medium tracking-widest text-[#F8F5F0] transition-all duration-300 hover:bg-[#F8F5F0]/10"
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            Découvrir le menu
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-terracotta/90 hover:shadow-xl"
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center rounded-full border-2 border-[#F8F5F0] px-10 py-4 font-medium tracking-widest text-[#F8F5F0] transition-all duration-500 hover:-translate-y-1 hover:bg-[#F8F5F0]/10 hover:shadow-[0_12px_40px_rgba(248,245,240,0.15)]"
+            >
+              Découvrir le menu
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.45, ease: [0.22, 1, 0.36, 1] }}
           >
-            Demander un devis
-          </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-terracotta/30"
+            >
+              Demander un devis
+            </Link>
+          </motion.div>
         </motion.div>
 
         <motion.div

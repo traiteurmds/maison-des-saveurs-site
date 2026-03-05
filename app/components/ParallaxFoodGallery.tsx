@@ -54,7 +54,7 @@ export default function ParallaxFoodGallery() {
               ref={(el) => {
                 itemRefs.current[i] = el;
               }}
-              className="group relative aspect-[4/5] overflow-hidden rounded-3xl shadow-[0_25px_60px_rgba(15,31,24,0.15)] transition-all duration-500 hover:shadow-[0_35px_80px_rgba(15,31,24,0.25)]"
+              className="group relative aspect-[4/5] overflow-hidden rounded-3xl shadow-[0_25px_60px_rgba(15,31,24,0.15)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_35px_80px_rgba(15,31,24,0.28)]"
             >
               <Image
                 src={item.src}
@@ -64,8 +64,8 @@ export default function ParallaxFoodGallery() {
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep-green/90 via-deep-green/30 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-95" aria-hidden />
-              <p className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-deep-green/95 via-deep-green/40 to-transparent opacity-80 transition-all duration-500 group-hover:opacity-100" aria-hidden />
+              <p className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white opacity-90 transition-opacity duration-500 group-hover:opacity-100">
                 {item.title}
               </p>
             </div>
