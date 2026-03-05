@@ -89,7 +89,7 @@ export default function Navbar() {
               <FaInstagram />
             </a>
             <a
-              href="https://www.tiktok.com/@mds.traiteur?_r=1&_t=ZN-94QKk4JGkuV"
+              href="https://www.tiktok.com/@mds.traiteur"
               target="_blank"
               rel="noopener noreferrer"
               className={`text-xl transition-opacity hover:opacity-70 ${overDarkHero ? "" : "text-deep-green"}`}
@@ -135,24 +135,47 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="overflow-hidden border-t border-deep-green/10 bg-beige md:hidden"
           >
-            <ul className="flex flex-col gap-1 px-6 py-4">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
-                        isActive ? "font-semibold" : ""
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="flex flex-col gap-4 px-6 py-4">
+              <ul className="flex flex-col gap-1">
+                {navLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
+                          isActive ? "font-semibold" : ""
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <div className="flex items-center gap-4 pt-1">
+                <a
+                  href="https://www.instagram.com/mds.traiteur69/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-2xl text-deep-green transition-opacity hover:opacity-70"
+                  aria-label="Instagram Maison Des Saveurs"
+                >
+                  <FaInstagram />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@mds.traiteur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-2xl text-deep-green transition-opacity hover:opacity-70"
+                  aria-label="TikTok Maison Des Saveurs"
+                >
+                  <FaTiktok />
+                </a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

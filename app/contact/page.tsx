@@ -25,33 +25,34 @@ export default function ContactPage() {
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    const name = (formData.get("name") ?? "") as string;
-    const email = (formData.get("email") ?? "") as string;
-    const message = (formData.get("message") ?? "") as string;
+    const form = e.currentTarget as HTMLFormElement & {
+      name: HTMLInputElement;
+      email: HTMLInputElement;
+      message: HTMLTextAreaElement;
+    };
 
     try {
       await emailjs.send(
-        "service_abcd123",
-        "template_contact",
+        "service_id",
+        "template_id",
         {
-          name,
-          email,
-          message,
+          name: form.name.value,
+          email: form.email.value,
+          message: form.message.value,
         },
-        "PUBLIC_KEY_EMAILJS"
+        "public_key"
       );
 
       setStatus({
         type: "success",
         message:
-          "Votre message a bien été envoyé. Nous vous répondrons rapidement.",
+          "Votre demande a été envoyée avec succès.",
       });
       form.reset();
-    } catch {
+    } catch (error) {
+      // Log pour faciliter le debug en local et sur Vercel
+      // eslint-disable-next-line no-console
+      console.error("EmailJS error:", error);
       setStatus({
         type: "error",
         message:
