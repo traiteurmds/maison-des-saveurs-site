@@ -34,7 +34,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="pt-24">
-      <section className="relative h-[45vh] min-h-[360px] overflow-hidden bg-page-hero grain-overlay flex items-center justify-center">
+      <section className="relative flex h-[45vh] min-h-[360px] items-center justify-center overflow-hidden bg-page-hero grain-overlay">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,13 +69,13 @@ export default function ServicesPage() {
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className={`grid gap-12 md:grid-cols-2 md:gap-16 ${
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                className={`group grid gap-12 md:grid-cols-2 md:gap-16 ${
                   i % 2 === 1 ? "md:flex-row-reverse" : ""
                 }`}
               >
                 <div
-                  className={`relative h-80 overflow-hidden rounded-sm border border-deep-green/5 md:h-96 ${
+                  className={`relative h-80 overflow-hidden rounded-3xl border border-deep-green/5 bg-white/5 shadow-[0_18px_45px_rgba(15,31,24,0.14)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)] md:h-96 ${
                     i % 2 === 1 ? "md:order-2" : ""
                   }`}
                 >
@@ -83,7 +83,7 @@ export default function ServicesPage() {
                     src={service.image}
                     alt={service.imageAlt}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:-translate-y-1"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     quality={80}
                     loading="lazy"

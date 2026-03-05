@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       {/* Hero — deep green luxury gradient + parallax + grain */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0F1F18] text-white">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F1F18] text-white">
         <motion.div
           className="absolute inset-0 hero-gradient-layer"
           style={{ y: heroParallaxY }}
@@ -46,13 +46,13 @@ export default function Home() {
           }}
           aria-hidden
         />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+        <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center px-6 text-center">
           <div className="relative">
             <div className="hero-heading-glow pointer-events-none absolute -inset-x-8 top-1/2 h-32 -translate-y-1/2" aria-hidden />
             <motion.h1
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="relative font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
               style={{ textShadow: "0 2px 24px rgba(0,0,0,0.18), 0 1px 8px rgba(0,0,0,0.1)" }}
             >
@@ -67,33 +67,51 @@ export default function Home() {
             />
           </div>
           <motion.p
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-8 max-w-2xl font-serif text-lg sm:text-xl md:text-2xl"
+            transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-8 max-w-3xl font-serif text-lg sm:text-xl md:text-2xl"
             style={{ color: "#F8F5F0" }}
           >
             Maison des Saveurs est un traiteur marocain halal basé à Lyon proposant des buffets gourmands pour mariages, anniversaires et événements professionnels. Notre cuisine est traditionnelle, faite maison avec des ingrédients soigneusement sélectionnés et des épices venues du Maroc.
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
             className="mt-14 flex flex-wrap justify-center gap-5"
           >
             <Link
               href="/contact"
-              className="btn-premium btn-cta-signature inline-flex items-center justify-center bg-terracotta px-10 py-4 font-medium tracking-widest text-white hover:bg-terracotta/90"
+              className="btn-premium btn-cta-signature inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg shadow-black/25 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-black/35"
             >
               Demander un devis
             </Link>
             <Link
               href="/services"
-              className="btn-premium btn-premium-outline inline-flex items-center justify-center border-2 border-[#F8F5F0] px-10 py-4 font-medium tracking-widest hover:bg-[#F8F5F0]/10"
-              style={{ color: "#F8F5F0" }}
+              className="btn-premium btn-premium-outline inline-flex items-center justify-center rounded-full border-2 border-[#F8F5F0] px-10 py-4 font-medium tracking-widest text-[#F8F5F0] shadow-[0_10px_40px_rgba(0,0,0,0.35)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#F8F5F0]/10"
             >
               Découvrir nos prestations
             </Link>
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2"
+          >
+            <div className="flex flex-col items-center gap-3 text-[10px] font-medium tracking-[0.3em] text-[#F8F5F0]/70 uppercase">
+              <span>Faire défiler</span>
+              <div className="relative h-10 w-px overflow-hidden rounded-full bg-[#F8F5F0]/30">
+                <motion.span
+                  className="absolute inset-x-0 top-0 h-3 rounded-full bg-[#F8F5F0]"
+                  animate={{ y: [0, 24, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -136,22 +154,22 @@ export default function Home() {
               Nos services
             </h2>
           </motion.div>
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
+          <div className="mt-16 grid gap-10 md:grid-cols-3">
             {homeServices.map((item, i) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
-                className="service-card-hover overflow-hidden border border-deep-green/10 bg-white"
+                transition={{ duration: 0.7, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative overflow-hidden rounded-3xl border border-deep-green/10 bg-white/95 shadow-[0_18px_45px_rgba(15,31,24,0.12)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)]"
               >
-                <div className="relative h-40 w-full overflow-hidden">
+                <div className="relative h-44 w-full overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.imageAlt}
                     fill
-                    className="object-cover"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:-translate-y-1"
                     sizes="(max-width: 768px) 100vw, 33vw"
                     quality={80}
                     loading="lazy"
@@ -161,7 +179,7 @@ export default function Home() {
                     aria-hidden
                   />
                 </div>
-                <div className="p-8">
+                <div className="flex flex-1 flex-col p-8">
                   <h3 className="font-serif text-xl font-semibold text-deep-green">
                     {item.title}
                   </h3>
@@ -185,6 +203,66 @@ export default function Home() {
               Découvrir tous nos services
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Avis clients premium */}
+      <section className="border-t border-deep-green/10 bg-beige py-24">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center"
+          >
+            <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">
+              Avis clients
+            </p>
+            <h2 className="mt-2 font-serif text-3xl font-semibold text-deep-green md:text-4xl">
+              Ils nous ont fait confiance
+            </h2>
+          </motion.div>
+
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {[
+              {
+                quote: "Service exceptionnel, cuisine incroyable.",
+                name: "Sarah M.",
+              },
+              {
+                quote: "Tout était parfait pour notre mariage.",
+                name: "Karim L.",
+              },
+              {
+                quote: "Professionnel et délicieux.",
+                name: "Nadia A.",
+              },
+            ].map((testimonial, index) => (
+              <motion.figure
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.1 * index,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="flex flex-col justify-between rounded-3xl bg-white/95 p-6 shadow-[0_14px_40px_rgba(15,31,24,0.12)] ring-1 ring-deep-green/5"
+              >
+                <div>
+                  <p className="text-xl leading-none text-terracotta">★★★★★</p>
+                  <blockquote className="mt-4 text-sm leading-relaxed text-deep-green/85">
+                    “{testimonial.quote}”
+                  </blockquote>
+                </div>
+                <figcaption className="mt-6 font-serif text-sm font-semibold text-deep-green/90">
+                  — {testimonial.name}
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
         </div>
       </section>
 
