@@ -28,8 +28,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const onDarkHero = !scrolled;
-  const linkColor = onDarkHero ? NAV_BEIGE : undefined;
+  const overDarkHero = pathname === "/" && !scrolled;
+  const linkColor = overDarkHero ? NAV_BEIGE : undefined;
 
   return (
     <motion.header
@@ -38,14 +38,19 @@ export default function Navbar() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out ${
         scrolled
-          ? "border-deep-green/10 bg-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.06)] backdrop-blur-md"
+          ? "nav-scrolled border-deep-green/10 bg-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.06)] backdrop-blur-md"
           : "border-transparent bg-transparent"
-      }`}
+      } ${overDarkHero ? "nav-over-hero" : ""}`}
     >
       <nav className={`mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-all duration-300 ${
         scrolled ? "py-3.5" : "py-5"
       }`}>
-        <Link href="/" className="text-2xl font-serif font-semibold tracking-wide">
+        <Link
+          href="/"
+          className={`nav-logo nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
+            pathname === "/" ? "font-semibold" : "font-medium"
+          }`}
+        >
           Maison Des Saveurs
         </Link>
 
@@ -64,7 +69,7 @@ export default function Navbar() {
                   href={link.href}
                   className={`nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                     isActive ? "font-semibold" : "font-medium"
-                  } ${onDarkHero ? "" : "text-deep-green"}`}
+                  } ${overDarkHero ? "" : "text-deep-green"}`}
                   style={linkColor ? { color: linkColor } : undefined}
                 >
                   {link.label}
@@ -84,17 +89,17 @@ export default function Navbar() {
           <motion.span
             animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
             className="h-0.5 w-6"
-            style={{ backgroundColor: onDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
+            style={{ backgroundColor: overDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
           />
           <motion.span
             animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
             className="h-0.5 w-6"
-            style={{ backgroundColor: onDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
+            style={{ backgroundColor: overDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
           />
           <motion.span
             animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
             className="h-0.5 w-6"
-            style={{ backgroundColor: onDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
+            style={{ backgroundColor: overDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
           />
         </button>
       </nav>

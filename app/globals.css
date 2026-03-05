@@ -151,6 +151,14 @@ html {
   color: #C6A75E;
 }
 
+/* Nav logo: beige uniquement sur la page d'accueil en haut (hero vert), vert partout ailleurs */
+header.nav-over-hero .nav-logo {
+  color: #E8E2D8 !important;
+}
+header:not(.nav-over-hero) .nav-logo {
+  color: var(--color-deep-green) !important;
+}
+
 .bg-soft-gradient-beige {
   background: linear-gradient(180deg, #F8F5F0 0%, #EDE8E0 50%, #F8F5F0 100%);
 }
