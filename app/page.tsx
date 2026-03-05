@@ -9,19 +9,19 @@ const homeServices = [
     title: "Traiteur mariages Lyon",
     desc: "Nous accompagnons tous les mariages à Lyon et dans ses alentours, quels que soient vos traditions, votre culture ou le style de votre réception. Chaque mariage est unique, et nous mettons tout notre savoir-faire au service de votre union pour créer une expérience culinaire exceptionnelle. De la réception au dessert, nous assurons une prestation complète, élégante et parfaitement maîtrisée, afin que le repas de votre plus beau jour reste gravé dans les mémoires.",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
-    imageAlt: "Texture marbre élégante",
+    imageAlt: "Traiteur mariage marocain Lyon - buffet et prestation mariage",
   },
   {
     title: "Traiteur Événements",
     desc: "Anniversaires, fêtes familiales, événements associatifs ou célébrations spéciales : nous vous accompagnons pour tous vos moments importants. Nous nous adaptons à votre lieu, à votre nombre d'invités et à votre budget afin de proposer une prestation sur mesure, généreuse et élégante. Chaque événement est pensé pour rassembler vos proches autour d'une cuisine authentique et mémorable.",
     image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=600&q=80",
-    imageAlt: "Tissu et texture raffinée",
+    imageAlt: "Buffet mini salés événement Lyon - traiteur anniversaire",
   },
   {
     title: "Traiteur Professionnel",
     desc: "Repas d'entreprise, événements internes, célébrations professionnelles ou rassemblements d'équipe : Maison Des Saveurs se déplace directement dans vos locaux ou sur le lieu de votre choix. Nous organisons des prestations adaptées à vos besoins afin de réunir vos collaborateurs autour d'un moment convivial et fédérateur à travers le repas. Buffet, service à table ou formule personnalisée, nous assurons une organisation sérieuse et raffinée.",
     image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80",
-    imageAlt: "Linge et ambiance épurée",
+    imageAlt: "Traiteur entreprise Lyon - buffet marocain traiteur Lyon",
   },
 ];
 
@@ -56,7 +56,7 @@ export default function Home() {
               className="relative font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
               style={{ textShadow: "0 2px 24px rgba(0,0,0,0.18), 0 1px 8px rgba(0,0,0,0.1)" }}
             >
-              L&apos;Art du Traiteur Événementiel à Lyon
+              Traiteur Marocain Halal à Lyon
             </motion.h1>
             <motion.div
               className="hero-accent-line mx-auto mt-4 w-full max-w-[280px]"
@@ -73,8 +73,7 @@ export default function Home() {
             className="mx-auto mt-8 max-w-2xl font-serif text-lg sm:text-xl md:text-2xl"
             style={{ color: "#F8F5F0" }}
           >
-            Maison Des Saveurs sublime vos mariages et événements avec élégance
-            et authenticité.
+            Maison des Saveurs est un traiteur marocain halal basé à Lyon proposant des buffets gourmands pour mariages, anniversaires et événements professionnels. Notre cuisine est traditionnelle, faite maison avec des ingrédients soigneusement sélectionnés et des épices venues du Maroc.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -187,11 +186,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section SEO — zone géographique et prestations */}
+      <section className="bg-beige-dark border-t border-deep-green/10 py-16" aria-labelledby="prestations-seo">
+        <div className="mx-auto max-w-4xl px-6">
+          <h2 id="prestations-seo" className="sr-only">
+            Traiteur marocain halal Lyon et métropole
+          </h2>
+          <p className="text-center font-serif text-lg leading-relaxed text-deep-green md:text-xl">
+            Nous proposons nos services de traiteur marocain halal à Lyon, Villeurbanne, Bron, Vénissieux, Vaulx-en-Velin et dans toute la métropole lyonnaise.
+          </p>
+          <p className="mt-6 font-serif text-sm font-semibold uppercase tracking-widest text-terracotta">
+            Prestations :
+          </p>
+          <ul className="mt-3 flex flex-wrap justify-center gap-x-8 gap-y-1 text-deep-green/90">
+            <li>Traiteur mariage marocain</li>
+            <li>Buffet anniversaire</li>
+            <li>Traiteur événementiel entreprise</li>
+            <li>Buffet marocain traditionnel</li>
+          </ul>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="relative overflow-hidden bg-deep-green py-24">
+      <section className="relative overflow-hidden bg-deep-green py-24" aria-labelledby="cta-contact">
         <div className="absolute inset-0 bg-gradient-to-b from-terracotta/5 to-transparent pointer-events-none" aria-hidden />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
           <motion.h2
+            id="cta-contact"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}

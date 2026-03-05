@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -19,16 +19,24 @@ const outfit = Outfit({
 
 const SITE_URL = "https://mds-traiteur.fr";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title:
-    "Maison des Saveurs - Traiteur Marocain à Lyon & Villeurbanne | Mariage, Événements & Entreprises",
+    "Maison des Saveurs | Traiteur Marocain Halal à Lyon – Mariage, Buffet & Événements",
   description:
-    "Maison des Saveurs, traiteur marocain haut de gamme à Lyon et Villeurbanne. Spécialiste des mariages, anniversaires, buffets et événements professionnels dans toute la métropole lyonnaise.",
+    "Maison des Saveurs est un traiteur marocain halal à Lyon spécialisé dans les buffets gourmands, mariages, anniversaires et événements professionnels. Cuisine marocaine traditionnelle faite maison avec des ingrédients de qualité.",
   keywords: [
     "traiteur lyon",
     "traiteur villeurbanne",
     "traiteur marocain lyon",
+    "traiteur halal lyon",
     "traiteur mariage lyon",
+    "buffet mariage lyon",
+    "traiteur evenement lyon",
     "traiteur anniversaire lyon",
     "traiteur entreprise lyon",
     "buffet marocain lyon",
@@ -40,9 +48,9 @@ export const metadata: Metadata = {
     icon: "/logo.png",
   },
   openGraph: {
-    title: "Maison des Saveurs - Traiteur Marocain à Lyon",
+    title: "Maison des Saveurs | Traiteur Marocain Halal à Lyon",
     description:
-      "Traiteur marocain premium à Lyon et Villeurbanne pour mariages, anniversaires et événements professionnels.",
+      "Maison des Saveurs est un traiteur marocain halal à Lyon spécialisé dans les buffets gourmands, mariages, anniversaires et événements professionnels.",
     url: SITE_URL,
     siteName: "Maison des Saveurs",
     images: [
@@ -58,9 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maison des Saveurs - Traiteur Marocain à Lyon",
+    title: "Maison des Saveurs | Traiteur Marocain Halal à Lyon",
     description:
-      "Traiteur marocain premium à Lyon et Villeurbanne pour mariages, anniversaires et événements professionnels.",
+      "Traiteur marocain halal à Lyon : buffets gourmands, mariages, anniversaires et événements professionnels. Cuisine marocaine traditionnelle faite maison.",
     images: ["/logo-share.png"],
   },
 };
