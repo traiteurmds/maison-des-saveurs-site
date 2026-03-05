@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 import path from "path";
 
-// CRITICAL: Use absolute path so Turbopack watches THIS project, not the parent.
-// There is another package-lock.json in C:\Users\crypt; without an explicit root,
-// Next.js picks that folder as root and file changes here are ignored.
-const PROJECT_ROOT = path.resolve(__dirname);
+// Chemin ABSOLU du projet — obligatoire car un package-lock.json dans C:\Users\crypt
+// fait que Next.js prend le mauvais dossier comme racine et ne surveille pas ce projet.
+const PROJECT_ROOT = path.resolve(
+  "C:\\Users\\crypt\\Desktop\\MDS\\maison-des-saveurs-site"
+);
 
 const nextConfig: NextConfig = {
   turbopack: {
