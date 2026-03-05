@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
 // Couleurs en dur pour garantir la visibilité partout
@@ -15,23 +15,48 @@ const colors = {
   placeholder: "rgba(31, 58, 46, 0.5)",
 } as const;
 
-export default function ContactPage() {
-  const formRef = useRef<HTMLFormElement>(null);
+type StatusState =
+  | { type: "success"; message: string }
+  | { type: "error"; message: string }
+  | null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+export default function ContactPage() {
+  const [status, setStatus] = useState<StatusState>(null);
+
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formRef.current) return;
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const name = (formData.get("name") ?? "") as string;
+    const email = (formData.get("email") ?? "") as string;
+    const message = (formData.get("message") ?? "") as string;
+
     try {
-      await emailjs.sendForm(
-        "service_id5rxw",
-        "template_90mrlpn",
-        formRef.current,
-        "JzBCJK41sDIKxSKXQ"
+      await emailjs.send(
+        "service_abcd123",
+        "template_contact",
+        {
+          name,
+          email,
+          message,
+        },
+        "PUBLIC_KEY_EMAILJS"
       );
-      alert("Message envoyé !");
-      formRef.current.reset();
+
+      setStatus({
+        type: "success",
+        message:
+          "Votre message a bien été envoyé. Nous vous répondrons rapidement.",
+      });
+      form.reset();
     } catch {
-      alert("Erreur lors de l'envoi");
+      setStatus({
+        type: "error",
+        message:
+          "Une erreur est survenue. Merci de réessayer.",
+      });
     }
   };
 
@@ -99,8 +124,7 @@ export default function ContactPage() {
       >
         <div style={{ maxWidth: "32rem", margin: "0 auto" }}>
           <form
-            ref={formRef}
-            onSubmit={handleSubmit}
+            onSubmit={sendEmail}
             style={{
               backgroundColor: colors.white,
               padding: "2.5rem",
@@ -113,7 +137,7 @@ export default function ContactPage() {
           >
             <div>
               <label
-                htmlFor="user_name"
+                htmlFor="name"
                 style={{
                   display: "block",
                   fontFamily: "var(--font-cormorant), Georgia, serif",
@@ -126,9 +150,9 @@ export default function ContactPage() {
                 Nom *
               </label>
               <input
-                id="user_name"
+                id="name"
                 type="text"
-                name="user_name"
+                name="name"
                 required
                 placeholder="Votre nom"
                 style={{
@@ -155,7 +179,7 @@ export default function ContactPage() {
 
             <div>
               <label
-                htmlFor="user_email"
+                htmlFor="email"
                 style={{
                   display: "block",
                   fontFamily: "var(--font-cormorant), Georgia, serif",
@@ -168,9 +192,9 @@ export default function ContactPage() {
                 Email *
               </label>
               <input
-                id="user_email"
+                id="email"
                 type="email"
-                name="user_email"
+                name="email"
                 required
                 placeholder="vous@exemple.fr"
                 style={{
@@ -238,11 +262,23 @@ export default function ContactPage() {
                 }}
               />
             </div>
+            {status && (
+              <p
+                aria-live="polite"
+                style={{
+                  marginTop: "0.5rem",
+                  fontSize: "0.9rem",
+                  color: status.type === "success" ? "#1F3A2E" : "#b00020",
+                }}
+              >
+                {status.message}
+              </p>
+            )}
 
             <button
               type="submit"
               style={{
-                marginTop: "0.5rem",
+                marginTop: "0.75rem",
                 padding: "1rem 2rem",
                 fontSize: "0.875rem",
                 fontWeight: 500,
