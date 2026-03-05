@@ -18,16 +18,13 @@ const colors = {
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
-
-    const form = e.target as HTMLFormElement & {
-      name: HTMLInputElement;
-      email: HTMLInputElement;
-      message: HTMLTextAreaElement;
-    };
 
     setLoading(true);
     setSent(false);
@@ -37,15 +34,22 @@ export default function ContactPage() {
         "service_abcd123",
         "template_tcbmdth",
         {
-          name: form.name.value,
-          email: form.email.value,
-          message: form.message.value,
+          name,
+          email,
+          message,
         },
         "JzBCJK41sDIKxSKXQ"
       );
 
       setSent(true);
-      form.reset();
+      setName("");
+      setEmail("");
+      setMessage("");
+
+      // Laisser visible le check/toast quelques secondes puis revenir à l'état normal
+      setTimeout(() => {
+        setSent(false);
+      }, 4000);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("EmailJS error:", error);
@@ -61,6 +65,13 @@ export default function ContactPage() {
         .contact-page input::placeholder,
         .contact-page textarea::placeholder {
           color: rgba(31, 58, 46, 0.5);
+        }
+        @keyframes toast-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .toast-enter {
+          animation: toast-in 0.3s ease-out;
         }
       `}</style>
       {/* Hero */}
@@ -150,6 +161,8 @@ export default function ContactPage() {
                 name="name"
                 required
                 placeholder="Votre nom"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 style={{
                   width: "100%",
                   padding: "0.75rem 1rem",
@@ -192,6 +205,8 @@ export default function ContactPage() {
                 name="email"
                 required
                 placeholder="vous@exemple.fr"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   width: "100%",
                   padding: "0.75rem 1rem",
@@ -234,6 +249,8 @@ export default function ContactPage() {
                 rows={5}
                 required
                 placeholder="Décrivez votre événement, le lieu, et vos préférences..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 style={{
                   width: "100%",
                   padding: "0.75rem 1rem",
@@ -262,15 +279,17 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-3 inline-flex items-center justify-center gap-2 rounded-md bg-terracotta px-8 py-4 text-xs font-medium tracking-[0.15em] text-white uppercase transition-all duration-200 ease-out hover:bg-terracotta/90 disabled:cursor-not-allowed disabled:opacity-60"
-                style={{
-                  letterSpacing: "0.15em",
-                }}
+                className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C46A4A] to-[#1F3A2E] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? (
                   <>
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-transparent" />
                     Envoi en cours...
+                  </>
+                ) : sent ? (
+                  <>
+                    <span className="text-base">✓</span>
+                    Envoyé
                   </>
                 ) : (
                   "Envoyer la demande"
@@ -280,8 +299,17 @@ export default function ContactPage() {
           </form>
 
           {sent && (
-            <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 shadow-sm transition-all duration-300 ease-out">
-              Votre demande a été envoyée avec succès. Nous vous répondrons sous 24h.
+            <div
+              role="status"
+              aria-live="polite"
+              className="toast-enter fixed right-4 top-4 z-50 flex max-w-xs items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 text-sm text-emerald-900 shadow-xl ring-1 ring-emerald-100"
+            >
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-base text-white shadow-sm">
+                ✓
+              </span>
+              <p className="text-sm">
+                Votre demande a été envoyée avec succès. Nous vous répondrons sous 24h.
+              </p>
             </div>
           )}
         </div>
