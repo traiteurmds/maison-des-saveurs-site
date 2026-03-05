@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaInstagram, FaTiktok } from "react-icons/fa";
 
 const navLinks = [
   { href: "/", label: "Accueil" },
@@ -52,30 +53,54 @@ export default function Navbar() {
           Maison Des Saveurs
         </Link>
 
-        {/* Desktop nav */}
-        <ul className="hidden items-center gap-10 md:flex">
-          {navLinks.map((link, i) => {
-            const isActive = pathname === link.href;
-            return (
-              <motion.li
-                key={link.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i, duration: 0.5 }}
-              >
-                <Link
-                  href={link.href}
-                  className={`nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
-                    isActive ? "font-semibold" : "font-medium"
-                  } ${overDarkHero ? "" : "text-deep-green"}`}
-                  style={linkColor ? { color: linkColor } : undefined}
+        {/* Desktop nav + réseaux sociaux */}
+        <div className="hidden items-center md:flex">
+          <ul className="flex items-center gap-10">
+            {navLinks.map((link, i) => {
+              const isActive = pathname === link.href;
+              return (
+                <motion.li
+                  key={link.href}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * i, duration: 0.5 }}
                 >
-                  {link.label}
-                </Link>
-              </motion.li>
-            );
-          })}
-        </ul>
+                  <Link
+                    href={link.href}
+                    className={`nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
+                      isActive ? "font-semibold" : "font-medium"
+                    } ${overDarkHero ? "" : "text-deep-green"}`}
+                    style={linkColor ? { color: linkColor } : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.li>
+              );
+            })}
+          </ul>
+          <div className="ml-4 flex items-center gap-3">
+            <a
+              href="https://www.instagram.com/mds.traiteur69/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`text-xl transition-opacity hover:opacity-70 ${overDarkHero ? "" : "text-deep-green"}`}
+              style={linkColor ? { color: linkColor } : undefined}
+              aria-label="Instagram Maison Des Saveurs"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://www.tiktok.com/@mds.traiteur?_r=1&_t=ZN-94QKk4JGkuV"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`text-xl transition-opacity hover:opacity-70 ${overDarkHero ? "" : "text-deep-green"}`}
+              style={linkColor ? { color: linkColor } : undefined}
+              aria-label="TikTok Maison Des Saveurs"
+            >
+              <FaTiktok />
+            </a>
+          </div>
+        </div>
 
         {/* Mobile menu button */}
         <button
