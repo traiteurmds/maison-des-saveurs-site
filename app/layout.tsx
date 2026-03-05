@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL(SITE_URL),
   icons: {
-    icon: "/logo-share.png",
+    icon: "/logo.png",
   },
   openGraph: {
     type: "website",

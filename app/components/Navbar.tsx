@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,7 +30,6 @@ export default function Navbar() {
   }, []);
 
   const onDarkHero = !scrolled;
-  const logoColor = onDarkHero ? NAV_BEIGE : undefined;
   const linkColor = onDarkHero ? NAV_BEIGE : undefined;
 
   return (
@@ -46,14 +46,14 @@ export default function Navbar() {
       <nav className={`mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-all duration-300 ${
         scrolled ? "py-3.5" : "py-5"
       }`}>
-        <Link
-          href="/"
-          className={`font-serif text-2xl font-semibold tracking-wide transition-colors duration-200 ${
-            onDarkHero ? "hover-gold" : "text-deep-green hover:text-terracotta"
-          }`}
-          style={logoColor ? { color: logoColor } : undefined}
-        >
-          Maison Des Saveurs
+        <Link href="/" className="block">
+          <Image
+            src="/logo.png"
+            alt="Maison Des Saveurs"
+            width={180}
+            height={180}
+            className="h-10 w-auto sm:h-12"
+          />
         </Link>
 
         {/* Desktop nav */}
