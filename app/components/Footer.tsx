@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 const footerLinks = [
   { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
-  { href: "/gallery", label: "Galerie" },
   { href: "/contact", label: "Contact" },
 ];
 
