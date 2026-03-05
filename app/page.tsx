@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
 const homeServices = [
   {
@@ -25,8 +26,56 @@ const homeServices = [
   },
 ];
 
+const menuItems = [
+  {
+    id: "mini-sales",
+    title: "Mini salés",
+    description: "Buffet de mini salés parfait pour les événements, anniversaires et réceptions : mini burgers, mini pizzas, mini batbout, petits fours, et autres bouchées gourmandes.",
+    image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80",
+    imageAlt: "Mini salés buffet traiteur Lyon",
+  },
+  {
+    id: "pastilla",
+    title: "Pastilla",
+    description: "Feuilleté traditionnel marocain aux amandes et à la cannelle, ou version salée au poulet et aux épices. Un classique de la cuisine marocaine pour vos buffets et réceptions.",
+    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80",
+    imageAlt: "Pastilla traiteur marocain Lyon",
+  },
+  {
+    id: "tajine",
+    title: "Tajine",
+    description: "Plat mijoté en terre cuite, poulet ou agneau aux olives et citron confit, légumes et épices du Maroc. Une institution de la cuisine marocaine pour vos événements.",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+    imageAlt: "Tajine traiteur marocain Lyon",
+  },
+  {
+    id: "couscous",
+    title: "Couscous",
+    description: "Semoule légère, légumes de saison, viande tendre et bouillon parfumé. Le couscous maison est un incontournable de nos buffets et repas de fête.",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+    imageAlt: "Couscous traiteur marocain Lyon",
+  },
+  {
+    id: "rfissa",
+    title: "Rfissa",
+    description: "Plat traditionnel aux lentilles, poulet et msemen, parfumé au ras el hanout et à la coriandre. Une spécialité marocaine raffinée pour vos réceptions.",
+    image: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=800&q=80",
+    imageAlt: "Rfissa traiteur marocain Lyon",
+  },
+];
+
 export default function Home() {
+  const [menuModal, setMenuModal] = useState<typeof menuItems[0] | null>(null);
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    if (!menuModal) return;
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuModal(null);
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, [menuModal]);
   const heroParallaxY = useTransform(scrollYProgress, [0, 0.25], [0, 12]);
 
   return (
@@ -227,15 +276,15 @@ export default function Home() {
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {[
               {
-                quote: "Service exceptionnel, cuisine incroyable.",
+                quote: "Service exceptionnel pour notre mariage.",
                 name: "Sarah M.",
               },
               {
-                quote: "Tout était parfait pour notre mariage.",
+                quote: "Cuisine incroyable et service professionnel.",
                 name: "Karim L.",
               },
               {
-                quote: "Professionnel et délicieux.",
+                quote: "Le meilleur traiteur marocain à Lyon.",
                 name: "Nadia A.",
               },
             ].map((testimonial, index) => (
@@ -252,7 +301,7 @@ export default function Home() {
                 className="flex flex-col justify-between rounded-3xl bg-white/95 p-6 shadow-[0_14px_40px_rgba(15,31,24,0.12)] ring-1 ring-deep-green/5"
               >
                 <div>
-                  <p className="text-xl leading-none text-terracotta">★★★★★</p>
+                  <p className="text-xl leading-none text-amber-400" aria-hidden>★★★★★</p>
                   <blockquote className="mt-4 text-sm leading-relaxed text-deep-green/85">
                     “{testimonial.quote}”
                   </blockquote>
@@ -265,6 +314,112 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Notre menu — cartes interactives + modal */}
+      <section className="border-t border-deep-green/10 bg-beige-dark py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center"
+          >
+            <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">
+              Nos plats
+            </p>
+            <h2 className="mt-2 font-serif text-4xl font-semibold text-deep-green md:text-5xl">
+              Notre menu
+            </h2>
+          </motion.div>
+
+          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+            {menuItems.map((item, i) => (
+              <motion.button
+                key={item.id}
+                type="button"
+                onClick={() => setMenuModal(item)}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative flex flex-col overflow-hidden rounded-3xl border border-deep-green/10 bg-white text-left shadow-[0_18px_45px_rgba(15,31,24,0.12)] transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)] focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    quality={80}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-deep-green/40 to-transparent" aria-hidden />
+                </div>
+                <div className="flex flex-1 flex-col justify-end p-5">
+                  <h3 className="font-serif text-lg font-semibold text-deep-green">
+                    {item.title}
+                  </h3>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Modal menu */}
+      <AnimatePresence>
+        {menuModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+              onClick={() => setMenuModal(null)}
+              aria-hidden
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl bg-white shadow-2xl focus:outline-none"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="menu-modal-title"
+            >
+              <div className="relative aspect-video w-full overflow-hidden">
+                <Image
+                  src={menuModal.image}
+                  alt={menuModal.imageAlt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 672px) 100vw, 672px"
+                  priority={false}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
+                <h2 id="menu-modal-title" className="absolute bottom-4 left-4 right-4 font-serif text-2xl font-semibold text-white md:text-3xl">
+                  {menuModal.title}
+                </h2>
+              </div>
+              <div className="p-6 md:p-8">
+                <p className="leading-relaxed text-deep-green/90">
+                  {menuModal.description}
+                </p>
+                <Link
+                  href="/contact"
+                  className="mt-6 inline-flex items-center justify-center rounded-full bg-terracotta px-8 py-3 font-medium tracking-widest text-white shadow-md transition-all duration-300 hover:bg-terracotta/90 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2"
+                >
+                  Demander un devis
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Section SEO — ~120 mots traiteur marocain Lyon, mariages, anniversaires, événements, entreprises */}
       <section className="bg-beige-dark border-t border-deep-green/10 py-16" aria-labelledby="prestations-seo">
