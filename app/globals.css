@@ -106,16 +106,25 @@ html {
   animation: globe-rotate 30s linear infinite;
 }
 
-/* Avis clients: slider horizontal infini */
+/* Avis clients: slider horizontal infini — ne jamais s'arrêter */
 @keyframes reviews-slide {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 .reviews-track {
-  animation: reviews-slide 45s linear infinite;
+  animation: reviews-slide 70s linear infinite;
+  animation-play-state: running !important;
+  will-change: transform;
 }
-.reviews-track:hover {
-  animation-play-state: paused;
+.reviews-track,
+.reviews-track * {
+  pointer-events: none;
+}
+.reviews-slider-wrap {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
 }
 
 /* Hero: deep green luxury gradient */

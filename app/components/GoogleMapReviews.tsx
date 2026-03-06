@@ -117,8 +117,8 @@ export default function GoogleMapReviews() {
           Ce que disent nos clients sur notre traiteur marocain à Lyon
         </motion.p>
 
-        {/* Slider horizontal infini */}
-        <div className="mt-14 overflow-hidden">
+        {/* Slider horizontal infini — défilement continu, aucune pause */}
+        <div className="reviews-slider-wrap mt-14 overflow-hidden">
           <div className="reviews-track flex w-max gap-8">
             {duplicatedReviews.map((review, index) => (
               <ReviewCard
@@ -132,23 +132,26 @@ export default function GoogleMapReviews() {
           </div>
         </div>
 
-        {/* SEO + carte (ordre : avis → texte → map) */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
+        {/* Transition élégante vers la carte */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6 }}
-          className="mt-20 text-center text-lg text-deep-green/85 md:text-xl"
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-24 flex flex-col items-center justify-center pb-4 pt-6 md:mt-28 md:pb-6 md:pt-8"
         >
-          Nous livrons vos événements dans toute la métropole de Lyon : Lyon, Villeurbanne, Vénissieux, Bron, Feyzin, Saint-Priest, Vaulx-en-Velin, Décines, Oullins, Caluire-et-Cuire et alentours.
-        </motion.p>
+          <h3 className="text-center font-serif text-2xl font-semibold text-deep-green md:text-3xl">
+            Retrouvez-nous dans la métropole lyonnaise
+          </h3>
+        </motion.div>
 
+        {/* Carte Google Maps */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 overflow-hidden rounded-2xl shadow-lg"
+          className="mt-6 overflow-hidden rounded-2xl shadow-lg md:mt-8"
         >
           <iframe
             src="https://www.google.com/maps?q=M%C3%A9tropole+de+Lyon&output=embed"
