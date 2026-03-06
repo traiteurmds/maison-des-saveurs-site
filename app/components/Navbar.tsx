@@ -14,10 +14,15 @@ function useScrollToTop() {
   }, []);
 }
 
+function scrollToMenuSection() {
+  if (typeof window === "undefined") return;
+  const el = document.getElementById("menu");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
-  { href: "/#avis", label: "Avis" },
   { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
@@ -175,6 +180,12 @@ export default function Navbar() {
                         onClick={(e) => {
                           setIsOpen(false);
                           const linkPath = link.href.split("#")[0] || "/";
+                          const hash = link.href.includes("#") ? link.href.split("#")[1] : null;
+                          if (pathname === linkPath && hash === "menu") {
+                            e.preventDefault();
+                            scrollToMenuSection();
+                            return;
+                          }
                           if (pathname === linkPath) {
                             e.preventDefault();
                           }

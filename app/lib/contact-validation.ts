@@ -30,8 +30,9 @@ export function sanitizeEmail(value: string): string {
   return trim(value).slice(0, 254);
 }
 
+/** Limite la longueur sans modifier espaces ni retours à la ligne. */
 export function sanitizeMessage(value: string): string {
-  return trim(value).slice(0, MAX_MESSAGE);
+  return value.slice(0, MAX_MESSAGE);
 }
 
 export function validateNom(value: string): { valid: boolean; error?: string } {
@@ -65,9 +66,8 @@ export function validatePhone(value: string): { valid: boolean; error?: string }
 }
 
 export function validateMessage(value: string): { valid: boolean; error?: string } {
-  const s = trim(value);
-  if (!s) return { valid: false, error: "Le message est requis." };
-  if (s.length > MAX_MESSAGE) return { valid: false, error: `Maximum ${MAX_MESSAGE} caractères.` };
+  if (!value || value.trim().length === 0) return { valid: false, error: "Le message est requis." };
+  if (value.length > MAX_MESSAGE) return { valid: false, error: `Maximum ${MAX_MESSAGE} caractères.` };
   return { valid: true };
 }
 

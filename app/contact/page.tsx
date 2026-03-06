@@ -159,6 +159,14 @@ export default function ContactPage() {
     const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
     if (!serviceId || !templateId || !publicKey) {
+      if (typeof console !== "undefined") {
+        console.error(
+          "[Maison Des Saveurs] Configuration EmailJS manquante. Définir dans .env.local :",
+          !serviceId && " NEXT_PUBLIC_EMAILJS_SERVICE_ID",
+          !templateId && " NEXT_PUBLIC_EMAILJS_TEMPLATE_ID",
+          !publicKey && " NEXT_PUBLIC_EMAILJS_PUBLIC_KEY"
+        );
+      }
       setFieldErrors({ form: "Configuration email manquante. Réessayez plus tard." });
       return;
     }
@@ -420,14 +428,10 @@ export default function ContactPage() {
                     style={inputBaseStyle}
                     onFocus={focusStyle}
                     onBlur={blurStyle}
-                    aria-describedby="eventDateHelp"
                   />
                   {fieldErrors.eventDate && (
                     <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.eventDate}</p>
                   )}
-                  <p id="eventDateHelp" style={{ fontSize: "0.8125rem", color: colors.dark, opacity: 0.6, marginTop: "0.375rem" }}>
-                    Date minimum : aujourd&apos;hui. Nous intervenons dans toute la métropole de Lyon.
-                  </p>
                 </div>
 
                 <div>
