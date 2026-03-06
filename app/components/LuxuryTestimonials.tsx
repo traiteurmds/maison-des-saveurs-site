@@ -24,7 +24,7 @@ export default function LuxuryTestimonials() {
         >
           Ce que disent nos clients
         </motion.h2>
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 flex flex-wrap justify-center gap-6">
           {reviews.map((review, index) => (
             <motion.figure
               key={`${review.name}-${index}`}
@@ -33,7 +33,7 @@ export default function LuxuryTestimonials() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.65, delay: 0.08 * index, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -6 }}
-              className="flex flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_18px_48px_rgba(15,31,24,0.08)] transition-all duration-300 hover:shadow-[0_24px_56px_rgba(15,31,24,0.18)]"
+              className="flex w-full max-w-sm flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_18px_48px_rgba(15,31,24,0.08)] transition-all duration-300 hover:shadow-[0_24px_56px_rgba(15,31,24,0.18)] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
             >
               <div>
                 <p className="text-xl leading-none text-amber-400" aria-hidden>★★★★★</p>
