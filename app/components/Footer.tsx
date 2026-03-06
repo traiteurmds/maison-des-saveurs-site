@@ -31,9 +31,8 @@ export default function Footer() {
               Maison Des Saveurs
             </Link>
             <p className="max-w-md text-sm leading-relaxed text-beige/80">
-              Traiteur mariage Lyon et traiteur événementiel à Villeurbanne.
-              Cuisine d&apos;exception pour vos plus beaux moments, dans le
-              respect de la tradition et du goût.
+              Traiteur marocain Lyon et traiteur oriental Lyon. Couscous lyon événement,
+              mariages et réceptions. Cuisine d&apos;exception dans toute la métropole.
             </p>
           </motion.div>
 
@@ -105,7 +104,7 @@ export default function Footer() {
         >
           <p>© {new Date().getFullYear()} Maison Des Saveurs. Tous droits réservés.</p>
           <p className="text-[11px]">
-            Traiteur marocain halal à Lyon – Expériences culinaires sur mesure.
+            Traiteur marocain lyon · Traiteur oriental lyon · Couscous lyon événement – Expériences culinaires sur mesure.
           </p>
         </motion.div>
       </div>

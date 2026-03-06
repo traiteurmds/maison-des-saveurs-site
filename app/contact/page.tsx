@@ -59,6 +59,15 @@ export default function ContactPage() {
   const [phoneError, setPhoneError] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [message, setMessage] = useState("");
+  const [minDate, setMinDate] = useState("");
+
+  useEffect(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, "0");
+    const d = String(today.getDate()).padStart(2, "0");
+    setMinDate(`${y}-${m}-${d}`);
+  }, []);
 
   const inCooldown = cooldownUntil !== null;
   const canSubmit = !loading && !inCooldown;
@@ -99,6 +108,13 @@ export default function ContactPage() {
 
     if (!phoneValid) {
       setPhoneError(`Le numéro doit contenir exactement ${PHONE_LENGTH} chiffres.`);
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selected = eventDate ? new Date(eventDate) : null;
+    if (selected && selected < today) {
       return;
     }
 
@@ -312,13 +328,17 @@ export default function ContactPage() {
                     type="date"
                     name="eventDate"
                     required
-                    min={new Date().toISOString().split("T")[0]}
+                    min={minDate}
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
                     style={inputBaseStyle}
                     onFocus={focusStyle}
                     onBlur={blurStyle}
+                    aria-describedby="eventDateHelp"
                   />
+                  <p id="eventDateHelp" style={{ fontSize: "0.8125rem", color: colors.dark, opacity: 0.6, marginTop: "0.375rem" }}>
+                    Date minimum : aujourd&apos;hui. Nous intervenons dans toute la métropole de Lyon.
+                  </p>
                 </div>
 
                 <div>

@@ -42,15 +42,17 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Maison des Saveurs - Traiteur marocain à Lyon",
+    default: "Traiteur Marocain à Lyon | Maison des Saveurs",
     template: "%s | Maison des Saveurs",
   },
   description:
-    "Traiteur marocain d'exception à Lyon pour mariages, événements et réceptions.",
+    "Maison des Saveurs, traiteur marocain à Lyon. Couscous, tajines, pâtisseries marocaines pour mariages, événements et réceptions.",
   keywords: [
-    "traiteur lyon",
-    "traiteur villeurbanne",
     "traiteur marocain lyon",
+    "traiteur lyon",
+    "traiteur oriental lyon",
+    "couscous lyon événement",
+    "traiteur villeurbanne",
     "traiteur halal lyon",
     "traiteur mariage lyon",
     "buffet mariage lyon",
@@ -66,8 +68,8 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Maison des Saveurs - Traiteur marocain à Lyon",
-    description: "Traiteur marocain d'exception à Lyon pour mariages, événements et réceptions.",
+    title: "Traiteur Marocain à Lyon | Maison des Saveurs",
+    description: "Maison des Saveurs, traiteur marocain à Lyon. Couscous, tajines, pâtisseries marocaines pour mariages, événements et réceptions.",
     url: SITE_URL,
     siteName: "Maison des Saveurs",
     images: [
@@ -83,8 +85,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maison des Saveurs - Traiteur marocain à Lyon",
-    description: "Traiteur marocain d'exception à Lyon pour vos événements.",
+    title: "Traiteur Marocain à Lyon | Maison des Saveurs",
+    description: "Maison des Saveurs, traiteur marocain à Lyon. Couscous, tajines, pâtisseries marocaines pour mariages et réceptions.",
     images: ["/logo-share.png"],
   },
 };

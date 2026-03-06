@@ -5,12 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
+type Category = "entrees" | "plats" | "desserts";
+
 type Dish = {
   id: string;
   title: string;
   description: string;
   image: string;
   alt: string;
+  category: Category;
 };
 
 const dishes: Dish[] = [
@@ -20,34 +23,7 @@ const dishes: Dish[] = [
     description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
     image: "/images/menu/pastilla.jpg",
     alt: "Pastilla marocaine traiteur Lyon",
-  },
-  {
-    id: "couscous-royal",
-    title: "Couscous Royal",
-    description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
-    image: "/images/menu/couscous.jpg",
-    alt: "Couscous marocain traiteur Lyon",
-  },
-  {
-    id: "viande-pruneaux",
-    title: "Viande aux pruneaux",
-    description: "Tajine de boeuf marocain aux pruneaux et amandes, sucré-salé emblématique des mariages.",
-    image: "/images/menu/viande-pruneaux.jpg",
-    alt: "Tajine marocain traiteur Lyon",
-  },
-  {
-    id: "poulet-olives",
-    title: "Poulet aux olives",
-    description: "Poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
-    image: "/images/menu/poulet-olives.jpg",
-    alt: "Poulet olives citron marocain traiteur Lyon",
-  },
-  {
-    id: "rfissa",
-    title: "Rfissa",
-    description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
-    image: "/images/menu/rfissa.jpg",
-    alt: "Rfissa marocaine traditionnelle traiteur Lyon",
+    category: "entrees",
   },
   {
     id: "mini-sales",
@@ -55,12 +31,62 @@ const dishes: Dish[] = [
     description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
     image: "/images/menu/mini-sales.jpg",
     alt: "Mini salés marocains buffet traiteur Lyon",
+    category: "entrees",
   },
+  {
+    id: "couscous-royal",
+    title: "Couscous Royal",
+    description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
+    image: "/images/menu/couscous.jpg",
+    alt: "Couscous marocain traiteur Lyon",
+    category: "plats",
+  },
+  {
+    id: "viande-pruneaux",
+    title: "Viande aux pruneaux",
+    description: "Tajine de boeuf marocain aux pruneaux et amandes, sucré-salé emblématique des mariages.",
+    image: "/images/menu/viande-pruneaux.jpg",
+    alt: "Tajine marocain traiteur Lyon",
+    category: "plats",
+  },
+  {
+    id: "poulet-olives",
+    title: "Poulet aux olives",
+    description: "Poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
+    image: "/images/menu/poulet-olives.jpg",
+    alt: "Poulet olives citron marocain traiteur Lyon",
+    category: "plats",
+  },
+  {
+    id: "rfissa",
+    title: "Rfissa",
+    description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
+    image: "/images/menu/rfissa.jpg",
+    alt: "Rfissa marocaine traditionnelle traiteur Lyon",
+    category: "plats",
+  },
+  {
+    id: "patisseries",
+    title: "Pâtisseries & douceurs",
+    description: "Pâtisseries marocaines et douceurs orientales pour clôturer vos événements en beauté.",
+    image: "/images/menu/pastilla.jpg",
+    alt: "Pâtisseries marocaines traiteur Lyon",
+    category: "desserts",
+  },
+];
+
+const categories: { id: Category; label: string }[] = [
+  { id: "entrees", label: "Entrées" },
+  { id: "plats", label: "Plats" },
+  { id: "desserts", label: "Desserts" },
 ];
 
 export default function Menu3DExperience() {
   const [openDish, setOpenDish] = useState<Dish | null>(null);
+  const [activeCategory, setActiveCategory] = useState<Category>("plats");
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const filteredDishes = dishes.filter((d) => d.category === activeCategory);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, index: number) => {
     const card = cardRefs.current[index];
@@ -94,11 +120,43 @@ export default function Menu3DExperience() {
           Notre menu
         </h2>
         <p className="mt-3 text-center font-serif text-lg text-deep-green/80">
-          Traiteur marocain pour mariages à Lyon · Cuisine marocaine traditionnelle à Lyon
+          Traiteur marocain Lyon · Couscous lyon événement · Cuisine marocaine traditionnelle
         </p>
+
+        <motion.div
+          className="mt-12 flex flex-wrap justify-center gap-2"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setActiveCategory(cat.id)}
+              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] ${
+                activeCategory === cat.id
+                  ? "bg-deep-green text-beige shadow-lg"
+                  : "bg-white text-deep-green shadow-md hover:-translate-y-0.5 hover:shadow-lg"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </motion.div>
+
         <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {dishes.map((dish, i) => (
-            <div key={dish.id} className="aspect-[4/3] min-h-[320px] w-full md:min-h-[360px]">
+          <AnimatePresence mode="wait">
+          {filteredDishes.map((dish, i) => (
+            <motion.div
+              key={dish.id}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
+              className="aspect-[4/3] min-h-[320px] w-full md:min-h-[360px]"
+            >
               <div
                 ref={(el) => {
                   cardRefs.current[i] = el;
@@ -138,8 +196,9 @@ export default function Menu3DExperience() {
                   {dish.title}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
+          </AnimatePresence>
         </div>
       </div>
 

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 
 const transition = {
   duration: 0.4,
@@ -14,6 +15,18 @@ export default function PageTransition({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
+  useEffect(() => {
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
 
   return (
     <AnimatePresence mode="wait">

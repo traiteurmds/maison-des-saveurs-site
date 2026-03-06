@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
+
+function useScrollToTop() {
+  return useCallback(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+}
 
 const navLinks = [
   { href: "/", label: "Accueil" },
@@ -19,9 +27,9 @@ const NAV_BEIGE = "#E8E2D8";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const scrollToTop = useScrollToTop();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
@@ -51,9 +59,10 @@ export default function Navbar() {
           href="/"
           scroll={true}
           onClick={(e) => {
-            if (pathname === "/" && typeof window !== "undefined") {
+            setIsOpen(false);
+            if (pathname === "/") {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              scrollToTop();
             }
           }}
           className="nav-link nav-logo nav-logo-brand nav-link-underline"
@@ -75,6 +84,14 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
+                    onClick={() => {
+                      if (link.href.startsWith("/#") && pathname === "/") {
+                        const id = link.href.slice(2);
+                        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        scrollToTop();
+                      }
+                    }}
                     className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                       isActive ? "font-semibold" : "font-medium"
                     } ${overDarkHero ? "" : "text-deep-green"}`}
@@ -153,7 +170,15 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         scroll={true}
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                          setIsOpen(false);
+                          if (link.href.startsWith("/#") && pathname === "/") {
+                            const id = link.href.slice(2);
+                            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                          } else {
+                            scrollToTop();
+                          }
+                        }}
                         className={`nav-link block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
                           isActive ? "font-semibold" : ""
                         }`}

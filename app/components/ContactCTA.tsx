@@ -34,7 +34,7 @@ export default function ContactCTA() {
         >
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-full bg-terracotta px-12 py-5 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:shadow-terracotta/30 focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2 focus:ring-offset-deep-green"
+            className="inline-flex min-h-[52px] min-w-[280px] items-center justify-center rounded-full bg-terracotta px-10 py-5 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:shadow-terracotta/30 focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2 focus:ring-offset-deep-green md:min-h-[56px] md:min-w-[320px] md:px-12"
           >
             Demander un devis
           </Link>

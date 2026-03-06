@@ -61,15 +61,15 @@ export default function VisionHero() {
           className="font-serif text-5xl font-semibold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl"
           style={{ textShadow: "0 4px 40px rgba(0,0,0,0.35)" }}
         >
-          Maison des Saveurs — Traiteur marocain à Lyon
+          Cuisine marocaine d&apos;exception à Lyon
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 font-serif text-xl text-beige/95 sm:text-2xl md:text-3xl"
+          className="mt-6 max-w-2xl font-serif text-xl text-beige/95 sm:text-2xl md:text-3xl"
         >
-          Cuisine marocaine authentique pour mariages, événements et réceptions à Lyon.
+          Maison des Saveurs sublime vos événements avec une cuisine marocaine authentique, raffinée et généreuse.
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
@@ -85,7 +85,7 @@ export default function VisionHero() {
             <button
               type="button"
               onClick={scrollToMenu}
-              className="btn-hero-outline inline-flex items-center justify-center rounded-full border-2 border-beige px-10 py-4 font-medium tracking-widest text-beige transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:bg-beige/10 hover:shadow-lg hover:shadow-[0_8px_32px_rgba(248,245,240,0.12)]"
+              className="btn-hero-outline inline-flex min-h-[52px] min-w-[200px] items-center justify-center rounded-full border-2 border-beige px-10 py-4 font-medium tracking-widest text-beige transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:bg-beige/10 hover:shadow-lg hover:shadow-[0_8px_32px_rgba(248,245,240,0.12)] md:min-h-[56px] md:min-w-[220px]"
             >
               Découvrir le menu
             </button>
@@ -97,7 +97,7 @@ export default function VisionHero() {
           >
             <Link
               href="/contact"
-              className="btn-hero-cta inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-xl hover:shadow-terracotta/25"
+              className="btn-hero-cta inline-flex min-h-[52px] min-w-[200px] items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-xl hover:shadow-terracotta/25 md:min-h-[56px] md:min-w-[220px]"
             >
               Demander un devis
             </Link>
