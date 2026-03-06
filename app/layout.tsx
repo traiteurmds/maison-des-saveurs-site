@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
 import WhatsAppButton from "./components/WhatsAppButton";
-import DevBanner from "./components/DevBanner";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
 
@@ -124,8 +123,6 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
       <body className="antialiased">
-        <DevBanner />
-        <div className="h-10" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
