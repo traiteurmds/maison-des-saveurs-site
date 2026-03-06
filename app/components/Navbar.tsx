@@ -14,17 +14,6 @@ function useScrollToTop() {
   }, []);
 }
 
-function scrollToHash(hash: string) {
-  if (typeof window === "undefined" || !hash) return;
-  const id = hash.startsWith("#") ? hash.slice(1) : hash;
-  const el = document.getElementById(id);
-  if (el) {
-    requestAnimationFrame(() => {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-}
-
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
@@ -74,8 +63,8 @@ export default function Navbar() {
             setIsOpen(false);
             if (pathname === "/") {
               e.preventDefault();
-              scrollToTop();
             }
+            scrollToTop();
           }}
           className="nav-link nav-logo nav-logo-brand nav-link-underline"
         >
@@ -98,14 +87,11 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     onClick={(e) => {
-                      const hash = link.href.includes("#") ? link.href.split("#")[1] : null;
-                      const path = link.href.split("#")[0] || "/";
-                      if (pathname === path && hash) {
+                      const linkPath = link.href.split("#")[0] || "/";
+                      if (pathname === linkPath) {
                         e.preventDefault();
-                        scrollToHash("#" + hash);
-                      } else if (pathname !== path) {
-                        scrollToTop();
                       }
+                      scrollToTop();
                     }}
                     className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                       isActive ? "font-semibold" : "font-medium"
@@ -188,14 +174,11 @@ export default function Navbar() {
                         scroll={true}
                         onClick={(e) => {
                           setIsOpen(false);
-                          const hash = link.href.includes("#") ? link.href.split("#")[1] : null;
-                          const path = link.href.split("#")[0] || "/";
-                          if (pathname === path && hash) {
+                          const linkPath = link.href.split("#")[0] || "/";
+                          if (pathname === linkPath) {
                             e.preventDefault();
-                            scrollToHash("#" + hash);
-                          } else {
-                            scrollToTop();
                           }
+                          scrollToTop();
                         }}
                         className={`nav-link block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
                           isActive ? "font-semibold" : ""

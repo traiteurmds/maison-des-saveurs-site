@@ -1,8 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCallback } from "react";
 import { motion } from "framer-motion";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
+
+function scrollToTop() {
+  if (typeof window !== "undefined") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
 
 const footerLinks = [
   { href: "/#menu", label: "Menu" },
@@ -12,6 +20,19 @@ const footerLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      const linkPath = href.split("#")[0] || "/";
+      if (pathname === linkPath) {
+        e.preventDefault();
+      }
+      scrollToTop();
+    },
+    [pathname]
+  );
+
   return (
     <footer className="border-t border-deep-green/10 bg-deep-green text-beige">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
@@ -26,6 +47,10 @@ export default function Footer() {
             <Link
               href="/"
               scroll={true}
+              onClick={(e) => {
+                if (pathname === "/") e.preventDefault();
+                scrollToTop();
+              }}
               className="nav-link inline-block font-serif text-3xl font-semibold tracking-wide"
             >
               Maison Des Saveurs
@@ -53,6 +78,7 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       scroll={true}
+                      onClick={(e) => handleNavClick(e, link.href)}
                       className="nav-link text-sm text-beige/90 transition-colors duration-200 hover:text-terracotta"
                     >
                       {link.label}
