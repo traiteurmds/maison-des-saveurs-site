@@ -106,7 +106,7 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_32px_64px_rgba(15,31,24,0.25)] hover:scale-[1.02]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
@@ -118,6 +118,11 @@ export default function Menu3DExperience() {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
+                {/* Light sweep au survol */}
+                <div
+                  className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[100%]"
+                  aria-hidden
+                />
                 <span className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white drop-shadow-md md:text-3xl">
                   {dish.title}
                 </span>
@@ -144,7 +149,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl"
+              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl"
               role="dialog"
               aria-modal="true"
               aria-labelledby="menu-3d-modal-title"

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 function scrollToMenu() {
@@ -10,35 +9,43 @@ function scrollToMenu() {
 
 export default function VisionHero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F1F18] text-white">
-      <div className="absolute inset-0">
-        <motion.div
-          className="h-full w-full"
-          animate={{
-            scale: [1, 1.08, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <Image
-            src="/images/menu/pastilla.jpg"
-            alt="Pastilla marocaine traditionnelle faite maison"
-            fill
-            className="object-cover"
-            sizes="100vw"
-            priority
-          />
-        </motion.div>
-      </div>
-      <div className="absolute inset-0 bg-[#0F1F18]/85" aria-hidden />
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden text-white">
+      {/* Gradient fond luxe */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(165deg, #0f172a 0%, #1e293b 40%, #334155 100%)",
+          backgroundSize: "120% 120%",
+        }}
+      />
+      {/* Overlay subtil pour profondeur */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 0%, #0f172a 70%)",
+        }}
+        aria-hidden
+      />
+      {/* Léger effet glow */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40"
+        style={{
+          background: "radial-gradient(ellipse 80% 50% at 50% 20%, rgba(148, 163, 184, 0.15) 0%, transparent 50%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-30"
+        style={{
+          background: "radial-gradient(ellipse 60% 80% at 50% 80%, rgba(196, 106, 74, 0.08) 0%, transparent 55%)",
+        }}
+        aria-hidden
+      />
       <div className="hero-grain absolute inset-0 z-[1]" aria-hidden />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[50vh] min-h-[280px]"
         style={{
-          background: "linear-gradient(to top, rgba(15,31,24,0.97), transparent)",
+          background: "linear-gradient(to top, rgba(15, 23, 42, 0.98), transparent)",
         }}
         aria-hidden
       />
@@ -57,7 +64,7 @@ export default function VisionHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 font-serif text-xl text-[#F8F5F0] sm:text-2xl md:text-3xl"
+          className="mt-6 font-serif text-xl text-slate-200 sm:text-2xl md:text-3xl"
         >
           Traiteur marocain d&apos;exception à Lyon
         </motion.p>
@@ -75,7 +82,7 @@ export default function VisionHero() {
             <button
               type="button"
               onClick={scrollToMenu}
-              className="inline-flex items-center justify-center rounded-full border-2 border-[#F8F5F0] px-10 py-4 font-medium tracking-widest text-[#F8F5F0] transition-all duration-500 hover:-translate-y-1 hover:bg-[#F8F5F0]/10 hover:shadow-[0_12px_40px_rgba(248,245,240,0.15)]"
+              className="inline-flex items-center justify-center rounded-full border-2 border-slate-200 px-10 py-4 font-medium tracking-widest text-slate-100 transition-all duration-500 hover:-translate-y-1 hover:bg-slate-200/10 hover:shadow-[0_12px_40px_rgba(248,250,252,0.15)]"
             >
               Découvrir le menu
             </button>
@@ -93,7 +100,6 @@ export default function VisionHero() {
             </Link>
           </motion.div>
         </motion.div>
-
       </div>
     </section>
   );

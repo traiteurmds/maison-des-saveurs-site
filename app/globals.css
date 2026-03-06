@@ -15,12 +15,14 @@
   --color-beige-dark: #EDE8E0;
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-outfit);
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-family: var(--font-inter), var(--font-outfit), system-ui, sans-serif;
   position: relative;
 }
 
@@ -36,7 +38,7 @@ body::after {
 }
 
 .font-serif {
-  font-family: var(--font-cormorant), Georgia, serif;
+  font-family: var(--font-playfair), var(--font-cormorant), Georgia, serif;
 }
 
 /* Smooth scroll with padding for fixed navbar */
@@ -94,6 +96,14 @@ html {
 @keyframes gradient-drift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+
+@keyframes globe-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-globe {
+  animation: globe-rotate 30s linear infinite;
 }
 
 /* Hero: deep green luxury gradient */

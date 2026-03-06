@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 
 const reviews = [
-  { quote: "Service exceptionnel pour notre mariage.", name: "Sarah M." },
-  { quote: "Cuisine incroyable et service parfait.", name: "Karim L." },
-  { quote: "Le meilleur traiteur marocain à Lyon.", name: "Nadia A." },
+  { quote: "Service exceptionnel et plats délicieux.", name: "Sarah M." },
+  { quote: "Couscous incroyable pour notre mariage.", name: "Karim B." },
+  { quote: "Traiteur parfait pour événement professionnel.", name: "Julien D." },
 ];
 
 export default function LuxuryTestimonials() {

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Cormorant_Garamond, Outfit, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -16,6 +16,18 @@ const cormorant = Cormorant_Garamond({
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
 });
@@ -51,7 +63,8 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL(SITE_URL),
   icons: {
-    icon: "/logo.png",
+    icon: [{ url: "/favicon.ico", sizes: "any" }, { url: "/icon.png", type: "image/png", sizes: "32x32" }],
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Maison des Saveurs | Traiteur Marocain Halal à Lyon",
@@ -112,7 +125,7 @@ export default function RootLayout({
 
   if (MAINTENANCE_MODE) {
     return (
-      <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
+      <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
         <body className="antialiased">
           <MaintenancePage />
         </body>
@@ -121,7 +134,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="fr" className={`${cormorant.variable} ${outfit.variable}`}>
+    <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
       <body className="antialiased">
         <script
           type="application/ld+json"
