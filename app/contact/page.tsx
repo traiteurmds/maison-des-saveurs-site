@@ -160,12 +160,7 @@ export default function ContactPage() {
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
     if (!serviceId || !templateId || !publicKey) {
       if (typeof console !== "undefined") {
-        console.error(
-          "[Maison Des Saveurs] Configuration EmailJS manquante. Définir dans .env.local :",
-          !serviceId && " NEXT_PUBLIC_EMAILJS_SERVICE_ID",
-          !templateId && " NEXT_PUBLIC_EMAILJS_TEMPLATE_ID",
-          !publicKey && " NEXT_PUBLIC_EMAILJS_PUBLIC_KEY"
-        );
+        console.error("EmailJS configuration manquante");
       }
       setFieldErrors({ form: "Configuration email manquante. Réessayez plus tard." });
       return;

@@ -88,7 +88,7 @@ export function buildEmailBody(params: {
     message: escapeForEmail(params.message),
   };
   return [
-    "Nouveau message — Maison Des Saveurs",
+    "Nouvelle demande — Maison Des Saveurs",
     "",
     "Nom : " + safe.nom,
     "Prénom : " + safe.prenom,

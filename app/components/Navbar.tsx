@@ -93,6 +93,13 @@ export default function Navbar() {
                     href={link.href}
                     onClick={(e) => {
                       const linkPath = link.href.split("#")[0] || "/";
+                      if (link.label === "Menu") {
+                        if (pathname === "/") {
+                          e.preventDefault();
+                          scrollToMenuSection();
+                        }
+                        return;
+                      }
                       if (pathname === linkPath) {
                         e.preventDefault();
                       }
@@ -180,10 +187,11 @@ export default function Navbar() {
                         onClick={(e) => {
                           setIsOpen(false);
                           const linkPath = link.href.split("#")[0] || "/";
-                          const hash = link.href.includes("#") ? link.href.split("#")[1] : null;
-                          if (pathname === linkPath && hash === "menu") {
-                            e.preventDefault();
-                            scrollToMenuSection();
+                          if (link.label === "Menu") {
+                            if (pathname === "/") {
+                              e.preventDefault();
+                              scrollToMenuSection();
+                            }
                             return;
                           }
                           if (pathname === linkPath) {
