@@ -9,25 +9,22 @@ const services = [
     title: "Traiteur mariages Lyon",
     description:
       "Nous accompagnons tous les mariages à Lyon et dans ses alentours, quels que soient vos traditions, votre culture ou le style de votre réception. Chaque mariage est unique, et nous mettons tout notre savoir-faire au service de votre union pour créer une expérience culinaire exceptionnelle. De la réception au dessert, nous assurons une prestation complète, élégante et parfaitement maîtrisée, afin que le repas de votre plus beau jour reste gravé dans les mémoires.",
-    image:
-      "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80",
-    imageAlt: "Poulet olives citron confit mariage marocain Lyon - buffet marocain traiteur Lyon",
+    image: "/images/services/mariage.png",
+    imageAlt: "Traiteur mariage marocain haut de gamme",
   },
   {
     title: "Traiteur Événements",
     description:
       "Anniversaires, fêtes familiales, événements associatifs ou célébrations spéciales : nous vous accompagnons pour tous vos moments importants. Nous nous adaptons à votre lieu, à votre nombre d'invités et à votre budget afin de proposer une prestation sur mesure, généreuse et élégante. Chaque événement est pensé pour rassembler vos proches autour d'une cuisine authentique et mémorable.",
-    image:
-      "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80",
-    imageAlt: "Mini burgers buffet marocain Lyon - buffet mini salés événement Lyon canapés finger food",
+    image: "/images/services/evenement.png",
+    imageAlt: "Service traiteur pour événements et réceptions",
   },
   {
     title: "Traiteur Professionnel",
     description:
       "Repas d'entreprise, événements internes, célébrations professionnelles ou rassemblements d'équipe : Maison Des Saveurs se déplace directement dans vos locaux ou sur le lieu de votre choix. Nous organisons des prestations adaptées à vos besoins afin de réunir vos collaborateurs autour d'un moment convivial et fédérateur à travers le repas. Buffet, service à table ou formule personnalisée, nous assurons une organisation sérieuse et raffinée.",
-    image:
-      "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80",
-    imageAlt: "Buffet événementiel Lyon traiteur entreprise - buffet marocain Lyon",
+    image: "/images/services/professionnel.jpg",
+    imageAlt: "Service traiteur pour entreprises et événements professionnels",
   },
 ];
 
@@ -75,7 +72,7 @@ export default function ServicesPage() {
                 }`}
               >
                 <div
-                  className={`relative h-80 overflow-hidden rounded-3xl border border-deep-green/5 bg-white/5 shadow-[0_18px_45px_rgba(15,31,24,0.14)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)] md:h-96 ${
+                  className={`relative h-80 overflow-hidden rounded-xl border border-deep-green/5 bg-white/5 shadow-[0_18px_45px_rgba(15,31,24,0.14)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)] md:h-96 ${
                     i % 2 === 1 ? "md:order-2" : ""
                   }`}
                 >
@@ -83,9 +80,9 @@ export default function ServicesPage() {
                     src={service.image}
                     alt={service.imageAlt}
                     fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:-translate-y-1"
+                    className="rounded-xl object-cover transition-transform duration-500 ease-out group-hover:scale-105 group-hover:-translate-y-1"
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={80}
+                    quality={90}
                     loading="lazy"
                   />
                   <div
