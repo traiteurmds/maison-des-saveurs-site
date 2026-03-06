@@ -54,7 +54,7 @@ export default function Navbar() {
 
         {/* Desktop nav + réseaux sociaux */}
         <div className="hidden items-center md:flex">
-          <ul className="flex items-center gap-10">
+          <ul className="main-nav-list flex items-center gap-10">
             {navLinks.map((link, i) => {
               const isActive = pathname === link.href;
               return (
@@ -66,7 +66,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className={`nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
+                    className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                       isActive ? "font-semibold" : "font-medium"
                     } ${overDarkHero ? "" : "text-deep-green"}`}
                     style={linkColor ? { color: linkColor } : undefined}
