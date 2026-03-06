@@ -106,14 +106,14 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
                   src={dish.image}
                   alt={dish.alt}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                 />
@@ -129,36 +129,35 @@ export default function Menu3DExperience() {
 
       <AnimatePresence>
         {openDish && (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm md:p-8"
+            onClick={() => setOpenDish(null)}
+            role="presentation"
+            aria-hidden
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md"
-              onClick={() => setOpenDish(null)}
-              aria-hidden
-            />
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="menu-3d-modal-title"
-                onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="menu-3d-modal-title"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setOpenDish(null)}
+                className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-black/60 text-2xl text-white transition-colors hover:bg-black"
+                aria-label="Fermer le détail du plat"
               >
-                <button
-                  type="button"
-                  onClick={() => setOpenDish(null)}
-                  className="absolute right-4 top-4 z-20 rounded-full bg-black/60 px-2 py-1 text-sm text-white hover:bg-black/80"
-                  aria-label="Fermer le détail du plat"
-                >
-                  ×
-                </button>
+                ×
+              </button>
                 <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden rounded-t-[20px]">
                 {openDish && (
                   <Image
@@ -191,9 +190,8 @@ export default function Menu3DExperience() {
                   Demander un devis
                 </Link>
               </div>
-              </motion.div>
-            </div>
-          </>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

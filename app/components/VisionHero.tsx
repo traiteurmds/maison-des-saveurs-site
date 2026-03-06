@@ -4,6 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+function scrollToMenu() {
+  document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+}
+
 export default function VisionHero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F1F18] text-white">
@@ -68,12 +72,13 @@ export default function VisionHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Link
-              href="#menu"
+            <button
+              type="button"
+              onClick={scrollToMenu}
               className="inline-flex items-center justify-center rounded-full border-2 border-[#F8F5F0] px-10 py-4 font-medium tracking-widest text-[#F8F5F0] transition-all duration-500 hover:-translate-y-1 hover:bg-[#F8F5F0]/10 hover:shadow-[0_12px_40px_rgba(248,245,240,0.15)]"
             >
               Découvrir le menu
-            </Link>
+            </button>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 16 }}

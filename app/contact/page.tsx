@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
@@ -53,6 +53,13 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const successMessageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (sent) {
+      successMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [sent]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -371,7 +378,9 @@ export default function ContactPage() {
                 </button>
               </motion.form>
             ) : (
-              <SuccessConfirmation />
+              <div ref={successMessageRef}>
+                <SuccessConfirmation />
+              </div>
             )}
           </AnimatePresence>
         </div>
