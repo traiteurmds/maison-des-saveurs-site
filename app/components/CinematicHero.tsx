@@ -65,21 +65,6 @@ export default function CinematicHero() {
           </Link>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <div className="flex flex-col items-center gap-2 text-[10px] font-medium tracking-[0.3em] text-[#F8F5F0]/70 uppercase">
-            <span>Défiler</span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              className="h-8 w-px rounded-full bg-[#F8F5F0]/50"
-            />
-          </div>
-        </motion.div>
       </div>
     </section>
   );

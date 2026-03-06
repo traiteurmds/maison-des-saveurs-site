@@ -89,21 +89,6 @@ export default function VisionHero() {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-        >
-          <div className="flex flex-col items-center gap-2 text-[10px] font-medium tracking-[0.35em] text-[#F8F5F0]/70 uppercase">
-            <span>Défiler</span>
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="h-10 w-px rounded-full bg-[#F8F5F0]/60"
-            />
-          </div>
-        </motion.div>
       </div>
     </section>
   );

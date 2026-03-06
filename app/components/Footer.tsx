@@ -67,6 +67,9 @@ export default function Footer() {
               <p className="text-sm text-beige/90">
                 contact.mds.traiteur@gmail.com
               </p>
+              <p className="text-sm text-beige/90">
+                07.58.63.97.34
+              </p>
               <div className="flex items-center gap-4">
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
