@@ -67,9 +67,8 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Maison des Saveurs | Traiteur Marocain Halal à Lyon",
-    description:
-      "Maison des Saveurs est un traiteur marocain halal à Lyon spécialisé dans les buffets gourmands, mariages, anniversaires et événements professionnels.",
+    title: "Maison des Saveurs - Traiteur marocain à Lyon",
+    description: "Traiteur marocain d'exception à Lyon pour mariages, événements et réceptions.",
     url: SITE_URL,
     siteName: "Maison des Saveurs",
     images: [
@@ -85,9 +84,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maison des Saveurs | Traiteur Marocain Halal à Lyon",
-    description:
-      "Traiteur marocain halal à Lyon : buffets gourmands, mariages, anniversaires et événements professionnels. Cuisine marocaine traditionnelle faite maison.",
+    title: "Maison des Saveurs - Traiteur marocain à Lyon",
+    description: "Traiteur marocain d'exception à Lyon pour vos événements.",
     images: ["/logo-share.png"],
   },
 };
@@ -99,28 +97,38 @@ export default function RootLayout({
 }>) {
   const localBusinessSchema = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "FoodEstablishment"],
     "@id": "https://mds-traiteur.fr/#organization",
-    name: "MDS Traiteur",
-    alternateName: "Maison des Saveurs",
+    name: "Maison des Saveurs",
+    alternateName: "MDS Traiteur",
     description:
-      "Traiteur marocain halal à Lyon et Villeurbanne. Spécialiste mariages, buffets événementiels et événements entreprise.",
+      "Traiteur marocain d'exception à Lyon. Catering pour mariages, événements et réceptions. Cuisine marocaine traditionnelle.",
     url: "https://mds-traiteur.fr",
-    areaServed: [
-      { "@type": "City", name: "Lyon" },
-      { "@type": "City", name: "Villeurbanne" },
-      { "@type": "AdministrativeArea", name: "Métropole de Lyon" },
-    ],
+    image: "https://mds-traiteur.fr/logo-share.png",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Lyon",
       addressRegion: "Auvergne-Rhône-Alpes",
       addressCountry: "FR",
     },
-    serviceType: ["Traiteur", "Catering", "Traiteur mariage", "Buffet événementiel"],
-    image: "https://mds-traiteur.fr/logo-share.png",
+    areaServed: [
+      { "@type": "City", name: "Lyon" },
+      { "@type": "City", name: "Villeurbanne" },
+      { "@type": "AdministrativeArea", name: "Métropole de Lyon" },
+    ],
+    priceRange: "€€",
     telephone: "+33758639734",
     email: "contact.mds.traiteur@gmail.com",
+    servingCuisine: "Moroccan",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Services traiteur",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Traiteur mariage Lyon" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Traiteur événements et réceptions" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Cuisine marocaine traditionnelle" } },
+      ],
+    },
   };
 
   if (MAINTENANCE_MODE) {

@@ -117,6 +117,24 @@ html {
   50% { background-position: 100% 50%; }
 }
 
+/* Hero vert: dégradé animé très lent (effet premium discret) */
+.hero-gradient-green {
+  animation: hero-green-drift 25s ease-in-out infinite;
+}
+@keyframes hero-green-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Lumière douce animée très lentement (effet premium discret) */
+.hero-light-drift {
+  animation: hero-light-move 18s ease-in-out infinite;
+}
+@keyframes hero-light-move {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.35; }
+}
+
 /* Hero: very subtle grain (3–5% opacity) */
 .hero-grain {
   position: relative;

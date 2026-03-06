@@ -19,42 +19,42 @@ const dishes: Dish[] = [
     title: "Pastilla",
     description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
     image: "/images/menu/pastilla.jpg",
-    alt: "Pastilla marocaine traditionnelle faite maison",
+    alt: "Pastilla marocaine traditionnelle traiteur Lyon",
   },
   {
     id: "couscous-royal",
     title: "Couscous Royal",
     description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
     image: "/images/menu/couscous.jpg",
-    alt: "Couscous royal marocain traiteur Lyon",
+    alt: "Couscous marocain traditionnel traiteur Lyon",
   },
   {
     id: "viande-pruneaux",
     title: "Viande aux pruneaux",
     description: "Tajine de boeuf marocain aux pruneaux et amandes, sucré-salé emblématique des mariages.",
     image: "/images/menu/viande-pruneaux.jpg",
-    alt: "Tajine de boeuf marocain aux pruneaux et amandes",
+    alt: "Tajine boeuf pruneaux marocain traiteur Lyon",
   },
   {
     id: "poulet-olives",
     title: "Poulet aux olives",
     description: "Poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
     image: "/images/menu/poulet-olives.jpg",
-    alt: "Poulet marocain aux olives et citron",
+    alt: "Poulet olives citron marocain traiteur Lyon",
   },
   {
     id: "rfissa",
     title: "Rfissa",
     description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
     image: "/images/menu/rfissa.jpg",
-    alt: "Rfissa marocaine traditionnelle",
+    alt: "Rfissa marocaine traditionnelle traiteur Lyon",
   },
   {
     id: "mini-sales",
     title: "Mini salés",
     description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
     image: "/images/menu/mini-sales.jpg",
-    alt: "Buffet de mini salés marocains pour événements",
+    alt: "Mini salés marocains buffet traiteur Lyon",
   },
 ];
 
@@ -88,11 +88,14 @@ export default function Menu3DExperience() {
   }, [openDish]);
 
   return (
-    <section id="menu" className="border-t border-deep-green/10 bg-beige py-24">
+    <section id="menu" className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="menu-heading">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
+        <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
+        <p className="mt-3 text-center font-serif text-lg text-deep-green/80">
+          Traiteur marocain pour mariages à Lyon · Cuisine marocaine traditionnelle à Lyon
+        </p>
         <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           {dishes.map((dish, i) => (
             <div key={dish.id} className="aspect-[4/3] min-h-[320px] w-full md:min-h-[360px]">
@@ -106,21 +109,29 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_32px_64px_rgba(15,31,24,0.25)] hover:scale-[1.02]"
+                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_56px_rgba(15,31,24,0.28)] hover:scale-[1.02]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
                   src={dish.image}
                   alt={dish.alt}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
+                {/* Reflet lumière dorée au survol (luxe) */}
+                <div
+                  className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{
+                    background: "linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.08) 50%, transparent 60%)",
+                  }}
+                  aria-hidden
+                />
                 {/* Light sweep au survol */}
                 <div
-                  className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[100%]"
+                  className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-[100%]"
                   aria-hidden
                 />
                 <span className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white drop-shadow-md md:text-3xl">
