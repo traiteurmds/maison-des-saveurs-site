@@ -13,7 +13,7 @@ const categories = [
       {
         title: "Assortiment mini salés",
         image: "/images/menu/mini-sales.jpg",
-        alt: "Buffet de mini salés marocains haut de gamme",
+        alt: "Buffet de mini salés marocains pour événements",
       },
     ],
   },
@@ -24,27 +24,27 @@ const categories = [
       {
         title: "Pastilla aux fruits de mer",
         image: "/images/menu/pastilla.jpg",
-        alt: "Pastilla marocaine garnie de fruits de mer",
+        alt: "Pastilla marocaine traditionnelle faite maison",
       },
       {
         title: "Couscous royal",
         image: "/images/menu/couscous.jpg",
-        alt: "Couscous royal marocain avec légumes et viande",
+        alt: "Couscous royal marocain traiteur Lyon",
       },
       {
         title: "Poulet aux olives",
         image: "/images/menu/poulet-olives.jpg",
-        alt: "Poulet marocain aux olives et citron confit",
+        alt: "Tajine de poulet marocain aux olives et citron",
       },
       {
         title: "Viande aux pruneaux",
         image: "/images/menu/viande-pruneaux.jpg",
-        alt: "Viande fondante aux pruneaux et amandes",
+        alt: "Tajine de boeuf marocain aux pruneaux et amandes",
       },
       {
         title: "Rfissa",
         image: "/images/menu/rfissa.jpg",
-        alt: "Rfissa marocaine traditionnelle",
+        alt: "Rfissa marocaine traditionnelle au poulet",
       },
     ],
   },

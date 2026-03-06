@@ -4,12 +4,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const galleryItems = [
-  { id: "1", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain servi en plat de fête" },
-  { id: "2", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine garnie de fruits de mer" },
-  { id: "3", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine servie pour un grand événement" },
-  { id: "4", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives et citron confit" },
-  { id: "5", src: "/images/menu/viande-pruneaux.jpg", alt: "Viande aux pruneaux et amandes pour mariage marocain" },
-  { id: "6", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour cocktail dinatoire" },
+  { id: "1", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain traiteur Lyon" },
+  { id: "2", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine traditionnelle faite maison" },
+  { id: "3", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle au poulet" },
+  { id: "4", src: "/images/menu/poulet-olives.jpg", alt: "Tajine de poulet marocain aux olives et citron" },
+  { id: "5", src: "/images/menu/viande-pruneaux.jpg", alt: "Tajine de boeuf marocain aux pruneaux et amandes" },
+  { id: "6", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour événements" },
 ];
 
 export default function LuxuryGallery() {

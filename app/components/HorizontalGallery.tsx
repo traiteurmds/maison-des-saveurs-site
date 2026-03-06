@@ -4,11 +4,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const items = [
-  { id: "1", title: "Couscous royal", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain" },
-  { id: "2", title: "Pastilla", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine maison" },
-  { id: "3", title: "Rfissa", src: "/images/menu/rfissa.jpg", alt: "Rfissa traditionnelle marocaine" },
-  { id: "4", title: "Poulet aux olives", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives" },
-  { id: "5", title: "Mini salés marocains", src: "/images/menu/mini-sales.jpg", alt: "Assortiment de mini salés marocains" },
+  { id: "1", title: "Couscous royal", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain traiteur Lyon" },
+  { id: "2", title: "Pastilla", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine traditionnelle faite maison" },
+  { id: "3", title: "Rfissa", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle au poulet" },
+  { id: "4", title: "Poulet aux olives", src: "/images/menu/poulet-olives.jpg", alt: "Tajine de poulet marocain aux olives et citron" },
+  { id: "5", title: "Mini salés marocains", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour événements" },
 ];
 
 export default function HorizontalGallery() {

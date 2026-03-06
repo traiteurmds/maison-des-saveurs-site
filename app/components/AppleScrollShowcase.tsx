@@ -13,28 +13,28 @@ const sections = [
     title: "Tajine",
     subtitle: "Cuisson lente, saveurs d’exception",
     src: "/images/menu/poulet-olives.jpg",
-    alt: "Tajine marocain au poulet et olives",
+    alt: "Tajine de poulet marocain aux olives et citron",
   },
   {
     id: "pastilla",
     title: "Pastilla",
     subtitle: "Feuilletage doré, amandes et épices",
     src: "/images/menu/pastilla.jpg",
-    alt: "Pastilla marocaine garnie",
+    alt: "Pastilla marocaine traditionnelle faite maison",
   },
   {
     id: "couscous",
     title: "Couscous Royal",
     subtitle: "Semoule, légumes et viandes mijotées",
     src: "/images/menu/couscous.jpg",
-    alt: "Couscous royal marocain",
+    alt: "Couscous royal marocain traiteur Lyon",
   },
   {
     id: "mini-sales",
     title: "Mini salés",
     subtitle: "Bouchées et amuse-bouches raffinés",
     src: "/images/menu/mini-sales.jpg",
-    alt: "Assortiment de mini salés marocains",
+    alt: "Buffet de mini salés marocains pour événements",
   },
 ];
 
