@@ -17,6 +17,17 @@ export default function PageTransition({
   const pathname = usePathname();
 
   useEffect(() => {
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    if (hash) {
+      const id = hash.replace(/^#/, "");
+      const el = document.getElementById(id);
+      if (el) {
+        requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        return;
+      }
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);
 

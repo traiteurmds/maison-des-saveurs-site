@@ -3,6 +3,18 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import {
+  LIMITS,
+  sanitizeName,
+  sanitizeEmail,
+  sanitizeMessage,
+  validateNom,
+  validatePrenom,
+  validateEmail,
+  validatePhone,
+  validateMessage,
+  buildEmailBody,
+} from "../lib/contact-validation";
 
 const colors = {
   dark: "#1F3A2E",
@@ -13,9 +25,7 @@ const colors = {
   border: "rgba(31, 58, 46, 0.25)",
 } as const;
 
-const MESSAGE_MAX = 500;
-const PHONE_LENGTH = 10;
-const COOLDOWN_MS = 10_000;
+const COOLDOWN_MS = 12_000;
 
 const inputBaseStyle: React.CSSProperties = {
   width: "100%",
@@ -60,6 +70,8 @@ export default function ContactPage() {
   const [eventDate, setEventDate] = useState("");
   const [message, setMessage] = useState("");
   const [minDate, setMinDate] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const today = new Date();
@@ -70,26 +82,24 @@ export default function ContactPage() {
   }, []);
 
   const inCooldown = cooldownUntil !== null;
-  const canSubmit = !loading && !inCooldown;
-  const phoneValid = phone.length === PHONE_LENGTH && /^\d+$/.test(phone);
+  const phoneValid = phone.length === LIMITS.PHONE_LENGTH && /^\d+$/.test(phone);
+  const canSubmit = !loading && !inCooldown && phoneValid;
 
   const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/\D/g, "").slice(0, PHONE_LENGTH);
+    const raw = e.target.value.replace(/\D/g, "").slice(0, LIMITS.PHONE_LENGTH);
     setPhone(raw);
     if (phoneError) setPhoneError("");
+    setFieldErrors((prev) => ({ ...prev, phone: "" }));
   }, [phoneError]);
 
   const handlePhoneBlur = useCallback(() => {
-    if (phone.length > 0 && !phoneValid) {
-      setPhoneError(`Le numéro doit contenir exactement ${PHONE_LENGTH} chiffres.`);
-    } else {
-      setPhoneError("");
-    }
-  }, [phone, phoneValid]);
+    const res = validatePhone(phone);
+    setPhoneError(res.valid ? "" : res.error ?? "");
+    if (!res.valid) setFieldErrors((prev) => ({ ...prev, phone: res.error ?? "" }));
+  }, [phone]);
 
   const handleMessageChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const v = e.target.value.slice(0, MESSAGE_MAX);
-    setMessage(v);
+    setMessage(sanitizeMessage(e.target.value));
   }, []);
 
   const resetForm = useCallback(() => {
@@ -100,40 +110,88 @@ export default function ContactPage() {
     setPhoneError("");
     setEventDate("");
     setMessage("");
+    setHoneypot("");
+    setFieldErrors({});
   }, []);
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!canSubmit) return;
 
-    if (!phoneValid) {
-      setPhoneError(`Le numéro doit contenir exactement ${PHONE_LENGTH} chiffres.`);
+    if (honeypot) {
       return;
     }
+
+    const nom = sanitizeName(lastName, LIMITS.MAX_NOM);
+    const prenom = sanitizeName(firstName, LIMITS.MAX_PRENOM);
+    const emailSanitized = sanitizeEmail(email);
+    const messageSanitized = sanitizeMessage(message);
+
+    const errs: Record<string, string> = {};
+    const rNom = validateNom(nom);
+    if (!rNom.valid && rNom.error) errs.lastName = rNom.error;
+    const rPrenom = validatePrenom(prenom);
+    if (!rPrenom.valid && rPrenom.error) errs.firstName = rPrenom.error;
+    const rEmail = validateEmail(emailSanitized);
+    if (!rEmail.valid && rEmail.error) errs.email = rEmail.error;
+    const rPhone = validatePhone(phone);
+    if (!rPhone.valid && rPhone.error) {
+      errs.phone = rPhone.error;
+      setPhoneError(rPhone.error);
+    }
+    const rMessage = validateMessage(messageSanitized);
+    if (!rMessage.valid && rMessage.error) errs.message = rMessage.error;
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const selected = eventDate ? new Date(eventDate) : null;
     if (selected && selected < today) {
+      errs.eventDate = "La date doit être aujourd'hui ou une date future.";
+    }
+
+    if (Object.keys(errs).length > 0) {
+      setFieldErrors(errs);
+      return;
+    }
+    setFieldErrors({});
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (!serviceId || !templateId || !publicKey) {
+      setFieldErrors({ form: "Configuration email manquante. Réessayez plus tard." });
       return;
     }
 
     setLoading(true);
     setSent(false);
 
+    const emailBody = buildEmailBody({
+      lastName: nom,
+      firstName: prenom,
+      email: emailSanitized,
+      phone,
+      eventDate: eventDate || "",
+      message: messageSanitized,
+    });
+
     try {
       await emailjs.send(
-        "service_abcd123",
-        "template_tcbmdth",
+        serviceId,
+        templateId,
         {
-          first_name: firstName,
-          last_name: lastName,
-          email,
+          first_name: prenom,
+          last_name: nom,
+          from_name: `${prenom} ${nom}`,
+          email: emailSanitized,
+          reply_to: emailSanitized,
           phone,
-          event_date: eventDate,
-          message,
+          event_date: eventDate || "",
+          message: messageSanitized,
+          email_body: emailBody,
+          subject: "Nouveau message — Maison Des Saveurs",
         },
-        "JzBCJK41sDIKxSKXQ"
+        publicKey
       );
 
       setSent(true);
@@ -141,8 +199,7 @@ export default function ContactPage() {
       setCooldownUntil(Date.now() + COOLDOWN_MS);
       setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("EmailJS error:", error);
+      setFieldErrors({ form: "L'envoi a échoué. Réessayez dans un moment." });
       setSent(false);
     } finally {
       setLoading(false);
@@ -243,6 +300,24 @@ export default function ContactPage() {
                   gap: "1.5rem",
                 }}
               >
+                {fieldErrors.form && (
+                  <p style={{ color: colors.terracotta, fontSize: "0.875rem" }} role="alert">
+                    {fieldErrors.form}
+                  </p>
+                )}
+                <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}>
+                  <label htmlFor="website_url">Ne pas remplir</label>
+                  <input
+                    id="website_url"
+                    type="text"
+                    name="website_url"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
                 <div>
                   <label htmlFor="firstName" style={labelStyle}>Prénom *</label>
                   <input
@@ -251,12 +326,16 @@ export default function ContactPage() {
                     name="firstName"
                     required
                     placeholder="Prénom"
+                    maxLength={LIMITS.MAX_PRENOM}
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={(e) => setFirstName(sanitizeName(e.target.value, LIMITS.MAX_PRENOM))}
                     style={inputBaseStyle}
                     onFocus={focusStyle}
                     onBlur={blurStyle}
                   />
+                  {fieldErrors.firstName && (
+                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.firstName}</p>
+                  )}
                 </div>
 
                 <div>
@@ -267,12 +346,16 @@ export default function ContactPage() {
                     name="lastName"
                     required
                     placeholder="Nom"
+                    maxLength={LIMITS.MAX_NOM}
                     value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    onChange={(e) => setLastName(sanitizeName(e.target.value, LIMITS.MAX_NOM))}
                     style={inputBaseStyle}
                     onFocus={focusStyle}
                     onBlur={blurStyle}
                   />
+                  {fieldErrors.lastName && (
+                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.lastName}</p>
+                  )}
                 </div>
 
                 <div>
@@ -284,11 +367,14 @@ export default function ContactPage() {
                     required
                     placeholder="vous@exemple.fr"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(sanitizeEmail(e.target.value))}
                     style={inputBaseStyle}
                     onFocus={focusStyle}
                     onBlur={blurStyle}
                   />
+                  {fieldErrors.email && (
+                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.email}</p>
+                  )}
                 </div>
 
                 <div>
@@ -312,11 +398,11 @@ export default function ContactPage() {
                       ...inputBaseStyle,
                       borderColor: phoneError ? colors.terracotta : colors.border,
                     }}
-                    maxLength={PHONE_LENGTH}
+                    maxLength={LIMITS.PHONE_LENGTH}
                   />
-                  {phoneError && (
+                  {(phoneError || fieldErrors.phone) && (
                     <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.375rem" }} role="alert">
-                      {phoneError}
+                      {phoneError || fieldErrors.phone}
                     </p>
                   )}
                 </div>
@@ -336,6 +422,9 @@ export default function ContactPage() {
                     onBlur={blurStyle}
                     aria-describedby="eventDateHelp"
                   />
+                  {fieldErrors.eventDate && (
+                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.eventDate}</p>
+                  )}
                   <p id="eventDateHelp" style={{ fontSize: "0.8125rem", color: colors.dark, opacity: 0.6, marginTop: "0.375rem" }}>
                     Date minimum : aujourd&apos;hui. Nous intervenons dans toute la métropole de Lyon.
                   </p>
@@ -348,7 +437,7 @@ export default function ContactPage() {
                     name="message"
                     rows={5}
                     required
-                    maxLength={MESSAGE_MAX}
+                    maxLength={LIMITS.MAX_MESSAGE}
                     placeholder="Décrivez votre événement, le lieu, et vos préférences..."
                     value={message}
                     onChange={handleMessageChange}
@@ -369,13 +458,16 @@ export default function ContactPage() {
                       textAlign: "right",
                     }}
                   >
-                    {message.length} / {MESSAGE_MAX}
+                    {message.length} / {LIMITS.MAX_MESSAGE}
                   </p>
+                  {fieldErrors.message && (
+                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.message}</p>
+                  )}
                 </div>
 
                 <button
                   type="submit"
-                  disabled={!canSubmit || !phoneValid}
+                  disabled={!canSubmit}
                   className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C46A4A] to-[#1F3A2E] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? (

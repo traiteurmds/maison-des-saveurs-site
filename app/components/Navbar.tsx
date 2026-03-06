@@ -14,9 +14,21 @@ function useScrollToTop() {
   }, []);
 }
 
+function scrollToHash(hash: string) {
+  if (typeof window === "undefined" || !hash) return;
+  const id = hash.startsWith("#") ? hash.slice(1) : hash;
+  const el = document.getElementById(id);
+  if (el) {
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+}
+
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
+  { href: "/#avis", label: "Avis" },
   { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
@@ -62,8 +74,8 @@ export default function Navbar() {
             setIsOpen(false);
             if (pathname === "/") {
               e.preventDefault();
+              scrollToTop();
             }
-            scrollToTop();
           }}
           className="nav-link nav-logo nav-logo-brand nav-link-underline"
         >
@@ -74,7 +86,8 @@ export default function Navbar() {
         <div className="hidden items-center md:flex">
           <ul className="main-nav-list flex items-center gap-10">
             {navLinks.map((link, i) => {
-              const isActive = pathname === link.href;
+              const linkPath = link.href.split("#")[0] || "/";
+              const isActive = pathname === linkPath;
               return (
                 <motion.li
                   key={link.href}
@@ -84,8 +97,15 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    onClick={() => {
-                      scrollToTop();
+                    onClick={(e) => {
+                      const hash = link.href.includes("#") ? link.href.split("#")[1] : null;
+                      const path = link.href.split("#")[0] || "/";
+                      if (pathname === path && hash) {
+                        e.preventDefault();
+                        scrollToHash("#" + hash);
+                      } else if (pathname !== path) {
+                        scrollToTop();
+                      }
                     }}
                     className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                       isActive ? "font-semibold" : "font-medium"
@@ -159,15 +179,23 @@ export default function Navbar() {
             <div className="flex flex-col gap-4 px-6 py-4">
               <ul className="flex flex-col gap-1">
                 {navLinks.map((link) => {
-                  const isActive = pathname === link.href;
+                  const linkPath = link.href.split("#")[0] || "/";
+                  const isActive = pathname === linkPath;
                   return (
                     <li key={link.href}>
                       <Link
                         href={link.href}
                         scroll={true}
-                        onClick={() => {
+                        onClick={(e) => {
                           setIsOpen(false);
-                          scrollToTop();
+                          const hash = link.href.includes("#") ? link.href.split("#")[1] : null;
+                          const path = link.href.split("#")[0] || "/";
+                          if (pathname === path && hash) {
+                            e.preventDefault();
+                            scrollToHash("#" + hash);
+                          } else {
+                            scrollToTop();
+                          }
                         }}
                         className={`nav-link block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
                           isActive ? "font-semibold" : ""

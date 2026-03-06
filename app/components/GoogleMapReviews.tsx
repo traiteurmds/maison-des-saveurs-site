@@ -95,7 +95,7 @@ export default function GoogleMapReviews() {
   const duplicatedReviews = [...reviews, ...reviews];
 
   return (
-    <section className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="avis-heading">
+    <section id="avis" className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="avis-heading">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.h2
           id="avis-heading"
