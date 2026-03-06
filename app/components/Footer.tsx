@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
 
 const footerLinks = [
+  { href: "/#menu", label: "Menu" },
   { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
@@ -24,7 +25,8 @@ export default function Footer() {
           >
             <Link
               href="/"
-              className="inline-block font-serif text-3xl font-semibold tracking-wide"
+              scroll={true}
+              className="nav-link inline-block font-serif text-3xl font-semibold tracking-wide"
             >
               Maison Des Saveurs
             </Link>
@@ -51,7 +53,8 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-beige/90 transition-colors duration-200 hover:text-terracotta"
+                      scroll={true}
+                      className="nav-link text-sm text-beige/90 transition-colors duration-200 hover:text-terracotta"
                     >
                       {link.label}
                     </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 function scrollToMenu() {
@@ -10,12 +11,21 @@ function scrollToMenu() {
 export default function VisionHero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden text-white">
-      {/* Dégradé vert premium, cohérent avec le site */}
+      {/* Fond image cuisine marocaine + overlay sombre */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/menu/couscous.jpg"
+          alt="Cuisine marocaine traiteur Lyon"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+        />
+      </div>
       <div
-        className="absolute inset-0 hero-gradient-green"
+        className="absolute inset-0 bg-deep-green/75"
         style={{
-          background: "linear-gradient(135deg, #0f3d2e 0%, #1b5e44 40%, #2f7a5a 100%)",
-          backgroundSize: "200% 200%",
+          background: "linear-gradient(135deg, rgba(15,61,46,0.88) 0%, rgba(27,94,68,0.82) 50%, rgba(47,122,90,0.78) 100%)",
         }}
         aria-hidden
       />
@@ -51,10 +61,7 @@ export default function VisionHero() {
           className="font-serif text-5xl font-semibold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl"
           style={{ textShadow: "0 4px 40px rgba(0,0,0,0.35)" }}
         >
-          Maison des Saveurs
-          <span className="block mt-2 text-3xl font-medium text-beige/95 sm:text-4xl md:text-5xl lg:text-6xl">
-            Traiteur marocain à Lyon
-          </span>
+          Maison des Saveurs — Traiteur marocain à Lyon
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -62,7 +69,7 @@ export default function VisionHero() {
           transition={{ duration: 1, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 font-serif text-xl text-beige/95 sm:text-2xl md:text-3xl"
         >
-          Traiteur marocain d&apos;exception à Lyon
+          Cuisine marocaine authentique pour mariages, événements et réceptions à Lyon.
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
@@ -78,7 +85,7 @@ export default function VisionHero() {
             <button
               type="button"
               onClick={scrollToMenu}
-              className="btn-hero-outline inline-flex items-center justify-center rounded-full border-2 border-beige px-10 py-4 font-medium tracking-widest text-beige transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-beige/10 hover:shadow-[0_8px_32px_rgba(248,245,240,0.12)]"
+              className="btn-hero-outline inline-flex items-center justify-center rounded-full border-2 border-beige px-10 py-4 font-medium tracking-widest text-beige transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:bg-beige/10 hover:shadow-lg hover:shadow-[0_8px_32px_rgba(248,245,240,0.12)]"
             >
               Découvrir le menu
             </button>
@@ -90,7 +97,7 @@ export default function VisionHero() {
           >
             <Link
               href="/contact"
-              className="btn-hero-cta inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl hover:shadow-terracotta/25"
+              className="btn-hero-cta inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-xl hover:shadow-terracotta/25"
             >
               Demander un devis
             </Link>

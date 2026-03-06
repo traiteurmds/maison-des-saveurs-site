@@ -8,6 +8,7 @@ import { FaInstagram, FaTiktok } from "react-icons/fa";
 
 const navLinks = [
   { href: "/", label: "Accueil" },
+  { href: "/#menu", label: "Menu" },
   { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
@@ -48,17 +49,14 @@ export default function Navbar() {
       }`}>
         <Link
           href="/"
+          scroll={true}
           onClick={(e) => {
-            e.preventDefault();
-            if (pathname === "/") {
-              if (typeof window !== "undefined") {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }
-            } else {
-              router.push("/");
+            if (pathname === "/" && typeof window !== "undefined") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="nav-logo nav-logo-brand nav-link-underline"
+          className="nav-link nav-logo nav-logo-brand nav-link-underline"
         >
           Maison Des Saveurs
         </Link>
@@ -154,8 +152,9 @@ export default function Navbar() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
+                        scroll={true}
                         onClick={() => setIsOpen(false)}
-                        className={`block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
+                        className={`nav-link block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
                           isActive ? "font-semibold" : ""
                         }`}
                       >

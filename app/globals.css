@@ -160,6 +160,15 @@ html {
   transform-origin: center;
 }
 
+/* Nav link: comportement commun (clic, hover) pour tous les liens de navigation */
+.nav-link {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.nav-link:hover {
+  opacity: 0.85;
+}
+
 /* Nav link: center-outward underline on hover (200ms, gold) */
 .nav-link-underline {
   position: relative;

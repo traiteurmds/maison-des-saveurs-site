@@ -3,16 +3,16 @@
 import { motion } from "framer-motion";
 import VisionHero from "./components/VisionHero";
 import Menu3DExperience from "./components/Menu3DExperience";
-import LuxuryTestimonials from "./components/LuxuryTestimonials";
+import GoogleMapReviews from "./components/GoogleMapReviews";
 import ContactCTA from "./components/ContactCTA";
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 48, scale: 0.99 },
+  hidden: { opacity: 0, y: 60, scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1.1, ease: "easeOut" },
   },
 };
 
@@ -36,7 +36,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
       >
-        <LuxuryTestimonials />
+        <GoogleMapReviews />
       </motion.div>
 
       <motion.div

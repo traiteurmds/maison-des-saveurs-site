@@ -17,14 +17,6 @@ const MESSAGE_MAX = 500;
 const PHONE_LENGTH = 10;
 const COOLDOWN_MS = 10_000;
 
-function getTodayISO() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
-
 const inputBaseStyle: React.CSSProperties = {
   width: "100%",
   padding: "0.75rem 1rem",
@@ -67,7 +59,6 @@ export default function ContactPage() {
   const [phoneError, setPhoneError] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [message, setMessage] = useState("");
-  const [minDate] = useState(() => getTodayISO());
 
   const inCooldown = cooldownUntil !== null;
   const canSubmit = !loading && !inCooldown;
@@ -321,7 +312,7 @@ export default function ContactPage() {
                     type="date"
                     name="eventDate"
                     required
-                    min={minDate}
+                    min={new Date().toISOString().split("T")[0]}
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
                     style={inputBaseStyle}

@@ -19,21 +19,21 @@ const dishes: Dish[] = [
     title: "Pastilla",
     description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
     image: "/images/menu/pastilla.jpg",
-    alt: "Pastilla marocaine traditionnelle traiteur Lyon",
+    alt: "Pastilla marocaine traiteur Lyon",
   },
   {
     id: "couscous-royal",
     title: "Couscous Royal",
     description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
     image: "/images/menu/couscous.jpg",
-    alt: "Couscous marocain traditionnel traiteur Lyon",
+    alt: "Couscous marocain traiteur Lyon",
   },
   {
     id: "viande-pruneaux",
     title: "Viande aux pruneaux",
     description: "Tajine de boeuf marocain aux pruneaux et amandes, sucré-salé emblématique des mariages.",
     image: "/images/menu/viande-pruneaux.jpg",
-    alt: "Tajine boeuf pruneaux marocain traiteur Lyon",
+    alt: "Tajine marocain traiteur Lyon",
   },
   {
     id: "poulet-olives",
@@ -109,16 +109,16 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_56px_rgba(15,31,24,0.28)] hover:scale-[1.02]"
+                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-2xl shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_32px_64px_rgba(15,31,24,0.3)] hover:scale-[1.02]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
                   src={dish.image}
                   alt={dish.alt}
                   fill
-                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
                 {/* Reflet lumière dorée au survol (luxe) */}
@@ -201,7 +201,7 @@ export default function Menu3DExperience() {
                 )}
                 <Link
                   href="/contact"
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-500 hover:-translate-y-1 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-terracotta/25"
+                  className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-terracotta/25"
                 >
                   Demander un devis
                 </Link>
