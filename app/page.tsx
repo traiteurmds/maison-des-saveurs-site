@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import VisionHero from "./components/VisionHero";
-import AppleScrollStory from "./components/AppleScrollStory";
 import Menu3DExperience from "./components/Menu3DExperience";
 import EventGallery from "./components/EventGallery";
 import LuxuryTestimonials from "./components/LuxuryTestimonials";
@@ -21,8 +20,6 @@ export default function Home() {
   return (
     <>
       <VisionHero />
-
-      <AppleScrollStory />
 
       <motion.div
         variants={sectionVariants}

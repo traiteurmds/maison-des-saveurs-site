@@ -89,20 +89,13 @@ export default function Menu3DExperience() {
 
   return (
     <section id="menu" className="border-t border-deep-green/10 bg-beige py-24">
-      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6">
         <h2 className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
-        <div
-          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-          style={{ perspective: "1200px" }}
-        >
+        <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           {dishes.map((dish, i) => (
-            <div
-              key={dish.id}
-              className="flex justify-center"
-              style={{ perspective: "1000px" }}
-            >
+            <div key={dish.id} className="aspect-[4/3] min-h-[320px] w-full md:min-h-[360px]">
               <div
                 ref={(el) => {
                   cardRefs.current[i] = el;
@@ -113,7 +106,7 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative aspect-[4/3] w-full max-w-md cursor-pointer overflow-hidden rounded-xl border border-deep-green/10 bg-white shadow-lg transition-all duration-300 ease-out will-change-transform hover:shadow-[0_32px_72px_rgba(15,31,24,0.2)]"
+                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
@@ -124,8 +117,8 @@ export default function Menu3DExperience() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-green/85 to-transparent" aria-hidden />
-                <span className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
+                <span className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white drop-shadow-md md:text-3xl">
                   {dish.title}
                 </span>
               </div>
