@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
@@ -18,6 +18,7 @@ const NAV_BEIGE = "#E8E2D8";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -47,6 +48,16 @@ export default function Navbar() {
       }`}>
         <Link
           href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            if (pathname === "/") {
+              if (typeof window !== "undefined") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            } else {
+              router.push("/");
+            }
+          }}
           className="nav-logo nav-logo-brand nav-link-underline"
         >
           Maison Des Saveurs

@@ -34,7 +34,7 @@ const categories = [
       {
         title: "Poulet aux olives",
         image: "/images/menu/poulet-olives.jpg",
-        alt: "Tajine de poulet marocain aux olives et citron",
+        alt: "Poulet marocain aux olives et citron",
       },
       {
         title: "Viande aux pruneaux",
@@ -44,7 +44,7 @@ const categories = [
       {
         title: "Rfissa",
         image: "/images/menu/rfissa.jpg",
-        alt: "Rfissa marocaine traditionnelle au poulet",
+        alt: "Rfissa marocaine traditionnelle",
       },
     ],
   },

@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 const items = [
   { id: "1", title: "Couscous royal", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain traiteur Lyon", speed: 0.4 },
   { id: "2", title: "Pastilla", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine traditionnelle faite maison", speed: 0.6 },
-  { id: "3", title: "Rfissa", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle au poulet", speed: 0.3 },
-  { id: "4", title: "Poulet aux olives", src: "/images/menu/poulet-olives.jpg", alt: "Tajine de poulet marocain aux olives et citron", speed: 0.5 },
+  { id: "3", title: "Rfissa", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle", speed: 0.3 },
+  { id: "4", title: "Poulet aux olives", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives et citron", speed: 0.5 },
   { id: "5", title: "Viande aux pruneaux", src: "/images/menu/viande-pruneaux.jpg", alt: "Tajine de boeuf marocain aux pruneaux et amandes", speed: 0.45 },
   { id: "6", title: "Assortiment mini salés", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour événements", speed: 0.35 },
 ];

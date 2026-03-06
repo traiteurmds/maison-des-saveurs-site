@@ -38,16 +38,16 @@ const dishes: Dish[] = [
   {
     id: "poulet-olives",
     title: "Poulet aux olives",
-    description: "Tajine de poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
+    description: "Poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
     image: "/images/menu/poulet-olives.jpg",
-    alt: "Tajine de poulet marocain aux olives et citron",
+    alt: "Poulet marocain aux olives et citron",
   },
   {
     id: "rfissa",
     title: "Rfissa",
-    description: "Rfissa marocaine traditionnelle au poulet, plat généreux pour les grandes tablées.",
+    description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
     image: "/images/menu/rfissa.jpg",
-    alt: "Rfissa marocaine traditionnelle au poulet",
+    alt: "Rfissa marocaine traditionnelle",
   },
   {
     id: "mini-sales",
@@ -88,12 +88,15 @@ export default function Menu3DExperience() {
   }, [openDish]);
 
   return (
-    <section className="border-t border-deep-green/10 bg-beige py-24">
+    <section id="menu" className="border-t border-deep-green/10 bg-beige py-24">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <h2 className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
-        <div className="mt-16 grid gap-8 sm:grid-cols-2" style={{ perspective: "1200px" }}>
+        <div
+          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+          style={{ perspective: "1200px" }}
+        >
           {dishes.map((dish, i) => (
             <div
               key={dish.id}
@@ -143,18 +146,27 @@ export default function Menu3DExperience() {
               onClick={() => setOpenDish(null)}
               aria-hidden
             />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-4 z-50 flex max-h-[calc(100vh-2rem)] flex-col overflow-hidden rounded-3xl bg-white shadow-2xl md:inset-8"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="menu-3d-modal-title"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="menu-3d-modal-title"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenDish(null)}
+                  className="absolute right-4 top-4 z-20 rounded-full bg-black/60 px-2 py-1 text-sm text-white hover:bg-black/80"
+                  aria-label="Fermer le détail du plat"
+                >
+                  ×
+                </button>
+                <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden">
                 {openDish && (
                   <Image
                     src={openDish.image}
@@ -165,7 +177,10 @@ export default function Menu3DExperience() {
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" aria-hidden />
-                <h2 id="menu-3d-modal-title" className="absolute bottom-6 left-6 right-6 font-serif text-3xl font-semibold text-white md:text-4xl">
+                <h2
+                  id="menu-3d-modal-title"
+                  className="absolute bottom-6 left-6 right-6 font-serif text-3xl font-semibold text-white md:text-4xl"
+                >
                   {openDish?.title}
                 </h2>
               </div>
@@ -182,7 +197,8 @@ export default function Menu3DExperience() {
                   Demander un devis
                 </Link>
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>

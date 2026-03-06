@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 const galleryItems = [
   { id: "1", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain traiteur Lyon" },
   { id: "2", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine traditionnelle faite maison" },
-  { id: "3", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle au poulet" },
-  { id: "4", src: "/images/menu/poulet-olives.jpg", alt: "Tajine de poulet marocain aux olives et citron" },
+  { id: "3", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle" },
+  { id: "4", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives et citron" },
   { id: "5", src: "/images/menu/viande-pruneaux.jpg", alt: "Tajine de boeuf marocain aux pruneaux et amandes" },
   { id: "6", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour événements" },
 ];

@@ -13,7 +13,7 @@ const sections = [
     title: "Tajine",
     subtitle: "Cuisson lente, saveurs d’exception",
     src: "/images/menu/poulet-olives.jpg",
-    alt: "Tajine de poulet marocain aux olives et citron",
+    alt: "Poulet marocain aux olives et citron",
   },
   {
     id: "pastilla",
