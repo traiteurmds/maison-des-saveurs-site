@@ -20,8 +20,8 @@ export default function VisionHero() {
           }}
         >
           <Image
-            src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=1920&q=90"
-            alt=""
+            src="/images/menu/pastilla.jpg"
+            alt="Pastilla marocaine traditionnelle faite maison"
             fill
             className="object-cover"
             sizes="100vw"

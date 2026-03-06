@@ -39,13 +39,13 @@ export default function LuxuryGallery() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.6, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative aspect-[4/3] overflow-hidden rounded-3xl border border-deep-green/10 shadow-[0_18px_45px_rgba(15,31,24,0.12)] transition-shadow duration-500 hover:shadow-[0_28px_60px_rgba(15,31,24,0.2)]"
+              className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-deep-green/10 shadow-lg transition-all duration-300 hover:shadow-[0_28px_60px_rgba(15,31,24,0.2)]"
             >
               <Image
                 src={item.src}
                 alt={item.alt}
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 quality={85}
                 loading="lazy"

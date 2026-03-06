@@ -113,15 +113,15 @@ export default function Menu3DExperience() {
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="relative aspect-[4/3] w-full max-w-md cursor-pointer overflow-hidden rounded-3xl border border-deep-green/10 bg-white shadow-[0_25px_60px_rgba(15,31,24,0.12)] transition-all duration-500 ease-out will-change-transform hover:shadow-[0_32px_72px_rgba(15,31,24,0.2)]"
+                className="group relative aspect-[4/3] w-full max-w-md cursor-pointer overflow-hidden rounded-xl border border-deep-green/10 bg-white shadow-lg transition-all duration-300 ease-out will-change-transform hover:shadow-[0_32px_72px_rgba(15,31,24,0.2)]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
                   src={dish.image}
                   alt={dish.alt}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-deep-green/85 to-transparent" aria-hidden />
@@ -166,14 +166,15 @@ export default function Menu3DExperience() {
                 >
                   ×
                 </button>
-                <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden">
+                <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden rounded-t-[20px]">
                 {openDish && (
                   <Image
                     src={openDish.image}
                     alt={openDish.alt}
                     fill
                     className="object-cover"
-                    sizes="100vw"
+                    sizes="(max-width: 900px) 100vw, 900px"
+                    loading="lazy"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" aria-hidden />

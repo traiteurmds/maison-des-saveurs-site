@@ -52,16 +52,16 @@ const categories = [
     id: "desserts",
     label: "Desserts",
     items: [
-      { title: "Pâtisseries orientales", image: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=600&q=80", alt: "Pâtisseries" },
-      { title: "Sélection de douceurs", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80", alt: "Douceurs" },
+      { title: "Pâtisseries orientales", image: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine traditionnelle faite maison" },
+      { title: "Sélection de douceurs", image: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour événements" },
     ],
   },
   {
     id: "boissons",
     label: "Boissons",
     items: [
-      { title: "Thé à la menthe", image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80", alt: "Thé à la menthe" },
-      { title: "Jus et rafraîchissements", image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&q=80", alt: "Jus" },
+      { title: "Thé à la menthe", image: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour événements" },
+      { title: "Jus et rafraîchissements", image: "/images/menu/couscous.jpg", alt: "Couscous royal marocain traiteur Lyon" },
     ],
   },
 ];

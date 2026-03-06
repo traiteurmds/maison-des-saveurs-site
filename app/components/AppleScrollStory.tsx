@@ -9,32 +9,32 @@ gsap.registerPlugin(ScrollTrigger);
 
 const sections = [
   {
-    id: "tajine",
-    title: "Tajine",
-    description: "Cuisson lente, saveurs d'exception",
-    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=90",
-    alt: "Tajine marocain",
-  },
-  {
     id: "pastilla",
     title: "Pastilla",
     description: "Feuilletage doré, amandes et épices",
-    src: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=1400&q=90",
-    alt: "Pastilla",
+    src: "/images/menu/pastilla.jpg",
+    alt: "Pastilla marocaine traditionnelle faite maison",
   },
   {
     id: "couscous",
     title: "Couscous Royal",
     description: "Semoule, légumes et viandes mijotées",
-    src: "https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&q=90",
-    alt: "Couscous royal",
+    src: "/images/menu/couscous.jpg",
+    alt: "Couscous royal marocain traiteur Lyon",
+  },
+  {
+    id: "viande-pruneaux",
+    title: "Viande aux pruneaux",
+    description: "Tajine sucré-salé, pruneaux et amandes",
+    src: "/images/menu/viande-pruneaux.jpg",
+    alt: "Tajine de boeuf aux pruneaux et amandes",
   },
   {
     id: "mini-sales",
     title: "Mini salés",
     description: "Bouchées et amuse-bouches raffinés",
-    src: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=1400&q=90",
-    alt: "Mini salés",
+    src: "/images/menu/mini-sales.jpg",
+    alt: "Buffet de mini salés marocains pour événements",
   },
 ];
 
@@ -115,12 +115,12 @@ export default function AppleScrollStory() {
           style={{ minHeight: "100vh" }}
         >
           <div className="story-image-wrap absolute inset-0 flex items-center justify-center px-4">
-            <div className="story-image relative h-[82vh] w-full max-w-5xl overflow-hidden rounded-3xl shadow-2xl will-change-transform">
+            <div className="story-image relative h-[82vh] w-full max-w-5xl overflow-hidden rounded-xl shadow-lg will-change-transform transition-all duration-300">
               <Image
                 src={section.src}
                 alt={section.alt}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-300 hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 1024px"
                 loading="lazy"
               />

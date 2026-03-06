@@ -36,14 +36,14 @@ export default function HorizontalGallery() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-20px" }}
             transition={{ duration: 0.7, delay: 0.1 * i, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative h-[420px] min-w-[320px] shrink-0 overflow-hidden rounded-3xl shadow-2xl md:min-w-[380px] md:h-[480px]"
+            className="group relative h-[420px] min-w-[320px] shrink-0 overflow-hidden rounded-xl shadow-lg transition-all duration-300 md:min-w-[380px] md:h-[480px]"
             style={{ scrollSnapAlign: "center" }}
           >
             <Image
               src={item.src}
               alt={item.alt}
               fill
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 768px) 320px, 380px"
               quality={85}
               loading="lazy"

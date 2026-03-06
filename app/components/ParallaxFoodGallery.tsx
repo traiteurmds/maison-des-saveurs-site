@@ -54,13 +54,13 @@ export default function ParallaxFoodGallery() {
               ref={(el) => {
                 itemRefs.current[i] = el;
               }}
-              className="group relative aspect-[4/5] overflow-hidden rounded-3xl shadow-[0_25px_60px_rgba(15,31,24,0.15)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_35px_80px_rgba(15,31,24,0.28)]"
+              className="group relative aspect-[4/5] overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_35px_80px_rgba(15,31,24,0.28)]"
             >
               <Image
                 src={item.src}
                 alt={item.alt}
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 loading="lazy"
               />

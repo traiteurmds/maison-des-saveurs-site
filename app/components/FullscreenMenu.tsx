@@ -30,8 +30,8 @@ const categories = [
   {
     id: "boissons",
     label: "Boissons",
-    image: "/images/menu/the-menthe.jpg",
-    alt: "Boissons",
+    image: "/images/menu/mini-sales.jpg",
+    alt: "Buffet de mini salés marocains pour événements",
     description: "Thé à la menthe, jus et rafraîchissements pour accompagner vos moments.",
   },
 ];
