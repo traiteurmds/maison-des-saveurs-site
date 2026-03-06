@@ -289,13 +289,15 @@ export default function ContactPage() {
                     placeholder="0612345678"
                     value={phone}
                     onChange={handlePhoneChange}
-                    onBlur={handlePhoneBlur}
+                    onFocus={focusStyle}
+                    onBlur={(e) => {
+                      handlePhoneBlur();
+                      blurStyle(e);
+                    }}
                     style={{
                       ...inputBaseStyle,
                       borderColor: phoneError ? colors.terracotta : colors.border,
                     }}
-                    onFocus={focusStyle}
-                    onBlur={(e) => { handlePhoneBlur(); blurStyle(e); }}
                     maxLength={PHONE_LENGTH}
                   />
                   {phoneError && (
