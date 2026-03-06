@@ -62,8 +62,8 @@ export default function Navbar() {
             setIsOpen(false);
             if (pathname === "/") {
               e.preventDefault();
-              scrollToTop();
             }
+            scrollToTop();
           }}
           className="nav-link nav-logo nav-logo-brand nav-link-underline"
         >
@@ -85,12 +85,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => {
-                      if (link.href.startsWith("/#") && pathname === "/") {
-                        const id = link.href.slice(2);
-                        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-                      } else {
-                        scrollToTop();
-                      }
+                      scrollToTop();
                     }}
                     className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                       isActive ? "font-semibold" : "font-medium"
@@ -172,12 +167,7 @@ export default function Navbar() {
                         scroll={true}
                         onClick={() => {
                           setIsOpen(false);
-                          if (link.href.startsWith("/#") && pathname === "/") {
-                            const id = link.href.slice(2);
-                            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-                          } else {
-                            scrollToTop();
-                          }
+                          scrollToTop();
                         }}
                         className={`nav-link block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
                           isActive ? "font-semibold" : ""

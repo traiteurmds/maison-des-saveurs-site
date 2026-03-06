@@ -18,22 +18,6 @@ type Dish = {
 
 const dishes: Dish[] = [
   {
-    id: "pastilla",
-    title: "Pastilla",
-    description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
-    image: "/images/menu/pastilla.jpg",
-    alt: "Pastilla marocaine traiteur Lyon",
-    category: "entrees",
-  },
-  {
-    id: "mini-sales",
-    title: "Mini salés",
-    description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
-    image: "/images/menu/mini-sales.jpg",
-    alt: "Mini salés marocains buffet traiteur Lyon",
-    category: "entrees",
-  },
-  {
     id: "couscous-royal",
     title: "Couscous Royal",
     description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
@@ -58,20 +42,28 @@ const dishes: Dish[] = [
     category: "plats",
   },
   {
+    id: "pastilla",
+    title: "Pastilla",
+    description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
+    image: "/images/menu/pastilla.jpg",
+    alt: "Pastilla marocaine traiteur Lyon",
+    category: "plats",
+  },
+  {
+    id: "mini-sales",
+    title: "Mini salés",
+    description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
+    image: "/images/menu/mini-sales.jpg",
+    alt: "Mini salés marocains buffet traiteur Lyon",
+    category: "plats",
+  },
+  {
     id: "rfissa",
     title: "Rfissa",
     description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
     image: "/images/menu/rfissa.jpg",
     alt: "Rfissa marocaine traditionnelle traiteur Lyon",
     category: "plats",
-  },
-  {
-    id: "patisseries",
-    title: "Pâtisseries & douceurs",
-    description: "Pâtisseries marocaines et douceurs orientales pour clôturer vos événements en beauté.",
-    image: "/images/menu/pastilla.jpg",
-    alt: "Pâtisseries marocaines traiteur Lyon",
-    category: "desserts",
   },
 ];
 
@@ -147,6 +139,11 @@ export default function Menu3DExperience() {
         </motion.div>
 
         <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+          {filteredDishes.length === 0 ? (
+            <p className="col-span-full py-12 text-center font-serif text-lg text-deep-green/70">
+              Cette catégorie sera bientôt enrichie.
+            </p>
+          ) : (
           <AnimatePresence mode="wait">
           {filteredDishes.map((dish, i) => (
             <motion.div
@@ -199,6 +196,7 @@ export default function Menu3DExperience() {
             </motion.div>
           ))}
           </AnimatePresence>
+          )}
         </div>
       </div>
 

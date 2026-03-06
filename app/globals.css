@@ -106,6 +106,18 @@ html {
   animation: globe-rotate 30s linear infinite;
 }
 
+/* Avis clients: slider horizontal infini */
+@keyframes reviews-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.reviews-track {
+  animation: reviews-slide 45s linear infinite;
+}
+.reviews-track:hover {
+  animation-play-state: paused;
+}
+
 /* Hero: deep green luxury gradient */
 .hero-gradient-layer {
   background: linear-gradient(135deg, #1F3A2E 0%, #163126 40%, #0F1F18 70%, #1F3A2E 100%);

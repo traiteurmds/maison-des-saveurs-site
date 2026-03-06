@@ -8,21 +8,30 @@ const reviews = [
     quote: "Un traiteur incroyable. Tous nos invités ont adoré.",
     rating: 5,
     initial: "M",
-    photo: null,
   },
   {
     name: "Thomas & Sophie",
     quote: "Service parfait et cuisine incroyable pour notre mariage. Maison des Saveurs a sublimé notre jour J.",
     rating: 5,
     initial: "T",
-    photo: null,
   },
   {
     name: "Sarah M.",
     quote: "Une équipe à l'écoute et une cuisine marocaine authentique. Nous recommandons les yeux fermés.",
     rating: 5,
     initial: "S",
-    photo: null,
+  },
+  {
+    name: "Karim & Amel",
+    quote: "Couscous et tajines délicieux. Traiteur marocain à Lyon au top pour notre événement.",
+    rating: 5,
+    initial: "K",
+  },
+  {
+    name: "Léa M.",
+    quote: "Raffiné et généreux. Nous reviendrons sans hésiter pour nos prochains événements.",
+    rating: 5,
+    initial: "L",
   },
 ];
 
@@ -47,11 +56,47 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+function ReviewCard({
+  name,
+  quote,
+  rating,
+  initial,
+}: {
+  name: string;
+  quote: string;
+  rating: number;
+  initial: string;
+}) {
+  return (
+    <article className="group flex w-[340px] shrink-0 flex-col rounded-2xl bg-white p-8 shadow-md transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl md:w-[380px]">
+      <div className="flex items-center gap-4">
+        <div
+          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-deep-green/20 to-terracotta/20 font-serif text-xl font-semibold text-deep-green ring-2 ring-deep-green/10"
+          aria-hidden
+        >
+          {initial}
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="font-serif text-lg font-semibold text-deep-green">{name}</p>
+          <StarRating rating={rating} />
+        </div>
+        <span className="text-deep-green/50 transition-colors group-hover:text-deep-green/70" aria-hidden>
+          <GoogleIcon />
+        </span>
+      </div>
+      <blockquote className="mt-6 flex-1 text-base leading-relaxed text-deep-green/90">
+        &quot;{quote}&quot;
+      </blockquote>
+    </article>
+  );
+}
+
 export default function GoogleMapReviews() {
+  const duplicatedReviews = [...reviews, ...reviews];
+
   return (
     <section className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="avis-heading">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* — Avis clients (premium, conversion) — */}
         <motion.h2
           id="avis-heading"
           initial={{ opacity: 0, y: 24 }}
@@ -72,39 +117,22 @@ export default function GoogleMapReviews() {
           Ce que disent nos clients sur notre traiteur marocain à Lyon
         </motion.p>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((review, index) => (
-            <motion.article
-              key={review.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: 0.1 * index, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex flex-col rounded-2xl bg-white p-8 shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl"
-            >
-              <div className="flex items-center gap-4">
-                <div
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-deep-green/20 to-terracotta/20 font-serif text-xl font-semibold text-deep-green ring-2 ring-deep-green/10"
-                  aria-hidden
-                >
-                  {review.initial}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-serif text-lg font-semibold text-deep-green">{review.name}</p>
-                  <StarRating rating={review.rating} />
-                </div>
-                <span className="text-deep-green/50 transition-colors group-hover:text-deep-green/70" aria-hidden>
-                  <GoogleIcon />
-                </span>
-              </div>
-              <blockquote className="mt-6 flex-1 text-base leading-relaxed text-deep-green/90">
-                &quot;{review.quote}&quot;
-              </blockquote>
-            </motion.article>
-          ))}
+        {/* Slider horizontal infini */}
+        <div className="mt-14 overflow-hidden">
+          <div className="reviews-track flex w-max gap-8">
+            {duplicatedReviews.map((review, index) => (
+              <ReviewCard
+                key={`${review.name}-${index}`}
+                name={review.name}
+                quote={review.quote}
+                rating={review.rating}
+                initial={review.initial}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* — SEO + Google Maps (ordre : avis → texte → map) — */}
+        {/* SEO + carte (ordre : avis → texte → map) */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -112,7 +140,7 @@ export default function GoogleMapReviews() {
           transition={{ duration: 0.6 }}
           className="mt-20 text-center text-lg text-deep-green/85 md:text-xl"
         >
-          Nous livrons vos événements dans toute la métropole de Lyon : Lyon, Villeurbanne, Vénissieux, Bron, Feyzin et alentours.
+          Nous livrons vos événements dans toute la métropole de Lyon : Lyon, Villeurbanne, Vénissieux, Bron, Feyzin, Saint-Priest, Vaulx-en-Velin, Décines, Oullins, Caluire-et-Cuire et alentours.
         </motion.p>
 
         <motion.div
@@ -124,7 +152,7 @@ export default function GoogleMapReviews() {
         >
           <iframe
             src="https://www.google.com/maps?q=M%C3%A9tropole+de+Lyon&output=embed"
-            title="Carte Métropole de Lyon - Traiteur marocain Lyon, Villeurbanne, Vénissieux"
+            title="Carte Métropole de Lyon - Traiteur marocain Lyon, Villeurbanne, Vénissieux, Bron, Feyzin, Saint-Priest"
             className="h-[420px] w-full border-0"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
