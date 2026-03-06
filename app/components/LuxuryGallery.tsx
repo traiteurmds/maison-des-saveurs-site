@@ -4,12 +4,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const galleryItems = [
-  { id: "1", src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85", alt: "Tajine et plats marocains" },
-  { id: "2", src: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=85", alt: "Couscous royal" },
-  { id: "3", src: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=85", alt: "Buffet mini salés" },
-  { id: "4", src: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=85", alt: "Pastilla" },
-  { id: "5", src: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=800&q=85", alt: "Pâtisseries marocaines" },
-  { id: "6", src: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=85", alt: "Buffet événement" },
+  { id: "1", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain servi en plat de fête" },
+  { id: "2", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine garnie de fruits de mer" },
+  { id: "3", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine servie pour un grand événement" },
+  { id: "4", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives et citron confit" },
+  { id: "5", src: "/images/menu/viande-pruneaux.jpg", alt: "Viande aux pruneaux et amandes pour mariage marocain" },
+  { id: "6", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains pour cocktail dinatoire" },
 ];
 
 export default function LuxuryGallery() {

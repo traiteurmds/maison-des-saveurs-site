@@ -10,19 +10,42 @@ const categories = [
     id: "mini-sales",
     label: "Mini salés",
     items: [
-      { title: "Mini burgers", image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=600&q=80", alt: "Mini burgers" },
-      { title: "Batbout", image: "https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80", alt: "Batbout" },
-      { title: "Petits fours", image: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=600&q=80", alt: "Petits fours" },
+      {
+        title: "Assortiment mini salés",
+        image: "/images/menu/mini-sales.jpg",
+        alt: "Buffet de mini salés marocains haut de gamme",
+      },
     ],
   },
   {
     id: "plats",
     label: "Plats",
     items: [
-      { title: "Tajine", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", alt: "Tajine" },
-      { title: "Couscous", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80", alt: "Couscous" },
-      { title: "Pastilla", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80", alt: "Pastilla" },
-      { title: "Rfissa", image: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=600&q=80", alt: "Rfissa" },
+      {
+        title: "Pastilla aux fruits de mer",
+        image: "/images/menu/pastilla.jpg",
+        alt: "Pastilla marocaine garnie de fruits de mer",
+      },
+      {
+        title: "Couscous royal",
+        image: "/images/menu/couscous.jpg",
+        alt: "Couscous royal marocain avec légumes et viande",
+      },
+      {
+        title: "Poulet aux olives",
+        image: "/images/menu/poulet-olives.jpg",
+        alt: "Poulet marocain aux olives et citron confit",
+      },
+      {
+        title: "Viande aux pruneaux",
+        image: "/images/menu/viande-pruneaux.jpg",
+        alt: "Viande fondante aux pruneaux et amandes",
+      },
+      {
+        title: "Rfissa",
+        image: "/images/menu/rfissa.jpg",
+        alt: "Rfissa marocaine traditionnelle",
+      },
     ],
   },
   {

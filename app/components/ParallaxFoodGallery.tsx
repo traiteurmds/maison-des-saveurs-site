@@ -8,12 +8,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const items = [
-  { id: "1", title: "Tajine", src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85", alt: "Tajine", speed: 0.4 },
-  { id: "2", title: "Couscous", src: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=85", alt: "Couscous", speed: 0.6 },
-  { id: "3", title: "Pastilla", src: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=85", alt: "Pastilla", speed: 0.3 },
-  { id: "4", title: "Pâtisseries", src: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=800&q=85", alt: "Pâtisseries", speed: 0.5 },
-  { id: "5", title: "Mini salés", src: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=85", alt: "Mini salés", speed: 0.45 },
-  { id: "6", title: "Thé & douceurs", src: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&q=85", alt: "Thé", speed: 0.35 },
+  { id: "1", title: "Couscous royal", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain", speed: 0.4 },
+  { id: "2", title: "Pastilla", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine maison", speed: 0.6 },
+  { id: "3", title: "Rfissa", src: "/images/menu/rfissa.jpg", alt: "Rfissa marocaine traditionnelle", speed: 0.3 },
+  { id: "4", title: "Poulet aux olives", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives", speed: 0.5 },
+  { id: "5", title: "Viande aux pruneaux", src: "/images/menu/viande-pruneaux.jpg", alt: "Viande aux pruneaux et amandes", speed: 0.45 },
+  { id: "6", title: "Assortiment mini salés", src: "/images/menu/mini-sales.jpg", alt: "Buffet de mini salés marocains", speed: 0.35 },
 ];
 
 export default function ParallaxFoodGallery() {

@@ -4,11 +4,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const items = [
-  { id: "1", title: "Tajine", src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85", alt: "Tajine marocain" },
-  { id: "2", title: "Couscous royal", src: "https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=85", alt: "Couscous royal" },
-  { id: "3", title: "Pastilla", src: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=900&q=85", alt: "Pastilla" },
-  { id: "4", title: "Mini salés", src: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=900&q=85", alt: "Mini salés" },
-  { id: "5", title: "Pâtisseries marocaines", src: "https://images.unsplash.com/photo-1604329760661-e71dc83f2b26?w=900&q=85", alt: "Pâtisseries marocaines" },
+  { id: "1", title: "Couscous royal", src: "/images/menu/couscous.jpg", alt: "Couscous royal marocain" },
+  { id: "2", title: "Pastilla", src: "/images/menu/pastilla.jpg", alt: "Pastilla marocaine maison" },
+  { id: "3", title: "Rfissa", src: "/images/menu/rfissa.jpg", alt: "Rfissa traditionnelle marocaine" },
+  { id: "4", title: "Poulet aux olives", src: "/images/menu/poulet-olives.jpg", alt: "Poulet marocain aux olives" },
+  { id: "5", title: "Mini salés marocains", src: "/images/menu/mini-sales.jpg", alt: "Assortiment de mini salés marocains" },
 ];
 
 export default function HorizontalGallery() {
