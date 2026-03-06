@@ -5,39 +5,61 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-const categories = [
+type Dish = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+};
+
+const dishes: Dish[] = [
   {
-    id: "mini-sales",
-    label: "Mini salés",
-    image: "/images/menu/mini-sales.jpg",
-    alt: "Buffet de mini salés marocains pour événements",
-    description: "Buffet de mini salés pour vos événements : bouchées, batbout et petits fours raffinés.",
-  },
-  {
-    id: "plats",
-    label: "Plats",
-    image: "/images/menu/couscous.jpg",
-    alt: "Couscous royal marocain traiteur Lyon",
-    description: "Tajine, couscous, pastilla : une cuisine marocaine d'exception pour vos réceptions.",
-  },
-  {
-    id: "desserts",
-    label: "Desserts",
+    id: "pastilla",
+    title: "Pastilla",
+    description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
     image: "/images/menu/pastilla.jpg",
     alt: "Pastilla marocaine traditionnelle faite maison",
-    description: "Pâtisseries orientales et douceurs marocaines pour conclure en beauté.",
   },
   {
-    id: "boissons",
-    label: "Boissons",
-    image: "/images/menu/the-menthe.jpg",
-    alt: "Thé à la menthe et boissons marocaines",
-    description: "Thé à la menthe, jus et rafraîchissements pour accompagner vos moments.",
+    id: "couscous-royal",
+    title: "Couscous Royal",
+    description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
+    image: "/images/menu/couscous.jpg",
+    alt: "Couscous royal marocain traiteur Lyon",
+  },
+  {
+    id: "viande-pruneaux",
+    title: "Viande aux pruneaux",
+    description: "Tajine de boeuf marocain aux pruneaux et amandes, sucré-salé emblématique des mariages.",
+    image: "/images/menu/viande-pruneaux.jpg",
+    alt: "Tajine de boeuf marocain aux pruneaux et amandes",
+  },
+  {
+    id: "poulet-olives",
+    title: "Poulet aux olives",
+    description: "Tajine de poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
+    image: "/images/menu/poulet-olives.jpg",
+    alt: "Tajine de poulet marocain aux olives et citron",
+  },
+  {
+    id: "rfissa",
+    title: "Rfissa",
+    description: "Rfissa marocaine traditionnelle au poulet, plat généreux pour les grandes tablées.",
+    image: "/images/menu/rfissa.jpg",
+    alt: "Rfissa marocaine traditionnelle au poulet",
+  },
+  {
+    id: "mini-sales",
+    title: "Mini salés",
+    description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
+    image: "/images/menu/mini-sales.jpg",
+    alt: "Buffet de mini salés marocains pour événements",
   },
 ];
 
 export default function Menu3DExperience() {
-  const [openCategory, setOpenCategory] = useState<typeof categories[0] | null>(null);
+  const [openDish, setOpenDish] = useState<Dish | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, index: number) => {
@@ -57,13 +79,13 @@ export default function Menu3DExperience() {
   }, []);
 
   useEffect(() => {
-    if (!openCategory) return;
+    if (!openDish) return;
     const onEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenCategory(null);
+      if (e.key === "Escape") setOpenDish(null);
     };
     window.addEventListener("keydown", onEscape);
     return () => window.removeEventListener("keydown", onEscape);
-  }, [openCategory]);
+  }, [openDish]);
 
   return (
     <section className="border-t border-deep-green/10 bg-beige py-24">
@@ -71,13 +93,10 @@ export default function Menu3DExperience() {
         <h2 className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
-        <div
-          className="mt-16 grid gap-8 sm:grid-cols-2"
-          style={{ perspective: "1200px" }}
-        >
-          {categories.map((cat, i) => (
+        <div className="mt-16 grid gap-8 sm:grid-cols-2" style={{ perspective: "1200px" }}>
+          {dishes.map((dish, i) => (
             <div
-              key={cat.id}
+              key={dish.id}
               className="flex justify-center"
               style={{ perspective: "1000px" }}
             >
@@ -87,16 +106,16 @@ export default function Menu3DExperience() {
                 }}
                 role="button"
                 tabIndex={0}
-                onClick={() => setOpenCategory(cat)}
+                onClick={() => setOpenDish(dish)}
                 onMouseMove={(e) => handleMouseMove(e, i)}
                 onMouseLeave={() => handleMouseLeave(i)}
-                onKeyDown={(e) => e.key === "Enter" && setOpenCategory(cat)}
+                onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
                 className="relative aspect-[4/3] w-full max-w-md cursor-pointer overflow-hidden rounded-3xl border border-deep-green/10 bg-white shadow-[0_25px_60px_rgba(15,31,24,0.12)] transition-all duration-500 ease-out will-change-transform hover:shadow-[0_32px_72px_rgba(15,31,24,0.2)]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Image
-                  src={cat.image}
-                  alt={cat.alt}
+                  src={dish.image}
+                  alt={dish.alt}
                   fill
                   className="object-cover"
                   sizes="(max-width: 640px) 100vw, 50vw"
@@ -104,7 +123,7 @@ export default function Menu3DExperience() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-deep-green/85 to-transparent" aria-hidden />
                 <span className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white">
-                  {cat.label}
+                  {dish.title}
                 </span>
               </div>
             </div>
@@ -113,7 +132,7 @@ export default function Menu3DExperience() {
       </div>
 
       <AnimatePresence>
-        {openCategory && (
+        {openDish && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
@@ -121,7 +140,7 @@ export default function Menu3DExperience() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md"
-              onClick={() => setOpenCategory(null)}
+              onClick={() => setOpenDish(null)}
               aria-hidden
             />
             <motion.div
@@ -136,22 +155,26 @@ export default function Menu3DExperience() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden">
-                <Image
-                  src={openCategory.image}
-                  alt={openCategory.alt}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                />
+                {openDish && (
+                  <Image
+                    src={openDish.image}
+                    alt={openDish.alt}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" aria-hidden />
                 <h2 id="menu-3d-modal-title" className="absolute bottom-6 left-6 right-6 font-serif text-3xl font-semibold text-white md:text-4xl">
-                  {openCategory.label}
+                  {openDish?.title}
                 </h2>
               </div>
               <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-12">
-                <p className="text-lg leading-relaxed text-deep-green/90">
-                  {openCategory.description}
-                </p>
+                {openDish && (
+                  <p className="text-lg leading-relaxed text-deep-green/90">
+                    {openDish.description}
+                  </p>
+                )}
                 <Link
                   href="/contact"
                   className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-500 hover:-translate-y-1 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-terracotta/25"
