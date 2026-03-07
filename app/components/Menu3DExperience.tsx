@@ -165,7 +165,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-              className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-1 lg:col-span-1 lg:justify-self-end" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3 lg:col-span-1 lg:justify-self-start" : ""}`}
+              className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-2" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3" : ""}`}
             >
               <div
                 role="button"
