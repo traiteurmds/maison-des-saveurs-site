@@ -111,13 +111,14 @@ export default function ContactPage() {
 
   const inCooldown = cooldownUntil !== null;
   const phoneValid = phone.length === LIMITS.PHONE_LENGTH && /^\d+$/.test(phone);
+  const emailValid = validateEmail(sanitizeEmail(email)).valid;
   const requiredFilled =
     firstName.trim().length > 0 &&
     lastName.trim().length > 0 &&
     email.trim().length > 0 &&
     message.trim().length > 0 &&
     eventDate.length > 0;
-  const canSubmit = !loading && !inCooldown && phoneValid && requiredFilled;
+  const canSubmit = !loading && !inCooldown && phoneValid && emailValid && requiredFilled;
 
   const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/\D/g, "").slice(0, LIMITS.PHONE_LENGTH);
@@ -222,7 +223,7 @@ export default function ContactPage() {
         );
       }
       setFieldErrors({
-        form: "Configuration email manquante. Vérifiez les variables d'environnement (NEXT_PUBLIC_EMAILJS_*).",
+        form: "Configuration email manquante. Vérifiez les variables d'environnement.",
       });
       return;
     }
