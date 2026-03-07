@@ -44,26 +44,26 @@ const dishes: Dish[] = [
     category: "plats",
   },
   {
-    id: "tajine-poulet-olives",
-    title: "Tajine poulet olives",
+    id: "poulet-olives",
+    title: "Poulet olives",
     description: "Poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
     image: "/images/menu/poulet-olives.jpg",
-    alt: "Tajine poulet olives traiteur Lyon",
+    alt: "Poulet olives traiteur Lyon",
     category: "plats",
   },
   {
-    id: "tajine-agneau-pruneaux",
-    title: "Tajine agneau pruneaux",
-    description: "Tajine d'agneau aux pruneaux et amandes, sucré-salé emblématique des mariages.",
+    id: "viande-pruneaux",
+    title: "Viande aux pruneaux",
+    description: "Viande aux pruneaux et amandes, sucré-salé emblématique des mariages.",
     image: "/images/menu/viande-pruneaux.jpg",
-    alt: "Tajine agneau pruneaux traiteur Lyon",
+    alt: "Viande aux pruneaux traiteur Lyon",
     category: "plats",
   },
   {
     id: "rfissa",
     title: "Rfissa",
     description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
-    image: "/images/menu/frissa.jpg",
+    image: "/images/menu/rfissa.jpg",
     alt: "Rfissa marocaine traditionnelle traiteur Lyon",
     category: "plats",
   },
@@ -80,7 +80,7 @@ const dishes: Dish[] = [
     id: "assiette-fruits",
     title: "Assiette de fruits",
     description: "Sélection de fruits frais de saison, présentée avec élégance. Une fin de repas légère et rafraîchissante.",
-    image: "/images/menu/gateaux-marocains.jpg",
+    image: "/images/menu/assiette-fruits.jpg",
     alt: "Assiette de fruits traiteur Lyon",
     category: "desserts",
   },
@@ -110,6 +110,7 @@ export default function Menu3DExperience() {
   const gridColsClass = isTwoItems
     ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
     : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+  const gridMaxWidthClass = "max-w-[1100px]";
 
   useEffect(() => {
     if (!openDish) return;
@@ -150,7 +151,7 @@ export default function Menu3DExperience() {
           ))}
         </motion.div>
 
-        <div className={`mx-auto mt-16 grid max-w-[1200px] justify-center justify-items-center gap-8 ${gridColsClass}`}>
+        <div className={`mx-auto mt-16 grid justify-center justify-items-center gap-8 ${gridMaxWidthClass} ${gridColsClass}`}>
           {filteredDishes.length === 0 ? (
             <p className="col-span-full py-12 text-center font-serif text-lg text-deep-green/70">
               Cette catégorie sera bientôt enrichie.
@@ -164,7 +165,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-              className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i >= 3 ? (i === 3 ? "lg:col-start-2" : "lg:col-start-3") : ""}`}
+              className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-2 lg:col-span-1" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3 lg:col-span-1" : ""}`}
             >
               <div
                 role="button"
