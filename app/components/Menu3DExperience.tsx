@@ -179,7 +179,8 @@ export default function Menu3DExperience() {
                   alt={dish.alt}
                   fill
                   loading="lazy"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                  quality={80}
                   className="h-full w-full object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.05]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
@@ -244,6 +245,7 @@ export default function Menu3DExperience() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 900px) 100vw, 900px"
+                    quality={85}
                     loading="lazy"
                   />
                 )}

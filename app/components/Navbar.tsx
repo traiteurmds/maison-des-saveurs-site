@@ -20,18 +20,12 @@ function scrollToMenuSection() {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function scrollToFaqSection() {
-  if (typeof window === "undefined") return;
-  const el = document.getElementById("faq");
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
   { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -104,13 +98,6 @@ export default function Navbar() {
                         if (pathname === "/") {
                           e.preventDefault();
                           scrollToMenuSection();
-                        }
-                        return;
-                      }
-                      if (link.label === "FAQ") {
-                        if (pathname === "/") {
-                          e.preventDefault();
-                          scrollToFaqSection();
                         }
                         return;
                       }
@@ -205,13 +192,6 @@ export default function Navbar() {
                             if (pathname === "/") {
                               e.preventDefault();
                               scrollToMenuSection();
-                            }
-                            return;
-                          }
-                          if (link.label === "FAQ") {
-                            if (pathname === "/") {
-                              e.preventDefault();
-                              scrollToFaqSection();
                             }
                             return;
                           }

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import VisionHero from "./components/VisionHero";
 import Menu3DExperience from "./components/Menu3DExperience";
 import GoogleMapReviews from "./components/GoogleMapReviews";
-import FAQSection from "./components/FAQSection";
 import ContactCTA from "./components/ContactCTA";
 
 const sectionVariants = {
@@ -37,15 +36,6 @@ export default function Home() {
         viewport={{ once: true, margin: "-80px" }}
       >
         <GoogleMapReviews />
-      </motion.section>
-
-      <motion.section
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-      >
-        <FAQSection />
       </motion.section>
 
       <motion.section
