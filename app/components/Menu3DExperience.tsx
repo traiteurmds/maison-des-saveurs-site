@@ -18,6 +18,30 @@ type Dish = {
 
 const dishes: Dish[] = [
   {
+    id: "salade-variee",
+    title: "Salade variée",
+    description: "Salade fraîche et colorée, préparée avec des légumes de saison et une touche d'épices douces. Idéale pour ouvrir l'appétit en douceur.",
+    image: "/images/menu/mini-sales.jpg",
+    alt: "Salade variée traiteur Lyon",
+    category: "entrees",
+  },
+  {
+    id: "salade-royale",
+    title: "Salade royale",
+    description: "Une salade raffinée aux saveurs marocaines : semoule, légumes croquants, herbes fraîches et une vinaigrette subtile. Parfaite pour un début de repas élégant.",
+    image: "/images/menu/mini-sales.jpg",
+    alt: "Salade royale traiteur Lyon",
+    category: "entrees",
+  },
+  {
+    id: "mini-sales",
+    title: "Mini salés",
+    description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
+    image: "/images/menu/mini-sales.jpg",
+    alt: "Mini salés marocains buffet traiteur Lyon",
+    category: "entrees",
+  },
+  {
     id: "couscous-royal",
     title: "Couscous Royal",
     description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
@@ -50,20 +74,28 @@ const dishes: Dish[] = [
     category: "plats",
   },
   {
-    id: "mini-sales",
-    title: "Mini salés",
-    description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
-    image: "/images/menu/mini-sales.jpg",
-    alt: "Mini salés marocains buffet traiteur Lyon",
-    category: "plats",
-  },
-  {
     id: "rfissa",
     title: "Rfissa",
     description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
     image: "/images/menu/rfissa.jpg",
     alt: "Rfissa marocaine traditionnelle traiteur Lyon",
     category: "plats",
+  },
+  {
+    id: "assiette-fruits",
+    title: "Assiette de fruits",
+    description: "Sélection de fruits frais de saison, présentée avec élégance. Une fin de repas légère et rafraîchissante.",
+    image: "/images/menu/pastilla.jpg",
+    alt: "Assiette de fruits traiteur Lyon",
+    category: "desserts",
+  },
+  {
+    id: "gateaux-marocains",
+    title: "Gâteaux marocains",
+    description: "Pâtisseries orientales et douceurs marocaines : cornes de gazelle, gâteaux au miel et aux amandes, pour clôturer le repas en beauté.",
+    image: "/images/menu/pastilla.jpg",
+    alt: "Gâteaux marocains traiteur Lyon",
+    category: "desserts",
   },
 ];
 
