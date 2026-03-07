@@ -34,7 +34,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="mt-2 font-serif text-3xl font-semibold text-deep-green md:text-4xl"
           >
-            Une passion pour l&apos;excellence
+            Une cuisine faite avec le cœur
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -44,18 +44,16 @@ export default function AboutPage() {
             className="mt-8 space-y-6 text-lg leading-relaxed text-deep-green/90"
           >
             <p>
-              Notre chef réunit plus de vingt ans d&apos;expérience en
-              gastronomie et des racines profondes dans la tradition culinaire
-              marocaine. Chaque plat traditionnel est préparé avec précision et
-              authenticité—tout est fait maison, avec des ingrédients de
-              première qualité et des épices importées directement du Maroc.
+              Maison Des Saveurs est avant tout une histoire de cœur. Derrière chaque plat se trouve une maman marocaine passionnée par la cuisine et par le plaisir de recevoir. Depuis toujours, cuisiner est bien plus qu&apos;un métier : c&apos;est une véritable passion, une manière de partager, de rassembler et de faire plaisir aux autres.
             </p>
             <p>
-              Nous nous adaptons à vos goûts, à votre culture et à votre budget,
-              pour que la table du plus beau jour de votre vie reste
-              inoubliable. Élégance, authenticité, générosité et excellence :
-              telle est notre promesse pour vos mariages et vos célébrations à
-              Lyon et Villeurbanne.
+              Chaque recette est préparée comme à la maison, avec la même attention que pour sa propre famille. Les saveurs authentiques du Maroc, les épices choisies avec soin et les plats généreux rappellent les grandes tables où tout le monde se réunit pour partager un moment chaleureux.
+            </p>
+            <p>
+              Se lancer dans ce métier est né d&apos;une envie simple : offrir aux gens des repas qui comptent vraiment. Lors d&apos;un mariage, d&apos;un anniversaire ou d&apos;une fête, la nourriture est au cœur du moment. C&apos;est ce qui rassemble les invités, ce qui crée les souvenirs et ce dont tout le monde se souvient en rentrant chez soi.
+            </p>
+            <p>
+              Notre objectif est simple : que chaque événement soit accompagné d&apos;un repas délicieux, généreux et authentique, pour que chacun puisse partager un vrai moment de bonheur autour de la table.
             </p>
           </motion.div>
         </div>
@@ -70,13 +68,13 @@ export default function AboutPage() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="text-center font-serif text-3xl font-semibold text-deep-green md:text-4xl"
           >
-            Nos valeurs
+            Nos engagements
           </motion.h2>
           <div className="mt-16 grid gap-12 md:grid-cols-3">
             {[
-              { title: "Exigence", text: "Ingrédients de qualité et épices du Maroc. Nous ne transigeons jamais sur la technique ni sur l'authenticité." },
-              { title: "Élégance", text: "Chaque détail—du dressage au service—est pensé pour sublimer votre plus beau jour." },
-              { title: "Confiance", text: "Nous nous adaptons à vos goûts, votre culture et votre budget, du premier échange au dernier plat." },
+              { title: "Une cuisine faite avec amour", text: "Chaque plat est préparé avec le même soin qu'un repas pour sa propre famille. Les recettes sont inspirées de la tradition marocaine, avec des ingrédients de qualité et des épices sélectionnées pour retrouver les vraies saveurs d'antan. Ici, rien n'est fait à la va-vite : tout est cuisiné avec patience, passion et beaucoup de cœur." },
+              { title: "Le plaisir de partager", text: "Pour nous, un événement réussi est un moment où les invités se retrouvent autour d'une belle table et partagent un bon repas ensemble. La cuisine marocaine est une cuisine généreuse, faite pour être partagée. Voir les invités apprécier les plats et repartir satisfaits est la plus belle récompense." },
+              { title: "Votre événement compte", text: "Chaque mariage, anniversaire ou réception est unique et mérite une attention particulière. Nous prenons le temps d'écouter chaque client afin de proposer un menu adapté à ses envies, à sa culture et à son budget. Le plus important est que vos invités passent un moment inoubliable et repartent avec le souvenir d'un repas exceptionnel." },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
