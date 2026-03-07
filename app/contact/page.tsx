@@ -229,7 +229,7 @@ export default function ContactPage() {
     if (typeof console !== "undefined") {
       console.log("SERVICE:", serviceId);
       console.log("TEMPLATE:", templateId);
-      console.log("PUBLIC KEY:", publicKey ? `${publicKey.slice(0, 6)}...` : "");
+      console.log("PUBLIC KEY:", publicKey);
     }
 
     setLoading(true);
