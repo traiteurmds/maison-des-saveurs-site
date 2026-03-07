@@ -17,7 +17,7 @@ type Dish = {
 };
 
 const dishes: Dish[] = [
-  // ENTREES (3)
+  // ENTREES (2)
   {
     id: "salade-variee",
     title: "Salade variée",
@@ -32,14 +32,6 @@ const dishes: Dish[] = [
     description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
     image: "/images/menu/mini-sales.jpg",
     alt: "Mini salés marocains buffet traiteur Lyon",
-    category: "entrees",
-  },
-  {
-    id: "pastilla-poulet",
-    title: "Pastilla poulet",
-    description: "Pastilla au poulet, amandes et épices, feuilletage doré. Entrée raffinée pour les grandes occasions.",
-    image: "/images/menu/pastilla.jpg",
-    alt: "Pastilla poulet traiteur Lyon",
     category: "entrees",
   },
   // PLATS (5)
@@ -71,16 +63,16 @@ const dishes: Dish[] = [
     id: "rfissa",
     title: "Rfissa",
     description: "Rfissa marocaine traditionnelle, plat généreux pour les grandes tablées.",
-    image: "/images/menu/rfissa.jpg",
+    image: "/images/menu/frissa.jpg",
     alt: "Rfissa marocaine traditionnelle traiteur Lyon",
     category: "plats",
   },
   {
-    id: "pastilla-fruits-de-mer",
-    title: "Pastilla fruits de mer",
-    description: "Pastilla aux fruits de mer, feuilletage croustillant et saveurs de la mer. Idéale pour les réceptions raffinées.",
+    id: "pastilla",
+    title: "Pastilla",
+    description: "Pastilla marocaine traditionnelle, feuilletage croustillant et saveurs raffinées. Idéale pour les réceptions.",
     image: "/images/menu/pastilla.jpg",
-    alt: "Pastilla fruits de mer traiteur Lyon",
+    alt: "Pastilla marocaine traiteur Lyon",
     category: "plats",
   },
   // DESSERTS (2)
@@ -94,10 +86,10 @@ const dishes: Dish[] = [
   },
   {
     id: "gateaux-marocains",
-    title: "Gâteaux marocains",
+    title: "Gateaux marocains",
     description: "Pâtisseries orientales et douceurs marocaines : cornes de gazelle, gâteaux au miel et aux amandes, pour clôturer le repas en beauté.",
     image: "/images/menu/gateaux-marocains.jpg",
-    alt: "Gâteaux marocains traiteur Lyon",
+    alt: "Gateaux marocains traiteur Lyon",
     category: "desserts",
   },
 ];
@@ -113,15 +105,11 @@ export default function Menu3DExperience() {
   const [activeCategory, setActiveCategory] = useState<Category>("plats");
 
   const filteredDishes = dishes.filter((d) => d.category === activeCategory);
-
-  const gridLayoutClass =
-    activeCategory === "entrees"
-      ? "grid-cols-1 md:grid-cols-3"
-      : activeCategory === "plats"
-        ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-        : "grid-cols-1 md:grid-cols-2";
-
-  const gridWrapperClass = activeCategory === "desserts" ? "mx-auto max-w-3xl" : "";
+  const isFiveItems = filteredDishes.length === 5;
+  const isTwoItems = filteredDishes.length === 2;
+  const gridColsClass = isTwoItems
+    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
 
   useEffect(() => {
     if (!openDish) return;
@@ -162,7 +150,7 @@ export default function Menu3DExperience() {
           ))}
         </motion.div>
 
-        <div className={`mt-16 grid gap-10 ${gridLayoutClass} ${gridWrapperClass}`}>
+        <div className={`mx-auto mt-16 grid max-w-[1200px] justify-center justify-items-center gap-8 ${gridColsClass}`}>
           {filteredDishes.length === 0 ? (
             <p className="col-span-full py-12 text-center font-serif text-lg text-deep-green/70">
               Cette catégorie sera bientôt enrichie.
@@ -176,7 +164,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="aspect-[4/3] min-h-[280px] w-full md:min-h-[320px]"
+              className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i >= 3 ? (i === 3 ? "lg:col-start-2" : "lg:col-start-3") : ""}`}
             >
               <div
                 role="button"
@@ -191,10 +179,9 @@ export default function Menu3DExperience() {
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.05]"
+                  className="h-full w-full object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.05]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
-                {/* Reflet lumière dorée au survol (luxe) */}
                 <div
                   className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
@@ -202,7 +189,6 @@ export default function Menu3DExperience() {
                   }}
                   aria-hidden
                 />
-                {/* Light sweep au survol */}
                 <div
                   className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-[100%]"
                   aria-hidden
