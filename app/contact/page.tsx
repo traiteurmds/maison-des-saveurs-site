@@ -13,7 +13,6 @@ import {
   validateEmail,
   validatePhone,
   validateMessage,
-  buildEmailBody,
 } from "../lib/contact-validation";
 
 const colors = {
@@ -112,7 +111,13 @@ export default function ContactPage() {
 
   const inCooldown = cooldownUntil !== null;
   const phoneValid = phone.length === LIMITS.PHONE_LENGTH && /^\d+$/.test(phone);
-  const canSubmit = !loading && !inCooldown && phoneValid;
+  const requiredFilled =
+    firstName.trim().length > 0 &&
+    lastName.trim().length > 0 &&
+    email.trim().length > 0 &&
+    message.trim().length > 0 &&
+    eventDate.length > 0;
+  const canSubmit = !loading && !inCooldown && phoneValid && requiredFilled;
 
   const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/\D/g, "").slice(0, LIMITS.PHONE_LENGTH);
@@ -209,25 +214,29 @@ export default function ContactPage() {
     const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
     if (!serviceId || !templateId || !publicKey) {
       if (typeof console !== "undefined") {
-        console.error("EmailJS configuration manquante");
+        console.error(
+          "EmailJS configuration missing. Set NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in .env.local"
+        );
       }
-      setFieldErrors({ form: "Configuration email manquante. Réessayez plus tard." });
+      setFieldErrors({
+        form: "Configuration email manquante. Vérifiez les variables d'environnement (NEXT_PUBLIC_EMAILJS_*).",
+      });
       return;
     }
 
     setLoading(true);
     setSent(false);
 
-    const emailBody = buildEmailBody({
-      lastName: nom,
-      firstName: prenom,
+    const templateParams = {
+      name: `${prenom} ${nom}`.trim(),
       email: emailSanitized,
       phone,
-      eventDate: eventDate || "",
+      date: eventDate || "",
       message: messageSanitized,
-    });
+    };
 
     try {
       const hcaptchaToken = await getHcaptchaToken();
@@ -259,30 +268,17 @@ export default function ContactPage() {
         return;
       }
 
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          first_name: prenom,
-          last_name: nom,
-          from_name: `${prenom} ${nom}`,
-          email: emailSanitized,
-          reply_to: emailSanitized,
-          phone,
-          event_date: eventDate || "",
-          message: messageSanitized,
-          email_body: emailBody,
-          subject: "Nouveau message — Maison Des Saveurs",
-        },
-        publicKey
-      );
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setSent(true);
       resetForm();
       setCooldownUntil(Date.now() + COOLDOWN_MS);
       setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
-    } catch {
-      setFieldErrors({ form: "L'envoi a échoué. Réessayez dans un moment." });
+    } catch (err) {
+      if (typeof console !== "undefined") {
+        console.error("EmailJS send error:", err);
+      }
+      setFieldErrors({ form: "Une erreur est survenue. Veuillez réessayer." });
       setSent(false);
     } finally {
       setLoading(false);
@@ -549,12 +545,12 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  disabled={!canSubmit}
+                  disabled={!canSubmit || loading}
                   className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C46A4A] to-[#1F3A2E] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? (
                     <>
-                      <span className="h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                      <span className="h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden />
                       Envoi en cours...
                     </>
                   ) : (
@@ -648,7 +644,7 @@ function SuccessConfirmation() {
             lineHeight: 1.3,
           }}
         >
-          Votre demande a bien été envoyée !
+          ✔ Votre demande a été envoyée avec succès.
         </h2>
         <p
           style={{
@@ -673,22 +669,21 @@ function AnimatedCheckmark() {
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: "relative", width: 80, height: 80 }}
+      aria-hidden
     >
       <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
-        {/* Circle (path so pathLength works) */}
         <motion.path
           d="M 40 4 A 36 36 0 0 1 76 40 A 36 36 0 0 1 40 76 A 36 36 0 0 1 4 40 A 36 36 0 0 1 40 4"
-          stroke={colors.terracotta}
+          stroke="#22c55e"
           strokeWidth="3"
           fill="none"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         />
-        {/* Checkmark */}
         <motion.path
           d="M22 40 L34 52 L58 28"
-          stroke={colors.terracotta}
+          stroke="#22c55e"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
