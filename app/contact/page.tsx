@@ -61,6 +61,21 @@ export default function ContactPage() {
       successMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [sent]);
+
+  useEffect(() => {
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (typeof console !== "undefined") {
+      console.log("SERVICE:", process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
+      console.log("TEMPLATE:", process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
+      console.log("PUBLIC KEY:", process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+      if (!serviceId || !templateId || !publicKey) {
+        console.error("EmailJS configuration missing. Check .env.local");
+      }
+    }
+  }, []);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
