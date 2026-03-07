@@ -218,14 +218,18 @@ export default function ContactPage() {
 
     if (!serviceId || !templateId || !publicKey) {
       if (typeof console !== "undefined") {
-        console.error(
-          "EmailJS configuration missing. Set NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in .env.local"
-        );
+        console.error("EmailJS configuration missing. Check .env.local");
       }
       setFieldErrors({
         form: "Configuration email manquante. Vérifiez les variables d'environnement.",
       });
       return;
+    }
+
+    if (typeof console !== "undefined") {
+      console.log("SERVICE:", serviceId);
+      console.log("TEMPLATE:", templateId);
+      console.log("PUBLIC KEY:", publicKey ? `${publicKey.slice(0, 6)}...` : "");
     }
 
     setLoading(true);
