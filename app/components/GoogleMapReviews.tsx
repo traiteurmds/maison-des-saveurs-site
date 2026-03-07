@@ -107,15 +107,6 @@ export default function GoogleMapReviews() {
         >
           Avis clients
         </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-3 text-center text-lg text-deep-green/80"
-        >
-          Ce que disent nos clients sur notre traiteur marocain à Lyon
-        </motion.p>
 
         {/* Slider horizontal infini — défilement continu, aucune pause */}
         <div className="reviews-slider-wrap mt-14 overflow-hidden">

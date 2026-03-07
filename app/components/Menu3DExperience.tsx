@@ -111,9 +111,6 @@ export default function Menu3DExperience() {
         <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
-        <p className="mt-3 text-center font-serif text-lg text-deep-green/80">
-          Traiteur marocain Lyon · Couscous lyon événement · Cuisine marocaine traditionnelle
-        </p>
 
         <motion.div
           className="mt-12 flex flex-wrap justify-center gap-2"

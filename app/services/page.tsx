@@ -49,16 +49,6 @@ export default function ServicesPage() {
 
       <section className="bg-beige py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center font-serif text-lg text-deep-green/90"
-          >
-            Du dîner intime à la grande réception, chaque détail est pensé selon
-            vos souhaits.
-          </motion.p>
           <div className="mt-20 space-y-24">
             {services.map((service, i) => (
               <motion.article
