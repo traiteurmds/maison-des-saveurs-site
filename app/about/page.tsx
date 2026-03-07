@@ -60,7 +60,7 @@ export default function AboutPage() {
       </section>
 
       <section className="border-t border-deep-green/10 bg-beige-dark py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-8">
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export default function AboutPage() {
           >
             Nos engagements
           </motion.h2>
-          <div className="mt-16 grid gap-12 md:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-16 md:grid-cols-3 lg:gap-24">
             {[
               { title: "Une cuisine faite avec amour", text: "Chaque plat est préparé avec le même soin qu'un repas pour sa propre famille. Les recettes sont inspirées de la tradition marocaine, avec des ingrédients de qualité et des épices sélectionnées pour retrouver les vraies saveurs d'antan. Ici, rien n'est fait à la va-vite : tout est cuisiné avec patience, passion et beaucoup de cœur." },
               { title: "Le plaisir de partager", text: "Pour nous, un événement réussi est un moment où les invités se retrouvent autour d'une belle table et partagent un bon repas ensemble. La cuisine marocaine est une cuisine généreuse, faite pour être partagée. Voir les invités apprécier les plats et repartir satisfaits est la plus belle récompense." },
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 <h3 className="font-serif text-xl font-semibold text-terracotta">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-deep-green/80">{item.text}</p>
+                <p className="mt-3 text-lg leading-loose text-deep-green/80">{item.text}</p>
               </motion.div>
             ))}
           </div>
