@@ -72,6 +72,35 @@ export default function ContactPage() {
   const [minDate, setMinDate] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const hcaptchaWidgetIdRef = useRef<string | null>(null);
+  const hcaptchaLoadedRef = useRef(false);
+
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
+    if (!siteKey || hcaptchaLoadedRef.current) return;
+    const el = document.getElementById("hcaptcha-contact");
+    if (!el) return;
+    const existing = document.querySelector('script[src*="hcaptcha.com"]');
+    if (existing) {
+      hcaptchaLoadedRef.current = true;
+      const w = window as unknown as { hcaptcha?: { render: (el: HTMLElement, opts: { sitekey: string; size: string }) => string } };
+      if (w.hcaptcha?.render) {
+        hcaptchaWidgetIdRef.current = w.hcaptcha.render(el, { sitekey: siteKey, size: "invisible" });
+      }
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "https://js.hcaptcha.com/1/api.js";
+    script.async = true;
+    script.onload = () => {
+      hcaptchaLoadedRef.current = true;
+      const w = window as unknown as { hcaptcha?: { render: (el: HTMLElement, opts: { sitekey: string; size: string }) => string } };
+      if (w.hcaptcha?.render && el) {
+        hcaptchaWidgetIdRef.current = w.hcaptcha.render(el, { sitekey: siteKey, size: "invisible" });
+      }
+    };
+    document.head.appendChild(script);
+  }, []);
 
   useEffect(() => {
     const today = new Date();
@@ -112,6 +141,28 @@ export default function ContactPage() {
     setMessage("");
     setHoneypot("");
     setFieldErrors({});
+  }, []);
+
+  const getHcaptchaToken = useCallback((): Promise<string | null> => {
+    const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
+    if (!siteKey || typeof window === "undefined") return Promise.resolve(null);
+    const w = window as unknown as {
+      hcaptcha?: {
+        getResponse: (widgetId?: string) => string;
+        execute: (widgetId?: string) => Promise<void>;
+      };
+    };
+    if (!w.hcaptcha) return Promise.resolve(null);
+    const widgetId = hcaptchaWidgetIdRef.current ?? undefined;
+    return new Promise((resolve) => {
+      w.hcaptcha
+        ?.execute?.(widgetId)
+        ?.then(() => {
+          const token = w.hcaptcha?.getResponse?.(widgetId) ?? null;
+          resolve(token || null);
+        })
+        ?.catch(() => resolve(null)) ?? resolve(null);
+    });
   }, []);
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -179,6 +230,35 @@ export default function ContactPage() {
     });
 
     try {
+      const hcaptchaToken = await getHcaptchaToken();
+      const apiRes = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: prenom,
+          lastName: nom,
+          email: emailSanitized,
+          phone,
+          eventDate: eventDate || "",
+          message: messageSanitized,
+          hcaptchaToken: hcaptchaToken ?? undefined,
+        }),
+      });
+
+      if (apiRes.status === 429) {
+        setFieldErrors({ form: "Trop de demandes. Réessayez dans quelques minutes." });
+        setLoading(false);
+        return;
+      }
+
+      const apiData = await apiRes.json().catch(() => ({}));
+      if (!apiRes.ok) {
+        const msg = apiData?.errors ? Object.values(apiData.errors).filter(Boolean)[0] : apiData?.error ?? "La validation a échoué.";
+        setFieldErrors({ form: typeof msg === "string" ? msg : "Erreur de validation." });
+        setLoading(false);
+        return;
+      }
+
       await emailjs.send(
         serviceId,
         templateId,
@@ -201,7 +281,7 @@ export default function ContactPage() {
       resetForm();
       setCooldownUntil(Date.now() + COOLDOWN_MS);
       setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
-    } catch (error) {
+    } catch {
       setFieldErrors({ form: "L'envoi a échoué. Réessayez dans un moment." });
       setSent(false);
     } finally {
@@ -320,6 +400,9 @@ export default function ContactPage() {
                     onChange={(e) => setHoneypot(e.target.value)}
                   />
                 </div>
+                {process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && (
+                  <div id="hcaptcha-contact" className="min-h-[1px] overflow-hidden" aria-hidden="true" />
+                )}
 
                 <div>
                   <label htmlFor="firstName" style={labelStyle}>Prénom *</label>

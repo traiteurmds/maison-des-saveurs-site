@@ -1,16 +1,26 @@
 /**
  * Validation et sanitization des données du formulaire contact.
- * Protection XSS / injection : trim, longueur max, format strict.
+ * Protection XSS / injection : trim, longueur max, format strict, blocage HTML/scripts.
  */
 
 const MAX_NOM = 50;
 const MAX_PRENOM = 50;
 const MAX_MESSAGE = 1000;
 const PHONE_LENGTH = 10;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 function trim(str: string): string {
   return str.replace(/\s+/g, " ").trim();
+}
+
+/** Remove HTML tags and script-like content to prevent XSS/injection. */
+function stripHtmlAndScripts(value: string): string {
+  return value
+    .replace(/<[^>]*>/g, "")
+    .replace(/javascript:/gi, "")
+    .replace(/vbscript:/gi, "")
+    .replace(/data:/gi, "")
+    .replace(/on\w+=/gi, "");
 }
 
 function escapeForEmail(str: string): string {
@@ -23,16 +33,16 @@ function escapeForEmail(str: string): string {
 }
 
 export function sanitizeName(value: string, maxLength: number): string {
-  return trim(value).slice(0, maxLength);
+  return stripHtmlAndScripts(trim(value)).slice(0, maxLength);
 }
 
 export function sanitizeEmail(value: string): string {
-  return trim(value).slice(0, 254);
+  return stripHtmlAndScripts(trim(value)).slice(0, 254);
 }
 
-/** Limite la longueur sans modifier espaces ni retours à la ligne. */
+/** Limite la longueur et supprime HTML/scripts. */
 export function sanitizeMessage(value: string): string {
-  return value.slice(0, MAX_MESSAGE);
+  return stripHtmlAndScripts(value).slice(0, MAX_MESSAGE);
 }
 
 export function validateNom(value: string): { valid: boolean; error?: string } {
