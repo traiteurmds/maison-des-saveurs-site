@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,20 +17,13 @@ type Dish = {
 };
 
 const dishes: Dish[] = [
+  // ENTREES (3)
   {
     id: "salade-variee",
     title: "Salade variée",
     description: "Salade fraîche et colorée, préparée avec des légumes de saison et une touche d'épices douces. Idéale pour ouvrir l'appétit en douceur.",
-    image: "/images/menu/mini-sales.jpg",
+    image: "/images/menu/salade-variee.jpg",
     alt: "Salade variée traiteur Lyon",
-    category: "entrees",
-  },
-  {
-    id: "salade-royale",
-    title: "Salade royale",
-    description: "Une salade raffinée aux saveurs marocaines : semoule, légumes croquants, herbes fraîches et une vinaigrette subtile. Parfaite pour un début de repas élégant.",
-    image: "/images/menu/mini-sales.jpg",
-    alt: "Salade royale traiteur Lyon",
     category: "entrees",
   },
   {
@@ -42,35 +35,36 @@ const dishes: Dish[] = [
     category: "entrees",
   },
   {
+    id: "pastilla-poulet",
+    title: "Pastilla poulet",
+    description: "Pastilla au poulet, amandes et épices, feuilletage doré. Entrée raffinée pour les grandes occasions.",
+    image: "/images/menu/pastilla.jpg",
+    alt: "Pastilla poulet traiteur Lyon",
+    category: "entrees",
+  },
+  // PLATS (5)
+  {
     id: "couscous-royal",
-    title: "Couscous Royal",
+    title: "Couscous royal",
     description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
     image: "/images/menu/couscous.jpg",
     alt: "Couscous marocain traiteur Lyon",
     category: "plats",
   },
   {
-    id: "viande-pruneaux",
-    title: "Viande aux pruneaux",
-    description: "Tajine de boeuf marocain aux pruneaux et amandes, sucré-salé emblématique des mariages.",
-    image: "/images/menu/viande-pruneaux.jpg",
-    alt: "Tajine marocain traiteur Lyon",
-    category: "plats",
-  },
-  {
-    id: "poulet-olives",
-    title: "Poulet aux olives",
+    id: "tajine-poulet-olives",
+    title: "Tajine poulet olives",
     description: "Poulet marocain aux olives et citron confit, servi sur plat traditionnel.",
     image: "/images/menu/poulet-olives.jpg",
-    alt: "Poulet olives citron marocain traiteur Lyon",
+    alt: "Tajine poulet olives traiteur Lyon",
     category: "plats",
   },
   {
-    id: "pastilla",
-    title: "Pastilla",
-    description: "Pastilla marocaine traditionnelle, idéale pour les grandes occasions et les réceptions raffinées.",
-    image: "/images/menu/pastilla.jpg",
-    alt: "Pastilla marocaine traiteur Lyon",
+    id: "tajine-agneau-pruneaux",
+    title: "Tajine agneau pruneaux",
+    description: "Tajine d'agneau aux pruneaux et amandes, sucré-salé emblématique des mariages.",
+    image: "/images/menu/viande-pruneaux.jpg",
+    alt: "Tajine agneau pruneaux traiteur Lyon",
     category: "plats",
   },
   {
@@ -82,10 +76,19 @@ const dishes: Dish[] = [
     category: "plats",
   },
   {
+    id: "pastilla-fruits-de-mer",
+    title: "Pastilla fruits de mer",
+    description: "Pastilla aux fruits de mer, feuilletage croustillant et saveurs de la mer. Idéale pour les réceptions raffinées.",
+    image: "/images/menu/pastilla.jpg",
+    alt: "Pastilla fruits de mer traiteur Lyon",
+    category: "plats",
+  },
+  // DESSERTS (2)
+  {
     id: "assiette-fruits",
     title: "Assiette de fruits",
     description: "Sélection de fruits frais de saison, présentée avec élégance. Une fin de repas légère et rafraîchissante.",
-    image: "/images/menu/pastilla.jpg",
+    image: "/images/menu/gateaux-marocains.jpg",
     alt: "Assiette de fruits traiteur Lyon",
     category: "desserts",
   },
@@ -93,7 +96,7 @@ const dishes: Dish[] = [
     id: "gateaux-marocains",
     title: "Gâteaux marocains",
     description: "Pâtisseries orientales et douceurs marocaines : cornes de gazelle, gâteaux au miel et aux amandes, pour clôturer le repas en beauté.",
-    image: "/images/menu/pastilla.jpg",
+    image: "/images/menu/gateaux-marocains.jpg",
     alt: "Gâteaux marocains traiteur Lyon",
     category: "desserts",
   },
@@ -108,25 +111,17 @@ const categories: { id: Category; label: string }[] = [
 export default function Menu3DExperience() {
   const [openDish, setOpenDish] = useState<Dish | null>(null);
   const [activeCategory, setActiveCategory] = useState<Category>("plats");
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const filteredDishes = dishes.filter((d) => d.category === activeCategory);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    const card = cardRefs.current[index];
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    const rotateX = (y - 0.5) * -12;
-    const rotateY = (x - 0.5) * 12;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-  }, []);
+  const gridLayoutClass =
+    activeCategory === "entrees"
+      ? "grid-cols-1 md:grid-cols-3"
+      : activeCategory === "plats"
+        ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        : "grid-cols-1 md:grid-cols-2";
 
-  const handleMouseLeave = useCallback((index: number) => {
-    const card = cardRefs.current[index];
-    if (card) card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
-  }, []);
+  const gridWrapperClass = activeCategory === "desserts" ? "mx-auto max-w-3xl" : "";
 
   useEffect(() => {
     if (!openDish) return;
@@ -167,7 +162,7 @@ export default function Menu3DExperience() {
           ))}
         </motion.div>
 
-        <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-16 grid gap-10 ${gridLayoutClass} ${gridWrapperClass}`}>
           {filteredDishes.length === 0 ? (
             <p className="col-span-full py-12 text-center font-serif text-lg text-deep-green/70">
               Cette catégorie sera bientôt enrichie.
@@ -177,24 +172,18 @@ export default function Menu3DExperience() {
           {filteredDishes.map((dish, i) => (
             <motion.div
               key={dish.id}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-              className="aspect-[4/3] min-h-[320px] w-full md:min-h-[360px]"
+              className="aspect-[4/3] min-h-[280px] w-full md:min-h-[320px]"
             >
               <div
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
                 role="button"
                 tabIndex={0}
                 onClick={() => setOpenDish(dish)}
-                onMouseMove={(e) => handleMouseMove(e, i)}
-                onMouseLeave={() => handleMouseLeave(i)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-2xl shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_32px_64px_rgba(15,31,24,0.3)] hover:scale-[1.02]"
-                style={{ transformStyle: "preserve-3d" }}
+                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[16px] shadow-lg transition-[box-shadow,transform] duration-[350ms] ease hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
               >
                 <Image
                   src={dish.image}
@@ -202,7 +191,7 @@ export default function Menu3DExperience() {
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.05]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
                 {/* Reflet lumière dorée au survol (luxe) */}
