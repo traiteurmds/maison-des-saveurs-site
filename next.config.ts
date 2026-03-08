@@ -62,6 +62,10 @@ const nextConfig: NextConfig = {
     const headers = [
       { source: "/:path*", headers: securityHeaders },
       {
+        source: "/favicon.ico",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
+      },
+      {
         source: "/_next/static/:path*",
         headers: [
           {
