@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     "traiteur evenementiel lyon",
   ],
   icons: {
-    icon: "/favicon.ico",
+    icon: [{ url: "/favicon.ico", sizes: "any" }],
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
