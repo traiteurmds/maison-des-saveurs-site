@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond, Outfit, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -142,6 +143,7 @@ export default function RootLayout({
     return (
       <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
         <body className="antialiased">
+          <Script src="https://elfsightcdn.com/platform.js" strategy="afterInteractive" defer />
           <MaintenancePage />
         </body>
       </html>
@@ -151,6 +153,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
       <body className="antialiased">
+        <Script src="https://elfsightcdn.com/platform.js" strategy="afterInteractive" defer />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
