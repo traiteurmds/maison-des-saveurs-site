@@ -2,86 +2,6 @@
 
 import { motion } from "framer-motion";
 
-const reviews = [
-  {
-    name: "Sarah B.",
-    quote:
-      "Service exceptionnel, la cuisine était incroyable et tous nos invités ont adoré. Merci pour votre professionnalisme.",
-  },
-  {
-    name: "Karim L.",
-    quote:
-      "Nous avons fait appel à ce traiteur pour un anniversaire et tout était parfait. Les plats étaient délicieux et très bien présentés.",
-  },
-  {
-    name: "Nadia R.",
-    quote:
-      "Service très professionnel et cuisine marocaine authentique. Tous nos invités ont adoré le couscous et la pastilla.",
-  },
-  {
-    name: "Julien M.",
-    quote:
-      "Un traiteur sérieux et à l'écoute. La prestation pour notre événement d'entreprise s'est déroulée parfaitement.",
-  },
-  {
-    name: "Amel T.",
-    quote:
-      "Les saveurs étaient incroyables et le service impeccable. Nous recommandons sans hésiter.",
-  },
-  {
-    name: "Samir H.",
-    quote:
-      "Très belle découverte. Les plats étaient généreux et vraiment savoureux.",
-  },
-  {
-    name: "Leila K.",
-    quote:
-      "Organisation parfaite pour notre réception familiale. Merci encore pour votre professionnalisme.",
-  },
-];
-
-const DISPLAY_REVIEWS = reviews.slice(0, 6);
-
-function StarRating() {
-  return (
-    <p className="flex gap-0.5 text-amber-500" aria-label="5 étoiles">
-      {Array.from({ length: 5 }, (_, i) => (
-        <span key={i} className="text-lg">★</span>
-      ))}
-    </p>
-  );
-}
-
-function GoogleIcon() {
-  return (
-    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-semibold text-[#4285F4] shadow-md">
-      G
-    </span>
-  );
-}
-
-function ReviewCard({ name, quote }: { name: string; quote: string }) {
-  return (
-    <article className="review-card flex max-w-[320px] flex-col justify-between rounded-2xl border border-white/10 bg-white/80 p-6 text-left text-sm text-deep-green shadow-[0_18px_45px_rgba(0,0,0,0.25)] backdrop-blur-md md:p-7">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <StarRating />
-          <p className="mt-3 text-xs font-medium uppercase tracking-[0.18em] text-deep-green/70">
-            Avis vérifié
-          </p>
-        </div>
-        <GoogleIcon />
-      </div>
-      <blockquote className="mt-5 flex-1 text-[0.95rem] leading-relaxed text-deep-green/90">
-        &ldquo;{quote}&rdquo;
-      </blockquote>
-      <footer className="mt-5 text-sm font-semibold text-deep-green">
-        — {name}
-      </footer>
-    </article>
-  );
-}
-
 export default function GoogleMapReviews() {
   return (
     <section id="avis" className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="avis-heading">
@@ -104,16 +24,21 @@ export default function GoogleMapReviews() {
           transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mt-4 flex flex-col items-center gap-1 text-center"
         >
-          <StarRating />
           <p className="text-deep-green/70 md:text-lg">
             Ils nous ont fait confiance pour leurs événements
           </p>
         </motion.div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
-          {DISPLAY_REVIEWS.map((review) => (
-            <ReviewCard key={review.name} name={review.name} quote={review.quote} />
-          ))}
+        <div className="mt-14 flex justify-center">
+          <div className="w-full max-w-[900px]">
+            <div className="flex justify-center">
+              <div
+                className="elfsight-app-086e1472-babb-4d8b-badb-86c0c9fcf1fa"
+                data-elfsight-app-lazy
+              />
+            </div>
+            <script src="https://elfsightcdn.com/platform.js" async />
+          </div>
         </div>
 
         <motion.div
