@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const reviews = [
   {
@@ -52,38 +53,79 @@ function StarRating() {
   );
 }
 
-function ReviewCard({
-  name,
-  quote,
-  index,
-}: {
-  name: string;
-  quote: string;
-  index: number;
-}) {
+function GoogleIcon() {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex flex-col rounded-2xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] md:p-8"
-    >
-      <StarRating />
-      <blockquote className="mt-4 flex-1 text-base leading-relaxed text-deep-green/90 md:text-lg">
-        &quot;{quote}&quot;
+    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-semibold text-[#4285F4] shadow-md">
+      G
+    </span>
+  );
+}
+
+function ReviewCard({ name, quote }: { name: string; quote: string }) {
+  return (
+    <article className="review-card flex max-w-[320px] flex-col justify-between rounded-2xl border border-white/5 bg-white/5 p-6 text-left text-sm text-beige shadow-[0_18px_45px_rgba(0,0,0,0.35)] backdrop-blur-md md:p-7">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <StarRating />
+          <p className="mt-3 text-xs font-medium uppercase tracking-[0.18em] text-beige/80">
+            Avis vérifié
+          </p>
+        </div>
+        <GoogleIcon />
+      </div>
+      <blockquote className="mt-5 flex-1 text-[0.95rem] leading-relaxed text-beige/90">
+        &ldquo;{quote}&rdquo;
       </blockquote>
-      <footer className="mt-5 text-sm font-medium text-deep-green/80 md:text-base">
+      <footer className="mt-5 text-sm font-semibold text-beige">
         — {name}
       </footer>
-    </motion.article>
+    </article>
+  );
+}
+
+function ReviewRow({
+  direction,
+  duration,
+  className,
+}: {
+  direction: "left" | "right";
+  duration: number;
+  className?: string;
+}) {
+  const items = [...DISPLAY_REVIEWS, ...DISPLAY_REVIEWS];
+
+  return (
+    <div className={`reviews-row ${className ?? ""}`}>
+      <div
+        className={`reviews-track ${
+          direction === "left" ? "reviews-track-left" : "reviews-track-right"
+        }`}
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {items.map((review, index) => (
+          <ReviewCard key={`${review.name}-${index}`} name={review.name} quote={review.quote} />
+        ))}
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-beige via-beige/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-beige via-beige/40 to-transparent" />
+    </div>
   );
 }
 
 export default function GoogleMapReviews() {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const yRow1 = useTransform(scrollYProgress, [0, 1], [0, -20]);
+  const yRow2 = useTransform(scrollYProgress, [0, 1], [0, 16]);
+  const yRow3 = useTransform(scrollYProgress, [0, 1], [0, -10]);
+
   return (
     <section id="avis" className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="avis-heading">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div ref={sectionRef} className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.h2
           id="avis-heading"
           initial={{ opacity: 0, y: 24 }}
@@ -103,18 +145,21 @@ export default function GoogleMapReviews() {
           className="mt-4 flex flex-col items-center gap-1 text-center"
         >
           <StarRating />
-          <p className="text-deep-green/70 md:text-lg">Plusieurs clients satisfaits</p>
+          <p className="text-deep-green/70 md:text-lg">
+            Ils nous ont fait confiance pour leurs événements
+          </p>
         </motion.div>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {DISPLAY_REVIEWS.map((review, index) => (
-            <ReviewCard
-              key={`${review.name}-${index}`}
-              name={review.name}
-              quote={review.quote}
-              index={index}
-            />
-          ))}
+        <div className="mt-14 space-y-8 md:space-y-10">
+          <motion.div style={{ y: yRow1 }} className="reviews-row-1">
+            <ReviewRow direction="left" duration={40} />
+          </motion.div>
+          <motion.div style={{ y: yRow2 }} className="hidden md:block reviews-row-2">
+            <ReviewRow direction="right" duration={50} />
+          </motion.div>
+          <motion.div style={{ y: yRow3 }} className="hidden md:block reviews-row-3">
+            <ReviewRow direction="left" duration={45} />
+          </motion.div>
         </div>
 
         <motion.div
@@ -145,6 +190,64 @@ export default function GoogleMapReviews() {
           />
         </motion.div>
       </div>
+
+      <style jsx global>{`
+        .reviews-row {
+          position: relative;
+          overflow: hidden;
+        }
+        .reviews-track {
+          display: flex;
+          gap: 24px;
+          will-change: transform;
+        }
+        .reviews-track-left {
+          animation-name: review-marquee-left;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        .reviews-track-right {
+          animation-name: review-marquee-right;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        .reviews-row:hover .reviews-track {
+          animation-play-state: paused;
+        }
+        .review-card {
+          min-width: 260px;
+        }
+        @keyframes review-marquee-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        @keyframes review-marquee-right {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+        @media (max-width: 768px) {
+          .reviews-row-2,
+          .reviews-row-3 {
+            display: none;
+          }
+          .reviews-row-1 .reviews-track-left,
+          .reviews-row-1 .reviews-track-right {
+            animation-duration: 60s !important;
+          }
+          .review-card {
+            max-width: 100%;
+            width: 100%;
+          }
+        }
+      `}</style>
     </section>
   );
 }
