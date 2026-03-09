@@ -128,11 +128,10 @@ export default function ContactPage() {
   const phoneValid = phone.length === LIMITS.PHONE_LENGTH && /^\d+$/.test(phone);
   const emailValid = validateEmail(sanitizeEmail(email)).valid;
   const requiredFilled =
-    firstName.trim().length > 0 &&
     lastName.trim().length > 0 &&
     email.trim().length > 0 &&
-    message.trim().length > 0 &&
-    eventDate.length > 0;
+    phone.trim().length > 0 &&
+    message.trim().length > 0;
   const canSubmit = !loading && !inCooldown && phoneValid && emailValid && requiredFilled;
 
   const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -195,15 +194,12 @@ export default function ContactPage() {
     }
 
     const nom = sanitizeName(lastName, LIMITS.MAX_NOM);
-    const prenom = sanitizeName(firstName, LIMITS.MAX_PRENOM);
     const emailSanitized = sanitizeEmail(email);
     const messageSanitized = sanitizeMessage(message);
 
     const errs: Record<string, string> = {};
     const rNom = validateNom(nom);
     if (!rNom.valid && rNom.error) errs.lastName = rNom.error;
-    const rPrenom = validatePrenom(prenom);
-    if (!rPrenom.valid && rPrenom.error) errs.firstName = rPrenom.error;
     const rEmail = validateEmail(emailSanitized);
     if (!rEmail.valid && rEmail.error) errs.email = rEmail.error;
     const rPhone = validatePhone(phone);
@@ -213,13 +209,6 @@ export default function ContactPage() {
     }
     const rMessage = validateMessage(messageSanitized);
     if (!rMessage.valid && rMessage.error) errs.message = rMessage.error;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selected = eventDate ? new Date(eventDate) : null;
-    if (selected && selected < today) {
-      errs.eventDate = "La date doit être aujourd'hui ou une date future.";
-    }
 
     if (Object.keys(errs).length > 0) {
       setFieldErrors(errs);
@@ -251,43 +240,13 @@ export default function ContactPage() {
     setSent(false);
 
     const templateParams = {
-      name: `${prenom} ${nom}`.trim(),
+      name: nom,
       email: emailSanitized,
       phone,
-      date: eventDate || "",
       message: messageSanitized,
     };
 
     try {
-      const hcaptchaToken = await getHcaptchaToken();
-      const apiRes = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: prenom,
-          lastName: nom,
-          email: emailSanitized,
-          phone,
-          eventDate: eventDate || "",
-          message: messageSanitized,
-          hcaptchaToken: hcaptchaToken ?? undefined,
-        }),
-      });
-
-      if (apiRes.status === 429) {
-        setFieldErrors({ form: "Trop de demandes. Réessayez dans quelques minutes." });
-        setLoading(false);
-        return;
-      }
-
-      const apiData = await apiRes.json().catch(() => ({}));
-      if (!apiRes.ok) {
-        const msg = apiData?.errors ? Object.values(apiData.errors).filter(Boolean)[0] : apiData?.error ?? "La validation a échoué.";
-        setFieldErrors({ form: typeof msg === "string" ? msg : "Erreur de validation." });
-        setLoading(false);
-        return;
-      }
-
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setSent(true);
@@ -421,26 +380,6 @@ export default function ContactPage() {
                 )}
 
                 <div>
-                  <label htmlFor="firstName" style={labelStyle}>Prénom *</label>
-                  <input
-                    id="firstName"
-                    type="text"
-                    name="firstName"
-                    required
-                    placeholder="Prénom"
-                    maxLength={LIMITS.MAX_PRENOM}
-                    value={firstName}
-                    onChange={(e) => setFirstName(sanitizeName(e.target.value, LIMITS.MAX_PRENOM))}
-                    style={inputBaseStyle}
-                    onFocus={focusStyle}
-                    onBlur={blurStyle}
-                  />
-                  {fieldErrors.firstName && (
-                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.firstName}</p>
-                  )}
-                </div>
-
-                <div>
                   <label htmlFor="lastName" style={labelStyle}>Nom *</label>
                   <input
                     id="lastName"
@@ -506,25 +445,6 @@ export default function ContactPage() {
                     <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.375rem" }} role="alert">
                       {phoneError || fieldErrors.phone}
                     </p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="eventDate" style={labelStyle}>Date de l&apos;événement *</label>
-                  <input
-                    id="eventDate"
-                    type="date"
-                    name="eventDate"
-                    required
-                    min={minDate}
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                    style={inputBaseStyle}
-                    onFocus={focusStyle}
-                    onBlur={blurStyle}
-                  />
-                  {fieldErrors.eventDate && (
-                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.eventDate}</p>
                   )}
                 </div>
 
@@ -664,7 +584,7 @@ function SuccessConfirmation() {
             lineHeight: 1.3,
           }}
         >
-          ✔ Votre demande a été envoyée avec succès.
+          Message envoyé ! Nous vous répondrons sous 24h.
         </h2>
         <p
           style={{
