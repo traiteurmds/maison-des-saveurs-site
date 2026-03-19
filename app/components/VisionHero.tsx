@@ -1,6 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+
+function scrollToMenu() {
+  document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+}
 
 export default function VisionHero() {
   return (
@@ -22,6 +27,38 @@ export default function VisionHero() {
         >
           Traiteur traditionnel halal
         </motion.p>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-12 flex flex-wrap justify-center gap-5"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <button
+              type="button"
+              onClick={scrollToMenu}
+              className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full border border-deep-green/35 bg-white/40 px-10 py-4 font-medium tracking-[0.18em] text-deep-green transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg md:min-h-[56px] md:min-w-[230px]"
+            >
+              Découvrir le menu
+            </button>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full bg-deep-green px-10 py-4 font-medium tracking-[0.18em] text-beige shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:min-h-[56px] md:min-w-[230px]"
+            >
+              Demander un devis
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

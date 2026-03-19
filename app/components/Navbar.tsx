@@ -31,6 +31,7 @@ const navLinks = [
 
 const SCROLL_THRESHOLD = 80;
 const NAV_BEIGE = "#E8E2D8";
+const HOME_HERO_IS_DARK = false;
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const overDarkHero = pathname === "/" && !scrolled;
+  const overDarkHero = HOME_HERO_IS_DARK && pathname === "/" && !scrolled;
   const linkColor = overDarkHero ? NAV_BEIGE : undefined;
 
   return (
