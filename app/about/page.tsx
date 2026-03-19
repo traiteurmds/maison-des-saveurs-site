@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 export default function AboutPage() {
   return (
     <div className="pt-24">
-      <section className="relative h-[50vh] min-h-[400px] overflow-hidden bg-page-hero grain-overlay flex items-center justify-center">
+      <section className="relative flex h-[45vh] min-h-[360px] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 font-serif text-5xl font-semibold text-beige md:text-6xl"
+          className="relative z-10 font-serif text-5xl font-semibold text-deep-green md:text-6xl"
         >
           Notre histoire
         </motion.h1>

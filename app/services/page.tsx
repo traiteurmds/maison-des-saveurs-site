@@ -31,17 +31,17 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="pt-24">
-      <section className="relative flex h-[45vh] min-h-[360px] items-center justify-center overflow-hidden bg-page-hero grain-overlay">
+      <section className="relative flex h-[45vh] min-h-[360px] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="relative z-10 text-center"
         >
-          <p className="font-serif text-sm uppercase tracking-[0.3em] text-beige/90">
+          <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">
             Ce que nous proposons
           </p>
-          <h1 className="mt-2 font-serif text-5xl font-semibold text-beige md:text-6xl">
+          <h1 className="mt-2 font-serif text-5xl font-semibold text-deep-green md:text-6xl">
             Nos services
           </h1>
         </motion.div>
