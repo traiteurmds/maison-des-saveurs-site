@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function AboutPage() {
   return (
     <div className="pt-24">
-      <section className="relative flex h-[45vh] min-h-[360px] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige">
+      <section className="relative flex items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige py-14 md:py-16">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -16,7 +16,7 @@ export default function AboutPage() {
         </motion.h1>
       </section>
 
-      <section className="bg-beige py-24">
+      <section className="bg-beige py-14 md:py-16">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <motion.p
             initial={{ opacity: 0, y: 24 }}

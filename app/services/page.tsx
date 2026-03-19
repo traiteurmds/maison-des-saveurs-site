@@ -31,7 +31,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="pt-24">
-      <section className="relative flex h-[45vh] min-h-[360px] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige">
+      <section className="relative flex items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige py-14 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
-      <section className="bg-beige py-24">
+      <section className="bg-beige py-14 md:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mt-20 space-y-24">
             {services.map((service, i) => (
