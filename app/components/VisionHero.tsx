@@ -9,7 +9,7 @@ function scrollToMenu() {
 
 export default function VisionHero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige text-deep-green md:min-h-[82vh]">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige text-deep-green md:min-h-[100vh]">
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 48 }}
