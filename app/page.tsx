@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import VisionHero from "./components/VisionHero";
 import Menu3DExperience from "./components/Menu3DExperience";
+import TarifsMenus from "./components/TarifsMenus";
 import ContactCTA from "./components/ContactCTA";
 
 const sectionVariants = {
@@ -26,6 +27,15 @@ export default function Home() {
         viewport={{ once: true, margin: "-80px" }}
       >
         <Menu3DExperience />
+      </motion.section>
+
+      <motion.section
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+      >
+        <TarifsMenus />
       </motion.section>
 
       <motion.section
