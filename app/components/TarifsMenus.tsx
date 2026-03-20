@@ -113,7 +113,6 @@ export default function TarifsMenus() {
                   aria-hidden
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
                   className="pointer-events-none absolute -top-24 left-0 h-48 w-full bg-[linear-gradient(90deg,transparent,rgba(212,175,55,0.45),transparent)]"
                   animate={{ x: [0, 220, 0] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
