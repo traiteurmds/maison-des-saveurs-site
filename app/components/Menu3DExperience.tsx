@@ -122,14 +122,22 @@ export default function Menu3DExperience() {
   }, [openDish]);
 
   return (
-    <section id="menu" className="border-t border-deep-green/10 bg-beige py-24" aria-labelledby="menu-heading">
+    <section
+      id="menu"
+      className="relative overflow-hidden border-t border-deep-green/10 bg-beige py-24"
+      aria-labelledby="menu-heading"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-beige-dark/10"
+      />
       <div className="mx-auto max-w-7xl px-6">
         <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
 
         <motion.div
-          className="mt-12 flex flex-wrap justify-center gap-2"
+          className="mt-12 flex flex-wrap justify-center gap-3"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -140,10 +148,10 @@ export default function Menu3DExperience() {
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
-              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] ${
+              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-green/30 ${
                 activeCategory === cat.id
-                  ? "bg-deep-green text-beige shadow-lg"
-                  : "bg-white text-deep-green shadow-md hover:-translate-y-0.5 hover:shadow-lg"
+                  ? "border border-beige/10 bg-deep-green text-beige shadow-lg shadow-deep-green/20 hover:-translate-y-0.5 hover:shadow-xl"
+                  : "border border-deep-green/15 bg-white/55 text-deep-green shadow-md hover:-translate-y-0.5 hover:bg-white/80 hover:shadow-lg"
               }`}
             >
               {cat.label}
@@ -172,7 +180,7 @@ export default function Menu3DExperience() {
                 tabIndex={0}
                 onClick={() => setOpenDish(dish)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[16px] shadow-lg transition-[box-shadow,transform] duration-[350ms] ease hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
+                  className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[18px] border border-deep-green/10 bg-white/40 shadow-lg transition-[box-shadow,transform] duration-[350ms] ease hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)]"
               >
                 <Image
                   src={dish.image}
@@ -181,13 +189,14 @@ export default function Menu3DExperience() {
                   loading="lazy"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                   quality={80}
-                  className="h-full w-full object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.05]"
+                    className="h-full w-full object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.06]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" aria-hidden />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" aria-hidden />
                 <div
-                  className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
-                    background: "linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.08) 50%, transparent 60%)",
+                      background:
+                        "linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.10) 50%, transparent 60%)",
                   }}
                   aria-hidden
                 />
@@ -195,7 +204,7 @@ export default function Menu3DExperience() {
                   className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-[100%]"
                   aria-hidden
                 />
-                <span className="absolute bottom-6 left-6 right-6 font-serif text-2xl font-semibold text-white drop-shadow-md md:text-3xl">
+                  <span className="absolute bottom-6 left-6 right-6 text-center font-serif text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">
                   {dish.title}
                 </span>
               </div>
@@ -223,7 +232,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[20px] bg-white shadow-2xl"
+              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[22px] border border-deep-green/10 bg-white/90 shadow-2xl backdrop-blur"
               role="dialog"
               aria-modal="true"
               aria-labelledby="menu-3d-modal-title"
@@ -232,7 +241,7 @@ export default function Menu3DExperience() {
               <button
                 type="button"
                 onClick={() => setOpenDish(null)}
-                className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-black/60 text-2xl text-white transition-colors hover:bg-black"
+                className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-deep-green/70 text-2xl text-white transition-colors hover:bg-deep-green/90"
                 aria-label="Fermer le détail du plat"
               >
                 ×
