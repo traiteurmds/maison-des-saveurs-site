@@ -23,6 +23,7 @@ function scrollToMenuSection() {
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
+  { href: "/caftans", label: "Caftans" },
   { href: "/services", label: "Services" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
