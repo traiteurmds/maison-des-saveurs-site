@@ -76,7 +76,7 @@ export default function VisionHero() {
           >
             <Link
               href="/caftans"
-              className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full border border-terracotta/45 bg-gradient-to-r from-white/85 to-[#f6eadc] px-10 py-4 font-medium tracking-[0.18em] text-terracotta shadow-[0_10px_28px_rgba(15,29,23,0.12)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:from-white hover:to-[#f3e2cf] hover:shadow-xl md:min-h-[56px] md:min-w-[230px]"
+              className="inline-flex h-[52px] w-[210px] items-center justify-center rounded-full border border-terracotta/45 bg-gradient-to-r from-white/85 to-[#f6eadc] px-6 text-[0.82rem] font-medium tracking-[0.12em] text-terracotta shadow-[0_10px_28px_rgba(15,29,23,0.12)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:from-white hover:to-[#f3e2cf] hover:shadow-xl md:h-[56px] md:w-[230px]"
             >
               Découvrir les caftans
             </Link>
