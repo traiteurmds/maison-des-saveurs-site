@@ -34,7 +34,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className="border-t border-deep-green/10 bg-gradient-to-br from-[#102019] via-[#15281f] to-[#1c3228] text-beige">
+    <footer className="border-t border-white/10 bg-gradient-to-br from-[#0f0f12] via-[#15151d] to-[#1c1c25] text-beige">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <motion.div
@@ -69,7 +69,7 @@ export default function Footer() {
             className="space-y-6 text-sm"
           >
             <div>
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-terracotta">
+              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[#ccb287]">
                 Navigation
               </h3>
               <ul className="mt-4 space-y-2">
@@ -89,7 +89,7 @@ export default function Footer() {
             </div>
 
             <div className="space-y-3">
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-terracotta">
+              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[#ccb287]">
                 Contact & réseaux
               </h3>
               <p className="text-sm text-beige/90">
