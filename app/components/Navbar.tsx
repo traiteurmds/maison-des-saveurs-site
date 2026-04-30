@@ -23,7 +23,6 @@ function scrollToMenuSection() {
 const navLinks = [
   { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
-  { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },

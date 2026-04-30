@@ -14,7 +14,6 @@ function scrollToTop() {
 
 const footerLinks = [
   { href: "/#menu", label: "Menu" },
-  { href: "/about", label: "Notre Maison" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
