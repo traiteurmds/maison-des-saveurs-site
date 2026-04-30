@@ -68,8 +68,16 @@ function CaftanCard({ item, index }: { item: Caftan; index: number }) {
 
 export default function CaftansPage() {
   return (
-    <div className="bg-beige pt-24 pb-24">
-      <section className="border-b border-deep-green/10 bg-gradient-to-b from-[#f7f0e7] to-beige px-6 py-16 text-center">
+    <div className="bg-soft-gradient-beige pt-24 pb-24">
+      <section className="relative overflow-hidden border-b border-deep-green/10 bg-gradient-to-b from-[#f7f0e7] to-beige px-6 py-16 text-center">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 12% 18%, rgba(184,132,84,0.2), transparent 36%), radial-gradient(circle at 86% 10%, rgba(21,40,31,0.10), transparent 30%)",
+          }}
+        />
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,7 +111,7 @@ export default function CaftansPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-20px" }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 rounded-2xl border border-deep-green/10 bg-gradient-to-r from-deep-green via-[#173126] to-deep-green p-7 text-center text-beige shadow-[0_12px_34px_rgba(15,31,24,0.28)]"
+          className="mb-10 rounded-2xl border border-deep-green/10 bg-gradient-to-r from-[#102019] via-[#173126] to-[#223c30] p-7 text-center text-beige shadow-[0_16px_38px_rgba(15,31,24,0.30)]"
         >
           <p className="font-serif text-3xl font-semibold md:text-4xl">MDS x Lamia Créations</p>
           <p className="mx-auto mt-3 max-w-2xl text-beige/80">

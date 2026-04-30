@@ -31,7 +31,15 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="pt-24">
-      <section className="relative flex items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige py-14 md:py-16">
+      <section className="relative flex items-center justify-center overflow-hidden border-b border-deep-green/10 bg-soft-gradient-beige py-16 md:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 14% 20%, rgba(184,132,84,0.16), transparent 35%), radial-gradient(circle at 88% 10%, rgba(21,40,31,0.10), transparent 30%)",
+          }}
+        />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +55,7 @@ export default function ServicesPage() {
         </motion.div>
       </section>
 
-      <section className="bg-beige py-14 md:py-16">
+      <section className="bg-soft-gradient-beige py-14 md:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mt-20 space-y-24">
             {services.map((service, i) => (
@@ -57,7 +65,7 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                className={`group grid gap-12 md:grid-cols-2 md:gap-16 ${
+                className={`group lux-surface service-card-hover rounded-2xl p-6 md:grid md:grid-cols-2 md:gap-16 md:p-8 ${
                   i % 2 === 1 ? "md:flex-row-reverse" : ""
                 }`}
               >

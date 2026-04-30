@@ -34,7 +34,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className="border-t border-deep-green/10 bg-deep-green text-beige">
+    <footer className="border-t border-deep-green/10 bg-gradient-to-br from-[#102019] via-[#15281f] to-[#1c3228] text-beige">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <motion.div
@@ -55,7 +55,7 @@ export default function Footer() {
             >
               Maison Des Saveurs
             </Link>
-            <p className="max-w-md text-sm leading-relaxed text-beige/80">
+            <p className="max-w-md text-sm leading-relaxed text-beige/75">
               Traiteur marocain Lyon et traiteur oriental Lyon. Couscous lyon événement,
               mariages et réceptions. Cuisine d&apos;exception dans toute la métropole.
             </p>
@@ -126,7 +126,7 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-12 flex flex-col gap-4 border-t border-beige/20 pt-8 text-xs text-beige/60 md:flex-row md:items-center md:justify-between"
+          className="mt-12 flex flex-col gap-4 border-t border-beige/20 pt-8 text-xs text-beige/65 md:flex-row md:items-center md:justify-between"
         >
           <p>© {new Date().getFullYear()} Maison Des Saveurs. Tous droits réservés.</p>
           <p className="text-[11px]">

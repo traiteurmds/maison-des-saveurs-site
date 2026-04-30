@@ -56,8 +56,8 @@ export default function Navbar() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out ${
         scrolled
-          ? "nav-scrolled border-deep-green/10 bg-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.06)] backdrop-blur-md"
-          : "border-transparent bg-transparent"
+          ? "nav-scrolled border-deep-green/10 bg-[#f9f3e9]/70 shadow-[0_10px_32px_rgba(12,23,18,0.12)] backdrop-blur-xl"
+          : "border-transparent bg-gradient-to-b from-[#f7f1e8]/75 to-transparent"
       } ${overDarkHero ? "nav-over-hero" : ""}`}
     >
       <nav className={`mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-all duration-300 ${
@@ -80,7 +80,7 @@ export default function Navbar() {
 
         {/* Desktop nav + réseaux sociaux */}
         <div className="hidden items-center md:flex">
-          <ul className="main-nav-list flex items-center gap-10">
+          <ul className="main-nav-list flex items-center gap-10 rounded-full border border-deep-green/10 bg-white/55 px-6 py-2 shadow-[0_10px_26px_rgba(15,29,23,0.08)] backdrop-blur">
             {navLinks.map((link, i) => {
               const linkPath = link.href.split("#")[0] || "/";
               const isActive = pathname === linkPath;
@@ -109,7 +109,7 @@ export default function Navbar() {
                     }}
                     className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
                       isActive ? "font-semibold" : "font-medium"
-                    } ${overDarkHero ? "" : "text-deep-green"}`}
+                    } ${overDarkHero ? "" : "text-deep-green"} ${isActive ? "text-terracotta" : ""}`}
                     style={linkColor ? { color: linkColor } : undefined}
                   >
                     {link.label}

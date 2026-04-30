@@ -59,13 +59,13 @@ export default function FAQPage() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-beige pt-24 pb-24">
+    <div className="min-h-screen bg-soft-gradient-beige pt-24 pb-24">
       <div className="mx-auto max-w-[900px] px-6 py-12 md:px-8 md:py-16">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-4xl font-semibold text-deep-green md:text-5xl"
+          className="lux-heading font-serif text-4xl font-semibold text-deep-green md:text-5xl"
         >
           Questions fréquentes
         </motion.h1>
@@ -92,7 +92,7 @@ export default function FAQPage() {
                 transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
                 className="list-none"
               >
-                <div className="overflow-hidden rounded-2xl bg-white p-1 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+                <div className="lux-surface overflow-hidden rounded-2xl p-1 transition-shadow duration-300 hover:shadow-[0_16px_36px_rgba(15,29,23,0.12)]">
                   <button
                     type="button"
                     onClick={() => setOpenId(isOpen ? null : item.id)}
@@ -144,7 +144,7 @@ export default function FAQPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-20 rounded-2xl bg-white px-6 py-10 text-center shadow-[0_4px_20px_rgba(0,0,0,0.06)] md:mt-24 md:px-10 md:py-14"
+          className="lux-surface mt-20 rounded-2xl px-6 py-10 text-center md:mt-24 md:px-10 md:py-14"
         >
           <h2 className="font-serif text-2xl font-semibold text-deep-green md:text-3xl">
             Vous ne trouvez pas votre réponse ?

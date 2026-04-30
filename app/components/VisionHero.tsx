@@ -9,13 +9,22 @@ function scrollToMenu() {
 
 export default function VisionHero() {
   return (
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-beige text-deep-green md:min-h-[100vh]">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-[#f5efe6] text-deep-green md:min-h-[100vh]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 12% 18%, rgba(184,132,84,0.24), transparent 36%), radial-gradient(circle at 88% 12%, rgba(21,40,31,0.12), transparent 30%), linear-gradient(160deg, #f8f2e8 0%, #f4ecdf 45%, #efe4d6 100%)",
+        }}
+      />
+      <div className="hero-grain absolute inset-0 z-[1]" aria-hidden />
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-5xl font-semibold tracking-tight text-deep-green sm:text-6xl md:text-7xl lg:text-8xl"
+          className="lux-heading font-serif text-5xl font-semibold tracking-tight text-deep-green sm:text-6xl md:text-7xl lg:text-8xl"
         >
           Maison Des Saveurs
         </motion.h1>
@@ -42,7 +51,7 @@ export default function VisionHero() {
               <button
                 type="button"
                 onClick={scrollToMenu}
-                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full border border-deep-green/35 bg-white/40 px-10 py-4 font-medium tracking-[0.18em] text-deep-green transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg md:min-h-[56px] md:min-w-[230px]"
+                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full border border-deep-green/25 bg-white/70 px-10 py-4 font-medium tracking-[0.18em] text-deep-green shadow-[0_8px_24px_rgba(15,29,23,0.08)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg md:min-h-[56px] md:min-w-[230px]"
               >
                 Découvrir le menu
               </button>
@@ -54,7 +63,7 @@ export default function VisionHero() {
             >
               <Link
                 href="/contact"
-                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full bg-deep-green px-10 py-4 font-medium tracking-[0.18em] text-beige shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:min-h-[56px] md:min-w-[230px]"
+                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full bg-gradient-to-r from-[#11231b] via-[#183126] to-[#1f3a2e] px-10 py-4 font-medium tracking-[0.18em] text-beige shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:min-h-[56px] md:min-w-[230px]"
               >
                 Demander un devis
               </Link>
@@ -67,7 +76,7 @@ export default function VisionHero() {
           >
             <Link
               href="/caftans"
-              className="inline-flex min-h-[52px] min-w-[240px] items-center justify-center rounded-full border border-terracotta/50 bg-terracotta/10 px-10 py-4 font-medium tracking-[0.18em] text-terracotta transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-terracotta/20 hover:shadow-lg md:min-h-[56px]"
+              className="inline-flex min-h-[52px] min-w-[240px] items-center justify-center rounded-full border border-terracotta/45 bg-white/65 px-10 py-4 font-medium tracking-[0.18em] text-terracotta shadow-[0_8px_24px_rgba(15,29,23,0.07)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-lg md:min-h-[56px]"
             >
               Découvrir les caftans
             </Link>

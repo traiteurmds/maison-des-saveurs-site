@@ -16,12 +16,12 @@ import {
 } from "../lib/contact-validation";
 
 const colors = {
-  dark: "#1F3A2E",
-  terracotta: "#C46A4A",
-  beige: "#F8F5F0",
-  beigeDark: "#EDE8E0",
+  dark: "#15281F",
+  terracotta: "#B88454",
+  beige: "#F6EFE5",
+  beigeDark: "#E9DCCA",
   white: "#FFFFFF",
-  border: "rgba(31, 58, 46, 0.25)",
+  border: "rgba(21, 40, 31, 0.2)",
 } as const;
 
 const COOLDOWN_MS = 12_000;
@@ -275,7 +275,7 @@ export default function ContactPage() {
   }, []);
 
   return (
-    <div style={{ paddingTop: "6rem", minHeight: "100vh" }} className="contact-page">
+    <div style={{ paddingTop: "6rem", minHeight: "100vh" }} className="contact-page bg-soft-gradient-beige">
       <style>{`
         .contact-page input::placeholder,
         .contact-page textarea::placeholder {
@@ -291,7 +291,8 @@ export default function ContactPage() {
         style={{
           padding: "4rem 1.5rem",
           textAlign: "center",
-          backgroundColor: colors.beige,
+          background:
+            "radial-gradient(circle at 16% 18%, rgba(184,132,84,0.16), transparent 32%), radial-gradient(circle at 84% 14%, rgba(21,40,31,0.09), transparent 26%), linear-gradient(180deg, #f7f1e9 0%, #f5ecdf 100%)",
           borderBottom: `1px solid ${colors.border}`,
         }}
       >
@@ -336,7 +337,7 @@ export default function ContactPage() {
       <section
         style={{
           padding: "4rem 1.5rem",
-          backgroundColor: colors.beige,
+          background: "linear-gradient(180deg, #f5ecdf 0%, #f2e7d9 100%)",
         }}
       >
         <div style={{ maxWidth: "32rem", margin: "0 auto" }}>
@@ -352,7 +353,9 @@ export default function ContactPage() {
                   backgroundColor: colors.white,
                   padding: "2.5rem",
                   borderRadius: "12px",
-                  boxShadow: "0 4px 24px rgba(31, 58, 46, 0.08)",
+                  border: "1px solid rgba(21,40,31,0.08)",
+                  boxShadow: "0 20px 48px rgba(15,29,23,0.10)",
+                  backdropFilter: "blur(10px)",
                   display: "flex",
                   flexDirection: "column",
                   gap: "1.5rem",
@@ -486,7 +489,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={!canSubmit || loading}
-                  className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#C46A4A] to-[#1F3A2E] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#b88454] via-[#9a6f46] to-[#15281f] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? (
                     <>
@@ -511,7 +514,7 @@ export default function ContactPage() {
         style={{
           padding: "3rem 1.5rem",
           textAlign: "center",
-          backgroundColor: colors.beigeDark,
+          background: "linear-gradient(180deg, #efe3d4 0%, #e6d8c7 100%)",
           borderTop: `1px solid ${colors.border}`,
         }}
       >

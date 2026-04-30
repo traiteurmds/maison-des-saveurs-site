@@ -124,12 +124,12 @@ export default function Menu3DExperience() {
   return (
     <section
       id="menu"
-      className="relative overflow-hidden border-t border-deep-green/10 bg-beige py-24"
+      className="relative overflow-hidden border-t border-deep-green/10 bg-soft-gradient-beige py-24"
       aria-labelledby="menu-heading"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-beige-dark/10"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-beige-dark/20"
       />
       <div className="mx-auto max-w-7xl px-6">
         <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">

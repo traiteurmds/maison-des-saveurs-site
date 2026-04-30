@@ -17,7 +17,15 @@ const cells = [
 export default function GalleryPage() {
   return (
     <div className="pt-24">
-      <section className="border-b border-deep-green/10 bg-beige py-20">
+      <section className="relative overflow-hidden border-b border-deep-green/10 bg-soft-gradient-beige py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 15% 18%, rgba(184,132,84,0.16), transparent 36%), radial-gradient(circle at 88% 12%, rgba(21,40,31,0.08), transparent 30%)",
+          }}
+        />
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -46,7 +54,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      <section className="bg-beige py-16">
+      <section className="bg-soft-gradient-beige py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {cells.map((cellClass, i) => (
