@@ -9,23 +9,22 @@ import { FaTiktok } from "react-icons/fa";
 type Caftan = {
   id: string;
   title: string;
-  occasion: string;
   image: string;
 };
 
 const caftans: Caftan[] = [
-  { id: "caftan-01", title: "Caftan Émeraude", occasion: "Mariage", image: "/images/caftans/caftan-01.jpg" },
-  { id: "caftan-02", title: "Caftan Ivoire", occasion: "Fiançailles", image: "/images/caftans/caftan-02.jpg" },
-  { id: "caftan-03", title: "Caftan Royal Bleu", occasion: "Soirée", image: "/images/caftans/caftan-03.jpg" },
-  { id: "caftan-04", title: "Caftan Velours Prune", occasion: "Réception", image: "/images/caftans/caftan-04.jpg" },
-  { id: "caftan-05", title: "Caftan Champagne", occasion: "Mariage", image: "/images/caftans/caftan-05.jpg" },
-  { id: "caftan-06", title: "Caftan Noir Doré", occasion: "Soirée", image: "/images/caftans/caftan-06.jpg" },
-  { id: "caftan-07", title: "Caftan Rose Poudré", occasion: "Fête familiale", image: "/images/caftans/caftan-07.jpg" },
-  { id: "caftan-08", title: "Caftan Terracotta", occasion: "Réception", image: "/images/caftans/caftan-08.jpg" },
-  { id: "caftan-09", title: "Caftan Grenat", occasion: "Mariage", image: "/images/caftans/caftan-09.jpg" },
-  { id: "caftan-10", title: "Caftan Satin Perlé", occasion: "Cérémonie", image: "/images/caftans/caftan-10.jpg" },
-  { id: "caftan-11", title: "Caftan Vert Olive", occasion: "Soirée", image: "/images/caftans/caftan-11.jpg" },
-  { id: "caftan-12", title: "Caftan Rubis", occasion: "Fiançailles", image: "/images/caftans/caftan-12.jpg" },
+  { id: "caftan-01", title: "Caftan 1", image: "/images/caftans/caftan-01.jpg" },
+  { id: "caftan-02", title: "Caftan 2", image: "/images/caftans/caftan-02.jpg" },
+  { id: "caftan-03", title: "Caftan 3", image: "/images/caftans/caftan-03.jpg" },
+  { id: "caftan-04", title: "Caftan 4", image: "/images/caftans/caftan-04.jpg" },
+  { id: "caftan-05", title: "Caftan 5", image: "/images/caftans/caftan-05.jpg" },
+  { id: "caftan-06", title: "Caftan 6", image: "/images/caftans/caftan-06.jpg" },
+  { id: "caftan-07", title: "Caftan 7", image: "/images/caftans/caftan-07.jpg" },
+  { id: "caftan-08", title: "Caftan 8", image: "/images/caftans/caftan-08.jpg" },
+  { id: "caftan-09", title: "Caftan 9", image: "/images/caftans/caftan-09.jpg" },
+  { id: "caftan-10", title: "Caftan 10", image: "/images/caftans/caftan-10.jpg" },
+  { id: "caftan-11", title: "Caftan 11", image: "/images/caftans/caftan-11.jpg" },
+  { id: "caftan-12", title: "Caftan 12", image: "/images/caftans/caftan-12.jpg" },
 ];
 
 function CaftanCard({ item, index }: { item: Caftan; index: number }) {
@@ -50,7 +49,7 @@ function CaftanCard({ item, index }: { item: Caftan; index: number }) {
         ) : (
           <Image
             src={item.image}
-            alt={`${item.title} - ${item.occasion}`}
+            alt={item.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
@@ -60,8 +59,7 @@ function CaftanCard({ item, index }: { item: Caftan; index: number }) {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-          <p className="text-xs tracking-[0.22em] uppercase text-beige/80">{item.occasion}</p>
-          <h2 className="mt-1 font-serif text-2xl font-semibold leading-tight">{item.title}</h2>
+          <h2 className="font-serif text-2xl font-semibold leading-tight">{item.title}</h2>
         </div>
       </div>
     </motion.article>
