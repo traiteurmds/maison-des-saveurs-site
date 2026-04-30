@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FaTiktok } from "react-icons/fa";
 
 type Caftan = {
   id: string;
@@ -99,6 +100,29 @@ export default function CaftansPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-20px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-10 rounded-2xl border border-deep-green/10 bg-gradient-to-r from-deep-green via-[#173126] to-deep-green p-7 text-center text-beige shadow-[0_12px_34px_rgba(15,31,24,0.28)]"
+        >
+          <p className="font-serif text-3xl font-semibold md:text-4xl">MDS x Lamia Créations</p>
+          <p className="mx-auto mt-3 max-w-2xl text-beige/80">
+            Découvrez nos inspirations, nouveautés et coulisses sur TikTok.
+          </p>
+          <a
+            href="https://www.tiktok.com/@lamia.creations?is_from_webapp=1&sender_device=pc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center justify-center gap-3 rounded-full border border-beige/45 bg-beige/10 px-8 py-3 font-medium tracking-[0.14em] text-beige transition-all duration-300 hover:-translate-y-0.5 hover:bg-beige/20"
+            aria-label="TikTok Lamia Créations"
+          >
+            <FaTiktok className="text-lg" />
+            Suivre sur TikTok
+          </a>
+        </motion.div>
+
         <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {caftans.map((item, index) => (
             <CaftanCard key={item.id} item={item} index={index} />
