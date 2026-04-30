@@ -9,23 +9,22 @@ function scrollToMenu() {
 
 export default function VisionHero() {
   return (
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden border-b border-white/10 bg-[#0f0f12] text-[#f2eee7] md:min-h-[100vh]">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-[#f5efe6] text-deep-green md:min-h-[100vh]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(120deg, rgba(10,10,14,0.86), rgba(10,10,14,0.52)), url('/images/menu/couscous.jpg') center/cover no-repeat",
+            "radial-gradient(circle at 12% 18%, rgba(184,132,84,0.24), transparent 36%), radial-gradient(circle at 88% 12%, rgba(21,40,31,0.12), transparent 30%), linear-gradient(160deg, #f8f2e8 0%, #f4ecdf 45%, #efe4d6 100%)",
         }}
       />
-      <div className="hero-grain absolute inset-0 z-[1] opacity-60" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(circle_at_20%_20%,rgba(184,153,106,0.25),transparent_35%)]" aria-hidden />
+      <div className="hero-grain absolute inset-0 z-[1]" aria-hidden />
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="lux-heading font-serif text-5xl font-semibold tracking-tight text-[#f7f3ec] sm:text-6xl md:text-7xl lg:text-8xl"
+          className="lux-heading font-serif text-5xl font-semibold tracking-tight text-deep-green sm:text-6xl md:text-7xl lg:text-8xl"
         >
           Maison Des Saveurs
         </motion.h1>
@@ -33,17 +32,9 @@ export default function VisionHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 max-w-3xl font-serif text-xl tracking-wide text-[#f7f3ec]/85 sm:text-2xl md:text-3xl"
+          className="mt-6 max-w-2xl font-serif text-xl tracking-wide text-deep-green/80 sm:text-2xl md:text-3xl"
         >
           Traiteur traditionnel halal
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 max-w-2xl text-sm tracking-[0.18em] text-[#ccb287]/90 uppercase"
-        >
-          Mariages · Événements privés · Réceptions d&apos;exception
         </motion.p>
         <motion.div
           initial={{ opacity: 0 }}
@@ -60,7 +51,7 @@ export default function VisionHero() {
               <button
                 type="button"
                 onClick={scrollToMenu}
-                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full border border-[#ccb287]/40 bg-white/10 px-10 py-4 font-medium tracking-[0.18em] text-[#f5f0e8] shadow-[0_8px_24px_rgba(0,0,0,0.3)] backdrop-blur transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-lg md:min-h-[56px] md:min-w-[230px]"
+                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full border border-deep-green/25 bg-white/70 px-10 py-4 font-medium tracking-[0.18em] text-deep-green shadow-[0_8px_24px_rgba(15,29,23,0.08)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg md:min-h-[56px] md:min-w-[230px]"
               >
                 Découvrir le menu
               </button>
@@ -72,7 +63,7 @@ export default function VisionHero() {
             >
               <Link
                 href="/contact"
-                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full bg-gradient-to-r from-[#b8996a] to-[#ccb287] px-10 py-4 font-medium tracking-[0.18em] text-[#15151b] shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:min-h-[56px] md:min-w-[230px]"
+                className="inline-flex min-h-[52px] min-w-[210px] items-center justify-center rounded-full bg-gradient-to-r from-[#11231b] via-[#183126] to-[#1f3a2e] px-10 py-4 font-medium tracking-[0.18em] text-beige shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:min-h-[56px] md:min-w-[230px]"
               >
                 Demander un devis
               </Link>
@@ -85,7 +76,7 @@ export default function VisionHero() {
           >
             <Link
               href="/caftans"
-              className="inline-flex min-h-[52px] min-w-[240px] items-center justify-center rounded-full border border-[#ccb287]/50 bg-[#15151d]/70 px-10 py-4 font-medium tracking-[0.18em] text-[#ccb287] shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-[#1d1d27] hover:shadow-lg md:min-h-[56px]"
+              className="inline-flex min-h-[52px] min-w-[240px] items-center justify-center rounded-full border border-terracotta/45 bg-white/65 px-10 py-4 font-medium tracking-[0.18em] text-terracotta shadow-[0_8px_24px_rgba(15,29,23,0.07)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-lg md:min-h-[56px]"
             >
               Découvrir les caftans
             </Link>

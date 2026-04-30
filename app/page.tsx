@@ -2,9 +2,7 @@
 
 import { motion } from "framer-motion";
 import VisionHero from "./components/VisionHero";
-import BrandStorySection from "./components/BrandStorySection";
 import Menu3DExperience from "./components/Menu3DExperience";
-import LuxuryReviews from "./components/LuxuryReviews";
 import ContactCTA from "./components/ContactCTA";
 
 const sectionVariants = {
@@ -27,25 +25,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
       >
-        <BrandStorySection />
-      </motion.section>
-
-      <motion.section
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-      >
         <Menu3DExperience />
-      </motion.section>
-
-      <motion.section
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-      >
-        <LuxuryReviews />
       </motion.section>
 
       <motion.section

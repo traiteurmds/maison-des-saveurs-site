@@ -30,14 +30,14 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="pt-24 bg-soft-gradient-beige">
-      <section className="relative flex items-center justify-center overflow-hidden border-b border-white/10 bg-soft-gradient-beige py-16 md:py-20">
+    <div className="pt-24">
+      <section className="relative flex items-center justify-center overflow-hidden border-b border-deep-green/10 bg-soft-gradient-beige py-16 md:py-20">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 14% 20%, rgba(184,153,106,0.18), transparent 35%), radial-gradient(circle at 88% 10%, rgba(255,255,255,0.06), transparent 30%)",
+              "radial-gradient(circle at 14% 20%, rgba(184,132,84,0.16), transparent 35%), radial-gradient(circle at 88% 10%, rgba(21,40,31,0.10), transparent 30%)",
           }}
         />
         <motion.div
@@ -46,10 +46,10 @@ export default function ServicesPage() {
           transition={{ duration: 0.8 }}
           className="relative z-10 text-center"
         >
-          <p className="font-serif text-sm uppercase tracking-[0.3em] text-[#ccb287]">
+          <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">
             Ce que nous proposons
           </p>
-          <h1 className="mt-2 font-serif text-5xl font-semibold text-[#f6f2eb] md:text-6xl">
+          <h1 className="mt-2 font-serif text-5xl font-semibold text-deep-green md:text-6xl">
             Nos services
           </h1>
         </motion.div>
@@ -70,7 +70,7 @@ export default function ServicesPage() {
                 }`}
               >
                 <div
-                  className={`relative h-80 overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-[0_18px_45px_rgba(0,0,0,0.35)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_26px_70px_rgba(0,0,0,0.5)] md:h-96 ${
+                  className={`relative h-80 overflow-hidden rounded-xl border border-deep-green/5 bg-white/5 shadow-[0_18px_45px_rgba(15,31,24,0.14)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)] md:h-96 ${
                     i % 2 === 1 ? "md:order-2" : ""
                   }`}
                 >
@@ -84,7 +84,7 @@ export default function ServicesPage() {
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-deep-green/10 to-transparent"
                     aria-hidden
                   />
                 </div>
@@ -93,10 +93,10 @@ export default function ServicesPage() {
                     i % 2 === 1 ? "md:order-1" : ""
                   }`}
                 >
-                  <h2 className="font-serif text-2xl font-semibold text-[#f6f2eb] md:text-3xl">
+                  <h2 className="font-serif text-2xl font-semibold text-deep-green md:text-3xl">
                     {service.title}
                   </h2>
-                  <p className="mt-4 leading-relaxed text-[#f6f2eb]/78">
+                  <p className="mt-4 leading-relaxed text-deep-green/85">
                     {service.description}
                   </p>
                 </div>
@@ -111,7 +111,7 @@ export default function ServicesPage() {
           >
             <Link
               href="/contact"
-              className="btn-premium btn-cta-signature inline-flex bg-gradient-to-r from-[#b8996a] to-[#ccb287] px-10 py-4 font-medium tracking-widest text-[#14141b]"
+              className="btn-premium btn-cta-signature inline-flex bg-terracotta px-10 py-4 font-medium tracking-widest text-beige hover:bg-terracotta/90"
             >
               Demander un devis
             </Link>

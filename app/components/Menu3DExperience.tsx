@@ -124,15 +124,15 @@ export default function Menu3DExperience() {
   return (
     <section
       id="menu"
-      className="relative overflow-hidden border-t border-white/10 lux-section-dark py-24"
+      className="relative overflow-hidden border-t border-deep-green/10 bg-soft-gradient-beige py-24"
       aria-labelledby="menu-heading"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-[#b8996a]/5"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-beige-dark/20"
       />
       <div className="mx-auto max-w-7xl px-6">
-        <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-[#f6f2eb] md:text-5xl">
+        <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
           Notre menu
         </h2>
 
@@ -148,10 +148,10 @@ export default function Menu3DExperience() {
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
-              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ccb287]/40 ${
+              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-green/30 ${
                 activeCategory === cat.id
-                  ? "border border-[#ccb287]/35 bg-[#ccb287] text-[#14141b] shadow-lg shadow-black/30 hover:-translate-y-0.5 hover:shadow-xl"
-                  : "border border-white/15 bg-white/5 text-[#f6f2eb] shadow-md hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-lg"
+                  ? "border border-beige/10 bg-deep-green text-beige shadow-lg shadow-deep-green/20 hover:-translate-y-0.5 hover:shadow-xl"
+                  : "border border-deep-green/15 bg-white/55 text-deep-green shadow-md hover:-translate-y-0.5 hover:bg-white/80 hover:shadow-lg"
               }`}
             >
               {cat.label}
@@ -180,7 +180,7 @@ export default function Menu3DExperience() {
                 tabIndex={0}
                 onClick={() => setOpenDish(dish)}
                 onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[18px] border border-white/10 bg-white/5 shadow-lg transition-[box-shadow,transform] duration-[350ms] ease hover:shadow-[0_26px_70px_rgba(0,0,0,0.45)]"
+                  className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[18px] border border-deep-green/10 bg-white/40 shadow-lg transition-[box-shadow,transform] duration-[350ms] ease hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)]"
               >
                 <Image
                   src={dish.image}
@@ -232,7 +232,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#181820]/95 shadow-2xl backdrop-blur"
+              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[22px] border border-deep-green/10 bg-white/90 shadow-2xl backdrop-blur"
               role="dialog"
               aria-modal="true"
               aria-labelledby="menu-3d-modal-title"
@@ -241,7 +241,7 @@ export default function Menu3DExperience() {
               <button
                 type="button"
                 onClick={() => setOpenDish(null)}
-                className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/40 text-2xl text-white transition-colors hover:bg-black/60"
+                className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-deep-green/70 text-2xl text-white transition-colors hover:bg-deep-green/90"
                 aria-label="Fermer le détail du plat"
               >
                 ×
@@ -268,13 +268,13 @@ export default function Menu3DExperience() {
               </div>
               <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-12">
                 {openDish && (
-                  <p className="text-lg leading-relaxed text-[#f6f2eb]/88">
+                  <p className="text-lg leading-relaxed text-deep-green/90">
                     {openDish.description}
                   </p>
                 )}
                 <Link
                   href="/contact"
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#b8996a] to-[#ccb287] px-10 py-4 font-medium tracking-widest text-[#14141b] shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl"
+                  className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-terracotta/25"
                 >
                   Demander un devis
                 </Link>
