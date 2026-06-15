@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
 import Providers from "./components/Providers";
-import WhatsAppButton from "./components/WhatsAppButton";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
 
@@ -169,7 +168,6 @@ export default function RootLayout({
             <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
-          <WhatsAppButton />
         </Providers>
       </body>
     </html>

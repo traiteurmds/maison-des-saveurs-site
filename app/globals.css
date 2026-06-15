@@ -3,47 +3,51 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f8f5f0;
-  --foreground: #15281f;
-  --accent: #b88454;
-  --deep-green-900: #0f1d17;
-  --deep-green-800: #15281f;
-  --deep-green-700: #1e352a;
-  --gold-500: #b88454;
-  --gold-400: #cba16d;
-  --champagne-100: #f8f5f0;
-  --champagne-200: #eadfcf;
-  --mds-bg: #f8f5f0;
+  --ivory: #f8f5ef;
+  --cream: #efe7da;
+  --black: #0b0b0a;
+  --charcoal: #171717;
+  --gold: #c6a46a;
+  --soft-gold: #e7d7b8;
+  --muted-text: #6f6a60;
+  --background: var(--ivory);
+  --foreground: var(--black);
+  --accent: var(--gold);
+  --deep-green-900: #0b0b0a;
+  --deep-green-800: var(--black);
+  --deep-green-700: var(--charcoal);
+  --gold-500: var(--gold);
+  --gold-400: var(--soft-gold);
+  --champagne-100: var(--ivory);
+  --champagne-200: var(--cream);
+  --mds-bg: var(--ivory);
   --mds-bg-elevated: #ffffff;
   --mds-card: #ffffff;
-  --mds-text: #15281f;
-  --mds-muted: rgba(21, 40, 31, 0.72);
-  --mds-border: #e8ded0;
-  --mds-surface: rgba(255, 255, 255, 0.72);
-  --mds-shadow: rgba(15, 29, 23, 0.08);
-  --mds-hero-glow: rgba(184, 132, 84, 0.18);
-  --royal-ivory: #f8f5f0;
-  --royal-black: #0a1210;
+  --mds-text: var(--black);
+  --mds-muted: var(--muted-text);
+  --mds-border: rgba(198, 164, 106, 0.22);
+  --mds-surface: rgba(255, 255, 255, 0.88);
+  --mds-shadow: rgba(11, 11, 10, 0.06);
+  --mds-hero-glow: rgba(198, 164, 106, 0.1);
 }
 
 .dark {
-  --background: #07110d;
-  --foreground: #f2eee7;
-  --deep-green-800: #f2eee7;
-  --deep-green-700: #d8d0c4;
-  --champagne-100: #f2eee7;
-  --champagne-200: #1a2e26;
-  --mds-bg: #07110d;
-  --mds-bg-elevated: #0f1d17;
-  --mds-card: #111f18;
-  --mds-text: #f2eee7;
-  --mds-muted: rgba(242, 238, 231, 0.72);
-  --mds-border: rgba(184, 132, 84, 0.22);
-  --mds-surface: rgba(17, 31, 24, 0.92);
-  --mds-shadow: rgba(0, 0, 0, 0.4);
-  --mds-hero-glow: rgba(184, 132, 84, 0.14);
-  --royal-ivory: #f2eee7;
-  --royal-black: #07110d;
+  --background: var(--black);
+  --foreground: var(--ivory);
+  --deep-green-800: var(--ivory);
+  --deep-green-700: rgba(248, 245, 239, 0.72);
+  --champagne-100: var(--ivory);
+  --champagne-200: var(--charcoal);
+  --mds-bg: var(--black);
+  --mds-bg-elevated: var(--charcoal);
+  --mds-card: var(--charcoal);
+  --mds-text: var(--ivory);
+  --mds-muted: rgba(248, 245, 239, 0.62);
+  --mds-border: rgba(198, 164, 106, 0.2);
+  --mds-surface: rgba(23, 23, 23, 0.94);
+  --mds-shadow: rgba(0, 0, 0, 0.45);
+  --mds-hero-glow: rgba(198, 164, 106, 0.08);
+  --cream: #141413;
 }
 
 @theme inline {
@@ -59,6 +63,9 @@
   --color-mds-muted: var(--mds-muted);
   --color-mds-border: var(--mds-border);
   --color-mds-surface: var(--mds-surface);
+  --color-gold: var(--gold);
+  --color-ivory: var(--ivory);
+  --color-charcoal: var(--charcoal);
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-outfit);
   --font-heading: var(--font-playfair);
@@ -106,8 +113,8 @@ html {
 
 /* Selection */
 ::selection {
-  background-color: var(--gold-500);
-  color: #fff;
+  background-color: var(--gold);
+  color: var(--black);
 }
 
 /* Luxury gradient backgrounds — hero: deep green */
@@ -225,7 +232,7 @@ html {
 /* Hero: soft gold accent line (#C6A75E) */
 .hero-accent-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(198, 167, 94, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(198, 164, 106, 0.65), transparent);
   transform-origin: center;
 }
 
@@ -569,23 +576,42 @@ header:not(.nav-over-hero) .nav-logo {
 }
 
 .btn-hero-outline {
-  border: 1px solid var(--mds-border);
+  border: 1px solid rgba(198, 164, 106, 0.35);
   background: var(--mds-card);
   color: var(--mds-text);
-  box-shadow: 0 10px 32px var(--mds-shadow);
+  box-shadow: 0 8px 28px var(--mds-shadow);
+}
+
+.btn-hero-outline:hover {
+  border-color: rgba(198, 164, 106, 0.55);
+  background: var(--mds-bg-elevated);
 }
 
 .btn-hero-primary {
-  background: linear-gradient(135deg, #11231b 0%, #1f3a2e 100%);
-  color: #f8f5f0;
+  background: var(--black);
+  color: var(--ivory);
   box-shadow: 0 12px 36px var(--mds-shadow);
+  border: 1px solid transparent;
+}
+
+.btn-hero-primary:hover {
+  background: var(--charcoal);
+}
+
+.dark .btn-hero-primary {
+  background: var(--ivory);
+  color: var(--black);
+}
+
+.dark .btn-hero-primary:hover {
+  background: var(--soft-gold);
 }
 
 .btn-hero-accent {
-  border: 1px solid rgba(184, 132, 84, 0.45);
+  border: 1px solid rgba(198, 164, 106, 0.35);
   background: var(--mds-card);
-  color: var(--gold-500);
-  box-shadow: 0 10px 32px var(--mds-shadow);
+  color: var(--mds-text);
+  box-shadow: 0 8px 28px var(--mds-shadow);
 }
 
 .premium-input {

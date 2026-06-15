@@ -16,6 +16,16 @@ export const EMPTY_SELECTION: SelectionState = {
   caftans: [],
 };
 
+export const SELECTION_LABELS: Record<keyof SelectionState, string> = {
+  starters: "Entrées",
+  mains: "Plats",
+  desserts: "Desserts",
+  options: "Options vaisselle & décoration",
+  caftans: "Caftans",
+};
+
+export const MENU_CATEGORIES: (keyof SelectionState)[] = ["starters", "mains", "desserts"];
+
 const formatItems = (items: string[]) => items.map((item) => `- ${item}`).join("\n");
 
 export function buildWhatsappMessage(selection: SelectionState) {
@@ -60,11 +70,7 @@ ${formatItems(selection.options)}`);
 
   if (selection.caftans.length > 0) {
     sections.push(`Caftans sélectionnés :
-${formatItems(selection.caftans)}
-
-Demande caftans :
-Location ou vente :
-Taille souhaitée :`);
+${formatItems(selection.caftans)}`);
   }
 
   sections.push(`Message complémentaire :
@@ -89,11 +95,21 @@ export function getSelectionCounts(selection: SelectionState) {
   };
 }
 
+export function getTotalSelected(selection: SelectionState) {
+  return Object.values(selection).reduce((total, items) => total + items.length, 0);
+}
+
 /** Classes partagées pour cartes sélectionnables */
 export const selectableCardClass = (selected: boolean) =>
   selected
-    ? "border-terracotta bg-[#faf6f0] shadow-[0_0_0_1px_rgba(184,132,84,0.4),0_16px_40px_rgba(184,132,84,0.12)] dark:bg-[#1a241c]"
-    : "border-mds-border bg-mds-card shadow-[0_12px_40px_var(--mds-shadow)] hover:border-terracotta/40";
+    ? "border-[var(--gold)] bg-[var(--soft-gold)]/25 shadow-[0_0_0_1px_rgba(198,164,106,0.35),0_16px_40px_var(--mds-shadow)] dark:bg-[var(--gold)]/10"
+    : "border-mds-border bg-mds-card shadow-[0_12px_40px_var(--mds-shadow)] hover:border-[var(--gold)]/35";
 
 export const selectableFocusClass =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-mds-bg";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-mds-bg";
+
+export const btnWhatsappClass =
+  "inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-[var(--black)] px-6 py-3 text-sm font-medium tracking-wide text-[var(--ivory)] transition-all duration-300 hover:bg-[var(--charcoal)] dark:bg-[var(--ivory)] dark:text-[var(--black)] dark:hover:bg-[var(--soft-gold)]";
+
+export const btnWhatsappSecondaryClass =
+  "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-mds-border bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-mds-muted transition-all hover:border-[var(--gold)]/40 hover:text-mds-text";

@@ -89,7 +89,7 @@ export default function Navbar() {
                 if (pathname === "/") e.preventDefault();
                 scrollToTop();
               }}
-              className="nav-link shrink-0 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-terracotta sm:text-base"
+              className="nav-link shrink-0 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-[var(--gold)] sm:text-base"
             >
               <span className="md:hidden">MDS</span>
               <span className="hidden md:inline">Maison Des Saveurs</span>
@@ -107,7 +107,7 @@ export default function Navbar() {
                       className={cn(
                         "rounded-full px-2.5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] transition-all duration-300 lg:px-3 lg:text-[0.7rem]",
                         isActive
-                          ? "text-terracotta"
+                          ? "text-[var(--gold)]"
                           : "text-mds-muted hover:text-mds-text"
                       )}
                     >
@@ -123,7 +123,7 @@ export default function Navbar() {
                     if (pathname === "/contact") e.preventDefault();
                     scrollToTop();
                   }}
-                  className="inline-flex rounded-full bg-mds-text px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[#f8f5f0] transition-all hover:bg-terracotta lg:px-5 lg:text-[0.7rem]"
+                  className="inline-flex rounded-full bg-[var(--black)] px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--ivory)] transition-all hover:bg-[var(--gold)] hover:text-[var(--black)] lg:px-5 lg:text-[0.7rem] dark:bg-[var(--ivory)] dark:text-[var(--black)] dark:hover:bg-[var(--soft-gold)]"
                 >
                   Devis
                 </Link>

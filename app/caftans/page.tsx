@@ -3,12 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
 import Reveal from "../components/ui/Reveal";
 import TiltCard from "../components/ui/TiltCard";
 import MagneticButton from "../components/ui/MagneticButton";
 import { useSelection } from "../components/providers/SelectionProvider";
-import { selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
+import { btnWhatsappClass, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 type Caftan = {
@@ -156,11 +156,11 @@ export default function CaftansPage() {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "inline-flex min-h-[56px] w-full max-w-md items-center justify-center gap-3 rounded-full bg-[#25D366] px-8 py-4 text-sm font-medium tracking-wide text-white shadow-[0_8px_32px_rgba(37,211,102,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(37,211,102,0.45)] sm:w-auto sm:min-w-[320px]",
+              btnWhatsappClass,
+              "max-w-md sm:w-auto sm:min-w-[320px]",
               selectableFocusClass
             )}
           >
-            <FaWhatsapp className="text-xl" aria-hidden />
             Envoyer ma sélection caftans
           </a>
           {counts.caftans === 0 ? (

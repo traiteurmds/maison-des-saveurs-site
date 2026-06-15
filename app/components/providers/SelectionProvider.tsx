@@ -11,6 +11,7 @@ import {
 import {
   EMPTY_SELECTION,
   getSelectionCounts,
+  getTotalSelected,
   getWhatsappUrl,
   type SelectionState,
 } from "../../lib/whatsapp";
@@ -20,9 +21,12 @@ const STORAGE_KEY = "mds-selection";
 type SelectionContextValue = {
   selection: SelectionState;
   toggleSelection: (category: keyof SelectionState, item: string) => void;
+  removeSelectionItem: (category: keyof SelectionState, item: string) => void;
+  clearSelection: () => void;
   isSelected: (category: keyof SelectionState, item: string) => boolean;
   whatsappUrl: string;
   counts: ReturnType<typeof getSelectionCounts>;
+  totalSelected: number;
 };
 
 const SelectionContext = createContext<SelectionContextValue | null>(null);
@@ -61,6 +65,17 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const removeSelectionItem = useCallback((category: keyof SelectionState, item: string) => {
+    setSelection((prev) => ({
+      ...prev,
+      [category]: prev[category].filter((selected) => selected !== item),
+    }));
+  }, []);
+
+  const clearSelection = useCallback(() => {
+    setSelection(EMPTY_SELECTION);
+  }, []);
+
   const isSelected = useCallback(
     (category: keyof SelectionState, item: string) => selection[category].includes(item),
     [selection]
@@ -68,10 +83,29 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
 
   const whatsappUrl = useMemo(() => getWhatsappUrl(selection), [selection]);
   const counts = useMemo(() => getSelectionCounts(selection), [selection]);
+  const totalSelected = useMemo(() => getTotalSelected(selection), [selection]);
 
   const value = useMemo(
-    () => ({ selection, toggleSelection, isSelected, whatsappUrl, counts }),
-    [selection, toggleSelection, isSelected, whatsappUrl, counts]
+    () => ({
+      selection,
+      toggleSelection,
+      removeSelectionItem,
+      clearSelection,
+      isSelected,
+      whatsappUrl,
+      counts,
+      totalSelected,
+    }),
+    [
+      selection,
+      toggleSelection,
+      removeSelectionItem,
+      clearSelection,
+      isSelected,
+      whatsappUrl,
+      counts,
+      totalSelected,
+    ]
   );
 
   return <SelectionContext.Provider value={value}>{children}</SelectionContext.Provider>;
