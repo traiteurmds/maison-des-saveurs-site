@@ -725,6 +725,10 @@ header:not(.nav-over-hero) .nav-logo {
   will-change: transform;
 }
 
+.testimonials-track-slow {
+  animation-duration: 75s;
+}
+
 .testimonials-track:hover {
   animation-play-state: paused;
 }
