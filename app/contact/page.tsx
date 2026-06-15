@@ -59,26 +59,13 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const successMessageRef = useRef<HTMLDivElement>(null);
+  const submittingRef = useRef(false);
 
   useEffect(() => {
     if (sent) {
       successMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [sent]);
-
-  useEffect(() => {
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-    if (typeof console !== "undefined") {
-      console.log("SERVICE:", process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
-      console.log("TEMPLATE:", process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
-      console.log("PUBLIC KEY:", process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
-      if (!serviceId || !templateId || !publicKey) {
-        console.error("EmailJS configuration missing. Check .env.local");
-      }
-    }
-  }, []);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -191,7 +178,7 @@ export default function ContactPage() {
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!canSubmit) return;
+    if (loading || submittingRef.current || !canSubmit) return;
 
     if (honeypot) {
       return;
@@ -225,21 +212,13 @@ export default function ContactPage() {
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     if (!serviceId || !templateId || !publicKey) {
-      if (typeof console !== "undefined") {
-        console.error("EmailJS configuration missing. Check .env.local");
-      }
       setFieldErrors({
         form: "Configuration email manquante. Vérifiez les variables d'environnement.",
       });
       return;
     }
 
-    if (typeof console !== "undefined") {
-      console.log("SERVICE:", serviceId);
-      console.log("TEMPLATE:", templateId);
-      console.log("PUBLIC KEY:", publicKey);
-    }
-
+    submittingRef.current = true;
     setLoading(true);
     setSent(false);
 
@@ -257,13 +236,11 @@ export default function ContactPage() {
       resetForm();
       setCooldownUntil(Date.now() + COOLDOWN_MS);
       setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
-    } catch (err) {
-      if (typeof console !== "undefined") {
-        console.error("EmailJS send error:", err);
-      }
+    } catch {
       setFieldErrors({ form: "Une erreur est survenue. Veuillez réessayer." });
       setSent(false);
     } finally {
+      submittingRef.current = false;
       setLoading(false);
     }
   };
@@ -283,7 +260,7 @@ export default function ContactPage() {
       <style>{`
         .contact-page input::placeholder,
         .contact-page textarea::placeholder {
-          color: rgba(31, 58, 46, 0.5);
+          color: rgba(111, 106, 96, 0.55);
         }
         .contact-page input[type="date"] {
           appearance: none;
@@ -296,7 +273,7 @@ export default function ContactPage() {
           padding: "4rem 1.5rem",
           textAlign: "center",
           background:
-            "radial-gradient(circle at 16% 18%, rgba(184,132,84,0.16), transparent 32%), radial-gradient(circle at 84% 14%, rgba(21,40,31,0.09), transparent 26%), linear-gradient(180deg, #f7f1e9 0%, #f5ecdf 100%)",
+            "radial-gradient(circle at 16% 18%, rgba(198,164,106,0.12), transparent 32%), radial-gradient(circle at 84% 14%, rgba(11,11,10,0.04), transparent 26%), linear-gradient(180deg, #f8f5ef 0%, #f1eae0 100%)",
           borderBottom: `1px solid ${colors.border}`,
         }}
       >
@@ -353,8 +330,8 @@ export default function ContactPage() {
                   backgroundColor: colors.white,
                   padding: "2.5rem",
                   borderRadius: "12px",
-                  border: "1px solid rgba(21,40,31,0.08)",
-                  boxShadow: "0 20px 48px rgba(15,29,23,0.10)",
+                  border: "1px solid rgba(198, 164, 106, 0.22)",
+                  boxShadow: "0 20px 48px rgba(11, 11, 10, 0.08)",
                   backdropFilter: "blur(10px)",
                   display: "flex",
                   flexDirection: "column",
@@ -530,7 +507,7 @@ export default function ContactPage() {
         style={{
           padding: "3rem 1.5rem",
           textAlign: "center",
-          background: "linear-gradient(180deg, #efe3d4 0%, #e6d8c7 100%)",
+          background: "linear-gradient(180deg, #f1eae0 0%, #f8f5ef 100%)",
           borderTop: `1px solid ${colors.border}`,
         }}
       >
@@ -583,7 +560,7 @@ function SuccessConfirmation() {
         backgroundColor: colors.white,
         padding: "3rem 2.5rem",
         borderRadius: "12px",
-        boxShadow: "0 4px 24px rgba(31, 58, 46, 0.08)",
+        boxShadow: "0 4px 24px rgba(11, 11, 10, 0.08)",
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
@@ -633,7 +610,7 @@ function AnimatedCheckmark() {
       <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
         <motion.path
           d="M 40 4 A 36 36 0 0 1 76 40 A 36 36 0 0 1 40 76 A 36 36 0 0 1 4 40 A 36 36 0 0 1 40 4"
-          stroke="#22c55e"
+          stroke="#C6A46A"
           strokeWidth="3"
           fill="none"
           initial={{ pathLength: 0 }}
@@ -642,7 +619,7 @@ function AnimatedCheckmark() {
         />
         <motion.path
           d="M22 40 L34 52 L58 28"
-          stroke="#22c55e"
+          stroke="#C6A46A"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"

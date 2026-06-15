@@ -95,7 +95,7 @@ export default function FAQPage() {
                 transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
                 className="list-none"
               >
-                <div className="glass-card overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-[0_20px_48px_rgba(15,29,23,0.1)]">
+                <div className="glass-card overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-[0_20px_48px_var(--mds-shadow)]">
                   <button
                     type="button"
                     onClick={() => setOpenId(isOpen ? null : item.id)}

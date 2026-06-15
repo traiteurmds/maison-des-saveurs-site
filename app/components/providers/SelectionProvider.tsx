@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -32,26 +33,27 @@ type SelectionContextValue = {
 const SelectionContext = createContext<SelectionContextValue | null>(null);
 
 export function SelectionProvider({ children }: { children: React.ReactNode }) {
-  const [selection, setSelection] = useState<SelectionState>(EMPTY_SELECTION);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
+  const [selection, setSelection] = useState<SelectionState>(() => {
+    if (typeof window === "undefined") return EMPTY_SELECTION;
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved) as SelectionState;
-        setSelection({ ...EMPTY_SELECTION, ...parsed });
+        return { ...EMPTY_SELECTION, ...(JSON.parse(saved) as SelectionState) };
       }
     } catch {
       /* ignore */
     }
-    setHydrated(true);
-  }, []);
+    return EMPTY_SELECTION;
+  });
+  const skipInitialPersist = useRef(true);
 
   useEffect(() => {
-    if (!hydrated) return;
+    if (skipInitialPersist.current) {
+      skipInitialPersist.current = false;
+      return;
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
-  }, [selection, hydrated]);
+  }, [selection]);
 
   const toggleSelection = useCallback((category: keyof SelectionState, item: string) => {
     setSelection((prev) => {

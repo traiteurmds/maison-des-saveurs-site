@@ -60,6 +60,8 @@ body {
   font-family: var(--font-inter), var(--font-outfit), system-ui, sans-serif;
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100%;
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
@@ -82,6 +84,8 @@ body::after {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6.5rem;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Hide scrollbar for horizontal galleries (keep scroll) */
@@ -629,4 +633,15 @@ header:not(.nav-over-hero) .nav-logo {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.mobile-selection-dock {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  max-width: calc(100vw - 24px);
+  width: auto;
+  box-sizing: border-box;
+  z-index: 50;
 }

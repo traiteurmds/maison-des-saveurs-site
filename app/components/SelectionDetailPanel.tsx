@@ -15,11 +15,9 @@ import { cn } from "../lib/utils";
 
 function SelectionItemRow({
   item,
-  category,
   onRemove,
 }: {
   item: string;
-  category: keyof SelectionState;
   onRemove: () => void;
 }) {
   return (
@@ -115,7 +113,6 @@ export default function SelectionDetailPanel({
                     <SelectionItemRow
                       key={`${category}-${item}`}
                       item={item}
-                      category={category}
                       onRemove={() => removeSelectionItem(category, item)}
                     />
                   ))}
@@ -133,7 +130,6 @@ export default function SelectionDetailPanel({
                     <SelectionItemRow
                       key={`opt-${item}`}
                       item={item}
-                      category="options"
                       onRemove={() => removeSelectionItem("options", item)}
                     />
                   ))}
@@ -151,7 +147,6 @@ export default function SelectionDetailPanel({
                     <SelectionItemRow
                       key={`caftan-${item}`}
                       item={item}
-                      category="caftans"
                       onRemove={() => removeSelectionItem("caftans", item)}
                     />
                   ))}

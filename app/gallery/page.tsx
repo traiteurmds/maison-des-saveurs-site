@@ -23,14 +23,14 @@ export default function GalleryPage() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 15% 18%, rgba(184,132,84,0.16), transparent 36%), radial-gradient(circle at 88% 12%, rgba(21,40,31,0.08), transparent 30%)",
+              "radial-gradient(circle at 15% 18%, rgba(198,164,106,0.12), transparent 36%), radial-gradient(circle at 88% 12%, rgba(11,11,10,0.04), transparent 30%)",
           }}
         />
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta"
+            className="font-serif text-sm uppercase tracking-[0.3em] text-[var(--gold)]"
           >
             Instants
           </motion.p>
@@ -70,7 +70,7 @@ export default function GalleryPage() {
                   className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
                     background:
-                      "radial-gradient(circle at 50% 50%, rgba(31, 58, 46, 0.03) 0%, transparent 70%)",
+                      "radial-gradient(circle at 50% 50%, rgba(198,164,106,0.06) 0%, transparent 70%)",
                   }}
                   aria-hidden
                 />

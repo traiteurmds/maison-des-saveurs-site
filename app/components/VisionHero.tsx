@@ -32,19 +32,10 @@ export default function VisionHero() {
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-6 inline-flex items-center rounded-full border border-mds-border bg-mds-card px-5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-[var(--gold)]"
-          >
-            Traiteur marocain halal à Lyon
-          </motion.span>
-
           <motion.h1
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="lux-heading font-serif text-[clamp(2.75rem,7vw,5.25rem)] font-semibold leading-[1.02] tracking-tight text-mds-text"
           >
             Maison Des Saveurs
@@ -53,7 +44,7 @@ export default function VisionHero() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="hero-accent-line mx-auto mt-6 w-full max-w-[200px] lg:mx-0"
             aria-hidden
           />
@@ -61,7 +52,7 @@ export default function VisionHero() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.45 }}
             className="mt-6 font-serif text-xl tracking-wide text-mds-muted sm:text-2xl lg:text-[1.55rem]"
           >
             Traiteur traditionnel halal
@@ -70,17 +61,21 @@ export default function VisionHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="mx-auto mt-10 flex w-full max-w-[440px] flex-col items-center gap-3.5 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:justify-start lg:gap-4"
+            transition={{ duration: 0.6, delay: 0.65 }}
+            className="mx-auto mt-10 flex w-full max-w-[440px] flex-col items-stretch gap-3.5 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-nowrap lg:items-center lg:justify-start lg:gap-3"
           >
-            <button type="button" onClick={scrollToMenu} className="btn-hero btn-hero-outline w-full lg:w-auto">
+            <button
+              type="button"
+              onClick={scrollToMenu}
+              className="btn-hero btn-hero-outline w-full lg:w-auto"
+            >
               Découvrir le menu
             </button>
-            <Link href="/contact" className="btn-hero btn-hero-primary w-full lg:w-auto">
-              Demander un devis
-            </Link>
             <Link href="/caftans" className="btn-hero btn-hero-outline w-full lg:w-auto">
               Découvrir les caftans
+            </Link>
+            <Link href="/contact" className="btn-hero btn-hero-primary w-full lg:w-auto">
+              Demander un devis
             </Link>
           </motion.div>
         </div>

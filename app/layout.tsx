@@ -154,7 +154,7 @@ export default function RootLayout({
       lang="fr"
       className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}
     >
-      <body className="bg-mds-bg pb-20 text-mds-text antialiased lg:pb-0">
+      <body className="bg-mds-bg pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-mds-text antialiased lg:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
