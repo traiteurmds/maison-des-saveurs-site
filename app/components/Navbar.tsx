@@ -56,8 +56,8 @@ export default function Navbar() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out ${
         scrolled
-          ? "nav-scrolled border-deep-green/10 bg-[#f9f3e9]/70 shadow-[0_10px_32px_rgba(12,23,18,0.12)] backdrop-blur-xl"
-          : "border-transparent bg-gradient-to-b from-[#f7f1e8]/75 to-transparent"
+          ? "nav-scrolled border-deep-green/10 bg-[#f9f3e9]/85 shadow-[0_12px_40px_rgba(12,23,18,0.14)] backdrop-blur-xl"
+          : "border-transparent bg-gradient-to-b from-[#f7f1e8]/80 to-transparent"
       } ${overDarkHero ? "nav-over-hero" : ""}`}
     >
       <nav className={`mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-all duration-300 ${

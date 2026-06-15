@@ -1,10 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const WHATSAPP_URL = "https://wa.me/33758639734";
 
 export default function WhatsAppButton() {
+  const reduced = useReducedMotion();
+
   return (
     <motion.a
       href={WHATSAPP_URL}
@@ -14,12 +16,13 @@ export default function WhatsAppButton() {
       initial={{ opacity: 0, x: 24, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.98 }}
-      className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 transition-shadow hover:shadow-xl hover:shadow-[#25D366]/50 md:bottom-8 md:right-8 md:h-16 md:w-16"
+      whileHover={reduced ? undefined : { scale: 1.08, y: -2 }}
+      whileTap={{ scale: 0.96 }}
+      className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 transition-shadow hover:shadow-xl hover:shadow-[#25D366]/55 md:bottom-8 md:right-8 md:h-16 md:w-16"
     >
+      <span className="absolute inset-0 rounded-full bg-[#25D366]/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:animate-ping" aria-hidden />
       <svg
-        className="h-7 w-7 md:h-8 md:w-8"
+        className="relative h-7 w-7 md:h-8 md:w-8"
         fill="currentColor"
         viewBox="0 0 24 24"
         aria-hidden

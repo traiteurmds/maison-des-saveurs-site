@@ -334,13 +334,9 @@ export default function ContactPage() {
         </p>
       </section>
 
-      <section
-        style={{
-          padding: "4rem 1.5rem",
-          background: "linear-gradient(180deg, #f5ecdf 0%, #f2e7d9 100%)",
-        }}
-      >
-        <div style={{ maxWidth: "32rem", margin: "0 auto" }}>
+      <section className="px-6 py-14 md:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_340px] lg:items-start">
+          <div>
           <AnimatePresence mode="wait">
             {!sent ? (
               <motion.form
@@ -507,6 +503,26 @@ export default function ContactPage() {
               </div>
             )}
           </AnimatePresence>
+          </div>
+
+          <aside className="glass-card rounded-2xl p-7 lg:sticky lg:top-28">
+            <h2 className="font-serif text-xl font-semibold text-deep-green">Contact direct</h2>
+            <p className="mt-3 text-sm leading-relaxed text-deep-green/75">
+              Pour une réponse plus rapide, contactez-nous directement.
+            </p>
+            <div className="mt-6 space-y-3 text-sm text-deep-green/85">
+              <p>contact.mds.traiteur@gmail.com</p>
+              <p>07 58 63 97 34</p>
+            </div>
+            <a
+              href="https://wa.me/33758639734"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium tracking-wide text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              Écrire sur WhatsApp
+            </a>
+          </aside>
         </div>
       </section>
 

@@ -469,3 +469,97 @@ header:not(.nav-over-hero) .nav-logo {
     transform: scaleX(1);
   }
 }
+
+/* ── Premium MDS design system ── */
+.glass-card {
+  border: 1px solid rgba(21, 40, 31, 0.08);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.58) 100%);
+  box-shadow: 0 12px 40px rgba(15, 29, 23, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.mds-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b88454' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.hero-blob {
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+}
+
+.btn-hero {
+  display: inline-flex;
+  height: 52px;
+  width: 260px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  .btn-hero {
+    height: 56px;
+    width: 300px;
+  }
+}
+
+.btn-hero:hover {
+  transform: translateY(-2px);
+}
+
+.btn-hero-outline {
+  border: 1px solid rgba(21, 40, 31, 0.2);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--deep-green-800);
+  box-shadow: 0 10px 32px rgba(15, 29, 23, 0.08);
+}
+
+.btn-hero-primary {
+  background: linear-gradient(135deg, #11231b 0%, #1f3a2e 100%);
+  color: var(--champagne-100);
+  box-shadow: 0 12px 36px rgba(15, 29, 23, 0.2);
+}
+
+.btn-hero-accent {
+  border: 1px solid rgba(184, 132, 84, 0.45);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, #f6eadc 100%);
+  color: var(--gold-500);
+  box-shadow: 0 10px 32px rgba(184, 132, 84, 0.15);
+}
+
+.premium-input {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(21, 40, 31, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1rem;
+  color: var(--deep-green-800);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.premium-input:focus {
+  outline: none;
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(184, 132, 84, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

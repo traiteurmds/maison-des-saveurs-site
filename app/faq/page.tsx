@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import Reveal from "../components/ui/Reveal";
 
 const faqData = [
   {
@@ -61,14 +62,16 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-soft-gradient-beige pt-24 pb-24">
       <div className="mx-auto max-w-[900px] px-6 py-12 md:px-8 md:py-16">
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="lux-heading font-serif text-4xl font-semibold text-deep-green md:text-5xl"
-        >
-          Questions fréquentes
-        </motion.h1>
+        <Reveal>
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lux-heading font-serif text-4xl font-semibold text-deep-green md:text-5xl"
+          >
+            Questions fréquentes
+          </motion.h1>
+        </Reveal>
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -92,7 +95,7 @@ export default function FAQPage() {
                 transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
                 className="list-none"
               >
-                <div className="lux-surface overflow-hidden rounded-2xl p-1 transition-shadow duration-300 hover:shadow-[0_16px_36px_rgba(15,29,23,0.12)]">
+                <div className="glass-card overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-[0_20px_48px_rgba(15,29,23,0.1)]">
                   <button
                     type="button"
                     onClick={() => setOpenId(isOpen ? null : item.id)}

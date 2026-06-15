@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import TiltCard from "./ui/TiltCard";
+import MagneticButton from "./ui/MagneticButton";
+import Reveal from "./ui/Reveal";
 
 type Category = "entrees" | "plats" | "desserts";
 
@@ -17,7 +20,6 @@ type Dish = {
 };
 
 const dishes: Dish[] = [
-  // ENTREES (2)
   {
     id: "salade-variee",
     title: "Salade variée",
@@ -34,7 +36,6 @@ const dishes: Dish[] = [
     alt: "Mini salés marocains buffet traiteur Lyon",
     category: "entrees",
   },
-  // PLATS (5)
   {
     id: "couscous-royal",
     title: "Couscous royal",
@@ -75,7 +76,6 @@ const dishes: Dish[] = [
     alt: "Pastilla marocaine traiteur Lyon",
     category: "plats",
   },
-  // DESSERTS (2)
   {
     id: "assiette-fruits",
     title: "Assiette de fruits",
@@ -117,47 +117,49 @@ export default function Menu3DExperience() {
     const onEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenDish(null);
     };
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onEscape);
-    return () => window.removeEventListener("keydown", onEscape);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onEscape);
+    };
   }, [openDish]);
 
   return (
     <section
       id="menu"
-      className="relative overflow-hidden border-t border-deep-green/10 bg-soft-gradient-beige py-24"
+      className="relative overflow-hidden border-t border-deep-green/10 bg-soft-gradient-beige py-24 md:py-28"
       aria-labelledby="menu-heading"
     >
+      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-25" aria-hidden />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-beige-dark/20"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-beige-dark/25"
       />
-      <div className="mx-auto max-w-7xl px-6">
-        <h2 id="menu-heading" className="text-center font-serif text-4xl font-semibold text-deep-green md:text-5xl">
-          Notre menu
-        </h2>
+      <div className="relative mx-auto max-w-7xl px-6">
+        <Reveal className="text-center">
+          <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Notre carte</p>
+          <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-deep-green md:text-5xl">
+            Notre menu
+          </h2>
+        </Reveal>
 
-        <motion.div
-          className="mt-12 flex flex-wrap justify-center gap-3"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <Reveal className="mt-12 flex flex-wrap justify-center gap-3" delay={0.1}>
           {categories.map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
-              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-green/30 ${
+              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 ${
                 activeCategory === cat.id
-                  ? "border border-beige/10 bg-deep-green text-beige shadow-lg shadow-deep-green/20 hover:-translate-y-0.5 hover:shadow-xl"
-                  : "border border-deep-green/15 bg-white/55 text-deep-green shadow-md hover:-translate-y-0.5 hover:bg-white/80 hover:shadow-lg"
+                  ? "border border-beige/10 bg-deep-green text-beige shadow-lg shadow-deep-green/20"
+                  : "glass-card border border-deep-green/10 text-deep-green hover:-translate-y-0.5"
               }`}
             >
               {cat.label}
             </button>
           ))}
-        </motion.div>
+        </Reveal>
 
         <div className={`mx-auto mt-16 grid justify-center justify-items-center gap-8 ${gridMaxWidthClass} ${gridColsClass}`}>
           {filteredDishes.length === 0 ? (
@@ -165,52 +167,50 @@ export default function Menu3DExperience() {
               Cette catégorie sera bientôt enrichie.
             </p>
           ) : (
-          <AnimatePresence mode="wait">
-          {filteredDishes.map((dish, i) => (
-            <motion.div
-              key={dish.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-              className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-2" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3" : ""}`}
-            >
-              <div
-                role="button"
-                tabIndex={0}
-                onClick={() => setOpenDish(dish)}
-                onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                  className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[18px] border border-deep-green/10 bg-white/40 shadow-lg transition-[box-shadow,transform] duration-[350ms] ease hover:shadow-[0_26px_70px_rgba(15,31,24,0.22)]"
-              >
-                <Image
-                  src={dish.image}
-                  alt={dish.alt}
-                  fill
-                  loading="lazy"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                  quality={80}
-                    className="h-full w-full object-cover transition-transform duration-[350ms] ease group-hover:scale-[1.06]"
-                />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" aria-hidden />
-                <div
-                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                      background:
-                        "linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.10) 50%, transparent 60%)",
-                  }}
-                  aria-hidden
-                />
-                <div
-                  className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-[100%]"
-                  aria-hidden
-                />
-                  <span className="absolute bottom-6 left-6 right-6 text-center font-serif text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">
-                  {dish.title}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-          </AnimatePresence>
+            <AnimatePresence mode="wait">
+              {filteredDishes.map((dish, i) => (
+                <motion.div
+                  key={dish.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
+                  className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-2" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3" : ""}`}
+                >
+                  <TiltCard className="h-full w-full">
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setOpenDish(dish)}
+                      onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
+                      className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[20px] border border-deep-green/10 bg-white/50 shadow-[0_16px_48px_rgba(15,29,23,0.12)] transition-shadow duration-300 hover:shadow-[0_28px_70px_rgba(15,29,23,0.18)]"
+                    >
+                      <Image
+                        src={dish.image}
+                        alt={dish.alt}
+                        fill
+                        loading="lazy"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                        quality={80}
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.07]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden />
+                      <div
+                        className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.12) 50%, transparent 60%)",
+                        }}
+                        aria-hidden
+                      />
+                      <span className="absolute bottom-6 left-6 right-6 text-center font-serif text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">
+                        {dish.title}
+                      </span>
+                    </div>
+                  </TiltCard>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           )}
         </div>
       </div>
@@ -221,18 +221,17 @@ export default function Menu3DExperience() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm md:p-8"
+            transition={{ duration: 0.35 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4 backdrop-blur-md md:p-8"
             onClick={() => setOpenDish(null)}
             role="presentation"
-            aria-hidden
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[22px] border border-deep-green/10 bg-white/90 shadow-2xl backdrop-blur"
+              initial={{ opacity: 0, scale: 0.92, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[24px] border border-white/20 bg-white/95 shadow-2xl backdrop-blur-xl"
               role="dialog"
               aria-modal="true"
               aria-labelledby="menu-3d-modal-title"
@@ -241,43 +240,38 @@ export default function Menu3DExperience() {
               <button
                 type="button"
                 onClick={() => setOpenDish(null)}
-                className="absolute right-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-deep-green/70 text-2xl text-white transition-colors hover:bg-deep-green/90"
+                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-deep-green/80 text-xl text-white transition-colors hover:bg-deep-green"
                 aria-label="Fermer le détail du plat"
               >
                 ×
               </button>
-                <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden rounded-t-[20px]">
-                {openDish && (
-                  <Image
-                    src={openDish.image}
-                    alt={openDish.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 900px) 100vw, 900px"
-                    quality={85}
-                    loading="lazy"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" aria-hidden />
+              <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden">
+                <Image
+                  src={openDish.image}
+                  alt={openDish.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 900px) 100vw, 900px"
+                  quality={85}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" aria-hidden />
                 <h2
                   id="menu-3d-modal-title"
                   className="absolute bottom-6 left-6 right-6 font-serif text-3xl font-semibold text-white md:text-4xl"
                 >
-                  {openDish?.title}
+                  {openDish.title}
                 </h2>
               </div>
               <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-12">
-                {openDish && (
-                  <p className="text-lg leading-relaxed text-deep-green/90">
-                    {openDish.description}
-                  </p>
-                )}
-                <Link
-                  href="/contact"
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:bg-terracotta/90 hover:shadow-xl hover:shadow-terracotta/25"
-                >
-                  Demander un devis
-                </Link>
+                <p className="text-lg leading-relaxed text-deep-green/90">{openDish.description}</p>
+                <MagneticButton className="mt-8 self-start">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 hover:shadow-xl"
+                  >
+                    Demander un devis
+                  </Link>
+                </MagneticButton>
               </div>
             </motion.div>
           </motion.div>

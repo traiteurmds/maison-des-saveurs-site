@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FaTiktok } from "react-icons/fa";
+import Reveal from "../components/ui/Reveal";
+import TiltCard from "../components/ui/TiltCard";
+import MagneticButton from "../components/ui/MagneticButton";
 
 type Caftan = {
   id: string;
@@ -31,103 +33,74 @@ function CaftanCard({ item, index }: { item: Caftan; index: number }) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-20px" }}
-      transition={{ duration: 0.45, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
-      className="group overflow-hidden rounded-2xl border border-deep-green/10 bg-white shadow-[0_18px_45px_rgba(15,31,24,0.10)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,31,24,0.18)]"
-    >
-      <div className="relative aspect-[3/4] w-full overflow-hidden">
-        {imageError ? (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-deep-green/90 via-deep-green to-black text-center text-beige">
-            <div>
-              <p className="font-serif text-2xl font-semibold">Photo {index + 1}</p>
-              <p className="mt-2 text-sm text-beige/80">Ajoute {item.image}</p>
+    <Reveal delay={index * 0.03}>
+      <TiltCard>
+        <article className="group overflow-hidden rounded-2xl border border-deep-green/10 bg-white shadow-[0_18px_45px_rgba(15,31,24,0.10)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(15,31,24,0.16)]">
+          <div className="relative aspect-[3/4] w-full overflow-hidden">
+            {imageError ? (
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-deep-green/90 via-deep-green to-black text-center text-beige">
+                <div>
+                  <p className="font-serif text-2xl font-semibold">Photo {index + 1}</p>
+                  <p className="mt-2 text-sm text-beige/80">Ajoute {item.image}</p>
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                loading="lazy"
+                onError={() => setImageError(true)}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+              <h2 className="font-serif text-2xl font-semibold leading-tight">{item.title}</h2>
             </div>
           </div>
-        ) : (
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            loading="lazy"
-            onError={() => setImageError(true)}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-          <h2 className="font-serif text-2xl font-semibold leading-tight">{item.title}</h2>
-        </div>
-      </div>
-    </motion.article>
+        </article>
+      </TiltCard>
+    </Reveal>
   );
 }
 
 export default function CaftansPage() {
   return (
     <div className="bg-soft-gradient-beige pt-24 pb-24">
-      <section className="relative overflow-hidden border-b border-deep-green/10 bg-gradient-to-b from-[#f7f0e7] to-beige px-6 py-16 text-center">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 12% 18%, rgba(184,132,84,0.2), transparent 36%), radial-gradient(circle at 86% 10%, rgba(21,40,31,0.10), transparent 30%)",
-          }}
-        />
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta"
-        >
-          Collection élégance
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.08 }}
-          className="mt-3 font-serif text-5xl font-semibold text-deep-green md:text-6xl"
-        >
-          Nos Caftans
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-deep-green/80"
-        >
-          Une sélection raffinée de caftans pour vos plus beaux événements. Location et vente,
-          avec accompagnement personnalisé pour trouver la tenue parfaite.
-        </motion.p>
+      <section className="relative overflow-hidden border-b border-deep-green/10 px-6 py-16 text-center md:py-20">
+        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-30" aria-hidden />
+        <Reveal className="relative z-10">
+          <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Collection élégance</p>
+          <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-deep-green md:text-6xl">Nos Caftans</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-deep-green/80">
+            Une sélection raffinée de caftans pour vos plus beaux événements. Location et vente,
+            avec accompagnement personnalisé pour trouver la tenue parfaite.
+          </p>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20px" }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 rounded-2xl border border-deep-green/10 bg-gradient-to-r from-[#102019] via-[#173126] to-[#223c30] p-7 text-center text-beige shadow-[0_16px_38px_rgba(15,31,24,0.30)]"
-        >
-          <p className="font-serif text-3xl font-semibold md:text-4xl">MDS x Lamia Créations</p>
-          <p className="mx-auto mt-3 max-w-2xl text-beige/80">
-            Découvrez nos inspirations, nouveautés et coulisses sur TikTok.
-          </p>
-          <a
-            href="https://www.tiktok.com/@lamia.creations?is_from_webapp=1&sender_device=pc"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center justify-center gap-3 rounded-full border border-beige/45 bg-beige/10 px-8 py-3 font-medium tracking-[0.14em] text-beige transition-all duration-300 hover:-translate-y-0.5 hover:bg-beige/20"
-            aria-label="TikTok Lamia Créations"
-          >
-            <FaTiktok className="text-lg" />
-            Suivre sur TikTok
-          </a>
-        </motion.div>
+        <Reveal>
+          <div className="mb-12 overflow-hidden rounded-3xl border border-deep-green/10 bg-gradient-to-br from-[#102019] via-[#173126] to-[#223c30] p-8 text-center text-beige shadow-[0_20px_48px_rgba(15,31,24,0.28)] md:p-10">
+            <p className="font-serif text-xs uppercase tracking-[0.3em] text-terracotta/90">Partenariat exclusif</p>
+            <p className="mt-3 font-serif text-3xl font-semibold md:text-4xl">MDS x Lamia Créations</p>
+            <p className="mx-auto mt-4 max-w-2xl text-beige/80">
+              Découvrez nos inspirations, nouveautés et coulisses sur TikTok.
+            </p>
+            <a
+              href="https://www.tiktok.com/@lamia.creations?is_from_webapp=1&sender_device=pc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center justify-center gap-3 rounded-full border border-beige/45 bg-beige/10 px-8 py-3 font-medium tracking-[0.14em] text-beige transition-all duration-300 hover:-translate-y-0.5 hover:bg-beige/20"
+              aria-label="TikTok Lamia Créations"
+            >
+              <FaTiktok className="text-lg" />
+              Suivre sur TikTok
+            </a>
+          </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {caftans.map((item, index) => (
@@ -135,24 +108,22 @@ export default function CaftansPage() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-16 rounded-2xl border border-deep-green/10 bg-white px-8 py-10 text-center shadow-[0_10px_30px_rgba(15,31,24,0.08)]"
-        >
-          <h3 className="font-serif text-3xl font-semibold text-deep-green">Un essayage sur mesure</h3>
-          <p className="mx-auto mt-3 max-w-2xl text-deep-green/80">
-            Contactez-nous pour la disponibilité, les tailles et les conditions de location/vente.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-7 inline-flex min-h-[52px] items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-[0.16em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-terracotta/90"
-          >
-            Demander un devis
-          </Link>
-        </motion.div>
+        <Reveal className="mt-16">
+          <div className="glass-card rounded-3xl px-8 py-10 text-center md:px-12 md:py-14">
+            <h3 className="font-serif text-3xl font-semibold text-deep-green">Un essayage sur mesure</h3>
+            <p className="mx-auto mt-3 max-w-2xl text-deep-green/80">
+              Contactez-nous pour la disponibilité, les tailles et les conditions de location/vente.
+            </p>
+            <MagneticButton className="mt-7 inline-block">
+              <Link
+                href="/contact"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-[0.16em] text-white transition-all duration-300 hover:shadow-lg"
+              >
+                Demander un devis
+              </Link>
+            </MagneticButton>
+          </div>
+        </Reveal>
       </section>
     </div>
   );

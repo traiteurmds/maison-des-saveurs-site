@@ -1,13 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import MagneticButton from "./ui/MagneticButton";
+import Reveal from "./ui/Reveal";
 
 function scrollToMenu() {
   document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
 }
 
+const trustBadges = [
+  "Mariages",
+  "Événements privés",
+  "Réceptions professionnelles",
+  "Halal",
+];
+
 export default function VisionHero() {
+  const reduced = useReducedMotion();
+  const { scrollY } = useScroll();
+  const blobY = useTransform(scrollY, [0, 400], [0, reduced ? 0 : 40]);
+  const contentY = useTransform(scrollY, [0, 400], [0, reduced ? 0 : 20]);
+
   return (
     <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden border-b border-deep-green/10 bg-[#f5efe6] text-deep-green md:min-h-[100vh]">
       <div
@@ -15,11 +29,35 @@ export default function VisionHero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at 12% 18%, rgba(184,132,84,0.24), transparent 36%), radial-gradient(circle at 88% 12%, rgba(21,40,31,0.12), transparent 30%), linear-gradient(160deg, #f8f2e8 0%, #f4ecdf 45%, #efe4d6 100%)",
+            "radial-gradient(circle at 12% 18%, rgba(184,132,84,0.22), transparent 38%), radial-gradient(circle at 88% 12%, rgba(21,40,31,0.1), transparent 32%), linear-gradient(160deg, #f8f2e8 0%, #f4ecdf 45%, #efe4d6 100%)",
         }}
       />
+      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-30" aria-hidden />
+      <motion.div
+        style={{ y: blobY }}
+        aria-hidden
+        className="hero-blob pointer-events-none absolute -left-24 top-20 h-72 w-72 bg-terracotta/25"
+      />
+      <motion.div
+        style={{ y: blobY }}
+        aria-hidden
+        className="hero-blob pointer-events-none absolute -right-16 bottom-24 h-64 w-64 bg-deep-green/10"
+      />
       <div className="hero-grain absolute inset-0 z-[1]" aria-hidden />
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
+
+      <motion.div
+        style={{ y: contentY }}
+        className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center"
+      >
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-5 font-serif text-xs uppercase tracking-[0.32em] text-terracotta"
+        >
+          Traiteur marocain · Lyon
+        </motion.p>
+
         <motion.h1
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
@@ -28,6 +66,15 @@ export default function VisionHero() {
         >
           Maison Des Saveurs
         </motion.h1>
+
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="hero-accent-line mx-auto mt-6 w-full max-w-[220px]"
+          aria-hidden
+        />
+
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -36,6 +83,18 @@ export default function VisionHero() {
         >
           Traiteur traditionnel halal
         </motion.p>
+
+        <Reveal className="mt-8 flex flex-wrap justify-center gap-2" delay={0.75}>
+          {trustBadges.map((badge) => (
+            <span
+              key={badge}
+              className="rounded-full border border-deep-green/10 bg-white/60 px-4 py-1.5 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-deep-green/75 backdrop-blur"
+            >
+              {badge}
+            </span>
+          ))}
+        </Reveal>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -43,46 +102,25 @@ export default function VisionHero() {
           className="mt-12 flex flex-col items-center gap-5"
         >
           <div className="flex flex-wrap justify-center gap-5">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <button
-                type="button"
-                onClick={scrollToMenu}
-                className="inline-flex h-[52px] w-[260px] items-center justify-center rounded-full border border-deep-green/25 bg-white/70 px-6 text-[0.82rem] font-medium tracking-[0.12em] text-deep-green shadow-[0_8px_24px_rgba(15,29,23,0.08)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg md:h-[56px] md:w-[300px]"
-              >
+            <MagneticButton>
+              <button type="button" onClick={scrollToMenu} className="btn-hero btn-hero-outline">
                 Découvrir le menu
               </button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Link
-                href="/contact"
-                className="inline-flex h-[52px] w-[260px] items-center justify-center rounded-full bg-gradient-to-r from-[#11231b] via-[#183126] to-[#1f3a2e] px-6 text-[0.82rem] font-medium tracking-[0.12em] text-beige shadow-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl md:h-[56px] md:w-[300px]"
-              >
+            </MagneticButton>
+            <MagneticButton>
+              <Link href="/contact" className="btn-hero btn-hero-primary">
                 Demander un devis
               </Link>
-            </motion.div>
+            </MagneticButton>
           </div>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 1.35, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Link
-              href="/caftans"
-              className="inline-flex h-[52px] w-[260px] items-center justify-center rounded-full border border-terracotta/45 bg-gradient-to-r from-white/85 to-[#f6eadc] px-6 text-[0.82rem] font-medium tracking-[0.12em] text-terracotta shadow-[0_10px_28px_rgba(15,29,23,0.12)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:from-white hover:to-[#f3e2cf] hover:shadow-xl md:h-[56px] md:w-[300px]"
-            >
+          <MagneticButton>
+            <Link href="/caftans" className="btn-hero btn-hero-accent">
               Découvrir les caftans
             </Link>
-          </motion.div>
+          </MagneticButton>
         </motion.div>
-      </div>
+      </motion.div>
+
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-24 bg-gradient-to-b from-transparent to-beige-dark/55 md:block"

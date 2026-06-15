@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
+import Providers from "./components/Providers";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
@@ -158,12 +159,14 @@ export default function RootLayout({
             __html: JSON.stringify(localBusinessSchema),
           }}
         />
-        <Navbar />
-        <main className="min-h-screen">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <Providers>
+          <Navbar />
+          <main className="min-h-screen">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+          <WhatsAppButton />
+        </Providers>
       </body>
     </html>
   );
