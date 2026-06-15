@@ -71,7 +71,7 @@ export default function VisionHero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="mx-auto mt-10 flex w-full max-w-[300px] flex-col items-center gap-3.5 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:justify-start lg:gap-4"
+            className="mx-auto mt-10 flex w-full max-w-[440px] flex-col items-center gap-3.5 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-wrap lg:justify-start lg:gap-4"
           >
             <button type="button" onClick={scrollToMenu} className="btn-hero btn-hero-outline w-full lg:w-auto">
               Découvrir le menu

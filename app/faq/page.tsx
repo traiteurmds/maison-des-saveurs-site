@@ -157,7 +157,7 @@ export default function FAQPage() {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex min-h-[52px] items-center justify-center rounded-full bg-terracotta px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-terracotta/25 focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2 focus:ring-offset-beige"
+            className="mt-8 inline-flex min-h-[52px] items-center justify-center rounded-full bg-[var(--black)] px-10 py-4 font-medium tracking-widest text-[var(--ivory)] shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-[var(--charcoal)] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:ring-offset-2 focus:ring-offset-[var(--background)]"
           >
             Nous contacter
           </Link>

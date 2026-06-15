@@ -1,53 +1,35 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 :root {
+  --background: #f8f5ef;
+  --surface: #fffdf8;
+  --surface-soft: #f1eae0;
   --ivory: #f8f5ef;
-  --cream: #efe7da;
+  --cream: #f1eae0;
   --black: #0b0b0a;
   --charcoal: #171717;
   --gold: #c6a46a;
   --soft-gold: #e7d7b8;
+  --border-gold: rgba(198, 164, 106, 0.28);
   --muted-text: #6f6a60;
-  --background: var(--ivory);
   --foreground: var(--black);
   --accent: var(--gold);
-  --deep-green-900: #0b0b0a;
+  --deep-green-900: var(--black);
   --deep-green-800: var(--black);
   --deep-green-700: var(--charcoal);
   --gold-500: var(--gold);
   --gold-400: var(--soft-gold);
   --champagne-100: var(--ivory);
-  --champagne-200: var(--cream);
-  --mds-bg: var(--ivory);
-  --mds-bg-elevated: #ffffff;
-  --mds-card: #ffffff;
+  --champagne-200: var(--surface-soft);
+  --mds-bg: var(--background);
+  --mds-bg-elevated: var(--surface);
+  --mds-card: var(--surface);
   --mds-text: var(--black);
   --mds-muted: var(--muted-text);
-  --mds-border: rgba(198, 164, 106, 0.22);
-  --mds-surface: rgba(255, 255, 255, 0.88);
-  --mds-shadow: rgba(11, 11, 10, 0.06);
+  --mds-border: var(--border-gold);
+  --mds-surface: rgba(255, 255, 255, 0.78);
+  --mds-shadow: rgba(11, 11, 10, 0.08);
   --mds-hero-glow: rgba(198, 164, 106, 0.1);
-}
-
-.dark {
-  --background: var(--black);
-  --foreground: var(--ivory);
-  --deep-green-800: var(--ivory);
-  --deep-green-700: rgba(248, 245, 239, 0.72);
-  --champagne-100: var(--ivory);
-  --champagne-200: var(--charcoal);
-  --mds-bg: var(--black);
-  --mds-bg-elevated: var(--charcoal);
-  --mds-card: var(--charcoal);
-  --mds-text: var(--ivory);
-  --mds-muted: rgba(248, 245, 239, 0.62);
-  --mds-border: rgba(198, 164, 106, 0.2);
-  --mds-surface: rgba(23, 23, 23, 0.94);
-  --mds-shadow: rgba(0, 0, 0, 0.45);
-  --mds-hero-glow: rgba(198, 164, 106, 0.08);
-  --cream: #141413;
 }
 
 @theme inline {
@@ -535,28 +517,41 @@ header:not(.nav-over-hero) .nav-logo {
 .btn-hero {
   display: inline-flex;
   height: 52px;
-  width: 260px;
+  width: 100%;
+  max-width: 440px;
+  min-width: 0;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  font-size: 0.82rem;
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .btn-hero {
-    height: 56px;
-    width: 300px;
+    height: 58px;
+    min-width: 220px;
+    width: auto;
+    max-width: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.11em;
   }
 }
 
 .btn-hero.w-full {
   width: 100%;
-  max-width: 300px;
+  max-width: 440px;
+}
+
+@media (min-width: 1024px) {
+  .btn-hero.w-full.lg\:w-auto {
+    width: auto;
+    max-width: none;
+  }
 }
 
 .btn-hero:hover {
@@ -584,7 +579,8 @@ header:not(.nav-over-hero) .nav-logo {
 
 .btn-hero-outline:hover {
   border-color: rgba(198, 164, 106, 0.55);
-  background: var(--mds-bg-elevated);
+  background: var(--surface);
+  color: var(--black);
 }
 
 .btn-hero-primary {
@@ -596,15 +592,6 @@ header:not(.nav-over-hero) .nav-logo {
 
 .btn-hero-primary:hover {
   background: var(--charcoal);
-}
-
-.dark .btn-hero-primary {
-  background: var(--ivory);
-  color: var(--black);
-}
-
-.dark .btn-hero-primary:hover {
-  background: var(--soft-gold);
 }
 
 .btn-hero-accent {

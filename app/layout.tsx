@@ -152,10 +152,9 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      suppressHydrationWarning
       className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}
     >
-      <body className="bg-mds-bg text-mds-text antialiased">
+      <body className="bg-mds-bg pb-20 text-mds-text antialiased lg:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

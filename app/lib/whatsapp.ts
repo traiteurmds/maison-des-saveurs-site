@@ -99,17 +99,25 @@ export function getTotalSelected(selection: SelectionState) {
   return Object.values(selection).reduce((total, items) => total + items.length, 0);
 }
 
-/** Classes partagées pour cartes sélectionnables */
 export const selectableCardClass = (selected: boolean) =>
   selected
-    ? "border-[var(--gold)] bg-[var(--soft-gold)]/25 shadow-[0_0_0_1px_rgba(198,164,106,0.35),0_16px_40px_var(--mds-shadow)] dark:bg-[var(--gold)]/10"
-    : "border-mds-border bg-mds-card shadow-[0_12px_40px_var(--mds-shadow)] hover:border-[var(--gold)]/35";
+    ? "border-[var(--gold)] bg-[var(--soft-gold)]/30 shadow-[0_0_0_1px_rgba(198,164,106,0.35),0_16px_40px_var(--mds-shadow)]"
+    : "border-mds-border bg-[var(--surface)] shadow-[0_12px_40px_var(--mds-shadow)] hover:border-[var(--gold)]/40";
 
 export const selectableFocusClass =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-mds-bg";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]";
 
-export const btnWhatsappClass =
-  "inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-[var(--black)] px-6 py-3 text-sm font-medium tracking-wide text-[var(--ivory)] transition-all duration-300 hover:bg-[var(--charcoal)] dark:bg-[var(--ivory)] dark:text-[var(--black)] dark:hover:bg-[var(--soft-gold)]";
+export const btnPrimaryClass =
+  "inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-[var(--black)] px-6 py-3 text-sm font-medium tracking-wide text-[var(--ivory)] transition-all duration-300 hover:bg-[var(--charcoal)]";
 
-export const btnWhatsappSecondaryClass =
-  "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-mds-border bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-mds-muted transition-all hover:border-[var(--gold)]/40 hover:text-mds-text";
+export const btnSecondaryClass =
+  "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-mds-border bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-mds-muted transition-all hover:border-[var(--gold)]/45 hover:text-mds-text";
+
+export const btnGhostClass =
+  "w-full py-2 text-center text-sm text-[var(--gold)] underline-offset-4 transition-colors hover:underline";
+
+/** @deprecated use btnPrimaryClass */
+export const btnWhatsappClass = btnPrimaryClass;
+
+/** @deprecated use btnSecondaryClass */
+export const btnWhatsappSecondaryClass = btnSecondaryClass;

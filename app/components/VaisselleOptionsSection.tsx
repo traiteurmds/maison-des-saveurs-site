@@ -59,13 +59,13 @@ function OptionCard({
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-2 px-6 text-center">
-            <span className="font-serif text-sm uppercase tracking-[0.2em] text-terracotta/80">Photo à venir</span>
+            <span className="font-serif text-sm uppercase tracking-[0.2em] text-[var(--gold)]/80">Photo à venir</span>
             <span className="text-xs text-mds-muted">Ajoutez votre image ici</span>
           </div>
         )}
         {selected && (
           <div
-            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-terracotta text-xs font-bold text-white"
+            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)]"
             aria-hidden
           >
             ✓
@@ -92,7 +92,7 @@ export default function VaisselleOptionsSection() {
       <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Complétez votre réception</p>
+          <p className="font-serif text-sm uppercase tracking-[0.28em] text-[var(--gold)]">Complétez votre réception</p>
           <h2 id="vaisselle-heading" className="lux-heading mt-4 font-serif text-4xl font-semibold text-mds-text md:text-5xl">
             Options vaisselle &amp; décoration
           </h2>

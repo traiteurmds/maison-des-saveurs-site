@@ -40,7 +40,7 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden border-b border-mds-border py-16 md:py-24">
         <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
         <Reveal className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">Ce que nous proposons</p>
+          <p className="font-serif text-sm uppercase tracking-[0.3em] text-[var(--gold)]">Ce que nous proposons</p>
           <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-mds-text md:text-6xl">Nos services</h1>
         </Reveal>
       </section>
@@ -63,10 +63,10 @@ export default function ServicesPage() {
                         quality={90}
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-deep-green/30 to-transparent" aria-hidden />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--black)]/25 to-transparent" aria-hidden />
                     </div>
                     <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
-                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-terracotta/30 bg-terracotta/10 text-terracotta">
+                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 text-[var(--gold)]">
                         <Icon aria-hidden />
                       </div>
                       <h2 className="font-serif text-2xl font-semibold text-mds-text md:text-3xl">{service.title}</h2>
@@ -83,7 +83,7 @@ export default function ServicesPage() {
           <MagneticButton className="inline-block">
             <Link
               href="/contact"
-              className="btn-premium btn-cta-signature inline-flex rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-widest text-white"
+              className="btn-premium btn-cta-signature inline-flex min-h-[52px] items-center justify-center rounded-full bg-[var(--black)] px-10 py-4 font-medium tracking-widest text-[var(--ivory)] transition-all hover:bg-[var(--charcoal)]"
             >
               Demander un devis
             </Link>

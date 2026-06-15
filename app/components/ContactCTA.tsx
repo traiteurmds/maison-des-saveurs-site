@@ -5,7 +5,7 @@ import Reveal from "./ui/Reveal";
 
 export default function ContactCTA() {
   return (
-    <section className="relative overflow-hidden border-t border-mds-border bg-[var(--black)] py-28 dark:bg-[var(--charcoal)] md:py-32">
+    <section className="relative overflow-hidden border-t border-mds-border bg-[var(--black)] py-28 md:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-40"

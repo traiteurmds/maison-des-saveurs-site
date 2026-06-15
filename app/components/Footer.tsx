@@ -13,9 +13,11 @@ function scrollToTop() {
 }
 
 const footerLinks = [
+  { href: "/", label: "Accueil" },
   { href: "/#menu", label: "Menu" },
   { href: "/caftans", label: "Caftans" },
   { href: "/services", label: "Services" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -25,6 +27,13 @@ export default function Footer() {
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       const linkPath = href.split("#")[0] || "/";
+      if (linkPath === "/#menu" || linkPath === "/") {
+        if (href.includes("#menu") && pathname === "/") {
+          e.preventDefault();
+          document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+      }
       if (pathname === linkPath) {
         e.preventDefault();
       }
@@ -34,7 +43,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className="border-t border-deep-green/10 bg-gradient-to-br from-[#102019] via-[#15281f] to-[#1c3228] text-beige">
+    <footer className="border-t border-mds-border bg-[var(--surface-soft)] text-mds-text">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <motion.div
@@ -51,11 +60,11 @@ export default function Footer() {
                 if (pathname === "/") e.preventDefault();
                 scrollToTop();
               }}
-              className="nav-link inline-block font-serif text-3xl font-semibold tracking-wide"
+              className="nav-link inline-block font-serif text-3xl font-semibold tracking-wide text-mds-text"
             >
               Maison Des Saveurs
             </Link>
-            <p className="max-w-md text-sm leading-relaxed text-beige/75">
+            <p className="max-w-md text-sm leading-relaxed text-mds-muted">
               Traiteur marocain Lyon et traiteur oriental Lyon. Couscous lyon événement,
               mariages et réceptions. Cuisine d&apos;exception dans toute la métropole.
             </p>
@@ -69,7 +78,7 @@ export default function Footer() {
             className="space-y-6 text-sm"
           >
             <div>
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-terracotta">
+              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
                 Navigation
               </h3>
               <ul className="mt-4 space-y-2">
@@ -79,7 +88,7 @@ export default function Footer() {
                       href={link.href}
                       scroll={true}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="nav-link text-sm text-beige/90 transition-colors duration-200 hover:text-terracotta"
+                      className="nav-link text-sm text-mds-muted transition-colors duration-200 hover:text-mds-text"
                     >
                       {link.label}
                     </Link>
@@ -89,22 +98,18 @@ export default function Footer() {
             </div>
 
             <div className="space-y-3">
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-terracotta">
+              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
                 Contact & réseaux
               </h3>
-              <p className="text-sm text-beige/90">
-                contact.mds.traiteur@gmail.com
-              </p>
-              <p className="text-sm text-beige/90">
-                07.58.63.97.34
-              </p>
+              <p className="text-sm text-mds-muted">contact.mds.traiteur@gmail.com</p>
+              <p className="text-sm text-mds-muted">07.58.63.97.34</p>
               <div className="flex items-center gap-4">
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram Maison Des Saveurs"
-                  className="text-xl text-beige transition-transform duration-200 hover:-translate-y-0.5 hover:text-terracotta"
+                  className="text-xl text-mds-muted transition-transform duration-200 hover:-translate-y-0.5 hover:text-[var(--gold)]"
                 >
                   <FaInstagram />
                 </a>
@@ -113,7 +118,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok Maison Des Saveurs"
-                  className="text-xl text-beige transition-transform duration-200 hover:-translate-y-0.5 hover:text-terracotta"
+                  className="text-xl text-mds-muted transition-transform duration-200 hover:-translate-y-0.5 hover:text-[var(--gold)]"
                 >
                   <FaTiktok />
                 </a>
@@ -126,11 +131,12 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-12 flex flex-col gap-4 border-t border-beige/20 pt-8 text-xs text-beige/65 md:flex-row md:items-center md:justify-between"
+          className="mt-12 flex flex-col gap-4 border-t border-mds-border pt-8 text-xs text-mds-muted md:flex-row md:items-center md:justify-between"
         >
           <p>© {new Date().getFullYear()} Maison Des Saveurs. Tous droits réservés.</p>
           <p className="text-[11px]">
-            Traiteur marocain lyon · Traiteur oriental lyon · Couscous lyon événement – Expériences culinaires sur mesure.
+            Traiteur marocain lyon · Traiteur oriental lyon · Couscous lyon événement – Expériences
+            culinaires sur mesure.
           </p>
         </motion.div>
       </div>

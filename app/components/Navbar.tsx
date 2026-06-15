@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTiktok, FaTimes } from "react-icons/fa";
-import ThemeToggle from "./ui/ThemeToggle";
 import { cn } from "../lib/utils";
 
 function useScrollToTop() {
@@ -76,7 +75,7 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            "pointer-events-auto w-full max-w-6xl rounded-full border border-mds-border bg-mds-surface shadow-[0_8px_40px_var(--mds-shadow)] backdrop-blur-xl transition-all duration-500",
+            "pointer-events-auto w-full max-w-6xl rounded-full border border-mds-border bg-[rgba(255,253,248,0.92)] shadow-[0_8px_40px_var(--mds-shadow)] backdrop-blur-xl transition-all duration-500",
             scrolled && "shadow-[0_12px_48px_var(--mds-shadow)]"
           )}
         >
@@ -123,7 +122,7 @@ export default function Navbar() {
                     if (pathname === "/contact") e.preventDefault();
                     scrollToTop();
                   }}
-                  className="inline-flex rounded-full bg-[var(--black)] px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--ivory)] transition-all hover:bg-[var(--gold)] hover:text-[var(--black)] lg:px-5 lg:text-[0.7rem] dark:bg-[var(--ivory)] dark:text-[var(--black)] dark:hover:bg-[var(--soft-gold)]"
+                  className="inline-flex rounded-full bg-[var(--black)] px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--ivory)] transition-all hover:bg-[var(--gold)] hover:text-[var(--black)] lg:px-5 lg:text-[0.7rem]"
                 >
                   Devis
                 </Link>
@@ -131,13 +130,12 @@ export default function Navbar() {
             </ul>
 
             <div className="flex items-center gap-2">
-              <ThemeToggle className="hidden sm:flex" />
               <div className="hidden items-center gap-1 sm:flex md:hidden">
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-terracotta"
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-[var(--gold)]"
                   aria-label="Instagram"
                 >
                   <FaInstagram className="text-sm" />
@@ -146,7 +144,7 @@ export default function Navbar() {
                   href="https://www.tiktok.com/@mds.traiteur"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-terracotta"
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-[var(--gold)]"
                   aria-label="TikTok"
                 >
                   <FaTiktok className="text-sm" />
@@ -155,7 +153,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setIsOpen(true)}
-                className="flex h-9 w-9 flex-col items-center justify-center gap-1 rounded-full border border-mds-border bg-mds-card md:hidden"
+                className="flex h-9 w-9 flex-col items-center justify-center gap-1 rounded-full border border-mds-border bg-[var(--surface)] md:hidden"
                 aria-label="Ouvrir le menu"
               >
                 <span className="h-0.5 w-4 bg-mds-text" />
@@ -193,14 +191,14 @@ export default function Navbar() {
               animate={{ y: 0 }}
               exit={{ y: "-100%" }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex h-full flex-col bg-mds-bg/97 backdrop-blur-xl"
+              className="relative flex h-full flex-col bg-[var(--background)]/97 backdrop-blur-xl"
             >
               <div className="flex items-center justify-between border-b border-mds-border px-6 py-5">
                 <span className="font-serif text-lg font-semibold text-mds-text">Menu</span>
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-mds-border bg-white text-mds-text transition-colors hover:border-terracotta hover:text-terracotta"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-mds-border bg-[var(--surface)] text-mds-text transition-colors hover:border-[var(--gold)] hover:text-[var(--gold)]"
                   aria-label="Fermer le menu"
                 >
                   <FaTimes className="text-base" />
@@ -224,7 +222,7 @@ export default function Navbar() {
                           onClick={(e) => handleLinkClick(e, link)}
                           className={cn(
                             "block border-b border-mds-border/60 py-4 font-serif text-2xl tracking-wide transition-colors",
-                            isActive ? "text-terracotta" : "text-mds-text hover:text-terracotta"
+                            isActive ? "text-[var(--gold)]" : "text-mds-text hover:text-[var(--gold)]"
                           )}
                         >
                           {link.label}
@@ -236,12 +234,11 @@ export default function Navbar() {
               </nav>
 
               <div className="flex items-center justify-center gap-6 border-t border-mds-border px-6 py-6">
-                <ThemeToggle />
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xl text-mds-muted transition-colors hover:text-terracotta"
+                  className="text-xl text-mds-muted transition-colors hover:text-[var(--gold)]"
                   aria-label="Instagram"
                 >
                   <FaInstagram />
@@ -250,7 +247,7 @@ export default function Navbar() {
                   href="https://www.tiktok.com/@mds.traiteur"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xl text-mds-muted transition-colors hover:text-terracotta"
+                  className="text-xl text-mds-muted transition-colors hover:text-[var(--gold)]"
                   aria-label="TikTok"
                 >
                   <FaTiktok />

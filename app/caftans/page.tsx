@@ -61,10 +61,10 @@ function CaftanCard({
         >
           <div className="relative aspect-[3/4] w-full overflow-hidden">
             {imageError ? (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-deep-green/90 via-deep-green to-black text-center text-beige">
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--surface-soft)] to-[var(--surface)] text-center text-mds-text">
                 <div>
                   <p className="font-serif text-2xl font-semibold">Photo {index + 1}</p>
-                  <p className="mt-2 text-sm text-beige/80">Ajoute {item.image}</p>
+                  <p className="mt-2 text-sm text-mds-muted">Ajoute {item.image}</p>
                 </div>
               </div>
             ) : (
@@ -81,7 +81,7 @@ function CaftanCard({
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden />
             {selected && (
               <div
-                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-terracotta text-xs font-bold text-white shadow-md"
+                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)] shadow-md"
                 aria-hidden
               >
                 ✓
@@ -105,7 +105,7 @@ export default function CaftansPage() {
       <section className="relative overflow-hidden border-b border-mds-border px-6 py-16 text-center md:py-20">
         <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
         <Reveal className="relative z-10">
-          <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Collection élégance</p>
+          <p className="font-serif text-sm uppercase tracking-[0.28em] text-[var(--gold)]">Collection élégance</p>
           <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-mds-text md:text-6xl">Nos Caftans</h1>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-mds-muted md:text-base">
             Sélectionnez les modèles qui vous intéressent pour préparer votre demande.
@@ -119,17 +119,17 @@ export default function CaftansPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
         <Reveal>
-          <div className="mb-12 overflow-hidden rounded-3xl border border-deep-green/10 bg-gradient-to-br from-[#102019] via-[#173126] to-[#223c30] p-8 text-center text-beige shadow-[0_20px_48px_rgba(15,31,24,0.28)] md:p-10">
-            <p className="font-serif text-xs uppercase tracking-[0.3em] text-terracotta/90">Partenariat exclusif</p>
+          <div className="mb-12 overflow-hidden rounded-3xl border border-mds-border bg-[var(--black)] p-8 text-center text-[var(--ivory)] shadow-[0_20px_48px_var(--mds-shadow)] md:p-10">
+            <p className="font-serif text-xs uppercase tracking-[0.3em] text-[var(--gold)]">Partenariat exclusif</p>
             <p className="mt-3 font-serif text-3xl font-semibold md:text-4xl">MDS x Lamia Créations</p>
-            <p className="mx-auto mt-4 max-w-2xl text-beige/80">
+            <p className="mx-auto mt-4 max-w-2xl text-[var(--ivory)]/75">
               Découvrez nos inspirations, nouveautés et coulisses sur TikTok.
             </p>
             <a
               href="https://www.tiktok.com/@lamia.creations?is_from_webapp=1&sender_device=pc"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center justify-center gap-3 rounded-full border border-beige/45 bg-beige/10 px-8 py-3 font-medium tracking-[0.14em] text-beige transition-all duration-300 hover:-translate-y-0.5 hover:bg-beige/20"
+              className="mt-7 inline-flex items-center justify-center gap-3 rounded-full border border-[var(--gold)]/45 bg-[var(--gold)]/10 px-8 py-3 font-medium tracking-[0.14em] text-[var(--ivory)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--gold)]/20"
               aria-label="TikTok Lamia Créations"
             >
               <FaTiktok className="text-lg" />
@@ -183,7 +183,7 @@ export default function CaftansPage() {
             <MagneticButton className="mt-7 inline-block">
               <Link
                 href="/contact"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-[0.16em] text-white transition-all duration-300 hover:shadow-lg"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[var(--black)] px-10 py-4 font-medium tracking-[0.16em] text-[var(--ivory)] transition-all duration-300 hover:bg-[var(--charcoal)] hover:shadow-lg"
               >
                 Demander un devis
               </Link>

@@ -146,7 +146,7 @@ function DishCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden />
         {selected && (
           <div
-            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-terracotta text-xs font-bold text-white shadow-md"
+            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)] shadow-md"
             aria-hidden
           >
             ✓
@@ -212,7 +212,7 @@ export default function Menu3DExperience() {
       <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal className="text-center">
-          <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Notre carte</p>
+          <p className="font-serif text-sm uppercase tracking-[0.28em] text-[var(--gold)]">Notre carte</p>
           <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-mds-text md:text-5xl">
             Notre menu
           </h2>
@@ -320,7 +320,7 @@ export default function Menu3DExperience() {
               <button
                 type="button"
                 onClick={() => setOpenDish(null)}
-                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-deep-green/80 text-xl text-white transition-colors hover:bg-deep-green"
+                className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-mds-border bg-[var(--black)]/80 text-xl text-[var(--ivory)] transition-colors hover:bg-[var(--black)]"
                 aria-label="Fermer le détail du plat"
               >
                 ×
@@ -353,8 +353,8 @@ export default function Menu3DExperience() {
                       "inline-flex min-h-[48px] items-center justify-center rounded-full border px-8 py-3 text-sm font-medium tracking-wide transition-all",
                       selectableFocusClass,
                       isDishSelected(openDish)
-                        ? "border-terracotta bg-[#faf6f0] text-terracotta dark:bg-[#1a241c]"
-                        : "border-mds-border bg-mds-card text-mds-text hover:border-terracotta/40"
+                        ? "border-[var(--gold)] bg-[var(--soft-gold)]/30 text-[var(--gold)]"
+                        : "border-mds-border bg-mds-card text-mds-text hover:border-[var(--gold)]/40"
                     )}
                   >
                     {isDishSelected(openDish) ? "Retirer de ma sélection" : "Ajouter à ma sélection"}
@@ -362,7 +362,7 @@ export default function Menu3DExperience() {
                   <MagneticButton className="inline-block">
                     <Link
                       href="/contact"
-                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 hover:shadow-xl"
+                      className="inline-flex items-center justify-center rounded-full bg-[var(--black)] px-10 py-4 font-medium tracking-widest text-[var(--ivory)] shadow-lg transition-all duration-300 hover:bg-[var(--charcoal)] hover:shadow-xl"
                     >
                       Demander un devis
                     </Link>

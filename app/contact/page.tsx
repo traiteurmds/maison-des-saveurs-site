@@ -19,12 +19,12 @@ import {
 } from "../lib/contact-validation";
 
 const colors = {
-  dark: "#15281F",
-  terracotta: "#B88454",
-  beige: "#F6EFE5",
-  beigeDark: "#E9DCCA",
-  white: "#FFFFFF",
-  border: "rgba(21, 40, 31, 0.2)",
+  black: "#0B0B0A",
+  gold: "#C6A46A",
+  beige: "#F8F5EF",
+  beigeDark: "#F1EAE0",
+  white: "#FFFDF8",
+  border: "rgba(198, 164, 106, 0.28)",
 } as const;
 
 const COOLDOWN_MS = 12_000;
@@ -34,7 +34,7 @@ const inputBaseStyle: React.CSSProperties = {
   padding: "0.75rem 1rem",
   fontSize: "1rem",
   lineHeight: "1.5",
-  color: colors.dark,
+  color: colors.black,
   backgroundColor: colors.white,
   border: "2px solid",
   borderColor: colors.border,
@@ -49,7 +49,7 @@ const labelStyle: React.CSSProperties = {
   fontFamily: "var(--font-cormorant), Georgia, serif",
   fontSize: "0.875rem",
   fontWeight: 500,
-  color: colors.dark,
+  color: colors.black,
   marginBottom: "0.5rem",
 };
 
@@ -269,8 +269,8 @@ export default function ContactPage() {
   };
 
   const focusStyle = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.target.style.borderColor = colors.terracotta;
-    e.target.style.boxShadow = `0 0 0 3px ${colors.terracotta}40`;
+    e.target.style.borderColor = colors.gold;
+    e.target.style.boxShadow = `0 0 0 3px ${colors.gold}40`;
   }, []);
 
   const blurStyle = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -306,7 +306,7 @@ export default function ContactPage() {
             fontSize: "0.75rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: colors.terracotta,
+            color: colors.gold,
             margin: 0,
           }}
         >
@@ -317,7 +317,7 @@ export default function ContactPage() {
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
             fontWeight: 600,
-            color: colors.dark,
+            color: colors.black,
             margin: "0.5rem 0 0",
           }}
         >
@@ -326,7 +326,7 @@ export default function ContactPage() {
         <p
           style={{
             fontSize: "1.125rem",
-            color: colors.dark,
+            color: colors.black,
             opacity: 0.85,
             margin: "1rem 0 0",
             maxWidth: "36rem",
@@ -362,7 +362,7 @@ export default function ContactPage() {
                 }}
               >
                 {fieldErrors.form && (
-                  <p style={{ color: colors.terracotta, fontSize: "0.875rem" }} role="alert">
+                  <p style={{ color: colors.gold, fontSize: "0.875rem" }} role="alert">
                     {fieldErrors.form}
                   </p>
                 )}
@@ -398,7 +398,7 @@ export default function ContactPage() {
                     onBlur={blurStyle}
                   />
                   {fieldErrors.lastName && (
-                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.lastName}</p>
+                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.lastName}</p>
                   )}
                 </div>
 
@@ -417,7 +417,7 @@ export default function ContactPage() {
                     onBlur={blurStyle}
                   />
                   {fieldErrors.email && (
-                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.email}</p>
+                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.email}</p>
                   )}
                 </div>
 
@@ -440,12 +440,12 @@ export default function ContactPage() {
                     }}
                     style={{
                       ...inputBaseStyle,
-                      borderColor: phoneError ? colors.terracotta : colors.border,
+                      borderColor: phoneError ? colors.gold : colors.border,
                     }}
                     maxLength={LIMITS.PHONE_LENGTH}
                   />
                   {(phoneError || fieldErrors.phone) && (
-                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.375rem" }} role="alert">
+                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.375rem" }} role="alert">
                       {phoneError || fieldErrors.phone}
                     </p>
                   )}
@@ -473,7 +473,7 @@ export default function ContactPage() {
                   <p
                     style={{
                       fontSize: "0.8125rem",
-                      color: colors.dark,
+                      color: colors.black,
                       opacity: 0.6,
                       marginTop: "0.375rem",
                       textAlign: "right",
@@ -482,14 +482,14 @@ export default function ContactPage() {
                     {message.length} / {LIMITS.MAX_MESSAGE}
                   </p>
                   {fieldErrors.message && (
-                    <p style={{ color: colors.terracotta, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.message}</p>
+                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.message}</p>
                   )}
                 </div>
 
                 <button
                   type="submit"
                   disabled={!canSubmit || loading}
-                  className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#b88454] via-[#9a6f46] to-[#15281f] px-8 py-3 text-xs font-medium tracking-[0.18em] text-white uppercase shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--black)] px-8 py-3 text-xs font-medium tracking-[0.18em] text-[var(--ivory)] uppercase shadow-md transition-all duration-300 ease-out hover:bg-[var(--charcoal)] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? (
                     <>
@@ -540,7 +540,7 @@ export default function ContactPage() {
             fontSize: "0.75rem",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: colors.dark,
+            color: colors.black,
             opacity: 0.75,
             margin: 0,
           }}
@@ -551,7 +551,7 @@ export default function ContactPage() {
           style={{
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "1.25rem",
-            color: colors.dark,
+            color: colors.black,
             margin: "0.5rem 0 0",
           }}
         >
@@ -560,7 +560,7 @@ export default function ContactPage() {
         <p
           style={{
             fontSize: "1rem",
-            color: colors.dark,
+            color: colors.black,
             opacity: 0.85,
             margin: "0.25rem 0 0",
           }}
@@ -598,7 +598,7 @@ function SuccessConfirmation() {
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "1.75rem",
             fontWeight: 600,
-            color: colors.dark,
+            color: colors.black,
             margin: 0,
             lineHeight: 1.3,
           }}
@@ -608,7 +608,7 @@ function SuccessConfirmation() {
         <p
           style={{
             fontSize: "1rem",
-            color: colors.dark,
+            color: colors.black,
             opacity: 0.85,
             margin: "0.75rem 0 0",
             lineHeight: 1.5,
