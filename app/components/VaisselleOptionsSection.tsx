@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
 import Reveal from "./ui/Reveal";
-import { buildWhatsAppUrlWithOptions } from "../lib/whatsapp";
+import { buildWhatsAppUrl, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 const options = [
@@ -40,11 +40,11 @@ function OptionCard({
       type="button"
       onClick={onToggle}
       aria-pressed={selected}
+      aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${option.title}`}
       className={cn(
-        "group w-full overflow-hidden rounded-2xl border bg-mds-card text-left transition-all duration-300",
-        selected
-          ? "border-terracotta shadow-[0_0_0_1px_rgba(184,132,84,0.4),0_20px_48px_rgba(184,132,84,0.15)]"
-          : "border-mds-border shadow-[0_12px_40px_var(--mds-shadow)] hover:border-terracotta/40 hover:shadow-[0_20px_48px_var(--mds-shadow)]"
+        "group w-full overflow-hidden rounded-2xl border text-left transition-all duration-300",
+        selectableCardClass(selected),
+        selectableFocusClass
       )}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#f0e8dc] to-[#e8ded0]">
@@ -64,7 +64,10 @@ function OptionCard({
           </div>
         )}
         {selected && (
-          <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-terracotta text-xs font-bold text-white">
+          <div
+            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-terracotta text-xs font-bold text-white"
+            aria-hidden
+          >
             ✓
           </div>
         )}
@@ -87,7 +90,7 @@ export default function VaisselleOptionsSection() {
     });
   };
 
-  const whatsappUrl = buildWhatsAppUrlWithOptions(selected);
+  const whatsappUrl = buildWhatsAppUrl({ selectedOptions: selected });
 
   return (
     <section
@@ -124,9 +127,12 @@ export default function VaisselleOptionsSection() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-[56px] w-full max-w-md items-center justify-center gap-3 rounded-full bg-[#25D366] px-8 py-4 text-sm font-medium tracking-wide text-white shadow-[0_8px_32px_rgba(37,211,102,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(37,211,102,0.45)] sm:w-auto sm:min-w-[320px]"
+            className={cn(
+              "inline-flex min-h-[56px] w-full max-w-md items-center justify-center gap-3 rounded-full bg-[#25D366] px-8 py-4 text-sm font-medium tracking-wide text-white shadow-[0_8px_32px_rgba(37,211,102,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(37,211,102,0.45)] sm:w-auto sm:min-w-[320px]",
+              selectableFocusClass
+            )}
           >
-            <FaWhatsapp className="text-xl" />
+            <FaWhatsapp className="text-xl" aria-hidden />
             Envoyer ma demande avec ces options
           </a>
           {selected.length === 0 && (

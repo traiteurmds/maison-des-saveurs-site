@@ -1,15 +1,14 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-
-const WHATSAPP_URL = "https://wa.me/33758639734";
+import { buildWhatsAppUrl } from "../lib/whatsapp";
 
 export default function WhatsAppButton() {
   const reduced = useReducedMotion();
 
   return (
     <motion.a
-      href={WHATSAPP_URL}
+      href={buildWhatsAppUrl()}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Nous contacter sur WhatsApp"
@@ -18,7 +17,7 @@ export default function WhatsAppButton() {
       transition={{ delay: 1.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduced ? undefined : { scale: 1.06, y: -3 }}
       whileTap={{ scale: 0.96 }}
-      className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-[#25D366]/30 bg-[#25D366] text-white shadow-[0_8px_32px_rgba(37,211,102,0.35)] backdrop-blur-sm transition-shadow hover:shadow-[0_12px_40px_rgba(37,211,102,0.5)] md:bottom-8 md:right-8 md:h-16 md:w-16"
+      className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-[#25D366]/30 bg-[#25D366] text-white shadow-[0_8px_32px_rgba(37,211,102,0.35)] backdrop-blur-sm transition-shadow hover:shadow-[0_12px_40px_rgba(37,211,102,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 md:bottom-8 md:right-8 md:h-16 md:w-16"
     >
       <span
         className="absolute -inset-1 rounded-full bg-[#25D366]/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"

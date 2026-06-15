@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaWhatsapp, FaInfo } from "react-icons/fa";
 import TiltCard from "./ui/TiltCard";
 import MagneticButton from "./ui/MagneticButton";
 import Reveal from "./ui/Reveal";
+import { buildWhatsAppUrl, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
+import { cn } from "../lib/utils";
 
 type Category = "entrees" | "plats" | "desserts";
 
@@ -100,9 +103,71 @@ const categories: { id: Category; label: string }[] = [
   { id: "desserts", label: "Desserts" },
 ];
 
+function DishCard({
+  dish,
+  selected,
+  onToggle,
+  onInfo,
+}: {
+  dish: Dish;
+  selected: boolean;
+  onToggle: () => void;
+  onInfo: () => void;
+}) {
+  return (
+    <div className="relative h-full w-full">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-pressed={selected}
+        aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${dish.title}`}
+        className={cn(
+          "group relative h-full w-full cursor-pointer overflow-hidden rounded-[20px] border transition-all duration-300",
+          selectableCardClass(selected),
+          selectableFocusClass
+        )}
+      >
+        <Image
+          src={dish.image}
+          alt={dish.alt}
+          fill
+          loading="lazy"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+          quality={80}
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden />
+        {selected && (
+          <div
+            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-terracotta text-xs font-bold text-white shadow-md"
+            aria-hidden
+          >
+            ✓
+          </div>
+        )}
+        <span className="absolute bottom-5 left-4 right-4 text-center font-serif text-xl font-semibold tracking-wide text-white drop-shadow-md md:text-2xl">
+          {dish.title}
+        </span>
+      </button>
+      <button
+        type="button"
+        onClick={onInfo}
+        className={cn(
+          "absolute left-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/40 bg-black/40 text-sm text-white backdrop-blur-sm transition-colors hover:bg-black/60",
+          selectableFocusClass
+        )}
+        aria-label={`Voir le détail de ${dish.title}`}
+      >
+        <FaInfo aria-hidden />
+      </button>
+    </div>
+  );
+}
+
 export default function Menu3DExperience() {
   const [openDish, setOpenDish] = useState<Dish | null>(null);
   const [activeCategory, setActiveCategory] = useState<Category>("plats");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   const filteredDishes = dishes.filter((d) => d.category === activeCategory);
   const isFiveItems = filteredDishes.length === 5;
@@ -111,6 +176,32 @@ export default function Menu3DExperience() {
     ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
     : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
   const gridMaxWidthClass = "max-w-[1100px]";
+
+  const menuSelections = useMemo(() => {
+    const selected = dishes.filter((d) => selectedIds.has(d.id));
+    return {
+      starters: selected.filter((d) => d.category === "entrees").map((d) => d.title),
+      mains: selected.filter((d) => d.category === "plats").map((d) => d.title),
+      desserts: selected.filter((d) => d.category === "desserts").map((d) => d.title),
+    };
+  }, [selectedIds]);
+
+  const whatsappUrl = buildWhatsAppUrl({
+    selectedStarters: menuSelections.starters,
+    selectedMains: menuSelections.mains,
+    selectedDesserts: menuSelections.desserts,
+  });
+
+  const toggleDish = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const totalSelected = selectedIds.size;
 
   useEffect(() => {
     if (!openDish) return;
@@ -138,26 +229,31 @@ export default function Menu3DExperience() {
           <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-mds-text md:text-5xl">
             Notre menu
           </h2>
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-mds-muted md:text-base">
+            Sélectionnez les plats qui vous intéressent pour préparer votre demande.
+          </p>
         </Reveal>
 
-        <Reveal className="mt-12 flex flex-wrap justify-center gap-3" delay={0.1}>
+        <Reveal className="mt-10 flex flex-wrap justify-center gap-3" delay={0.1}>
           {categories.map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
-              className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 ${
+              className={cn(
+                "min-h-[48px] min-w-[120px] rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px]",
+                selectableFocusClass,
                 activeCategory === cat.id
                   ? "border border-mds-border bg-mds-text text-mds-bg shadow-lg"
                   : "glass-card border border-mds-border text-mds-text hover:-translate-y-0.5"
-              }`}
+              )}
             >
               {cat.label}
             </button>
           ))}
         </Reveal>
 
-        <div className={`mx-auto mt-16 grid justify-center justify-items-center gap-8 ${gridMaxWidthClass} ${gridColsClass}`}>
+        <div className={`mx-auto mt-14 grid justify-center justify-items-center gap-8 ${gridMaxWidthClass} ${gridColsClass}`}>
           {filteredDishes.length === 0 ? (
             <p className="col-span-full py-12 text-center font-serif text-lg text-mds-muted">
               Cette catégorie sera bientôt enrichie.
@@ -174,41 +270,42 @@ export default function Menu3DExperience() {
                   className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-2" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3" : ""}`}
                 >
                   <TiltCard className="h-full w-full">
-                    <div
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => setOpenDish(dish)}
-                      onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                      className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[20px] border border-mds-border bg-mds-card shadow-[0_16px_48px_var(--mds-shadow)] transition-shadow duration-300 hover:shadow-[0_28px_70px_var(--mds-shadow)]"
-                    >
-                      <Image
-                        src={dish.image}
-                        alt={dish.alt}
-                        fill
-                        loading="lazy"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                        quality={80}
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.07]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden />
-                      <div
-                        className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.12) 50%, transparent 60%)",
-                        }}
-                        aria-hidden
-                      />
-                      <span className="absolute bottom-6 left-6 right-6 text-center font-serif text-2xl font-semibold tracking-wide text-white drop-shadow-md md:text-3xl">
-                        {dish.title}
-                      </span>
-                    </div>
+                    <DishCard
+                      dish={dish}
+                      selected={selectedIds.has(dish.id)}
+                      onToggle={() => toggleDish(dish.id)}
+                      onInfo={() => setOpenDish(dish)}
+                    />
                   </TiltCard>
                 </motion.div>
               ))}
             </AnimatePresence>
           )}
         </div>
+
+        <Reveal className="mt-14 text-center" delay={0.15}>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "inline-flex min-h-[56px] w-full max-w-md items-center justify-center gap-3 rounded-full bg-[#25D366] px-8 py-4 text-sm font-medium tracking-wide text-white shadow-[0_8px_32px_rgba(37,211,102,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(37,211,102,0.45)] sm:w-auto sm:min-w-[320px]",
+              selectableFocusClass
+            )}
+          >
+            <FaWhatsapp className="text-xl" aria-hidden />
+            Envoyer ma sélection menu
+          </a>
+          {totalSelected === 0 ? (
+            <p className="mt-4 text-sm text-mds-muted">
+              Sélectionnez un ou plusieurs plats pour les inclure dans votre message WhatsApp.
+            </p>
+          ) : (
+            <p className="mt-4 text-sm text-mds-muted">
+              {totalSelected} plat{totalSelected > 1 ? "s" : ""} sélectionné{totalSelected > 1 ? "s" : ""}
+            </p>
+          )}
+        </Reveal>
       </div>
 
       <AnimatePresence>
@@ -260,14 +357,32 @@ export default function Menu3DExperience() {
               </div>
               <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-12">
                 <p className="text-lg leading-relaxed text-mds-muted">{openDish.description}</p>
-                <MagneticButton className="mt-8 self-start">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 hover:shadow-xl"
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      toggleDish(openDish.id);
+                    }}
+                    aria-pressed={selectedIds.has(openDish.id)}
+                    className={cn(
+                      "inline-flex min-h-[48px] items-center justify-center rounded-full border px-8 py-3 text-sm font-medium tracking-wide transition-all",
+                      selectableFocusClass,
+                      selectedIds.has(openDish.id)
+                        ? "border-terracotta bg-[#faf6f0] text-terracotta"
+                        : "border-mds-border bg-mds-card text-mds-text hover:border-terracotta/40"
+                    )}
                   >
-                    Demander un devis
-                  </Link>
-                </MagneticButton>
+                    {selectedIds.has(openDish.id) ? "Retirer de ma sélection" : "Ajouter à ma sélection"}
+                  </button>
+                  <MagneticButton className="inline-block">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-terracotta to-[#c99a67] px-10 py-4 font-medium tracking-widest text-white shadow-lg transition-all duration-300 hover:shadow-xl"
+                    >
+                      Demander un devis
+                    </Link>
+                  </MagneticButton>
+                </div>
               </div>
             </motion.div>
           </motion.div>

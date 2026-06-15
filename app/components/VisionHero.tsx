@@ -24,7 +24,7 @@ export default function VisionHero() {
   const contentY = useTransform(scrollY, [0, 500], [0, reduced ? 0 : 30]);
 
   return (
-    <section className="relative overflow-hidden bg-mds-bg pt-28 pb-16 md:pt-32 md:pb-24">
+    <section className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-mds-bg pt-28 pb-32 md:min-h-0 md:py-32 md:pb-24">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -50,13 +50,13 @@ export default function VisionHero() {
 
       <motion.div
         style={{ y: contentY }}
-        className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center"
+        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 text-center"
       >
         <motion.span
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-6 inline-flex items-center rounded-full border border-mds-border bg-mds-card px-5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-terracotta shadow-[0_4px_24px_var(--mds-shadow)] md:mb-8"
+          className="mb-8 inline-flex items-center rounded-full border border-mds-border bg-mds-card px-5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-terracotta shadow-[0_4px_24px_var(--mds-shadow)] md:mb-8"
         >
           Traiteur marocain halal à Lyon
         </motion.span>
@@ -74,7 +74,7 @@ export default function VisionHero() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="hero-accent-line mx-auto mt-6 w-full max-w-[180px] md:mt-8"
+          className="hero-accent-line mx-auto mt-8 w-full max-w-[180px]"
           aria-hidden
         />
 
@@ -82,7 +82,7 @@ export default function VisionHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 font-serif text-xl tracking-wide text-mds-muted sm:text-2xl md:mt-8 md:text-3xl"
+          className="mt-8 font-serif text-xl tracking-wide text-mds-muted sm:text-2xl md:text-3xl"
         >
           Traiteur traditionnel halal
         </motion.p>
@@ -91,7 +91,7 @@ export default function VisionHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 flex w-full max-w-[300px] flex-col items-center gap-4 md:mt-14 md:max-w-none md:gap-5"
+          className="mt-12 flex w-full max-w-[300px] flex-col items-center gap-4 md:mt-14 md:max-w-none md:flex-row md:flex-wrap md:justify-center md:gap-5"
         >
           <MagneticButton className="w-full md:w-auto">
             <button type="button" onClick={scrollToMenu} className="btn-hero btn-hero-outline w-full">
@@ -110,12 +110,12 @@ export default function VisionHero() {
           </MagneticButton>
         </motion.div>
 
-        <Reveal className="mt-12 w-full max-w-lg md:mt-16 md:max-w-3xl" delay={0.2}>
-          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap md:justify-center md:gap-3">
+        <Reveal className="mt-14 w-full max-w-lg md:mt-16 md:max-w-3xl" delay={0.2}>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:flex md:flex-wrap md:justify-center">
             {trustBadges.map((badge) => (
               <span
                 key={badge}
-                className="rounded-full border border-mds-border bg-mds-card px-3 py-2 text-center text-[0.6rem] font-medium uppercase leading-snug tracking-[0.08em] text-mds-muted sm:text-[0.65rem] md:px-4 md:tracking-[0.12em]"
+                className="rounded-full border border-mds-border bg-mds-card px-3 py-2.5 text-center text-[0.6rem] font-medium uppercase leading-snug tracking-[0.08em] text-mds-muted sm:text-[0.65rem] md:px-4 md:py-2 md:tracking-[0.12em]"
               >
                 {badge}
               </span>
