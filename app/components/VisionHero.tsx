@@ -22,42 +22,41 @@ export default function VisionHero() {
   const { scrollY } = useScroll();
   const blobY = useTransform(scrollY, [0, 500], [0, reduced ? 0 : 60]);
   const contentY = useTransform(scrollY, [0, 500], [0, reduced ? 0 : 30]);
-  const opacity = useTransform(scrollY, [0, 400], [1, reduced ? 1 : 0.6]);
 
   return (
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-mds-bg pt-28 pb-20 md:min-h-[100vh] md:pt-32 md:pb-28">
+    <section className="relative overflow-hidden bg-mds-bg pt-28 pb-16 md:pt-32 md:pb-24">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-100 dark:opacity-80"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
             "radial-gradient(circle at 50% 0%, var(--mds-hero-glow), transparent 50%), radial-gradient(circle at 20% 80%, rgba(21,40,31,0.04), transparent 40%)",
         }}
       />
-      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-20 dark:opacity-10" aria-hidden />
+      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-20" aria-hidden />
 
       <motion.div
         style={{ y: blobY }}
         aria-hidden
-        className="hero-blob pointer-events-none absolute -left-32 top-16 h-80 w-80 bg-terracotta/15 dark:bg-terracotta/10"
+        className="hero-blob pointer-events-none absolute -left-32 top-16 hidden h-80 w-80 bg-terracotta/15 md:block"
       />
       <motion.div
         style={{ y: blobY }}
         aria-hidden
-        className="hero-blob pointer-events-none absolute -right-24 bottom-20 h-72 w-72 bg-mds-text/5"
+        className="hero-blob pointer-events-none absolute -right-24 bottom-20 hidden h-72 w-72 bg-mds-text/5 md:block"
       />
 
       <HeroFloatingCards />
 
       <motion.div
-        style={{ y: contentY, opacity }}
+        style={{ y: contentY }}
         className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center"
       >
         <motion.span
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 inline-flex items-center rounded-full border border-mds-border bg-mds-card px-5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-terracotta shadow-[0_4px_24px_var(--mds-shadow)]"
+          className="mb-6 inline-flex items-center rounded-full border border-mds-border bg-mds-card px-5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-terracotta shadow-[0_4px_24px_var(--mds-shadow)] md:mb-8"
         >
           Traiteur marocain halal à Lyon
         </motion.span>
@@ -66,7 +65,7 @@ export default function VisionHero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="lux-heading font-serif text-[clamp(2.75rem,8vw,6.5rem)] font-semibold leading-[1.05] tracking-tight text-mds-text"
+          className="lux-heading font-serif text-[clamp(2.5rem,8vw,6.5rem)] font-semibold leading-[1.05] tracking-tight text-mds-text"
         >
           Maison Des Saveurs
         </motion.h1>
@@ -75,7 +74,7 @@ export default function VisionHero() {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="hero-accent-line mx-auto mt-8 w-full max-w-[180px]"
+          className="hero-accent-line mx-auto mt-6 w-full max-w-[180px] md:mt-8"
           aria-hidden
         />
 
@@ -83,7 +82,7 @@ export default function VisionHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 font-serif text-xl tracking-wide text-mds-muted sm:text-2xl md:text-3xl"
+          className="mt-6 font-serif text-xl tracking-wide text-mds-muted sm:text-2xl md:mt-8 md:text-3xl"
         >
           Traiteur traditionnel halal
         </motion.p>
@@ -92,40 +91,38 @@ export default function VisionHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-14 flex flex-col items-center gap-5"
+          className="mt-10 flex w-full max-w-[300px] flex-col items-center gap-4 md:mt-14 md:max-w-none md:gap-5"
         >
-          <div className="flex flex-wrap justify-center gap-5">
-            <MagneticButton>
-              <button type="button" onClick={scrollToMenu} className="btn-hero btn-hero-outline">
-                Découvrir le menu
-              </button>
-            </MagneticButton>
-            <MagneticButton>
-              <Link href="/contact" className="btn-hero btn-hero-primary">
-                Demander un devis
-              </Link>
-            </MagneticButton>
-          </div>
-          <MagneticButton>
-            <Link href="/caftans" className="btn-hero btn-hero-accent">
+          <MagneticButton className="w-full md:w-auto">
+            <button type="button" onClick={scrollToMenu} className="btn-hero btn-hero-outline w-full">
+              Découvrir le menu
+            </button>
+          </MagneticButton>
+          <MagneticButton className="w-full md:w-auto">
+            <Link href="/contact" className="btn-hero btn-hero-primary w-full">
+              Demander un devis
+            </Link>
+          </MagneticButton>
+          <MagneticButton className="w-full md:w-auto">
+            <Link href="/caftans" className="btn-hero btn-hero-accent w-full">
               Découvrir les caftans
             </Link>
           </MagneticButton>
         </motion.div>
-      </motion.div>
 
-      <Reveal className="absolute inset-x-0 bottom-10 z-10 mx-auto max-w-3xl px-6" delay={1}>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {trustBadges.map((badge) => (
-            <span
-              key={badge}
-              className="rounded-full border border-mds-border bg-mds-card/80 px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-mds-muted backdrop-blur-sm"
-            >
-              {badge}
-            </span>
-          ))}
-        </div>
-      </Reveal>
+        <Reveal className="mt-12 w-full max-w-lg md:mt-16 md:max-w-3xl" delay={0.2}>
+          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap md:justify-center md:gap-3">
+            {trustBadges.map((badge) => (
+              <span
+                key={badge}
+                className="rounded-full border border-mds-border bg-mds-card px-3 py-2 text-center text-[0.6rem] font-medium uppercase leading-snug tracking-[0.08em] text-mds-muted sm:text-[0.65rem] md:px-4 md:tracking-[0.12em]"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        </Reveal>
+      </motion.div>
     </section>
   );
 }

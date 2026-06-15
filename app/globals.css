@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 :root {
   --background: #f8f5f0;
   --foreground: #15281f;
@@ -22,24 +20,6 @@
   --mds-surface: rgba(255, 255, 255, 0.72);
   --mds-shadow: rgba(15, 29, 23, 0.08);
   --mds-hero-glow: rgba(184, 132, 84, 0.18);
-}
-
-.dark {
-  --background: #07110d;
-  --foreground: #f2eee7;
-  --deep-green-800: #f2eee7;
-  --deep-green-700: #d8d0c4;
-  --champagne-100: #f2eee7;
-  --champagne-200: #1a2e26;
-  --mds-bg: #07110d;
-  --mds-bg-elevated: #0f1d17;
-  --mds-card: #111f18;
-  --mds-text: #f2eee7;
-  --mds-muted: rgba(242, 238, 231, 0.72);
-  --mds-border: rgba(21, 40, 31, 0.55);
-  --mds-surface: rgba(17, 31, 24, 0.85);
-  --mds-shadow: rgba(0, 0, 0, 0.35);
-  --mds-hero-glow: rgba(184, 132, 84, 0.12);
 }
 
 @theme inline {
@@ -312,10 +292,6 @@ header:not(.nav-over-hero) .nav-logo {
   background: var(--mds-bg);
 }
 
-.dark .bg-soft-gradient-beige {
-  background: linear-gradient(180deg, #07110d 0%, #0a1612 50%, #07110d 100%);
-}
-
 /* Intro strip: slightly darker top (#F6F2EC) for atmospheric transition from hero */
 .intro-strip-beige {
   background: linear-gradient(180deg, #f7f1e8 0%, #f6efe6 28%, #ece0d1 50%, #f7f1e8 100%);
@@ -547,6 +523,11 @@ header:not(.nav-over-hero) .nav-logo {
   }
 }
 
+.btn-hero.w-full {
+  width: 100%;
+  max-width: 300px;
+}
+
 .btn-hero:hover {
   transform: translateY(-2px);
 }
@@ -574,11 +555,6 @@ header:not(.nav-over-hero) .nav-logo {
   background: linear-gradient(135deg, #11231b 0%, #1f3a2e 100%);
   color: #f8f5f0;
   box-shadow: 0 12px 36px var(--mds-shadow);
-}
-
-.dark .btn-hero-primary {
-  background: linear-gradient(135deg, #1a3228 0%, #254035 100%);
-  color: #f2eee7;
 }
 
 .btn-hero-accent {

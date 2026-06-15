@@ -24,7 +24,7 @@ const pillars = [
 export default function ExperienceSection() {
   return (
     <section className="mds-section relative overflow-hidden border-t border-mds-border bg-mds-bg">
-      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-20 dark:opacity-10" aria-hidden />
+      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-20" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal className="mx-auto max-w-3xl text-center">
           <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">

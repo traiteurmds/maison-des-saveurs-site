@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaHeart, FaUsers, FaBriefcase } from "react-icons/fa";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
+import VaisselleOptionsSection from "../components/VaisselleOptionsSection";
 
 const services = [
   {
@@ -37,7 +38,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-mds-bg pt-28">
       <section className="relative overflow-hidden border-b border-mds-border py-16 md:py-24">
-        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15 dark:opacity-10" aria-hidden />
+        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
         <Reveal className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">Ce que nous proposons</p>
           <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-mds-text md:text-6xl">Nos services</h1>
@@ -89,6 +90,8 @@ export default function ServicesPage() {
           </MagneticButton>
         </Reveal>
       </section>
+
+      <VaisselleOptionsSection />
     </div>
   );
 }

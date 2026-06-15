@@ -131,7 +131,7 @@ export default function Menu3DExperience() {
       className="mds-section relative overflow-hidden border-t border-mds-border bg-mds-bg"
       aria-labelledby="menu-heading"
     >
-      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15 dark:opacity-10" aria-hidden />
+      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal className="text-center">
           <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Notre carte</p>

@@ -153,7 +153,6 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      suppressHydrationWarning
       className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}
     >
       <body className="bg-mds-bg text-mds-text antialiased">

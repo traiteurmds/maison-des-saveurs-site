@@ -3,6 +3,8 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { FaWhatsapp } from "react-icons/fa";
+import { buildWhatsAppUrl } from "../lib/whatsapp";
 import {
   LIMITS,
   sanitizeName,
@@ -508,18 +510,15 @@ export default function ContactPage() {
           <aside className="glass-card rounded-2xl p-7 lg:sticky lg:top-32">
             <h2 className="font-serif text-xl font-semibold text-mds-text">Contact direct</h2>
             <p className="mt-3 text-sm leading-relaxed text-mds-muted">
-              Pour une réponse plus rapide, contactez-nous directement.
+              Pour une réponse plus rapide, contactez-nous directement sur WhatsApp.
             </p>
-            <div className="mt-6 space-y-3 text-sm text-mds-text">
-              <p>contact.mds.traiteur@gmail.com</p>
-              <p>07 58 63 97 34</p>
-            </div>
             <a
-              href="https://wa.me/33758639734"
+              href={buildWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium tracking-wide text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              className="mt-8 inline-flex w-full min-h-[56px] items-center justify-center gap-3 rounded-full bg-[#25D366] px-6 py-4 text-base font-medium tracking-wide text-white shadow-[0_8px_32px_rgba(37,211,102,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(37,211,102,0.45)]"
             >
+              <FaWhatsapp className="text-2xl" />
               Écrire sur WhatsApp
             </a>
           </aside>
