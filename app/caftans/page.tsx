@@ -35,7 +35,7 @@ function CaftanCard({ item, index }: { item: Caftan; index: number }) {
   return (
     <Reveal delay={index * 0.03}>
       <TiltCard>
-        <article className="group overflow-hidden rounded-2xl border border-deep-green/10 bg-white shadow-[0_18px_45px_rgba(15,31,24,0.10)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(15,31,24,0.16)]">
+        <article className="group overflow-hidden rounded-2xl border border-mds-border bg-mds-card shadow-[0_18px_45px_var(--mds-shadow)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_60px_var(--mds-shadow)]">
           <div className="relative aspect-[3/4] w-full overflow-hidden">
             {imageError ? (
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-deep-green/90 via-deep-green to-black text-center text-beige">
@@ -68,13 +68,13 @@ function CaftanCard({ item, index }: { item: Caftan; index: number }) {
 
 export default function CaftansPage() {
   return (
-    <div className="bg-soft-gradient-beige pt-24 pb-24">
-      <section className="relative overflow-hidden border-b border-deep-green/10 px-6 py-16 text-center md:py-20">
-        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-30" aria-hidden />
+    <div className="bg-mds-bg pt-28 pb-24">
+      <section className="relative overflow-hidden border-b border-mds-border px-6 py-16 text-center md:py-20">
+        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15 dark:opacity-10" aria-hidden />
         <Reveal className="relative z-10">
           <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Collection élégance</p>
-          <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-deep-green md:text-6xl">Nos Caftans</h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-deep-green/80">
+          <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-mds-text md:text-6xl">Nos Caftans</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-mds-muted">
             Une sélection raffinée de caftans pour vos plus beaux événements. Location et vente,
             avec accompagnement personnalisé pour trouver la tenue parfaite.
           </p>
@@ -110,8 +110,8 @@ export default function CaftansPage() {
 
         <Reveal className="mt-16">
           <div className="glass-card rounded-3xl px-8 py-10 text-center md:px-12 md:py-14">
-            <h3 className="font-serif text-3xl font-semibold text-deep-green">Un essayage sur mesure</h3>
-            <p className="mx-auto mt-3 max-w-2xl text-deep-green/80">
+            <h3 className="font-serif text-3xl font-semibold text-mds-text">Un essayage sur mesure</h3>
+            <p className="mx-auto mt-3 max-w-2xl text-mds-muted">
               Contactez-nous pour la disponibilité, les tailles et les conditions de location/vente.
             </p>
             <MagneticButton className="mt-7 inline-block">

@@ -128,18 +128,14 @@ export default function Menu3DExperience() {
   return (
     <section
       id="menu"
-      className="relative overflow-hidden border-t border-deep-green/10 bg-soft-gradient-beige py-24 md:py-28"
+      className="mds-section relative overflow-hidden border-t border-mds-border bg-mds-bg"
       aria-labelledby="menu-heading"
     >
-      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-25" aria-hidden />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-beige-dark/25"
-      />
+      <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15 dark:opacity-10" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-6">
         <Reveal className="text-center">
           <p className="font-serif text-sm uppercase tracking-[0.28em] text-terracotta">Notre carte</p>
-          <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-deep-green md:text-5xl">
+          <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-mds-text md:text-5xl">
             Notre menu
           </h2>
         </Reveal>
@@ -152,8 +148,8 @@ export default function Menu3DExperience() {
               onClick={() => setActiveCategory(cat.id)}
               className={`min-h-[48px] min-w-[120px] rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 ease-out md:min-w-[140px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/40 ${
                 activeCategory === cat.id
-                  ? "border border-beige/10 bg-deep-green text-beige shadow-lg shadow-deep-green/20"
-                  : "glass-card border border-deep-green/10 text-deep-green hover:-translate-y-0.5"
+                  ? "border border-mds-border bg-mds-text text-mds-bg shadow-lg"
+                  : "glass-card border border-mds-border text-mds-text hover:-translate-y-0.5"
               }`}
             >
               {cat.label}
@@ -163,7 +159,7 @@ export default function Menu3DExperience() {
 
         <div className={`mx-auto mt-16 grid justify-center justify-items-center gap-8 ${gridMaxWidthClass} ${gridColsClass}`}>
           {filteredDishes.length === 0 ? (
-            <p className="col-span-full py-12 text-center font-serif text-lg text-deep-green/70">
+            <p className="col-span-full py-12 text-center font-serif text-lg text-mds-muted">
               Cette catégorie sera bientôt enrichie.
             </p>
           ) : (
@@ -183,7 +179,7 @@ export default function Menu3DExperience() {
                       tabIndex={0}
                       onClick={() => setOpenDish(dish)}
                       onKeyDown={(e) => e.key === "Enter" && setOpenDish(dish)}
-                      className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[20px] border border-deep-green/10 bg-white/50 shadow-[0_16px_48px_rgba(15,29,23,0.12)] transition-shadow duration-300 hover:shadow-[0_28px_70px_rgba(15,29,23,0.18)]"
+                      className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[20px] border border-mds-border bg-mds-card shadow-[0_16px_48px_var(--mds-shadow)] transition-shadow duration-300 hover:shadow-[0_28px_70px_var(--mds-shadow)]"
                     >
                       <Image
                         src={dish.image}
@@ -231,7 +227,7 @@ export default function Menu3DExperience() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[24px] border border-white/20 bg-white/95 shadow-2xl backdrop-blur-xl"
+              className="relative flex max-h-[calc(100vh-2rem)] w-full max-w-[900px] flex-col overflow-hidden rounded-[24px] border border-mds-border bg-mds-card shadow-2xl backdrop-blur-xl"
               role="dialog"
               aria-modal="true"
               aria-labelledby="menu-3d-modal-title"
@@ -263,7 +259,7 @@ export default function Menu3DExperience() {
                 </h2>
               </div>
               <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-12">
-                <p className="text-lg leading-relaxed text-deep-green/90">{openDish.description}</p>
+                <p className="text-lg leading-relaxed text-mds-muted">{openDish.description}</p>
                 <MagneticButton className="mt-8 self-start">
                   <Link
                     href="/contact"

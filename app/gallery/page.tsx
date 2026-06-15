@@ -16,8 +16,8 @@ const cells = [
 
 export default function GalleryPage() {
   return (
-    <div className="pt-24">
-      <section className="relative overflow-hidden border-b border-deep-green/10 bg-soft-gradient-beige py-20">
+    <div className="bg-mds-bg pt-28">
+      <section className="relative overflow-hidden border-b border-mds-border py-20">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -38,7 +38,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mt-2 font-serif text-5xl font-semibold text-deep-green md:text-6xl"
+            className="mt-2 font-serif text-5xl font-semibold text-mds-text md:text-6xl"
           >
             Galerie
           </motion.h1>
@@ -46,7 +46,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-4 text-deep-green/80"
+            className="mt-4 text-mds-muted"
           >
             L&apos;ambiance et l&apos;attention portée à chaque détail font la
             singularité de nos événements.
@@ -54,7 +54,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      <section className="bg-soft-gradient-beige py-16">
+      <section className="bg-mds-bg py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {cells.map((cellClass, i) => (
@@ -64,7 +64,7 @@ export default function GalleryPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.05 * i, duration: 0.5 }}
-                className={`group relative aspect-[4/3] overflow-hidden rounded-sm border border-deep-green/5 ${cellClass}`}
+                className={`group relative aspect-[4/3] overflow-hidden rounded-sm border border-mds-border ${cellClass}`}
               >
                 <div
                   className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"

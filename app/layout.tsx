@@ -151,8 +151,12 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
-      <body className="antialiased">
+    <html
+      lang="fr"
+      suppressHydrationWarning
+      className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}
+    >
+      <body className="bg-mds-bg text-mds-text antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

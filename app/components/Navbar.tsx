@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
+import ThemeToggle from "./ui/ThemeToggle";
+import { cn } from "../lib/utils";
 
 function useScrollToTop() {
   return useCallback(() => {
@@ -29,10 +31,6 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const SCROLL_THRESHOLD = 80;
-const NAV_BEIGE = "#E8E2D8";
-const HOME_HERO_IS_DARK = false;
-
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,61 +38,55 @@ export default function Navbar() {
   const scrollToTop = useScrollToTop();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const overDarkHero = HOME_HERO_IS_DARK && pathname === "/" && !scrolled;
-  const linkColor = overDarkHero ? NAV_BEIGE : undefined;
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out ${
-        scrolled
-          ? "nav-scrolled border-deep-green/10 bg-[#f9f3e9]/85 shadow-[0_12px_40px_rgba(12,23,18,0.14)] backdrop-blur-xl"
-          : "border-transparent bg-gradient-to-b from-[#f7f1e8]/80 to-transparent"
-      } ${overDarkHero ? "nav-over-hero" : ""}`}
-    >
-      <nav className={`mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-all duration-300 ${
-        scrolled ? "py-3.5" : "py-5"
-      }`}>
-        <Link
-          href="/"
-          scroll={true}
-          onClick={(e) => {
-            setIsOpen(false);
-            if (pathname === "/") {
-              e.preventDefault();
-            }
-            scrollToTop();
-          }}
-          className="nav-link nav-logo nav-logo-brand nav-link-underline"
-        >
-          Maison Des Saveurs
-        </Link>
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-5">
+      <motion.header
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className={cn(
+          "pointer-events-auto w-full max-w-6xl rounded-full border border-mds-border bg-mds-surface shadow-[0_8px_40px_var(--mds-shadow)] backdrop-blur-xl transition-all duration-500",
+          scrolled && "shadow-[0_12px_48px_var(--mds-shadow)]"
+        )}
+      >
+        <nav className="flex items-center justify-between gap-3 px-4 py-2.5 md:px-6 md:py-3">
+          <Link
+            href="/"
+            scroll={true}
+            onClick={(e) => {
+              setIsOpen(false);
+              if (pathname === "/") e.preventDefault();
+              scrollToTop();
+            }}
+            className="nav-link shrink-0 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-terracotta sm:text-base md:text-lg"
+          >
+            <span className="sm:hidden">MDS</span>
+            <span className="hidden sm:inline">Maison Des Saveurs</span>
+          </Link>
 
-        {/* Desktop nav + réseaux sociaux */}
-        <div className="hidden items-center md:flex">
-          <ul className="main-nav-list flex items-center gap-10 rounded-full border border-deep-green/10 bg-white/55 px-6 py-2 shadow-[0_10px_26px_rgba(15,29,23,0.08)] backdrop-blur">
-            {navLinks.map((link, i) => {
+          <ul className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => {
               const linkPath = link.href.split("#")[0] || "/";
               const isActive = pathname === linkPath;
               return (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * i, duration: 0.5 }}
-                >
+                <li key={link.href}>
                   <Link
                     href={link.href}
                     onClick={(e) => {
-                      const linkPath = link.href.split("#")[0] || "/";
+                      setIsOpen(false);
                       if (link.label === "Menu") {
                         if (pathname === "/") {
                           e.preventDefault();
@@ -102,82 +94,78 @@ export default function Navbar() {
                         }
                         return;
                       }
-                      if (pathname === linkPath) {
-                        e.preventDefault();
-                      }
+                      if (pathname === linkPath) e.preventDefault();
                       scrollToTop();
                     }}
-                    className={`main-nav-link nav-link-underline text-sm tracking-widest uppercase transition-colors duration-200 ${
-                      isActive ? "font-semibold" : "font-medium"
-                    } ${overDarkHero ? "" : "text-deep-green"} ${isActive ? "text-terracotta" : ""}`}
-                    style={linkColor ? { color: linkColor } : undefined}
+                    className={cn(
+                      "rounded-full px-3.5 py-2 text-[0.7rem] font-medium uppercase tracking-[0.14em] transition-all duration-300",
+                      isActive
+                        ? "bg-mds-text/8 text-terracotta"
+                        : "text-mds-muted hover:bg-mds-text/5 hover:text-mds-text"
+                    )}
                   >
                     {link.label}
                   </Link>
-                </motion.li>
+                </li>
               );
             })}
           </ul>
-          <div className="ml-4 flex items-center gap-3">
-            <a
-              href="https://www.instagram.com/mds.traiteur69/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`text-xl transition-opacity hover:opacity-70 ${overDarkHero ? "" : "text-deep-green"}`}
-              style={linkColor ? { color: linkColor } : undefined}
-              aria-label="Instagram Maison Des Saveurs"
+
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="hidden items-center gap-2 sm:flex">
+              <a
+                href="https://www.instagram.com/mds.traiteur69/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted transition-colors hover:bg-mds-text/5 hover:text-terracotta"
+                aria-label="Instagram Maison Des Saveurs"
+              >
+                <FaInstagram className="text-sm" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@mds.traiteur"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted transition-colors hover:bg-mds-text/5 hover:text-terracotta"
+                aria-label="TikTok Maison Des Saveurs"
+              >
+                <FaTiktok className="text-sm" />
+              </a>
+            </div>
+            <ThemeToggle className="h-9 w-9" />
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex h-9 w-9 flex-col items-center justify-center gap-1 rounded-full border border-mds-border bg-mds-card lg:hidden"
+              aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={isOpen}
             >
-              <FaInstagram />
-            </a>
-            <a
-              href="https://www.tiktok.com/@mds.traiteur"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`text-xl transition-opacity hover:opacity-70 ${overDarkHero ? "" : "text-deep-green"}`}
-              style={linkColor ? { color: linkColor } : undefined}
-              aria-label="TikTok Maison Des Saveurs"
-            >
-              <FaTiktok />
-            </a>
+              <motion.span
+                animate={isOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                className="h-0.5 w-4 bg-mds-text"
+              />
+              <motion.span
+                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                className="h-0.5 w-4 bg-mds-text"
+              />
+              <motion.span
+                animate={isOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                className="h-0.5 w-4 bg-mds-text"
+              />
+            </button>
           </div>
-        </div>
+        </nav>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex flex-col gap-1.5 p-2 md:hidden"
-          aria-label="Ouvrir le menu"
-        >
-          <motion.span
-            animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="h-0.5 w-6"
-            style={{ backgroundColor: overDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
-          />
-          <motion.span
-            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="h-0.5 w-6"
-            style={{ backgroundColor: overDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
-          />
-          <motion.span
-            animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            className="h-0.5 w-6"
-            style={{ backgroundColor: overDarkHero ? NAV_BEIGE : "var(--color-deep-green)" }}
-          />
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden border-t border-deep-green/10 bg-beige md:hidden"
-          >
-            <div className="flex flex-col gap-4 px-6 py-4">
-              <ul className="flex flex-col gap-1">
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden border-t border-mds-border lg:hidden"
+            >
+              <ul className="flex flex-col gap-1 px-4 py-4">
                 {navLinks.map((link) => {
                   const linkPath = link.href.split("#")[0] || "/";
                   const isActive = pathname === linkPath;
@@ -185,10 +173,8 @@ export default function Navbar() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        scroll={true}
                         onClick={(e) => {
                           setIsOpen(false);
-                          const linkPath = link.href.split("#")[0] || "/";
                           if (link.label === "Menu") {
                             if (pathname === "/") {
                               e.preventDefault();
@@ -196,14 +182,13 @@ export default function Navbar() {
                             }
                             return;
                           }
-                          if (pathname === linkPath) {
-                            e.preventDefault();
-                          }
+                          if (pathname === linkPath) e.preventDefault();
                           scrollToTop();
                         }}
-                        className={`nav-link block py-3 font-serif text-lg text-deep-green hover-gold transition-colors duration-200 ${
-                          isActive ? "font-semibold" : ""
-                        }`}
+                        className={cn(
+                          "block rounded-xl px-4 py-3 font-serif text-lg transition-colors",
+                          isActive ? "bg-mds-text/8 text-terracotta" : "text-mds-text hover:bg-mds-text/5"
+                        )}
                       >
                         {link.label}
                       </Link>
@@ -211,14 +196,13 @@ export default function Navbar() {
                   );
                 })}
               </ul>
-
-              <div className="flex items-center gap-4 pt-1">
+              <div className="flex items-center gap-4 border-t border-mds-border px-6 py-4">
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-deep-green transition-opacity hover:opacity-70"
-                  aria-label="Instagram Maison Des Saveurs"
+                  className="text-xl text-mds-muted hover:text-terracotta"
+                  aria-label="Instagram"
                 >
                   <FaInstagram />
                 </a>
@@ -226,16 +210,16 @@ export default function Navbar() {
                   href="https://www.tiktok.com/@mds.traiteur"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-2xl text-deep-green transition-opacity hover:opacity-70"
-                  aria-label="TikTok Maison Des Saveurs"
+                  className="text-xl text-mds-muted hover:text-terracotta"
+                  aria-label="TikTok"
                 >
                   <FaTiktok />
                 </a>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
+    </div>
   );
 }

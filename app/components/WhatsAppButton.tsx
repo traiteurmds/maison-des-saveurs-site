@@ -15,12 +15,15 @@ export default function WhatsAppButton() {
       aria-label="Nous contacter sur WhatsApp"
       initial={{ opacity: 0, x: 24, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
-      transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduced ? undefined : { scale: 1.08, y: -2 }}
+      transition={{ delay: 1.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={reduced ? undefined : { scale: 1.06, y: -3 }}
       whileTap={{ scale: 0.96 }}
-      className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 transition-shadow hover:shadow-xl hover:shadow-[#25D366]/55 md:bottom-8 md:right-8 md:h-16 md:w-16"
+      className="group fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-[#25D366]/30 bg-[#25D366] text-white shadow-[0_8px_32px_rgba(37,211,102,0.35)] backdrop-blur-sm transition-shadow hover:shadow-[0_12px_40px_rgba(37,211,102,0.5)] md:bottom-8 md:right-8 md:h-16 md:w-16"
     >
-      <span className="absolute inset-0 rounded-full bg-[#25D366]/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:animate-ping" aria-hidden />
+      <span
+        className="absolute -inset-1 rounded-full bg-[#25D366]/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        aria-hidden
+      />
       <svg
         className="relative h-7 w-7 md:h-8 md:w-8"
         fill="currentColor"

@@ -35,12 +35,12 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="bg-soft-gradient-beige pt-24">
-      <section className="relative overflow-hidden border-b border-deep-green/10 py-16 md:py-24">
-        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-30" aria-hidden />
+    <div className="bg-mds-bg pt-28">
+      <section className="relative overflow-hidden border-b border-mds-border py-16 md:py-24">
+        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15 dark:opacity-10" aria-hidden />
         <Reveal className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <p className="font-serif text-sm uppercase tracking-[0.3em] text-terracotta">Ce que nous proposons</p>
-          <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-deep-green md:text-6xl">Nos services</h1>
+          <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-mds-text md:text-6xl">Nos services</h1>
         </Reveal>
       </section>
 
@@ -68,8 +68,8 @@ export default function ServicesPage() {
                       <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-terracotta/30 bg-terracotta/10 text-terracotta">
                         <Icon aria-hidden />
                       </div>
-                      <h2 className="font-serif text-2xl font-semibold text-deep-green md:text-3xl">{service.title}</h2>
-                      <p className="mt-4 leading-relaxed text-deep-green/80">{service.description}</p>
+                      <h2 className="font-serif text-2xl font-semibold text-mds-text md:text-3xl">{service.title}</h2>
+                      <p className="mt-4 leading-relaxed text-mds-muted">{service.description}</p>
                     </div>
                   </div>
                 </article>

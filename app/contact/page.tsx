@@ -275,7 +275,7 @@ export default function ContactPage() {
   }, []);
 
   return (
-    <div style={{ paddingTop: "6rem", minHeight: "100vh" }} className="contact-page bg-soft-gradient-beige">
+    <div style={{ paddingTop: "7rem", minHeight: "100vh" }} className="contact-page bg-mds-bg">
       <style>{`
         .contact-page input::placeholder,
         .contact-page textarea::placeholder {
@@ -505,12 +505,12 @@ export default function ContactPage() {
           </AnimatePresence>
           </div>
 
-          <aside className="glass-card rounded-2xl p-7 lg:sticky lg:top-28">
-            <h2 className="font-serif text-xl font-semibold text-deep-green">Contact direct</h2>
-            <p className="mt-3 text-sm leading-relaxed text-deep-green/75">
+          <aside className="glass-card rounded-2xl p-7 lg:sticky lg:top-32">
+            <h2 className="font-serif text-xl font-semibold text-mds-text">Contact direct</h2>
+            <p className="mt-3 text-sm leading-relaxed text-mds-muted">
               Pour une réponse plus rapide, contactez-nous directement.
             </p>
-            <div className="mt-6 space-y-3 text-sm text-deep-green/85">
+            <div className="mt-6 space-y-3 text-sm text-mds-text">
               <p>contact.mds.traiteur@gmail.com</p>
               <p>07 58 63 97 34</p>
             </div>

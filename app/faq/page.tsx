@@ -60,14 +60,14 @@ export default function FAQPage() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-soft-gradient-beige pt-24 pb-24">
+    <div className="min-h-screen bg-mds-bg pt-28 pb-24">
       <div className="mx-auto max-w-[900px] px-6 py-12 md:px-8 md:py-16">
         <Reveal>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lux-heading font-serif text-4xl font-semibold text-deep-green md:text-5xl"
+            className="lux-heading font-serif text-4xl font-semibold text-mds-text md:text-5xl"
           >
             Questions fréquentes
           </motion.h1>
@@ -77,7 +77,7 @@ export default function FAQPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 text-lg leading-relaxed text-deep-green/80 md:mt-8 md:text-xl"
+          className="mt-6 text-lg leading-relaxed text-mds-muted md:mt-8 md:text-xl"
         >
           Vous organisez un événement et vous avez des questions ? Retrouvez ici les réponses aux
           questions les plus fréquentes concernant nos prestations.
@@ -99,14 +99,14 @@ export default function FAQPage() {
                   <button
                     type="button"
                     onClick={() => setOpenId(isOpen ? null : item.id)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-deep-green/[0.02] active:bg-deep-green/[0.04] min-[768px]:px-6 min-[768px]:py-5"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-mds-text/[0.03] active:bg-mds-text/[0.05] min-[768px]:px-6 min-[768px]:py-5"
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${item.id}`}
                     id={`faq-question-${item.id}`}
                   >
-                    <span className="font-medium text-deep-green md:text-lg">{item.question}</span>
+                    <span className="font-medium text-mds-text md:text-lg">{item.question}</span>
                     <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-deep-green/10 text-deep-green transition-transform duration-300"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mds-text/8 text-mds-text transition-transform duration-300"
                       aria-hidden
                     >
                       <motion.span
@@ -130,7 +130,7 @@ export default function FAQPage() {
                         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="border-t border-deep-green/5 px-5 pb-5 pt-2 text-deep-green/85 md:px-6 md:pb-6 md:pt-3 md:leading-relaxed">
+                        <p className="border-t border-mds-border px-5 pb-5 pt-2 text-mds-muted md:px-6 md:pb-6 md:pt-3 md:leading-relaxed">
                           {item.answer}
                         </p>
                       </motion.div>
@@ -149,10 +149,10 @@ export default function FAQPage() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="lux-surface mt-20 rounded-2xl px-6 py-10 text-center md:mt-24 md:px-10 md:py-14"
         >
-          <h2 className="font-serif text-2xl font-semibold text-deep-green md:text-3xl">
+          <h2 className="font-serif text-2xl font-semibold text-mds-text md:text-3xl">
             Vous ne trouvez pas votre réponse ?
           </h2>
-          <p className="mt-3 text-deep-green/70 md:text-lg">
+          <p className="mt-3 text-mds-muted md:text-lg">
             Notre équipe est à votre écoute pour toute question.
           </p>
           <Link
