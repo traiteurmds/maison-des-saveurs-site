@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import PremiumImage from "./ui/PremiumImage";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "./ui/Reveal";
@@ -16,11 +17,13 @@ const HOME_CAFTANS = CAFTANS.slice(0, 6);
 function CaftanSelectCard({
   title,
   image,
+  alt,
   selected,
   onToggle,
 }: {
   title: string;
   image: string;
+  alt: string;
   selected: boolean;
   onToggle: () => void;
 }) {
@@ -43,13 +46,12 @@ function CaftanSelectCard({
     >
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--surface-soft)]">
         {!imageError ? (
-          <Image
+          <PremiumImage
             src={image}
-            alt={title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 50vw, 200px"
-            loading="lazy"
+            alt={alt}
+            sizes={IMAGE_SIZES.caftanThumb}
+            quality={IMAGE_QUALITY.card}
+            objectPosition="center 20%"
             onError={() => setImageError(true)}
           />
         ) : (
@@ -91,6 +93,7 @@ export default function ConfiguratorCaftansStep() {
             key={item.id}
             title={item.title}
             image={item.image}
+            alt={item.alt}
             selected={isSelected("caftans", item.title)}
             onToggle={() => toggleSelection("caftans", item.title)}
           />

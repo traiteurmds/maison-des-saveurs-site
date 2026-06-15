@@ -4,6 +4,7 @@ export type Realisation = {
   title: string;
   description: string;
   image: string;
+  alt: string;
 };
 
 export const REALISATIONS: Realisation[] = [
@@ -14,6 +15,7 @@ export const REALISATIONS: Realisation[] = [
     description:
       "Une réception élégante pensée pour accompagner chaque moment, du dressage à la dégustation.",
     image: "/realisations/mariage-120.jpg",
+    alt: "Réception de mariage 120 personnes — traiteur marocain Lyon Maison Des Saveurs",
   },
   {
     id: "hlel-80",
@@ -22,6 +24,7 @@ export const REALISATIONS: Realisation[] = [
     description:
       "Une prestation chaleureuse et raffinée, adaptée aux traditions familiales et aux envies des invités.",
     image: "/realisations/hlel-80.jpg",
+    alt: "Célébration familiale Hlel 80 personnes — traiteur marocain Lyon",
   },
   {
     id: "entreprise-200",
@@ -30,5 +33,6 @@ export const REALISATIONS: Realisation[] = [
     description:
       "Un format professionnel, fluide et généreux, conçu pour recevoir vos équipes et partenaires avec soin.",
     image: "/realisations/entreprise-200.jpg",
+    alt: "Réception entreprise 200 personnes — traiteur professionnel Lyon",
   },
 ];

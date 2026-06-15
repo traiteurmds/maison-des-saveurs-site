@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import PremiumImage from "./ui/PremiumImage";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInfo } from "react-icons/fa";
 import TiltCard from "./ui/TiltCard";
@@ -56,7 +57,7 @@ const dishes: Dish[] = [
     title: "Couscous Viande",
     description:
       "Couscous marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
-    image: "/images/menu/couscous.jpg",
+    image: "/images/menu/couscous-viande.jpg",
     alt: "Couscous viande traiteur Lyon",
     category: "plats",
   },
@@ -107,7 +108,7 @@ const dishes: Dish[] = [
     title: "Fruits de saison",
     description:
       "Sélection de fruits frais de saison, présentée avec élégance. Une fin de repas légère et rafraîchissante.",
-    image: "/images/menu/assiette-fruits.jpg",
+    image: "/images/menu/fruits-saison.jpg",
     alt: "Fruits de saison traiteur Lyon",
     category: "desserts",
   },
@@ -170,26 +171,24 @@ function DishCard({
         )}
       >
         {!imageError ? (
-          <Image
+          <PremiumImage
             src={dish.image}
             alt={dish.alt}
-            fill
-            loading="lazy"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-            quality={80}
+            sizes={IMAGE_SIZES.menuCard}
+            quality={IMAGE_QUALITY.card}
+            hover
             onError={() => setImageError(true)}
-            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
           />
         ) : (
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-br from-[var(--surface-soft)] via-[var(--soft-gold)]/25 to-[var(--surface)]"
-          />
-        )}
-        {imageError && (
-          <span className="absolute inset-x-0 top-1/3 text-center font-serif text-xs uppercase tracking-[0.2em] text-[var(--gold)]/80">
-            Photo à venir
-          </span>
+          <>
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-br from-[var(--surface-soft)] via-[var(--soft-gold)]/25 to-[var(--surface)]"
+            />
+            <span className="absolute inset-x-0 top-1/3 text-center font-serif text-xs uppercase tracking-[0.2em] text-[var(--gold)]/80">
+              Photo à venir
+            </span>
+          </>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden />
         {selected && (
@@ -327,7 +326,7 @@ export default function Menu3DExperience({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.4, delay: 0.05 * i, ease: [0.22, 1, 0.36, 1] }}
-                  className={`aspect-[4/3] min-h-[280px] w-full md:min-h-[320px] ${isFiveItems && i === 3 ? "lg:col-start-2" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3" : ""}`}
+                  className={`aspect-[4/3] h-full min-h-[260px] w-full max-w-[360px] md:min-h-[300px] ${isFiveItems && i === 3 ? "lg:col-start-2" : ""} ${isFiveItems && i === 4 ? "lg:col-start-3" : ""}`}
                 >
                   <TiltCard className="h-full w-full">
                     <DishCard
@@ -400,14 +399,12 @@ export default function Menu3DExperience({
               >
                 ×
               </button>
-              <div className="relative h-[45vh] min-h-[260px] shrink-0 overflow-hidden">
-                <Image
+              <div className="relative aspect-[16/10] min-h-[260px] w-full shrink-0 overflow-hidden md:aspect-[16/9]">
+                <PremiumImage
                   src={openDish.image}
                   alt={openDish.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 900px) 100vw, 900px"
-                  quality={85}
+                  sizes={IMAGE_SIZES.menuModal}
+                  quality={IMAGE_QUALITY.modal}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" aria-hidden />
                 <h2

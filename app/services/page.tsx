@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import PremiumImage from "../components/ui/PremiumImage";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
 import Link from "next/link";
 import { FaHeart, FaUsers, FaBriefcase } from "react-icons/fa";
 import Reveal from "../components/ui/Reveal";
@@ -53,15 +54,13 @@ export default function ServicesPage() {
               <Reveal key={service.title} delay={0.05 * i}>
                 <article className="glass-card service-card-hover overflow-hidden rounded-3xl p-6 md:p-8">
                   <div className={`grid items-center gap-10 md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`}>
-                    <div className={`relative h-72 overflow-hidden rounded-2xl md:h-96 ${i % 2 === 1 ? "md:[direction:ltr]" : ""}`}>
-                      <Image
+                    <div className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl md:aspect-[5/4] ${i % 2 === 1 ? "md:[direction:ltr]" : ""}`}>
+                      <PremiumImage
                         src={service.image}
                         alt={service.imageAlt}
-                        fill
-                        className="object-cover transition-transform duration-700 hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        quality={90}
-                        loading="lazy"
+                        sizes={IMAGE_SIZES.serviceHero}
+                        quality={IMAGE_QUALITY.hero}
+                        hover
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[var(--black)]/25 to-transparent" aria-hidden />
                     </div>

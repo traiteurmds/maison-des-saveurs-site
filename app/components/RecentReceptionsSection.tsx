@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import PremiumImage from "./ui/PremiumImage";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "./ui/Reveal";
@@ -21,16 +22,16 @@ function RealisationCard({
 
   return (
     <Reveal delay={index * 0.08}>
-      <article className="realisation-card group relative min-h-[420px] overflow-hidden rounded-3xl border border-mds-border shadow-[0_24px_64px_var(--mds-shadow)] md:min-h-[480px]">
+      <article className="realisation-card group relative aspect-[16/10] min-h-[360px] overflow-hidden rounded-3xl border border-mds-border shadow-[0_24px_64px_var(--mds-shadow)] md:aspect-[21/9] md:min-h-[420px] lg:min-h-[480px]">
         {!imageError ? (
-          <Image
+          <PremiumImage
             src={item.image}
-            alt={item.title}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            sizes="(max-width: 768px) 100vw, 1200px"
-            onError={() => setImageError(true)}
+            alt={item.alt}
+            sizes={IMAGE_SIZES.realisation}
+            quality={IMAGE_QUALITY.hero}
             priority={index === 0}
+            hover
+            onError={() => setImageError(true)}
           />
         ) : (
           <div
@@ -48,7 +49,7 @@ function RealisationCard({
           className="absolute inset-0 bg-gradient-to-t from-[rgba(255,253,248,0.96)] via-[rgba(255,253,248,0.72)] to-[rgba(255,253,248,0.35)]"
         />
 
-        <div className="relative flex h-full min-h-[420px] flex-col justify-end p-8 md:min-h-[480px] md:p-12">
+        <div className="relative flex h-full min-h-[360px] flex-col justify-end p-8 md:min-h-[420px] md:p-12 lg:min-h-[480px]">
           <p className="font-serif text-xs uppercase tracking-[0.28em] text-[var(--gold)]">
             {item.label}
           </p>

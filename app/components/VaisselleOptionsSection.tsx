@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import PremiumImage from "./ui/PremiumImage";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
 import { FaUserTie, FaWineGlass } from "react-icons/fa";
 import { GiBread } from "react-icons/gi";
 import Reveal from "./ui/Reveal";
@@ -60,13 +61,12 @@ function OptionCard({
         )}
       >
         {hasImage && !imageError ? (
-          <Image
+          <PremiumImage
             src={option.image!}
-            alt={option.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            loading="lazy"
+            alt={option.alt ?? option.title}
+            sizes={IMAGE_SIZES.optionCard}
+            quality={IMAGE_QUALITY.card}
+            hover
             onError={() => setImageError(true)}
           />
         ) : hasIcon ? (

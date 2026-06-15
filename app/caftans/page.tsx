@@ -1,36 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { FaTiktok } from "react-icons/fa";
 import Reveal from "../components/ui/Reveal";
 import TiltCard from "../components/ui/TiltCard";
 import MagneticButton from "../components/ui/MagneticButton";
+import PremiumImage from "../components/ui/PremiumImage";
 import { useSelection } from "../components/providers/SelectionProvider";
 import { btnWhatsappClass, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
+import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
+import { CAFTANS } from "../lib/caftans";
 import { cn } from "../lib/utils";
-
-type Caftan = {
-  id: string;
-  title: string;
-  image: string;
-};
-
-const caftans: Caftan[] = [
-  { id: "caftan-01", title: "Caftan 1", image: "/images/caftans/caftan-01.jpg" },
-  { id: "caftan-02", title: "Caftan 2", image: "/images/caftans/caftan-02.jpg" },
-  { id: "caftan-03", title: "Caftan 3", image: "/images/caftans/caftan-03.jpg" },
-  { id: "caftan-04", title: "Caftan 4", image: "/images/caftans/caftan-04.jpg" },
-  { id: "caftan-05", title: "Caftan 5", image: "/images/caftans/caftan-05.jpg" },
-  { id: "caftan-06", title: "Caftan 6", image: "/images/caftans/caftan-06.jpg" },
-  { id: "caftan-07", title: "Caftan 7", image: "/images/caftans/caftan-07.jpg" },
-  { id: "caftan-08", title: "Caftan 8", image: "/images/caftans/caftan-08.jpg" },
-  { id: "caftan-09", title: "Caftan 9", image: "/images/caftans/caftan-09.jpg" },
-  { id: "caftan-10", title: "Caftan 10", image: "/images/caftans/caftan-10.jpg" },
-  { id: "caftan-11", title: "Caftan 11", image: "/images/caftans/caftan-11.jpg" },
-  { id: "caftan-12", title: "Caftan 12", image: "/images/caftans/caftan-12.jpg" },
-];
 
 function CaftanCard({
   item,
@@ -38,7 +19,7 @@ function CaftanCard({
   selected,
   onToggle,
 }: {
-  item: Caftan;
+  item: (typeof CAFTANS)[0];
   index: number;
   selected: boolean;
   onToggle: () => void;
@@ -68,13 +49,13 @@ function CaftanCard({
                 </div>
               </div>
             ) : (
-              <Image
+              <PremiumImage
                 src={item.image}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 25vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                loading="lazy"
+                alt={item.alt}
+                sizes={IMAGE_SIZES.caftanCard}
+                quality={IMAGE_QUALITY.card}
+                objectPosition="center 20%"
+                hover
                 onError={() => setImageError(true)}
               />
             )}
@@ -139,7 +120,7 @@ export default function CaftansPage() {
         </Reveal>
 
         <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {caftans.map((item, index) => (
+          {CAFTANS.map((item, index) => (
             <CaftanCard
               key={item.id}
               item={item}
