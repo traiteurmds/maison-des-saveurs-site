@@ -4,7 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { FaWhatsapp } from "react-icons/fa";
-import { buildWhatsAppUrl } from "../lib/whatsapp";
+import { useSelection } from "../components/providers/SelectionProvider";
 import {
   LIMITS,
   sanitizeName,
@@ -53,6 +53,7 @@ const labelStyle: React.CSSProperties = {
 };
 
 export default function ContactPage() {
+  const { whatsappUrl } = useSelection();
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
@@ -513,7 +514,7 @@ export default function ContactPage() {
               Pour une réponse plus rapide, contactez-nous directement sur WhatsApp.
             </p>
             <a
-              href={buildWhatsAppUrl()}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 inline-flex w-full min-h-[56px] items-center justify-center gap-3 rounded-full bg-[#25D366] px-6 py-4 text-base font-medium tracking-wide text-white shadow-[0_8px_32px_rgba(37,211,102,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(37,211,102,0.45)]"

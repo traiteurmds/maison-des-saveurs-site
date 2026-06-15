@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +8,8 @@ import { FaWhatsapp, FaInfo } from "react-icons/fa";
 import TiltCard from "./ui/TiltCard";
 import MagneticButton from "./ui/MagneticButton";
 import Reveal from "./ui/Reveal";
-import { buildWhatsAppUrl, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
+import { useSelection } from "./providers/SelectionProvider";
+import { selectableCardClass, selectableFocusClass, type SelectionState } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 type Category = "entrees" | "plats" | "desserts";
@@ -103,6 +104,12 @@ const categories: { id: Category; label: string }[] = [
   { id: "desserts", label: "Desserts" },
 ];
 
+const CATEGORY_MAP: Record<Category, keyof SelectionState> = {
+  entrees: "starters",
+  plats: "mains",
+  desserts: "desserts",
+};
+
 function DishCard({
   dish,
   selected,
@@ -167,7 +174,7 @@ function DishCard({
 export default function Menu3DExperience() {
   const [openDish, setOpenDish] = useState<Dish | null>(null);
   const [activeCategory, setActiveCategory] = useState<Category>("plats");
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const { toggleSelection, isSelected, whatsappUrl, counts } = useSelection();
 
   const filteredDishes = dishes.filter((d) => d.category === activeCategory);
   const isFiveItems = filteredDishes.length === 5;
@@ -177,31 +184,11 @@ export default function Menu3DExperience() {
     : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
   const gridMaxWidthClass = "max-w-[1100px]";
 
-  const menuSelections = useMemo(() => {
-    const selected = dishes.filter((d) => selectedIds.has(d.id));
-    return {
-      starters: selected.filter((d) => d.category === "entrees").map((d) => d.title),
-      mains: selected.filter((d) => d.category === "plats").map((d) => d.title),
-      desserts: selected.filter((d) => d.category === "desserts").map((d) => d.title),
-    };
-  }, [selectedIds]);
+  const isDishSelected = (dish: Dish) => isSelected(CATEGORY_MAP[dish.category], dish.title);
 
-  const whatsappUrl = buildWhatsAppUrl({
-    selectedStarters: menuSelections.starters,
-    selectedMains: menuSelections.mains,
-    selectedDesserts: menuSelections.desserts,
-  });
-
-  const toggleDish = (id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const toggleDish = (dish: Dish) => {
+    toggleSelection(CATEGORY_MAP[dish.category], dish.title);
   };
-
-  const totalSelected = selectedIds.size;
 
   useEffect(() => {
     if (!openDish) return;
@@ -272,8 +259,8 @@ export default function Menu3DExperience() {
                   <TiltCard className="h-full w-full">
                     <DishCard
                       dish={dish}
-                      selected={selectedIds.has(dish.id)}
-                      onToggle={() => toggleDish(dish.id)}
+                      selected={isDishSelected(dish)}
+                      onToggle={() => toggleDish(dish)}
                       onInfo={() => setOpenDish(dish)}
                     />
                   </TiltCard>
@@ -296,13 +283,13 @@ export default function Menu3DExperience() {
             <FaWhatsapp className="text-xl" aria-hidden />
             Envoyer ma sélection menu
           </a>
-          {totalSelected === 0 ? (
+          {counts.menu === 0 ? (
             <p className="mt-4 text-sm text-mds-muted">
               Sélectionnez un ou plusieurs plats pour les inclure dans votre message WhatsApp.
             </p>
           ) : (
             <p className="mt-4 text-sm text-mds-muted">
-              {totalSelected} plat{totalSelected > 1 ? "s" : ""} sélectionné{totalSelected > 1 ? "s" : ""}
+              {counts.menu} plat{counts.menu > 1 ? "s" : ""} sélectionné{counts.menu > 1 ? "s" : ""} · message global avec toutes vos sélections
             </p>
           )}
         </Reveal>
@@ -360,19 +347,17 @@ export default function Menu3DExperience() {
                 <div className="mt-8 flex flex-wrap gap-4">
                   <button
                     type="button"
-                    onClick={() => {
-                      toggleDish(openDish.id);
-                    }}
-                    aria-pressed={selectedIds.has(openDish.id)}
+                    onClick={() => toggleDish(openDish)}
+                    aria-pressed={isDishSelected(openDish)}
                     className={cn(
                       "inline-flex min-h-[48px] items-center justify-center rounded-full border px-8 py-3 text-sm font-medium tracking-wide transition-all",
                       selectableFocusClass,
-                      selectedIds.has(openDish.id)
-                        ? "border-terracotta bg-[#faf6f0] text-terracotta"
+                      isDishSelected(openDish)
+                        ? "border-terracotta bg-[#faf6f0] text-terracotta dark:bg-[#1a241c]"
                         : "border-mds-border bg-mds-card text-mds-text hover:border-terracotta/40"
                     )}
                   >
-                    {selectedIds.has(openDish.id) ? "Retirer de ma sélection" : "Ajouter à ma sélection"}
+                    {isDishSelected(openDish) ? "Retirer de ma sélection" : "Ajouter à ma sélection"}
                   </button>
                   <MagneticButton className="inline-block">
                     <Link

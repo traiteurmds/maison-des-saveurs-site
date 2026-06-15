@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTiktok, FaTimes } from "react-icons/fa";
+import ThemeToggle from "./ui/ThemeToggle";
 import { cn } from "../lib/utils";
 
 function useScrollToTop() {
@@ -130,6 +131,7 @@ export default function Navbar() {
             </ul>
 
             <div className="flex items-center gap-2">
+              <ThemeToggle className="hidden sm:flex" />
               <div className="hidden items-center gap-1 sm:flex md:hidden">
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
@@ -191,7 +193,7 @@ export default function Navbar() {
               animate={{ y: 0 }}
               exit={{ y: "-100%" }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex h-full flex-col bg-[#f8f5f0]/97 backdrop-blur-xl"
+              className="relative flex h-full flex-col bg-mds-bg/97 backdrop-blur-xl"
             >
               <div className="flex items-center justify-between border-b border-mds-border px-6 py-5">
                 <span className="font-serif text-lg font-semibold text-mds-text">Menu</span>
@@ -234,6 +236,7 @@ export default function Navbar() {
               </nav>
 
               <div className="flex items-center justify-center gap-6 border-t border-mds-border px-6 py-6">
+                <ThemeToggle />
                 <a
                   href="https://www.instagram.com/mds.traiteur69/"
                   target="_blank"

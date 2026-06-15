@@ -1,0 +1,86 @@
+"use client";
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import {
+  EMPTY_SELECTION,
+  getSelectionCounts,
+  getWhatsappUrl,
+  type SelectionState,
+} from "../../lib/whatsapp";
+
+const STORAGE_KEY = "mds-selection";
+
+type SelectionContextValue = {
+  selection: SelectionState;
+  toggleSelection: (category: keyof SelectionState, item: string) => void;
+  isSelected: (category: keyof SelectionState, item: string) => boolean;
+  whatsappUrl: string;
+  counts: ReturnType<typeof getSelectionCounts>;
+};
+
+const SelectionContext = createContext<SelectionContextValue | null>(null);
+
+export function SelectionProvider({ children }: { children: React.ReactNode }) {
+  const [selection, setSelection] = useState<SelectionState>(EMPTY_SELECTION);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as SelectionState;
+        setSelection({ ...EMPTY_SELECTION, ...parsed });
+      }
+    } catch {
+      /* ignore */
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
+  }, [selection, hydrated]);
+
+  const toggleSelection = useCallback((category: keyof SelectionState, item: string) => {
+    setSelection((prev) => {
+      const alreadySelected = prev[category].includes(item);
+      return {
+        ...prev,
+        [category]: alreadySelected
+          ? prev[category].filter((selectedItem) => selectedItem !== item)
+          : [...prev[category], item],
+      };
+    });
+  }, []);
+
+  const isSelected = useCallback(
+    (category: keyof SelectionState, item: string) => selection[category].includes(item),
+    [selection]
+  );
+
+  const whatsappUrl = useMemo(() => getWhatsappUrl(selection), [selection]);
+  const counts = useMemo(() => getSelectionCounts(selection), [selection]);
+
+  const value = useMemo(
+    () => ({ selection, toggleSelection, isSelected, whatsappUrl, counts }),
+    [selection, toggleSelection, isSelected, whatsappUrl, counts]
+  );
+
+  return <SelectionContext.Provider value={value}>{children}</SelectionContext.Provider>;
+}
+
+export function useSelection() {
+  const ctx = useContext(SelectionContext);
+  if (!ctx) {
+    throw new Error("useSelection must be used within SelectionProvider");
+  }
+  return ctx;
+}

@@ -7,7 +7,8 @@ import { FaTiktok, FaWhatsapp } from "react-icons/fa";
 import Reveal from "../components/ui/Reveal";
 import TiltCard from "../components/ui/TiltCard";
 import MagneticButton from "../components/ui/MagneticButton";
-import { buildWhatsAppUrl, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
+import { useSelection } from "../components/providers/SelectionProvider";
+import { selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 type Caftan = {
@@ -97,19 +98,7 @@ function CaftanCard({
 }
 
 export default function CaftansPage() {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const toggleCaftan = (title: string) => {
-    setSelected((prev) => {
-      if (prev.includes(title)) return prev.filter((t) => t !== title);
-      return [...prev, title];
-    });
-  };
-
-  const whatsappUrl = buildWhatsAppUrl({
-    selectedCaftans: selected,
-    includeCaftanDemande: true,
-  });
+  const { toggleSelection, isSelected, whatsappUrl, counts } = useSelection();
 
   return (
     <div className="bg-mds-bg pt-28 pb-24">
@@ -155,8 +144,8 @@ export default function CaftansPage() {
               key={item.id}
               item={item}
               index={index}
-              selected={selected.includes(item.title)}
-              onToggle={() => toggleCaftan(item.title)}
+              selected={isSelected("caftans", item.title)}
+              onToggle={() => toggleSelection("caftans", item.title)}
             />
           ))}
         </div>
@@ -174,13 +163,13 @@ export default function CaftansPage() {
             <FaWhatsapp className="text-xl" aria-hidden />
             Envoyer ma sélection caftans
           </a>
-          {selected.length === 0 ? (
+          {counts.caftans === 0 ? (
             <p className="mt-4 text-sm text-mds-muted">
               Sélectionnez un ou plusieurs caftans pour les inclure dans votre message WhatsApp.
             </p>
           ) : (
             <p className="mt-4 text-sm text-mds-muted">
-              {selected.length} caftan{selected.length > 1 ? "s" : ""} sélectionné{selected.length > 1 ? "s" : ""}
+              {counts.caftans} caftan{counts.caftans > 1 ? "s" : ""} sélectionné{counts.caftans > 1 ? "s" : ""} · message global avec toutes vos sélections
             </p>
           )}
         </Reveal>

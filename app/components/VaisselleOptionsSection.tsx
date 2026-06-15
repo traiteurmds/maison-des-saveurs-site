@@ -4,7 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
 import Reveal from "./ui/Reveal";
-import { buildWhatsAppUrl, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
+import { useSelection } from "./providers/SelectionProvider";
+import { selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 const options = [
@@ -81,16 +82,7 @@ function OptionCard({
 }
 
 export default function VaisselleOptionsSection() {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const toggleOption = (title: string) => {
-    setSelected((prev) => {
-      if (prev.includes(title)) return prev.filter((t) => t !== title);
-      return [...prev, title];
-    });
-  };
-
-  const whatsappUrl = buildWhatsAppUrl({ selectedOptions: selected });
+  const { toggleSelection, isSelected, whatsappUrl, counts } = useSelection();
 
   return (
     <section
@@ -115,8 +107,8 @@ export default function VaisselleOptionsSection() {
             <Reveal key={option.id} delay={0.08 * i}>
               <OptionCard
                 option={option}
-                selected={selected.includes(option.title)}
-                onToggle={() => toggleOption(option.title)}
+                selected={isSelected("options", option.title)}
+                onToggle={() => toggleSelection("options", option.title)}
               />
             </Reveal>
           ))}
@@ -135,7 +127,7 @@ export default function VaisselleOptionsSection() {
             <FaWhatsapp className="text-xl" aria-hidden />
             Envoyer ma demande avec ces options
           </a>
-          {selected.length === 0 && (
+          {counts.options === 0 && (
             <p className="mt-4 text-sm text-mds-muted">
               Sélectionnez une ou plusieurs options pour les inclure dans votre message WhatsApp.
             </p>

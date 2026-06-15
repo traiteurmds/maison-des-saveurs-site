@@ -1,80 +1,98 @@
 export const WHATSAPP_PHONE = "33758639734";
 
-export type WhatsappMessageParams = {
-  selectedStarters?: string[];
-  selectedMains?: string[];
-  selectedDesserts?: string[];
-  selectedOptions?: string[];
-  selectedCaftans?: string[];
-  includeCaftanDemande?: boolean;
+export type SelectionState = {
+  starters: string[];
+  mains: string[];
+  desserts: string[];
+  options: string[];
+  caftans: string[];
 };
 
-export function buildWhatsappMessage({
-  selectedStarters = [],
-  selectedMains = [],
-  selectedDesserts = [],
-  selectedOptions = [],
-  selectedCaftans = [],
-  includeCaftanDemande = false,
-}: WhatsappMessageParams = {}) {
-  const list = (items: string[]) =>
-    items.length ? items.map((item) => `- ${item}`).join("\n") : "- ..........";
+export const EMPTY_SELECTION: SelectionState = {
+  starters: [],
+  mains: [],
+  desserts: [],
+  options: [],
+  caftans: [],
+};
 
-  let message = `Bonjour, je souhaite obtenir un devis Maison Des Saveurs.
+const formatItems = (items: string[]) => items.map((item) => `- ${item}`).join("\n");
 
-Nom : ..........
-Prénom : ..........
-Téléphone : ..........
-Date de l'événement : ..........
-Lieu : ..........
-Nombre de personnes : ..........
-Type d'événement : ..........
+export function buildWhatsappMessage(selection: SelectionState) {
+  const sections: string[] = [];
 
-Sélection menu :
-Entrées :
-${list(selectedStarters)}
+  sections.push(`Bonjour, je souhaite obtenir un devis Maison Des Saveurs.
 
-Plats :
-${list(selectedMains)}
+Nom :
+Prénom :
+Téléphone :
+Date de l'événement :
+Lieu :
+Nombre de personnes :
+Type d'événement :`);
 
-Desserts :
-${list(selectedDesserts)}
+  const menuSections: string[] = [];
 
-Options souhaitées :
-${list(selectedOptions)}
-
-Caftans sélectionnés :
-${list(selectedCaftans)}`;
-
-  if (includeCaftanDemande) {
-    message += `
-
-Demande :
-Location ou vente : ..........
-Taille souhaitée : ..........
-Date de l'événement : ..........
-Lieu : ..........`;
+  if (selection.starters.length > 0) {
+    menuSections.push(`Entrées :
+${formatItems(selection.starters)}`);
   }
 
-  message += `
+  if (selection.mains.length > 0) {
+    menuSections.push(`Plats :
+${formatItems(selection.mains)}`);
+  }
 
-Message complémentaire :
-..........
+  if (selection.desserts.length > 0) {
+    menuSections.push(`Desserts :
+${formatItems(selection.desserts)}`);
+  }
 
-Merci.`;
+  if (menuSections.length > 0) {
+    sections.push(`Sélection menu :
+${menuSections.join("\n\n")}`);
+  }
 
-  return message;
+  if (selection.options.length > 0) {
+    sections.push(`Options vaisselle & décoration :
+${formatItems(selection.options)}`);
+  }
+
+  if (selection.caftans.length > 0) {
+    sections.push(`Caftans sélectionnés :
+${formatItems(selection.caftans)}
+
+Demande caftans :
+Location ou vente :
+Taille souhaitée :`);
+  }
+
+  sections.push(`Message complémentaire :
+
+Merci.`);
+
+  return sections.join("\n\n");
 }
 
-export function buildWhatsAppUrl(params?: WhatsappMessageParams) {
-  const message = buildWhatsappMessage(params);
-  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
+export function getWhatsappUrl(selection: SelectionState) {
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(buildWhatsappMessage(selection))}`;
+}
+
+export function getSelectionCounts(selection: SelectionState) {
+  const menu =
+    selection.starters.length + selection.mains.length + selection.desserts.length;
+  return {
+    menu,
+    options: selection.options.length,
+    caftans: selection.caftans.length,
+    total: menu + selection.options.length + selection.caftans.length,
+  };
 }
 
 /** Classes partagées pour cartes sélectionnables */
 export const selectableCardClass = (selected: boolean) =>
   selected
-    ? "border-terracotta bg-[#faf6f0] shadow-[0_0_0_1px_rgba(184,132,84,0.4),0_16px_40px_rgba(184,132,84,0.12)]"
+    ? "border-terracotta bg-[#faf6f0] shadow-[0_0_0_1px_rgba(184,132,84,0.4),0_16px_40px_rgba(184,132,84,0.12)] dark:bg-[#1a241c]"
     : "border-mds-border bg-mds-card shadow-[0_12px_40px_var(--mds-shadow)] hover:border-terracotta/40";
 
 export const selectableFocusClass =
