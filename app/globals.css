@@ -690,11 +690,6 @@ header:not(.nav-over-hero) .nav-logo {
   }
 }
 
-.realisation-card {
-  position: relative;
-}
-
-.configurator-progress {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -712,4 +707,32 @@ header:not(.nav-over-hero) .nav-logo {
   width: auto;
   box-sizing: border-box;
   z-index: 50;
+}
+
+.testimonials-marquee {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.testimonials-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }

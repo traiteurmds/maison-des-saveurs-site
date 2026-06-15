@@ -6,7 +6,6 @@ export const IMAGE_SIZES = {
   caftanCard: "(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 300px",
   caftanThumb: "(max-width: 768px) 50vw, 180px",
   serviceHero: "(max-width: 768px) 100vw, 560px",
-  realisation: "(max-width: 768px) 100vw, 1200px",
 } as const;
 
 export const IMAGE_QUALITY = {
@@ -21,7 +20,7 @@ export const IMAGE_HOVER_SCALE = "group-hover:scale-[1.03]";
 /** Points focaux par fichier — préserve le sujet principal au crop 4:3 */
 export const IMAGE_FOCAL: Record<string, string> = {
   "/images/menu/salade-variee.jpg": "center 45%",
-  "/images/menu/salade-royale.jpg": "center 50%",
+  "/images/menu/salade-royale.jpg": "center 65%",
   "/images/menu/mini-sales.jpg": "center 55%",
   "/images/menu/couscous-viande.jpg": "center 50%",
   "/images/menu/couscous-poulet.jpg": "center 50%",
@@ -36,9 +35,6 @@ export const IMAGE_FOCAL: Record<string, string> = {
   "/images/services/mariage.png": "center 40%",
   "/images/services/evenement.png": "center 45%",
   "/images/services/professionnel.jpg": "center 50%",
-  "/realisations/mariage-120.jpg": "center 35%",
-  "/realisations/hlel-80.jpg": "center 35%",
-  "/realisations/entreprise-200.jpg": "center 35%",
 };
 
 export function focalPoint(src: string): string {

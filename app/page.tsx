@@ -2,14 +2,14 @@
 
 import VisionHero from "./components/VisionHero";
 import ReceptionConfiguratorSection from "./components/ReceptionConfiguratorSection";
-import RecentReceptionsSection from "./components/RecentReceptionsSection";
+import ClientTestimonialsSection from "./components/ClientTestimonialsSection";
 
 export default function Home() {
   return (
     <>
       <VisionHero />
       <ReceptionConfiguratorSection />
-      <RecentReceptionsSection />
+      <ClientTestimonialsSection />
     </>
   );
 }
