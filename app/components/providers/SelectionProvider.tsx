@@ -16,8 +16,33 @@ import {
   getWhatsappUrl,
   type SelectionState,
 } from "../../lib/whatsapp";
+import { LEGACY_OPTION_TITLES, migrateOptionTitles } from "../../lib/configurator-options";
 
 const STORAGE_KEY = "mds-selection";
+
+function normalizeSelection(raw: SelectionState): SelectionState {
+  return {
+    ...raw,
+    options: migrateOptionTitles(raw.options),
+    starters: [...new Set(raw.starters)],
+    mains: [...new Set(raw.mains)],
+    desserts: [...new Set(raw.desserts)],
+    caftans: [...new Set(raw.caftans)],
+  };
+}
+
+function parseStoredSelection(saved: string): SelectionState {
+  try {
+    const parsed = JSON.parse(saved) as SelectionState;
+    const merged = { ...EMPTY_SELECTION, ...parsed };
+    if (merged.options.some((item) => item in LEGACY_OPTION_TITLES)) {
+      return normalizeSelection(merged);
+    }
+    return merged;
+  } catch {
+    return EMPTY_SELECTION;
+  }
+}
 const TOAST_DURATION_MS = 2400;
 
 type SelectionContextValue = {
@@ -41,7 +66,7 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return { ...EMPTY_SELECTION, ...(JSON.parse(saved) as SelectionState) };
+        return parseStoredSelection(saved);
       }
     } catch {
       /* ignore */

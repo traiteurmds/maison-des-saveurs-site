@@ -31,6 +31,7 @@ const COOLDOWN_MS = 12_000;
 
 const inputBaseStyle: React.CSSProperties = {
   width: "100%",
+  maxWidth: "100%",
   padding: "0.75rem 1rem",
   fontSize: "1rem",
   lineHeight: "1.5",
@@ -366,6 +367,7 @@ export default function ContactPage() {
                     type="text"
                     name="lastName"
                     required
+                    autoComplete="family-name"
                     placeholder="Nom"
                     maxLength={LIMITS.MAX_NOM}
                     value={lastName}
@@ -386,7 +388,9 @@ export default function ContactPage() {
                     type="email"
                     name="email"
                     required
+                    autoComplete="email"
                     placeholder="vous@exemple.fr"
+                    maxLength={254}
                     value={email}
                     onChange={(e) => setEmail(sanitizeEmail(e.target.value))}
                     style={inputBaseStyle}
@@ -435,6 +439,7 @@ export default function ContactPage() {
                     name="message"
                     rows={5}
                     required
+                    autoComplete="off"
                     maxLength={LIMITS.MAX_MESSAGE}
                     placeholder="Décrivez votre événement, le lieu, et vos préférences..."
                     value={message}
@@ -443,6 +448,8 @@ export default function ContactPage() {
                       ...inputBaseStyle,
                       resize: "vertical",
                       minHeight: "120px",
+                      maxWidth: "100%",
+                      wordBreak: "break-word",
                     }}
                     onFocus={focusStyle}
                     onBlur={blurStyle}

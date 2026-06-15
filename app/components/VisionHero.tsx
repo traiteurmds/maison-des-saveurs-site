@@ -6,7 +6,16 @@ import { scrollToConfiguratorStep } from "../lib/configurator-options";
 
 function HeroContent() {
   return (
-    <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+    <div className="hero-content flex w-full flex-col items-center text-center lg:items-start lg:text-left">
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-4 font-serif text-xs uppercase tracking-[0.28em] text-[var(--gold)]"
+      >
+        Traiteur d&apos;exception à Lyon
+      </motion.p>
+
       <motion.h1
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,7 +46,7 @@ function HeroContent() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.65 }}
-        className="mx-auto mt-10 flex w-full max-w-[440px] flex-col items-stretch gap-3.5 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-nowrap lg:items-center lg:justify-start lg:gap-3"
+        className="hero-cta-group mx-auto mt-10 flex w-full max-w-[440px] flex-col items-stretch gap-3.5 lg:mx-0 lg:max-w-none lg:flex-row lg:flex-nowrap lg:items-center lg:justify-start lg:gap-3"
       >
         <button
           type="button"
@@ -73,13 +82,18 @@ export default function VisionHero() {
         }}
       />
 
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[18%] hidden h-px w-32 -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--gold)]/40 to-transparent lg:block"
+      />
+
       <motion.div
         style={{ y: blobY }}
         aria-hidden
         className="hero-blob pointer-events-none absolute -right-20 top-1/4 hidden h-96 w-96 bg-[var(--gold)]/6 lg:block"
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl items-center px-6 lg:min-h-[96vh] lg:px-8 lg:py-28">
+      <div className="hero-inner relative z-10 mx-auto flex w-full max-w-7xl items-center justify-center px-6 lg:min-h-[96vh] lg:px-8 lg:py-20">
         <HeroContent />
       </div>
     </section>

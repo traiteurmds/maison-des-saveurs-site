@@ -607,23 +607,30 @@ header:not(.nav-over-hero) .nav-logo {
   .hero-section {
     min-height: 100svh;
     min-height: 100dvh;
+    max-height: 100dvh;
     display: flex;
     align-items: center;
-    padding-top: 110px;
-    padding-bottom: calc(48px + env(safe-area-inset-bottom));
+    justify-content: center;
+    padding-top: calc(100px + env(safe-area-inset-top));
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
     box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .hero-section > .relative.z-10 {
+  .hero-inner {
     width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .hero-secondary-card {
-    margin-top: 0;
+  .hero-content {
+    max-width: 440px;
   }
 
-  .hero-composer-mobile {
-    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+  .hero-cta-group {
+    width: 100%;
   }
 }
 
@@ -632,8 +639,13 @@ header:not(.nav-over-hero) .nav-logo {
     min-height: 96vh;
     display: flex;
     align-items: center;
-    padding-top: 6rem;
-    padding-bottom: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-inner {
+    width: 100%;
+    transform: translateY(-55px);
   }
 }
 

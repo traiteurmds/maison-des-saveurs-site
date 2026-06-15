@@ -1,8 +1,11 @@
+export type ConfiguratorOptionIcon = "serveurs" | "pain-boissons";
+
 export type ConfiguratorOption = {
   id: string;
   title: string;
   description: string;
   image?: string;
+  icon?: ConfiguratorOptionIcon;
 };
 
 export const CONFIGURATOR_OPTIONS: ConfiguratorOption[] = [
@@ -21,18 +24,26 @@ export const CONFIGURATOR_OPTIONS: ConfiguratorOption[] = [
     image: "/images/vaisselle/decoration-table.jpg",
   },
   {
-    id: "service-salle",
-    title: "Service en salle",
+    id: "serveurs",
+    title: "Serveurs",
+    icon: "serveurs",
     description:
-      "Équipe de service pour l'accueil, le dressage et le déroulement fluide de votre réception.",
+      "Nous disposons d'une équipe de serveurs pour accompagner votre événement. Vous pouvez personnaliser le nombre de serveurs souhaité ainsi que le profil de l'équipe selon vos besoins : hommes, femmes ou équipe mixte.",
   },
   {
-    id: "boissons",
-    title: "Boissons sur demande",
+    id: "pain-boissons",
+    title: "Pain & Boissons",
+    icon: "pain-boissons",
     description:
-      "Prise en charge des boissons selon votre format : softs, jus, thé à la menthe, café et options sur mesure.",
+      "Pack comprenant 6 bouteilles d'eau plate, 2 bouteilles d'eau gazeuse, 4 boissons au choix ainsi que le pain en baguettes. Une option pratique pour compléter votre réception simplement.",
   },
 ];
+
+/** Anciens libellés stockés en localStorage → nouveaux titres */
+export const LEGACY_OPTION_TITLES: Record<string, string> = {
+  "Service en salle": "Serveurs",
+  "Boissons sur demande": "Pain & Boissons",
+};
 
 export const CONFIGURATOR_STEPS = [
   { id: 1, label: "Menu", targetId: "configurateur-etape-1" },
@@ -47,4 +58,9 @@ export function scrollToConfiguratorStep(targetId: string) {
 
 export function scrollToConfigurator() {
   scrollToConfiguratorStep("configurateur");
+}
+
+export function migrateOptionTitles(options: string[]): string[] {
+  const mapped = options.map((item) => LEGACY_OPTION_TITLES[item] ?? item);
+  return [...new Set(mapped)];
 }

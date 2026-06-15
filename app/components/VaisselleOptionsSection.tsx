@@ -2,11 +2,29 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { FaUserTie, FaWineGlass } from "react-icons/fa";
+import { GiBread } from "react-icons/gi";
 import Reveal from "./ui/Reveal";
 import { useSelection } from "./providers/SelectionProvider";
-import { CONFIGURATOR_OPTIONS, scrollToConfiguratorStep } from "../lib/configurator-options";
+import {
+  CONFIGURATOR_OPTIONS,
+  scrollToConfiguratorStep,
+  type ConfiguratorOptionIcon,
+} from "../lib/configurator-options";
 import { btnWhatsappClass, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
+
+function OptionIcon({ icon }: { icon: ConfiguratorOptionIcon }) {
+  if (icon === "serveurs") {
+    return <FaUserTie className="text-2xl" aria-hidden />;
+  }
+  return (
+    <span className="flex items-center gap-2" aria-hidden>
+      <GiBread className="text-xl" />
+      <FaWineGlass className="text-lg opacity-90" />
+    </span>
+  );
+}
 
 function OptionCard({
   option,
@@ -19,6 +37,7 @@ function OptionCard({
 }) {
   const [imageError, setImageError] = useState(false);
   const hasImage = Boolean(option.image);
+  const hasIcon = Boolean(option.icon);
 
   return (
     <button
@@ -35,7 +54,7 @@ function OptionCard({
       <div
         className={cn(
           "relative w-full overflow-hidden bg-gradient-to-br from-[var(--surface-soft)] to-[var(--surface)]",
-          hasImage ? "aspect-[16/10]" : "min-h-[120px] flex items-center px-6 py-8"
+          hasImage ? "aspect-[16/10]" : "min-h-[140px]"
         )}
       >
         {hasImage && !imageError ? (
@@ -48,13 +67,23 @@ function OptionCard({
             loading="lazy"
             onError={() => setImageError(true)}
           />
-        ) : hasImage && imageError ? (
+        ) : hasIcon ? (
+          <div className="flex h-full min-h-[140px] flex-col items-center justify-center gap-3 px-6 py-8">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-mds-border bg-[var(--surface)] text-[var(--gold)] shadow-[0_8px_24px_var(--mds-shadow)] transition-transform duration-300 group-hover:scale-105">
+              <OptionIcon icon={option.icon!} />
+            </div>
+            <span className="font-serif text-xs uppercase tracking-[0.22em] text-[var(--gold)]/80">
+              Option premium
+            </span>
+          </div>
+        ) : null}
+        {hasImage && imageError && (
           <div className="flex h-full w-full items-center justify-center">
             <span className="font-serif text-sm uppercase tracking-[0.2em] text-[var(--gold)]/80">
               Photo à venir
             </span>
           </div>
-        ) : null}
+        )}
         {selected && (
           <div
             className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)]"

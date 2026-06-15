@@ -157,10 +157,10 @@ export default function RootLayout({
       <body className="bg-mds-bg pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-mds-text antialiased lg:pb-0">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessSchema),
-          }}
-        />
+          suppressHydrationWarning
+        >
+          {JSON.stringify(localBusinessSchema)}
+        </script>
         <Providers>
           <Navbar />
           <main className="min-h-screen">
