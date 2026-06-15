@@ -119,17 +119,17 @@ export default function CaftansPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
         <Reveal>
-          <div className="mb-12 overflow-hidden rounded-3xl border border-mds-border bg-[var(--black)] p-8 text-center text-[var(--ivory)] shadow-[0_20px_48px_var(--mds-shadow)] md:p-10">
+          <div className="mb-12 overflow-hidden rounded-3xl border border-mds-border bg-[var(--surface)] p-8 text-center shadow-[0_20px_48px_var(--mds-shadow)] md:p-10">
             <p className="font-serif text-xs uppercase tracking-[0.3em] text-[var(--gold)]">Partenariat exclusif</p>
-            <p className="mt-3 font-serif text-3xl font-semibold md:text-4xl">MDS x Lamia Créations</p>
-            <p className="mx-auto mt-4 max-w-2xl text-[var(--ivory)]/75">
+            <p className="mt-3 font-serif text-3xl font-semibold text-mds-text md:text-4xl">MDS x Lamia Créations</p>
+            <p className="mx-auto mt-4 max-w-2xl text-mds-muted">
               Découvrez nos inspirations, nouveautés et coulisses sur TikTok.
             </p>
             <a
               href="https://www.tiktok.com/@lamia.creations?is_from_webapp=1&sender_device=pc"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-7 inline-flex items-center justify-center gap-3 rounded-full border border-[var(--gold)]/45 bg-[var(--gold)]/10 px-8 py-3 font-medium tracking-[0.14em] text-[var(--ivory)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--gold)]/20"
+              className="mt-7 inline-flex items-center justify-center gap-3 rounded-full border border-mds-border bg-[var(--surface-soft)] px-8 py-3 font-medium tracking-[0.14em] text-mds-text transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--gold)]/45"
               aria-label="TikTok Lamia Créations"
             >
               <FaTiktok className="text-lg" />

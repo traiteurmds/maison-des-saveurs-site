@@ -598,6 +598,49 @@ header:not(.nav-over-hero) .nav-logo {
   background: var(--charcoal);
 }
 
+/* Hero — plein écran mobile, premium desktop */
+.hero-section {
+  position: relative;
+}
+
+@media (max-width: 1023px) {
+  .hero-section {
+    min-height: 100svh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    padding-top: 110px;
+    padding-bottom: calc(48px + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+  }
+
+  .hero-section > .relative.z-10 {
+    width: 100%;
+  }
+
+  .hero-secondary-card {
+    margin-top: 0;
+  }
+
+  .hero-composer-mobile {
+    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-section {
+    min-height: 96vh;
+    display: flex;
+    align-items: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+  }
+}
+
+.premium-cta-card {
+  background: linear-gradient(180deg, var(--surface) 0%, rgba(255, 253, 248, 0.92) 100%);
+}
+
 .btn-hero-accent {
   border: 1px solid rgba(198, 164, 106, 0.35);
   background: var(--mds-card);
