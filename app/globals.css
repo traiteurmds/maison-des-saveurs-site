@@ -690,6 +690,7 @@ header:not(.nav-over-hero) .nav-logo {
   }
 }
 
+.configurator-progress {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
