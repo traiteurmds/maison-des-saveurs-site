@@ -1,17 +1,15 @@
 "use client";
 
 import VisionHero from "./components/VisionHero";
-import Menu3DExperience from "./components/Menu3DExperience";
-import VaisselleOptionsSection from "./components/VaisselleOptionsSection";
-import ContactCTA from "./components/ContactCTA";
+import ReceptionConfiguratorSection from "./components/ReceptionConfiguratorSection";
+import RecentReceptionsSection from "./components/RecentReceptionsSection";
 
 export default function Home() {
   return (
     <>
       <VisionHero />
-      <Menu3DExperience />
-      <VaisselleOptionsSection />
-      <ContactCTA />
+      <ReceptionConfiguratorSection />
+      <RecentReceptionsSection />
     </>
   );
 }

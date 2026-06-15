@@ -678,6 +678,19 @@ header:not(.nav-over-hero) .nav-logo {
   }
 }
 
+.realisation-card {
+  position: relative;
+}
+
+.configurator-progress {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.configurator-progress::-webkit-scrollbar {
+  display: none;
+}
+
 .mobile-selection-dock {
   position: fixed;
   left: 12px;

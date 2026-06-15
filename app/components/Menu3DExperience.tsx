@@ -171,7 +171,13 @@ function DishCard({
   );
 }
 
-export default function Menu3DExperience() {
+export default function Menu3DExperience({
+  embedded = false,
+  stepLabel,
+}: {
+  embedded?: boolean;
+  stepLabel?: string;
+}) {
   const [openDish, setOpenDish] = useState<Dish | null>(null);
   const [activeCategory, setActiveCategory] = useState<Category>("plats");
   const { toggleSelection, isSelected, whatsappUrl, counts } = useSelection();
@@ -206,19 +212,38 @@ export default function Menu3DExperience() {
   return (
     <section
       id="menu"
-      className="mds-section relative overflow-hidden border-t border-mds-border bg-mds-bg"
+      className={cn(
+        "relative overflow-hidden bg-mds-bg",
+        embedded ? "py-14 md:py-16" : "mds-section border-t border-mds-border"
+      )}
       aria-labelledby="menu-heading"
     >
       <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
       <div className="relative mx-auto max-w-7xl px-6">
-        <Reveal className="text-center">
-          <p className="font-serif text-sm uppercase tracking-[0.28em] text-[var(--gold)]">Notre carte</p>
-          <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-mds-text md:text-5xl">
-            Notre menu
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-mds-muted md:text-base">
-            Sélectionnez les plats qui vous intéressent pour préparer votre demande.
-          </p>
+        <Reveal className={embedded ? "max-w-3xl" : "text-center"}>
+          {embedded ? (
+            <>
+              <p className="font-serif text-xs uppercase tracking-[0.24em] text-[var(--gold)]">
+                {stepLabel ?? "Étape 1 — Choisissez votre menu"}
+              </p>
+              <h2 id="menu-heading" className="mt-2 font-serif text-2xl font-semibold text-mds-text md:text-3xl">
+                Entrées, plats et desserts
+              </h2>
+              <p className="mt-3 text-mds-muted">
+                Sélectionnez les plats qui composent votre réception.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="font-serif text-sm uppercase tracking-[0.28em] text-[var(--gold)]">Notre carte</p>
+              <h2 id="menu-heading" className="lux-heading mt-3 font-serif text-4xl font-semibold text-mds-text md:text-5xl">
+                Notre menu
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-mds-muted md:text-base">
+                Sélectionnez les plats qui vous intéressent pour préparer votre demande.
+              </p>
+            </>
+          )}
         </Reveal>
 
         <Reveal className="mt-10 flex flex-wrap justify-center gap-3" delay={0.1}>
@@ -270,29 +295,31 @@ export default function Menu3DExperience() {
           )}
         </div>
 
-        <Reveal className="mt-14 text-center" delay={0.15}>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              btnWhatsappClass,
-              "max-w-md sm:w-auto sm:min-w-[320px]",
-              selectableFocusClass
+        {!embedded && (
+          <Reveal className="mt-14 text-center" delay={0.15}>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                btnWhatsappClass,
+                "max-w-md sm:w-auto sm:min-w-[320px]",
+                selectableFocusClass
+              )}
+            >
+              Envoyer ma sélection menu
+            </a>
+            {counts.menu === 0 ? (
+              <p className="mt-4 text-sm text-mds-muted">
+                Sélectionnez un ou plusieurs plats pour les inclure dans votre message WhatsApp.
+              </p>
+            ) : (
+              <p className="mt-4 text-sm text-mds-muted">
+                {counts.menu} plat{counts.menu > 1 ? "s" : ""} sélectionné{counts.menu > 1 ? "s" : ""} · message global avec toutes vos sélections
+              </p>
             )}
-          >
-            Envoyer ma sélection menu
-          </a>
-          {counts.menu === 0 ? (
-            <p className="mt-4 text-sm text-mds-muted">
-              Sélectionnez un ou plusieurs plats pour les inclure dans votre message WhatsApp.
-            </p>
-          ) : (
-            <p className="mt-4 text-sm text-mds-muted">
-              {counts.menu} plat{counts.menu > 1 ? "s" : ""} sélectionné{counts.menu > 1 ? "s" : ""} · message global avec toutes vos sélections
-            </p>
-          )}
-        </Reveal>
+          </Reveal>
+        )}
       </div>
 
       <AnimatePresence>

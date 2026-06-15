@@ -18,6 +18,7 @@ import {
 } from "../../lib/whatsapp";
 
 const STORAGE_KEY = "mds-selection";
+const TOAST_DURATION_MS = 2400;
 
 type SelectionContextValue = {
   selection: SelectionState;
@@ -28,6 +29,8 @@ type SelectionContextValue = {
   whatsappUrl: string;
   counts: ReturnType<typeof getSelectionCounts>;
   totalSelected: number;
+  toastMessage: string | null;
+  lastAddedKey: string | null;
 };
 
 const SelectionContext = createContext<SelectionContextValue | null>(null);
@@ -45,7 +48,10 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
     }
     return EMPTY_SELECTION;
   });
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [lastAddedKey, setLastAddedKey] = useState<string | null>(null);
   const skipInitialPersist = useRef(true);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (skipInitialPersist.current) {
@@ -55,17 +61,39 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
   }, [selection]);
 
-  const toggleSelection = useCallback((category: keyof SelectionState, item: string) => {
-    setSelection((prev) => {
-      const alreadySelected = prev[category].includes(item);
-      return {
-        ...prev,
-        [category]: alreadySelected
-          ? prev[category].filter((selectedItem) => selectedItem !== item)
-          : [...prev[category], item],
-      };
-    });
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
   }, []);
+
+  const showAddedToast = useCallback((category: keyof SelectionState, item: string) => {
+    setToastMessage("Ajouté à votre sélection");
+    setLastAddedKey(`${category}:${item}`);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => {
+      setToastMessage(null);
+      setLastAddedKey(null);
+    }, TOAST_DURATION_MS);
+  }, []);
+
+  const toggleSelection = useCallback(
+    (category: keyof SelectionState, item: string) => {
+      setSelection((prev) => {
+        const alreadySelected = prev[category].includes(item);
+        if (!alreadySelected) {
+          queueMicrotask(() => showAddedToast(category, item));
+        }
+        return {
+          ...prev,
+          [category]: alreadySelected
+            ? prev[category].filter((selectedItem) => selectedItem !== item)
+            : [...prev[category], item],
+        };
+      });
+    },
+    [showAddedToast]
+  );
 
   const removeSelectionItem = useCallback((category: keyof SelectionState, item: string) => {
     setSelection((prev) => ({
@@ -76,6 +104,8 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
 
   const clearSelection = useCallback(() => {
     setSelection(EMPTY_SELECTION);
+    setToastMessage(null);
+    setLastAddedKey(null);
   }, []);
 
   const isSelected = useCallback(
@@ -97,6 +127,8 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
       whatsappUrl,
       counts,
       totalSelected,
+      toastMessage,
+      lastAddedKey,
     }),
     [
       selection,
@@ -107,6 +139,8 @@ export function SelectionProvider({ children }: { children: React.ReactNode }) {
       whatsappUrl,
       counts,
       totalSelected,
+      toastMessage,
+      lastAddedKey,
     ]
   );
 

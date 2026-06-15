@@ -9,12 +9,13 @@ import { useSelection } from "./providers/SelectionProvider";
 import { btnPrimaryClass, btnSecondaryClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
+import { scrollToConfiguratorStep } from "../lib/configurator-options";
+
 function scrollToMenu() {
-  const home = window.location.pathname === "/";
-  if (home) {
-    document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
+  if (window.location.pathname === "/") {
+    scrollToConfiguratorStep("configurateur-etape-1");
   } else {
-    window.location.href = "/#menu";
+    window.location.href = "/#configurateur-etape-1";
   }
 }
 

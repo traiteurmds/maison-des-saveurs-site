@@ -199,7 +199,7 @@ export default function SelectionDetailPanel({
                 }}
                 className={cn(btnGhostClass, selectableFocusClass)}
               >
-                Continuer à choisir
+                Continuer ma sélection
               </button>
             )}
           </>
