@@ -14,14 +14,16 @@ import {
 import { btnWhatsappClass, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
+const OPTION_MEDIA_HEIGHT = "h-[128px]";
+
 function OptionIcon({ icon }: { icon: ConfiguratorOptionIcon }) {
   if (icon === "serveurs") {
-    return <FaUserTie className="text-2xl" aria-hidden />;
+    return <FaUserTie className="text-xl" aria-hidden />;
   }
   return (
-    <span className="flex items-center gap-2" aria-hidden>
-      <GiBread className="text-xl" />
-      <FaWineGlass className="text-lg opacity-90" />
+    <span className="flex items-center gap-1.5" aria-hidden>
+      <GiBread className="text-lg" />
+      <FaWineGlass className="text-base opacity-90" />
     </span>
   );
 }
@@ -46,15 +48,15 @@ function OptionCard({
       aria-pressed={selected}
       aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${option.title}`}
       className={cn(
-        "group w-full overflow-hidden rounded-2xl border text-left transition-all duration-300",
+        "group flex h-full min-h-[280px] w-full flex-col overflow-hidden rounded-2xl border text-left transition-all duration-300",
         selectableCardClass(selected),
         selectableFocusClass
       )}
     >
       <div
         className={cn(
-          "relative w-full overflow-hidden bg-gradient-to-br from-[var(--surface-soft)] to-[var(--surface)]",
-          hasImage ? "aspect-[16/10]" : "min-h-[140px]"
+          "relative w-full shrink-0 overflow-hidden bg-gradient-to-br from-[var(--surface-soft)] to-[var(--surface)]",
+          OPTION_MEDIA_HEIGHT
         )}
       >
         {hasImage && !imageError ? (
@@ -63,39 +65,37 @@ function OptionCard({
             alt={option.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 420px"
             loading="lazy"
             onError={() => setImageError(true)}
           />
         ) : hasIcon ? (
-          <div className="flex h-full min-h-[140px] flex-col items-center justify-center gap-3 px-6 py-8">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-mds-border bg-[var(--surface)] text-[var(--gold)] shadow-[0_8px_24px_var(--mds-shadow)] transition-transform duration-300 group-hover:scale-105">
+          <div className="flex h-full items-center justify-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-mds-border bg-[var(--surface)] text-[var(--gold)] shadow-[0_6px_20px_var(--mds-shadow)]">
               <OptionIcon icon={option.icon!} />
             </div>
-            <span className="font-serif text-xs uppercase tracking-[0.22em] text-[var(--gold)]/80">
-              Option premium
-            </span>
           </div>
         ) : null}
         {hasImage && imageError && (
           <div className="flex h-full w-full items-center justify-center">
-            <span className="font-serif text-sm uppercase tracking-[0.2em] text-[var(--gold)]/80">
+            <span className="font-serif text-xs uppercase tracking-[0.2em] text-[var(--gold)]/80">
               Photo à venir
             </span>
           </div>
         )}
         {selected && (
           <div
-            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)]"
+            className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--gold)] text-[0.65rem] font-bold text-[var(--black)]"
             aria-hidden
           >
             ✓
           </div>
         )}
       </div>
-      <div className="p-6 md:p-7">
-        <h3 className="font-serif text-xl font-semibold text-mds-text md:text-2xl">{option.title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-mds-muted md:text-base">{option.description}</p>
+
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-serif text-lg font-semibold leading-snug text-mds-text">{option.title}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-mds-muted">{option.description}</p>
       </div>
     </button>
   );
@@ -151,9 +151,9 @@ export default function VaisselleOptionsSection({
           )}
         </Reveal>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+        <div className="options-grid mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-5 md:grid-cols-2 md:gap-5">
           {CONFIGURATOR_OPTIONS.map((option, i) => (
-            <Reveal key={option.id} delay={0.06 * i}>
+            <Reveal key={option.id} delay={0.06 * i} className="h-full">
               <OptionCard
                 option={option}
                 selected={isSelected("options", option.title)}

@@ -27,25 +27,46 @@ const dishes: Dish[] = [
   {
     id: "salade-variee",
     title: "Salade variée",
-    description: "Salade fraîche et colorée, préparée avec des légumes de saison et une touche d'épices douces. Idéale pour ouvrir l'appétit en douceur.",
+    description:
+      "Salade fraîche et colorée, préparée avec des légumes de saison et une touche d'épices douces. Idéale pour ouvrir l'appétit en douceur.",
     image: "/images/menu/salade-variee.jpg",
     alt: "Salade variée traiteur Lyon",
     category: "entrees",
   },
   {
+    id: "salade-royale",
+    title: "Salade royale",
+    description:
+      "Salade généreuse et raffinée, composée d'ingrédients soigneusement sélectionnés pour une entrée élégante et festive.",
+    image: "/images/menu/salade-royale.jpg",
+    alt: "Salade royale traiteur Lyon",
+    category: "entrees",
+  },
+  {
     id: "mini-sales",
     title: "Mini salés",
-    description: "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
+    description:
+      "Buffet de mini salés marocains : mini burgers, batbout, briouates et bouchées gourmandes.",
     image: "/images/menu/mini-sales.jpg",
     alt: "Mini salés marocains buffet traiteur Lyon",
     category: "entrees",
   },
   {
-    id: "couscous-royal",
-    title: "Couscous royal",
-    description: "Couscous royal marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
+    id: "couscous-viande",
+    title: "Couscous Viande",
+    description:
+      "Couscous marocain avec légumes fondants et viandes mijotées, signature de notre maison.",
     image: "/images/menu/couscous.jpg",
-    alt: "Couscous marocain traiteur Lyon",
+    alt: "Couscous viande traiteur Lyon",
+    category: "plats",
+  },
+  {
+    id: "couscous-poulet",
+    title: "Couscous Poulet",
+    description:
+      "Couscous traditionnel aux légumes fondants, pois chiches et poulet mijoté aux épices marocaines.",
+    image: "/images/menu/couscous-poulet.jpg",
+    alt: "Couscous poulet traiteur Lyon",
     category: "plats",
   },
   {
@@ -75,23 +96,35 @@ const dishes: Dish[] = [
   {
     id: "pastilla",
     title: "Pastilla",
-    description: "Pastilla marocaine traditionnelle, feuilletage croustillant et saveurs raffinées. Idéale pour les réceptions.",
+    description:
+      "Pastilla marocaine traditionnelle, feuilletage croustillant et saveurs raffinées. Idéale pour les réceptions.",
     image: "/images/menu/pastilla.jpg",
     alt: "Pastilla marocaine traiteur Lyon",
     category: "plats",
   },
   {
-    id: "assiette-fruits",
-    title: "Assiette de fruits",
-    description: "Sélection de fruits frais de saison, présentée avec élégance. Une fin de repas légère et rafraîchissante.",
+    id: "fruits-saison",
+    title: "Fruits de saison",
+    description:
+      "Sélection de fruits frais de saison, présentée avec élégance. Une fin de repas légère et rafraîchissante.",
     image: "/images/menu/assiette-fruits.jpg",
-    alt: "Assiette de fruits traiteur Lyon",
+    alt: "Fruits de saison traiteur Lyon",
+    category: "desserts",
+  },
+  {
+    id: "fruits-exotiques",
+    title: "Fruits exotiques",
+    description:
+      "Sélection de fruits exotiques frais, découpés et présentés avec soin pour une touche colorée et raffinée.",
+    image: "/images/menu/fruits-exotiques.jpg",
+    alt: "Fruits exotiques traiteur Lyon",
     category: "desserts",
   },
   {
     id: "gateaux-marocains",
     title: "Gateaux marocains",
-    description: "Pâtisseries orientales et douceurs marocaines : cornes de gazelle, gâteaux au miel et aux amandes, pour clôturer le repas en beauté.",
+    description:
+      "Pâtisseries orientales et douceurs marocaines : cornes de gazelle, gâteaux au miel et aux amandes, pour clôturer le repas en beauté.",
     image: "/images/menu/gateaux-marocains.jpg",
     alt: "Gateaux marocains traiteur Lyon",
     category: "desserts",
@@ -121,6 +154,8 @@ function DishCard({
   onToggle: () => void;
   onInfo: () => void;
 }) {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <div className="relative h-full w-full">
       <button
@@ -134,15 +169,28 @@ function DishCard({
           selectableFocusClass
         )}
       >
-        <Image
-          src={dish.image}
-          alt={dish.alt}
-          fill
-          loading="lazy"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-          quality={80}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-        />
+        {!imageError ? (
+          <Image
+            src={dish.image}
+            alt={dish.alt}
+            fill
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+            quality={80}
+            onError={() => setImageError(true)}
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-br from-[var(--surface-soft)] via-[var(--soft-gold)]/25 to-[var(--surface)]"
+          />
+        )}
+        {imageError && (
+          <span className="absolute inset-x-0 top-1/3 text-center font-serif text-xs uppercase tracking-[0.2em] text-[var(--gold)]/80">
+            Photo à venir
+          </span>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" aria-hidden />
         {selected && (
           <div
