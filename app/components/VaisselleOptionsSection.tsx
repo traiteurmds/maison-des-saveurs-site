@@ -65,7 +65,7 @@ function OptionCard({
             alt={option.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 420px"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
             loading="lazy"
             onError={() => setImageError(true)}
           />
@@ -94,7 +94,9 @@ function OptionCard({
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-serif text-lg font-semibold leading-snug text-mds-text">{option.title}</h3>
+        <h3 className="min-h-[3.25rem] font-serif text-lg font-semibold leading-snug text-mds-text">
+          {option.title}
+        </h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-mds-muted">{option.description}</p>
       </div>
     </button>
@@ -151,7 +153,7 @@ export default function VaisselleOptionsSection({
           )}
         </Reveal>
 
-        <div className="options-grid mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-5 md:grid-cols-2 md:gap-5">
+        <div className="options-grid mx-auto mt-10 grid w-full grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
           {CONFIGURATOR_OPTIONS.map((option, i) => (
             <Reveal key={option.id} delay={0.06 * i} className="h-full">
               <OptionCard
