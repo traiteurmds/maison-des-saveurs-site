@@ -5,14 +5,20 @@ const PROJECT_ROOT = path.resolve(
   "C:\\Users\\crypt\\Desktop\\MDS\\maison-des-saveurs-site"
 );
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const securityHeaders = [
-  {
-    key: "Strict-Transport-Security",
-    value: "max-age=31536000; includeSubDomains; preload",
-  },
+  ...(isProduction
+    ? [
+        {
+          key: "Strict-Transport-Security",
+          value: "max-age=31536000; includeSubDomains; preload",
+        },
+      ]
+    : []),
   {
     key: "X-Frame-Options",
-    value: "DENY",
+    value: "SAMEORIGIN",
   },
   {
     key: "X-Content-Type-Options",
@@ -24,8 +30,7 @@ const securityHeaders = [
   },
   {
     key: "Permissions-Policy",
-    value:
-      "camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=()",
+    value: "camera=(), microphone=(), geolocation=()",
   },
   {
     key: "X-DNS-Prefetch-Control",
@@ -36,12 +41,12 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "img-src 'self' https: data: blob:",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.emailjs.com https://*.hcaptcha.com https://hcaptcha.com https://va.vercel-scripts.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.emailjs.com https://challenges.cloudflare.com https://va.vercel-scripts.com",
       "style-src 'self' 'unsafe-inline' https: https://*.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com",
-      "connect-src 'self' https: https://api.emailjs.com https://*.hcaptcha.com https://hcaptcha.com https://vitals.vercel-insights.com",
-      "frame-src 'self' https://www.google.com https://*.hcaptcha.com https://hcaptcha.com",
-      "frame-ancestors 'none'",
+      "connect-src 'self' https: https://api.emailjs.com https://challenges.cloudflare.com https://vitals.vercel-insights.com",
+      "frame-src 'self' https://www.google.com https://challenges.cloudflare.com",
+      "frame-ancestors 'self'",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",

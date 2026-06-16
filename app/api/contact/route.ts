@@ -11,6 +11,7 @@ import {
   validatePhone,
   validateMessage,
 } from "@/app/lib/contact-validation";
+import { verifyTurnstileToken } from "@/app/lib/turnstile";
 
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
@@ -36,23 +37,6 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-async function verifyHCaptcha(token: string | null): Promise<boolean> {
-  const secret = process.env.HCAPTCHA_SECRET_KEY;
-  if (!secret) return true;
-  if (!token || token.length < 10) return false;
-  try {
-    const res = await fetch("https://hcaptcha.com/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ secret, response: token }),
-    });
-    const data = (await res.json()) as { success?: boolean };
-    return data.success === true;
-  } catch {
-    return false;
-  }
-}
-
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
   if (isRateLimited(ip)) {
@@ -66,17 +50,11 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json(
-      { error: "Corps de requête invalide." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Corps de requête invalide." }, { status: 400 });
   }
 
   if (!body || typeof body !== "object") {
-    return NextResponse.json(
-      { error: "Données invalides." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Données invalides." }, { status: 400 });
   }
 
   const raw = body as Record<string, unknown>;
@@ -86,7 +64,8 @@ export async function POST(request: NextRequest) {
   const phone = typeof raw.phone === "string" ? raw.phone : "";
   const eventDate = typeof raw.eventDate === "string" ? raw.eventDate : "";
   const message = typeof raw.message === "string" ? raw.message : "";
-  const hcaptchaToken = typeof raw.hcaptchaToken === "string" ? raw.hcaptchaToken : null;
+  const turnstileToken =
+    typeof raw.turnstileToken === "string" ? raw.turnstileToken : null;
 
   const nom = sanitizeName(lastName, LIMITS.MAX_NOM);
   const prenom = sanitizeName(firstName, LIMITS.MAX_PRENOM);
@@ -96,8 +75,10 @@ export async function POST(request: NextRequest) {
   const errors: Record<string, string> = {};
   const rNom = validateNom(nom);
   if (!rNom.valid && rNom.error) errors.lastName = rNom.error;
-  const rPrenom = validatePrenom(prenom);
-  if (!rPrenom.valid && rPrenom.error) errors.firstName = rPrenom.error;
+  if (prenom.trim()) {
+    const rPrenom = validatePrenom(prenom);
+    if (!rPrenom.valid && rPrenom.error) errors.firstName = rPrenom.error;
+  }
   const rEmail = validateEmail(emailSanitized);
   if (!rEmail.valid && rEmail.error) errors.email = rEmail.error;
   const rPhone = validatePhone(phone);
@@ -116,10 +97,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Validation échouée.", errors }, { status: 400 });
   }
 
-  const hcaptchaOk = await verifyHCaptcha(hcaptchaToken);
-  if (!hcaptchaOk) {
+  const turnstileOk = await verifyTurnstileToken(turnstileToken, ip);
+  if (!turnstileOk) {
     return NextResponse.json(
-      { error: "Vérification de sécurité échouée. Réessayez." },
+      {
+        error:
+          "Vérification anti-spam échouée. Merci de réessayer ou de nous contacter par WhatsApp.",
+      },
       { status: 400 }
     );
   }

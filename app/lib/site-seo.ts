@@ -1,5 +1,8 @@
 export const SITE_URL = "https://mds-traiteur.fr";
 
+export const EMAIL = "contact.mds.traiteur@gmail.com";
+export const EMAIL_MAILTO = `mailto:${EMAIL}`;
+
 export const PHONE_E164 = "+33758639734";
 export const PHONE_TEL = `tel:${PHONE_E164}`;
 export const PHONE_DISPLAY = "07.58.63.97.34";
@@ -20,16 +23,17 @@ export const SERVICE_AREAS = [
 export const FOOTER_PRESTATIONS = [
   "Mariages",
   "Hlel",
-  "Réceptions privées",
   "Buffets entreprises",
+  "Repas entreprises",
   "Associations",
   "Universités",
   "Événements professionnels",
+  "Réceptions privées",
 ] as const;
 
 /** Texte SEO discret — intégré au footer, ton naturel et inclusif */
 export const FOOTER_SEO_TEXT =
-  "Maison Des Saveurs, traiteur halal événementiel à Lyon, accompagne les mariages, buffets d'entreprise, associations, universités et réceptions privées avec une cuisine orientale maison, généreuse et soignée.";
+  "Maison Des Saveurs, traiteur halal événementiel à Lyon, accompagne les mariages, hlel, réceptions privées, buffets d'entreprise, associations, universités et événements professionnels avec une cuisine orientale maison, généreuse et soignée.";
 
 export const SEO_KEYWORDS = [
   "traiteur marocain lyon",

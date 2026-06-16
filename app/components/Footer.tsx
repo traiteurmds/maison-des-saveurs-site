@@ -8,6 +8,8 @@ import { FaInstagram, FaTiktok } from "react-icons/fa";
 import {
   FOOTER_PRESTATIONS,
   FOOTER_SEO_TEXT,
+  EMAIL,
+  EMAIL_MAILTO,
   PHONE_DISPLAY,
   PHONE_TEL,
   SERVICE_AREAS,
@@ -137,7 +139,12 @@ export default function Footer() {
               <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
                 Contact
               </h3>
-              <p className="mt-4 text-sm text-mds-muted">contact.mds.traiteur@gmail.com</p>
+              <a
+                href={EMAIL_MAILTO}
+                className="mt-4 inline-block text-sm text-mds-muted transition-colors hover:text-mds-text"
+              >
+                {EMAIL}
+              </a>
               <a
                 href={PHONE_TEL}
                 className="mt-1 inline-block text-sm text-mds-muted transition-colors hover:text-mds-text"
@@ -175,14 +182,22 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="seo-footer-text mt-12 max-w-4xl text-[11px] leading-relaxed text-mds-muted/80"
+          className="seo-footer-text mt-12 max-w-4xl space-y-2 text-[11px] leading-relaxed text-mds-muted/80"
         >
-          {FOOTER_SEO_TEXT}
-        </motion.p>
+          <p>{FOOTER_SEO_TEXT}</p>
+          <p>
+            <span className="text-mds-muted/90">Zones desservies : </span>
+            {SERVICE_AREAS.join(" · ")}
+          </p>
+          <p>
+            <span className="text-mds-muted/90">Prestations : </span>
+            {FOOTER_PRESTATIONS.join(" · ")}
+          </p>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}

@@ -12,11 +12,12 @@ import {
   sanitizeEmail,
   sanitizeMessage,
   validateNom,
-  validatePrenom,
   validateEmail,
   validatePhone,
   validateMessage,
 } from "../lib/contact-validation";
+import TurnstileField, { type TurnstileHandle } from "../components/contact/TurnstileField";
+import { EMAIL, EMAIL_MAILTO, PHONE_DISPLAY, PHONE_TEL } from "../lib/site-seo";
 
 const colors = {
   black: "#0B0B0A",
@@ -61,6 +62,8 @@ export default function ContactPage() {
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const successMessageRef = useRef<HTMLDivElement>(null);
   const submittingRef = useRef(false);
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
   useEffect(() => {
     if (sent) {
@@ -78,35 +81,6 @@ export default function ContactPage() {
   const [minDate, setMinDate] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const hcaptchaWidgetIdRef = useRef<string | null>(null);
-  const hcaptchaLoadedRef = useRef(false);
-
-  useEffect(() => {
-    const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
-    if (!siteKey || hcaptchaLoadedRef.current) return;
-    const el = document.getElementById("hcaptcha-contact");
-    if (!el) return;
-    const existing = document.querySelector('script[src*="hcaptcha.com"]');
-    if (existing) {
-      hcaptchaLoadedRef.current = true;
-      const w = window as unknown as { hcaptcha?: { render: (el: HTMLElement, opts: { sitekey: string; size: string }) => string } };
-      if (w.hcaptcha?.render) {
-        hcaptchaWidgetIdRef.current = w.hcaptcha.render(el, { sitekey: siteKey, size: "invisible" });
-      }
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "https://js.hcaptcha.com/1/api.js";
-    script.async = true;
-    script.onload = () => {
-      hcaptchaLoadedRef.current = true;
-      const w = window as unknown as { hcaptcha?: { render: (el: HTMLElement, opts: { sitekey: string; size: string }) => string } };
-      if (w.hcaptcha?.render && el) {
-        hcaptchaWidgetIdRef.current = w.hcaptcha.render(el, { sitekey: siteKey, size: "invisible" });
-      }
-    };
-    document.head.appendChild(script);
-  }, []);
 
   useEffect(() => {
     const today = new Date();
@@ -155,28 +129,6 @@ export default function ContactPage() {
     setFieldErrors({});
   }, []);
 
-  const getHcaptchaToken = useCallback((): Promise<string | null> => {
-    const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
-    if (!siteKey || typeof window === "undefined") return Promise.resolve(null);
-    const w = window as unknown as {
-      hcaptcha?: {
-        getResponse: (widgetId?: string) => string;
-        execute: (widgetId?: string) => Promise<void>;
-      };
-    };
-    if (!w.hcaptcha) return Promise.resolve(null);
-    const widgetId = hcaptchaWidgetIdRef.current ?? undefined;
-    return new Promise((resolve) => {
-      w.hcaptcha
-        ?.execute?.(widgetId)
-        ?.then(() => {
-          const token = w.hcaptcha?.getResponse?.(widgetId) ?? null;
-          resolve(token || null);
-        })
-        ?.catch(() => resolve(null)) ?? resolve(null);
-    });
-  }, []);
-
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading || submittingRef.current || !canSubmit) return;
@@ -223,23 +175,61 @@ export default function ContactPage() {
     setLoading(true);
     setSent(false);
 
-    const templateParams = {
-      name: nom,
-      email: emailSanitized,
-      phone,
-      message: messageSanitized,
-    };
-
     try {
+      let turnstileToken: string | null = null;
+      if (turnstileEnabled) {
+        turnstileToken = (await turnstileRef.current?.execute()) ?? null;
+        if (!turnstileToken) {
+          setFieldErrors({
+            form: "Vérification anti-spam échouée. Merci de réessayer.",
+          });
+          return;
+        }
+      }
+
+      const verifyRes = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: sanitizeName(firstName, LIMITS.MAX_PRENOM),
+          lastName: nom,
+          email: emailSanitized,
+          phone,
+          eventDate,
+          message: messageSanitized,
+          turnstileToken,
+        }),
+      });
+
+      if (!verifyRes.ok) {
+        const data = (await verifyRes.json().catch(() => ({}))) as { error?: string };
+        setFieldErrors({
+          form:
+            data.error ??
+            "Vérification anti-spam échouée. Merci de réessayer ou de nous contacter par WhatsApp.",
+        });
+        turnstileRef.current?.reset();
+        return;
+      }
+
+      const templateParams = {
+        name: nom,
+        email: emailSanitized,
+        phone,
+        message: messageSanitized,
+      };
+
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setSent(true);
       resetForm();
+      turnstileRef.current?.reset();
       setCooldownUntil(Date.now() + COOLDOWN_MS);
       setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
     } catch {
       setFieldErrors({ form: "Une erreur est survenue. Veuillez réessayer." });
       setSent(false);
+      turnstileRef.current?.reset();
     } finally {
       submittingRef.current = false;
       setLoading(false);
@@ -356,9 +346,7 @@ export default function ContactPage() {
                     onChange={(e) => setHoneypot(e.target.value)}
                   />
                 </div>
-                {process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && (
-                  <div id="hcaptcha-contact" className="min-h-[1px] overflow-hidden" aria-hidden="true" />
-                )}
+                <TurnstileField ref={turnstileRef} />
 
                 <div>
                   <label htmlFor="lastName" style={labelStyle}>Nom *</label>
@@ -546,7 +534,9 @@ export default function ContactPage() {
             margin: "0.5rem 0 0",
           }}
         >
-          contact.mds.traiteur@gmail.com
+          <a href={EMAIL_MAILTO} className="text-inherit no-underline hover:underline">
+            {EMAIL}
+          </a>
         </p>
         <p
           style={{
@@ -556,7 +546,9 @@ export default function ContactPage() {
             margin: "0.25rem 0 0",
           }}
         >
-          07 58 63 97 34
+          <a href={PHONE_TEL} className="text-inherit no-underline hover:underline">
+            {PHONE_DISPLAY}
+          </a>
         </p>
       </section>
     </div>
