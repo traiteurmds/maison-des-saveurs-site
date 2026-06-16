@@ -4,8 +4,6 @@ import Reveal from "./ui/Reveal";
 import SelectionDetailPanel from "./SelectionDetailPanel";
 import { scrollToConfiguratorStep } from "../lib/configurator-options";
 import { useSelection } from "./providers/SelectionProvider";
-import { selectableFocusClass } from "../lib/whatsapp";
-import { cn } from "../lib/utils";
 
 export default function ConfiguratorSummaryStep() {
   const { totalSelected } = useSelection();
@@ -35,19 +33,6 @@ export default function ConfiguratorSummaryStep() {
           showHeader={false}
         />
       </div>
-
-      {totalSelected > 0 && (
-        <button
-          type="button"
-          onClick={() => scrollToConfiguratorStep("configurateur-etape-1")}
-          className={cn(
-            "mt-4 w-full py-2 text-center text-sm text-[var(--gold)] underline-offset-4 hover:underline",
-            selectableFocusClass
-          )}
-        >
-          Continuer ma sélection
-        </button>
-      )}
     </div>
   );
 }

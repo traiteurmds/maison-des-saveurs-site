@@ -6,7 +6,6 @@ import Link from "next/link";
 import { FaHeart, FaUsers, FaBriefcase } from "react-icons/fa";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
-import VaisselleOptionsSection from "../components/VaisselleOptionsSection";
 
 const services = [
   {
@@ -89,8 +88,6 @@ export default function ServicesPage() {
           </MagneticButton>
         </Reveal>
       </section>
-
-      <VaisselleOptionsSection />
     </div>
   );
 }

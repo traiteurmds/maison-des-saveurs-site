@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     template: "%s | Maison des Saveurs",
   },
   description:
-    "Maison des Saveurs, traiteur marocain à Lyon. Couscous, tajines, pâtisseries marocaines pour mariages, événements et réceptions.",
+    "Traiteur marocain halal à Lyon. Maison Des Saveurs : couscous, tajines et pâtisseries marocaines pour mariages, événements privés et réceptions professionnelles.",
   keywords: [
     "traiteur marocain lyon",
     "traiteur lyon",
@@ -76,7 +76,8 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   openGraph: {
     title: "Traiteur Marocain à Lyon | Maison des Saveurs",
-    description: "Maison des Saveurs, traiteur marocain à Lyon. Couscous, tajines, pâtisseries marocaines pour mariages, événements et réceptions.",
+    description:
+      "Traiteur marocain halal à Lyon. Couscous, tajines et pâtisseries pour mariages, événements privés et réceptions professionnelles.",
     url: SITE_URL,
     siteName: "Maison des Saveurs",
     images: [
@@ -93,7 +94,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Traiteur Marocain à Lyon | Maison des Saveurs",
-    description: "Maison des Saveurs, traiteur marocain à Lyon. Couscous, tajines, pâtisseries marocaines pour mariages et réceptions.",
+    description:
+      "Traiteur marocain halal à Lyon. Couscous, tajines et pâtisseries pour mariages, événements privés et réceptions professionnelles.",
     images: ["/logo-share.png"],
   },
 };
@@ -110,7 +112,7 @@ export default function RootLayout({
     name: "Maison des Saveurs",
     alternateName: "MDS Traiteur",
     description:
-      "Traiteur marocain d'exception à Lyon. Catering pour mariages, événements et réceptions. Cuisine marocaine traditionnelle.",
+      "Traiteur marocain d'exception à Lyon. Catering halal pour mariages, événements privés et réceptions professionnelles. Cuisine marocaine traditionnelle.",
     url: "https://mds-traiteur.fr",
     image: "https://mds-traiteur.fr/logo-share.png",
     address: {
@@ -128,6 +130,12 @@ export default function RootLayout({
     telephone: "+33758639734",
     email: "contact.mds.traiteur@gmail.com",
     servingCuisine: "Moroccan",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      reviewCount: "22",
+      bestRating: "5",
+    },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Services traiteur",

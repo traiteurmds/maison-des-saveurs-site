@@ -192,6 +192,7 @@ export default function ClientTestimonialsSection() {
             href={GOOGLE_BUSINESS.profileUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Voir notre fiche Google Maison Des Saveurs"
             className={cn(
               "inline-flex min-h-[48px] items-center justify-center rounded-full border border-[var(--gold)]/40 bg-[var(--surface)] px-8 py-3 text-sm font-medium tracking-wide text-mds-text shadow-[0_10px_32px_var(--mds-shadow)] transition-all hover:border-[var(--gold)]/60 hover:shadow-[0_14px_40px_var(--mds-shadow)]",
               selectableFocusClass

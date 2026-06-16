@@ -7,12 +7,11 @@ export type Testimonial = {
   source: "google";
 };
 
-/** Mettre à jour l’URL directe de la fiche Google (g.page ou lien Maps) dès qu’elle est disponible. */
+/** Fiche Google Maps — Maison Des Saveurs */
 export const GOOGLE_BUSINESS = {
   rating: 5.0,
   reviewCount: 22,
-  profileUrl:
-    "https://www.google.com/maps/search/?api=1&query=Maison+des+Saveurs+traiteur+marocain+Lyon",
+  profileUrl: "https://share.google/uiBTniokmuQrw7QzH",
 } as const;
 
 export const TESTIMONIAL_PREVIEW_LENGTH = 160;
