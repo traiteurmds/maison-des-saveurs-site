@@ -36,10 +36,10 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "img-src 'self' https: data: blob:",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.emailjs.com https://*.hcaptcha.com https://hcaptcha.com https://va.vercel-scripts.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.emailjs.com https://*.hcaptcha.com https://hcaptcha.com",
       "style-src 'self' 'unsafe-inline' https: https://*.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com",
-      "connect-src 'self' https: https://api.emailjs.com https://*.hcaptcha.com https://hcaptcha.com https://vitals.vercel-insights.com",
+      "connect-src 'self' https: https://api.emailjs.com https://*.hcaptcha.com https://hcaptcha.com",
       "frame-src 'self' https://www.google.com https://*.hcaptcha.com https://hcaptcha.com",
       "frame-ancestors 'none'",
       "object-src 'none'",

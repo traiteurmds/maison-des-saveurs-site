@@ -12,8 +12,6 @@ import {
   PHONE_TEL,
   SERVICE_AREAS,
 } from "../lib/site-seo";
-import { LEGAL_ROUTES } from "../lib/legal";
-import { useCookieConsentOptional } from "./cookies/CookieConsentProvider";
 
 function scrollToTop() {
   if (typeof window !== "undefined") {
@@ -30,16 +28,8 @@ const footerLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const legalLinks = [
-  { href: LEGAL_ROUTES.mentions, label: "Mentions légales" },
-  { href: LEGAL_ROUTES.cgv, label: "CGV" },
-  { href: LEGAL_ROUTES.privacy, label: "Confidentialité" },
-  { href: LEGAL_ROUTES.cookies, label: "Cookies" },
-];
-
 export default function Footer() {
   const pathname = usePathname();
-  const cookieConsent = useCookieConsentOptional();
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -188,37 +178,10 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-8 flex flex-col gap-4 border-t border-mds-border pt-8 text-xs text-mds-muted md:flex-row md:items-center md:justify-between"
+          className="mt-8 flex flex-col gap-3 border-t border-mds-border pt-8 text-xs text-mds-muted md:flex-row md:items-center md:justify-between"
         >
           <p>© {new Date().getFullYear()} Maison Des Saveurs. Tous droits réservés.</p>
-          <nav
-            aria-label="Informations légales"
-            className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]"
-          >
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-mds-text"
-              >
-                {link.label}
-              </Link>
-            ))}
-            {cookieConsent && (
-              <>
-                <span aria-hidden className="text-mds-border">
-                  ·
-                </span>
-                <button
-                  type="button"
-                  onClick={cookieConsent.openPreferences}
-                  className="text-left transition-colors hover:text-mds-text"
-                >
-                  Gérer les cookies
-                </button>
-              </>
-            )}
-          </nav>
+          <p className="text-[11px]">Traiteur marocain halal Lyon — Expériences culinaires sur mesure.</p>
         </motion.div>
       </div>
     </footer>

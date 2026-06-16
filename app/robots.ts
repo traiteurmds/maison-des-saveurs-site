@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { SITE_URL } from "./lib/site-seo";
+
+const SITE_URL = "https://mds-traiteur.fr";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,6 +10,5 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/api/"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
   };
 }

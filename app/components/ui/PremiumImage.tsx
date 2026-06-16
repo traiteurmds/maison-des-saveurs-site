@@ -53,7 +53,6 @@ export default function PremiumImage({
       quality={quality}
       priority={priority}
       loading={priority ? undefined : "lazy"}
-      decoding="async"
       className={cn(
         "object-cover",
         hover && `transition-transform duration-700 ease-out ${IMAGE_HOVER_SCALE}`,

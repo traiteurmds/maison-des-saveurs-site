@@ -70,7 +70,6 @@ export default function CaftanLightbox({
                 width={900}
                 height={1200}
                 quality={90}
-                decoding="async"
                 className="max-h-[min(70vh,640px)] w-auto max-w-full object-contain"
                 sizes="(max-width: 768px) 100vw, 768px"
                 priority
