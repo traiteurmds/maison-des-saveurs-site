@@ -1,11 +1,17 @@
 "use client";
 
-import { Analytics } from "@vercel/analytics/react";
-import { useCookieConsent } from "./CookieConsentProvider";
+import dynamic from "next/dynamic";
+import { useCookieConsentOptional } from "./CookieConsentProvider";
 
-/** Charge Vercel Analytics uniquement après consentement explicite (CNIL). */
+const Analytics = dynamic(
+  () => import("@vercel/analytics/react").then((m) => m.Analytics),
+  { ssr: false }
+);
+
+/** Vercel Analytics — optionnel, uniquement après consentement, jamais bloquant. */
 export default function ConsentAwareAnalytics() {
-  const { analyticsAllowed } = useCookieConsent();
+  const consent = useCookieConsentOptional();
+  const analyticsAllowed = Boolean(consent?.analyticsAllowed);
 
   if (!analyticsAllowed) return null;
 

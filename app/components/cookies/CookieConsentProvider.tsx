@@ -18,6 +18,7 @@ import {
   type CookiePreferences,
   type StoredConsent,
 } from "../../lib/cookie-consent";
+import SafeClientBoundary from "../SafeClientBoundary";
 import CookieBanner from "./CookieBanner";
 import CookiePreferencesModal from "./CookiePreferencesModal";
 import ConsentAwareAnalytics from "./ConsentAwareAnalytics";
@@ -36,34 +37,39 @@ type CookieConsentContextValue = {
 
 const CookieConsentContext = createContext<CookieConsentContextValue | null>(null);
 
+const noopSubscribe = () => () => {};
+
 function subscribeToConsent(onStoreChange: () => void) {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener(CONSENT_CHANGE_EVENT, onStoreChange);
-  window.addEventListener("storage", onStoreChange);
-  return () => {
-    window.removeEventListener(CONSENT_CHANGE_EVENT, onStoreChange);
-    window.removeEventListener("storage", onStoreChange);
-  };
+  if (typeof window === "undefined") return noopSubscribe;
+  try {
+    window.addEventListener(CONSENT_CHANGE_EVENT, onStoreChange);
+    window.addEventListener("storage", onStoreChange);
+    return () => {
+      window.removeEventListener(CONSENT_CHANGE_EVENT, onStoreChange);
+      window.removeEventListener("storage", onStoreChange);
+    };
+  } catch {
+    return noopSubscribe;
+  }
 }
 
 function getConsentSnapshot(): StoredConsent | null {
-  return readConsent();
+  try {
+    return readConsent();
+  } catch {
+    return null;
+  }
 }
 
 function getConsentServerSnapshot(): null {
   return null;
 }
 
-function subscribeClient(onStoreChange: () => void) {
-  onStoreChange();
-  return () => {};
-}
-
-function getClientSnapshot(): boolean {
+function getMountedSnapshot(): boolean {
   return true;
 }
 
-function getClientServerSnapshot(): boolean {
+function getMountedServerSnapshot(): boolean {
   return false;
 }
 
@@ -85,11 +91,15 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
     getConsentSnapshot,
     getConsentServerSnapshot
   );
-  const hydrated = useSyncExternalStore(subscribeClient, getClientSnapshot, getClientServerSnapshot);
+  const mounted = useSyncExternalStore(noopSubscribe, getMountedSnapshot, getMountedServerSnapshot);
   const [preferencesOpen, setPreferencesOpen] = useState(false);
 
   const persist = useCallback((preferences: CookiePreferences) => {
-    saveConsent(preferences);
+    try {
+      saveConsent(preferences);
+    } catch {
+      /* localStorage indisponible — ne pas crasher */
+    }
     setPreferencesOpen(false);
   }, []);
 
@@ -100,7 +110,7 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
   const value = useMemo<CookieConsentContextValue>(
     () => ({
       consent,
-      bannerVisible: hydrated && consent === null,
+      bannerVisible: mounted && consent === null,
       preferencesOpen,
       acceptAll,
       rejectAll,
@@ -109,18 +119,20 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
       savePreferences,
       analyticsAllowed: Boolean(consent?.preferences.analytics),
     }),
-    [consent, hydrated, preferencesOpen, acceptAll, rejectAll, savePreferences]
+    [consent, mounted, preferencesOpen, acceptAll, rejectAll, savePreferences]
   );
 
   return (
     <CookieConsentContext.Provider value={value}>
       {children}
-      <ConsentAwareAnalytics />
-      {hydrated && (
-        <>
+      <SafeClientBoundary>
+        <ConsentAwareAnalytics />
+      </SafeClientBoundary>
+      {mounted && (
+        <SafeClientBoundary>
           <CookieBanner />
           <CookiePreferencesModal />
-        </>
+        </SafeClientBoundary>
       )}
     </CookieConsentContext.Provider>
   );

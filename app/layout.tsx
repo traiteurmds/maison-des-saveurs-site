@@ -6,8 +6,8 @@ import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
 import Providers from "./components/Providers";
 import MaintenancePage from "./components/MaintenancePage";
+import StructuredDataScript from "./components/StructuredDataScript";
 import { MAINTENANCE_MODE } from "./config/maintenance";
-import { getStructuredDataGraph } from "./lib/structured-data";
 import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
 
 const cormorant = Cormorant_Garamond({
@@ -93,8 +93,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = getStructuredDataGraph();
-
   if (MAINTENANCE_MODE) {
     return (
       <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
@@ -111,12 +109,7 @@ export default function RootLayout({
       className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}
     >
       <body className="bg-mds-bg pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-mds-text antialiased lg:pb-0">
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-        >
-          {JSON.stringify(structuredData)}
-        </script>
+        <StructuredDataScript />
         <Providers>
           <Navbar />
           <main className="min-h-screen">

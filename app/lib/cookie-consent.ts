@@ -45,7 +45,11 @@ export function parseStoredConsent(raw: string | null): StoredConsent | null {
 
 export function readConsent(): StoredConsent | null {
   if (typeof window === "undefined") return null;
-  return parseStoredConsent(localStorage.getItem(COOKIE_CONSENT_KEY));
+  try {
+    return parseStoredConsent(localStorage.getItem(COOKIE_CONSENT_KEY));
+  } catch {
+    return null;
+  }
 }
 
 export function saveConsent(preferences: CookiePreferences): StoredConsent {
@@ -53,9 +57,11 @@ export function saveConsent(preferences: CookiePreferences): StoredConsent {
     preferences: { ...preferences, essential: true },
     updatedAt: new Date().toISOString(),
   };
-  localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(stored));
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event("mds-consent-change"));
+  try {
+    localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(stored));
+    window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT));
+  } catch {
+    /* Safari privé, quota, blocage tiers — ignorer sans crash */
   }
   return stored;
 }

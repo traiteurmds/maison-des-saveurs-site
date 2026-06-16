@@ -181,35 +181,45 @@ export default function ContactPage() {
         turnstileToken = (await turnstileRef.current?.execute()) ?? null;
         if (!turnstileToken) {
           setFieldErrors({
-            form: "Vérification anti-spam échouée. Merci de réessayer.",
+            form: "Vérification anti-spam échouée. Merci de réessayer ou contactez-nous par WhatsApp.",
           });
           return;
         }
       }
 
-      const verifyRes = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: sanitizeName(firstName, LIMITS.MAX_PRENOM),
-          lastName: nom,
-          email: emailSanitized,
-          phone,
-          eventDate,
-          message: messageSanitized,
-          turnstileToken,
-        }),
-      });
-
-      if (!verifyRes.ok) {
-        const data = (await verifyRes.json().catch(() => ({}))) as { error?: string };
-        setFieldErrors({
-          form:
-            data.error ??
-            "Vérification anti-spam échouée. Merci de réessayer ou de nous contacter par WhatsApp.",
+      try {
+        const verifyRes = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName: sanitizeName(firstName, LIMITS.MAX_PRENOM),
+            lastName: nom,
+            email: emailSanitized,
+            phone,
+            eventDate,
+            message: messageSanitized,
+            turnstileToken,
+          }),
         });
-        turnstileRef.current?.reset();
-        return;
+
+        if (!verifyRes.ok) {
+          const data = (await verifyRes.json().catch(() => ({}))) as { error?: string };
+          setFieldErrors({
+            form:
+              data.error ??
+              "Vérification anti-spam échouée. Merci de réessayer ou contactez-nous par WhatsApp.",
+          });
+          turnstileRef.current?.reset();
+          return;
+        }
+      } catch {
+        /* API indisponible — continuer vers EmailJS si Turnstile non configuré */
+        if (turnstileEnabled) {
+          setFieldErrors({
+            form: "Impossible de vérifier le formulaire. Réessayez ou contactez-nous par WhatsApp.",
+          });
+          return;
+        }
       }
 
       const templateParams = {

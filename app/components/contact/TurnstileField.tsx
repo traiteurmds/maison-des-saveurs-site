@@ -58,28 +58,49 @@ const TurnstileField = forwardRef<TurnstileHandle>(function TurnstileField(_, re
   useEffect(() => {
     if (!SITE_KEY) return;
 
-    if (window.turnstile) {
-      renderWidget();
-      return () => {
-        if (widgetIdRef.current && window.turnstile) {
-          window.turnstile.remove(widgetIdRef.current);
-        }
-      };
-    }
+    try {
+      if (window.turnstile) {
+        renderWidget();
+        return () => {
+          try {
+            if (widgetIdRef.current && window.turnstile) {
+              window.turnstile.remove(widgetIdRef.current);
+            }
+          } catch {
+            /* ignore */
+          }
+        };
+      }
 
-    const existing = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
-    if (!existing) {
-      window.onloadTurnstileCallback = () => renderWidget();
-      const script = document.createElement("script");
-      script.src =
-        "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback";
-      script.async = true;
-      document.head.appendChild(script);
+      const existing = document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
+      if (!existing) {
+        window.onloadTurnstileCallback = () => {
+          try {
+            renderWidget();
+          } catch {
+            /* ignore */
+          }
+        };
+        const script = document.createElement("script");
+        script.src =
+          "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback";
+        script.async = true;
+        script.onerror = () => {
+          /* Turnstile bloqué (CSP, réseau) — formulaire reste utilisable sans captcha */
+        };
+        document.head.appendChild(script);
+      }
+    } catch {
+      /* ignore */
     }
 
     return () => {
-      if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current);
+      try {
+        if (widgetIdRef.current && window.turnstile) {
+          window.turnstile.remove(widgetIdRef.current);
+        }
+      } catch {
+        /* ignore */
       }
     };
   }, [renderWidget]);
@@ -91,22 +112,30 @@ const TurnstileField = forwardRef<TurnstileHandle>(function TurnstileField(_, re
           resolve(null);
           return;
         }
-        if (tokenRef.current) {
-          resolve(tokenRef.current);
-          return;
-        }
-        resolveRef.current = resolve;
-        if (widgetIdRef.current && window.turnstile && containerRef.current) {
-          window.turnstile.reset(widgetIdRef.current);
-          window.turnstile.execute(containerRef.current);
-        } else {
+        try {
+          if (tokenRef.current) {
+            resolve(tokenRef.current);
+            return;
+          }
+          resolveRef.current = resolve;
+          if (widgetIdRef.current && window.turnstile && containerRef.current) {
+            window.turnstile.reset(widgetIdRef.current);
+            window.turnstile.execute(containerRef.current);
+          } else {
+            resolve(null);
+          }
+        } catch {
           resolve(null);
         }
       }),
     reset: () => {
       tokenRef.current = null;
-      if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.reset(widgetIdRef.current);
+      try {
+        if (widgetIdRef.current && window.turnstile) {
+          window.turnstile.reset(widgetIdRef.current);
+        }
+      } catch {
+        /* ignore */
       }
     },
   }));
