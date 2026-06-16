@@ -72,8 +72,8 @@ export default function Footer() {
               Maison Des Saveurs
             </Link>
             <p className="max-w-md text-sm leading-relaxed text-mds-muted">
-              Traiteur halal événementiel à Lyon. Cuisine orientale raffinée pour mariages, hlel,
-              réceptions privées et événements professionnels.
+              Traiteur marocain halal à Lyon. Cuisine d&apos;exception pour mariages, réceptions
+              privées et événements professionnels.
             </p>
             <div className="flex items-center gap-4 pt-1">
               <a
@@ -159,7 +159,7 @@ export default function Footer() {
                 Zones desservies
               </h3>
               <p className="mt-4 leading-relaxed text-mds-muted">
-                {SERVICE_AREAS.join(" · ")}
+                {SERVICE_AREAS.join(" \u2022 ")}
               </p>
             </div>
           </motion.div>

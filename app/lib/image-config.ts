@@ -3,7 +3,7 @@ export const IMAGE_SIZES = {
   menuCard: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px",
   menuModal: "(max-width: 900px) 100vw, 900px",
   optionCard: "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 280px",
-  caftanCard: "(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 300px",
+  caftanCard: "(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 300px",
   caftanThumb: "(max-width: 768px) 50vw, 180px",
   serviceHero: "(max-width: 768px) 100vw, 560px",
 } as const;
