@@ -710,6 +710,11 @@ header:not(.nav-over-hero) .nav-logo {
   z-index: 50;
 }
 
+.mobile-call-button {
+  left: 14px;
+  bottom: calc(5.35rem + env(safe-area-inset-bottom));
+}
+
 .testimonials-marquee {
   overflow: hidden;
   width: 100%;

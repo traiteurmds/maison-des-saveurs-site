@@ -5,6 +5,7 @@ import SmoothScrollProvider from "./providers/SmoothScrollProvider";
 import CursorGlow from "./ui/CursorGlow";
 import SelectionCartDock from "./SelectionCartDock";
 import SelectionToast from "./SelectionToast";
+import MobileCallButton from "./MobileCallButton";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -14,6 +15,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         {children}
         <SelectionToast />
         <SelectionCartDock />
+        <MobileCallButton />
       </SmoothScrollProvider>
     </SelectionProvider>
   );

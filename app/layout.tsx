@@ -7,6 +7,8 @@ import PageTransition from "./components/PageTransition";
 import Providers from "./components/Providers";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
+import { getStructuredDataGraph } from "./lib/structured-data";
+import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -32,8 +34,6 @@ const inter = Inter({
   weight: ["300", "400", "500", "600"],
 });
 
-const SITE_URL = "https://mds-traiteur.fr";
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -47,22 +47,10 @@ export const metadata: Metadata = {
   },
   description:
     "Traiteur marocain halal à Lyon. Maison Des Saveurs : couscous, tajines et pâtisseries marocaines pour mariages, événements privés et réceptions professionnelles.",
-  keywords: [
-    "traiteur marocain lyon",
-    "traiteur lyon",
-    "traiteur oriental lyon",
-    "couscous lyon événement",
-    "traiteur villeurbanne",
-    "traiteur halal lyon",
-    "traiteur mariage lyon",
-    "buffet mariage lyon",
-    "traiteur evenement lyon",
-    "traiteur anniversaire lyon",
-    "traiteur entreprise lyon",
-    "buffet marocain lyon",
-    "cuisine marocaine lyon",
-    "traiteur evenementiel lyon",
-  ],
+  keywords: [...SEO_KEYWORDS],
+  alternates: {
+    canonical: SITE_URL,
+  },
   icons: {
     icon: [
       { url: "/favicon-ms.png", type: "image/png" },
@@ -105,47 +93,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "FoodEstablishment"],
-    "@id": "https://mds-traiteur.fr/#organization",
-    name: "Maison des Saveurs",
-    alternateName: "MDS Traiteur",
-    description:
-      "Traiteur marocain d'exception à Lyon. Catering halal pour mariages, événements privés et réceptions professionnelles. Cuisine marocaine traditionnelle.",
-    url: "https://mds-traiteur.fr",
-    image: "https://mds-traiteur.fr/logo-share.png",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Lyon",
-      addressRegion: "Auvergne-Rhône-Alpes",
-      addressCountry: "FR",
-    },
-    areaServed: [
-      { "@type": "City", name: "Lyon" },
-      { "@type": "City", name: "Villeurbanne" },
-      { "@type": "AdministrativeArea", name: "Métropole de Lyon" },
-    ],
-    priceRange: "€€",
-    telephone: "+33758639734",
-    email: "contact.mds.traiteur@gmail.com",
-    servingCuisine: "Moroccan",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5",
-      reviewCount: "22",
-      bestRating: "5",
-    },
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Services traiteur",
-      itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Traiteur mariage Lyon" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Traiteur événements et réceptions" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Cuisine marocaine traditionnelle" } },
-      ],
-    },
-  };
+  const structuredData = getStructuredDataGraph();
 
   if (MAINTENANCE_MODE) {
     return (
@@ -167,7 +115,7 @@ export default function RootLayout({
           type="application/ld+json"
           suppressHydrationWarning
         >
-          {JSON.stringify(localBusinessSchema)}
+          {JSON.stringify(structuredData)}
         </script>
         <Providers>
           <Navbar />
