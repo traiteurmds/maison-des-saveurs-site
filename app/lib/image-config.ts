@@ -29,7 +29,6 @@ export const IMAGE_FOCAL: Record<string, string> = {
   "/images/menu/rfissa.jpg": "center 50%",
   "/images/menu/pastilla.jpg": "center 50%",
   "/images/menu/fruits-saison.jpg": "center 50%",
-  "/images/menu/fruits-exotiques.jpg": "center 50%",
   "/images/menu/gateaux-marocains.jpg": "center 55%",
   "/images/vaisselle/decoration.jpg": "center 55%",
   "/images/services/mariage.png": "center 40%",

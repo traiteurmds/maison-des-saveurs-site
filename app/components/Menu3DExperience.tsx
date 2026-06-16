@@ -113,15 +113,6 @@ const dishes: Dish[] = [
     category: "desserts",
   },
   {
-    id: "fruits-exotiques",
-    title: "Fruits exotiques",
-    description:
-      "Sélection de fruits exotiques frais, découpés et présentés avec soin pour une touche colorée et raffinée.",
-    image: "/images/menu/fruits-exotiques.jpg",
-    alt: "Fruits exotiques traiteur Lyon",
-    category: "desserts",
-  },
-  {
     id: "gateaux-marocains",
     title: "Gateaux marocains",
     description:

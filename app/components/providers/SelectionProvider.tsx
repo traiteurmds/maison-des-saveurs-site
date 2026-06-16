@@ -16,18 +16,21 @@ import {
   getWhatsappUrl,
   type SelectionState,
 } from "../../lib/whatsapp";
-import { LEGACY_OPTION_TITLES, migrateOptionTitles } from "../../lib/configurator-options";
-import { LEGACY_MENU_TITLES, migrateMenuTitles } from "../../lib/menu-migration";
+import { migrateOptionTitles } from "../../lib/configurator-options";
+import { normalizeMenuSelection } from "../../lib/menu-migration";
 
 const STORAGE_KEY = "mds-selection";
 
 function normalizeSelection(raw: SelectionState): SelectionState {
+  const menuSanitized = normalizeMenuSelection({
+    starters: raw.starters,
+    mains: raw.mains,
+    desserts: raw.desserts,
+  });
   return {
     ...raw,
+    ...menuSanitized,
     options: migrateOptionTitles(raw.options),
-    starters: migrateMenuTitles(raw.starters),
-    mains: migrateMenuTitles(raw.mains),
-    desserts: migrateMenuTitles(raw.desserts),
     caftans: [...new Set(raw.caftans)],
   };
 }
@@ -35,16 +38,7 @@ function normalizeSelection(raw: SelectionState): SelectionState {
 function parseStoredSelection(saved: string): SelectionState {
   try {
     const parsed = JSON.parse(saved) as SelectionState;
-    const merged = { ...EMPTY_SELECTION, ...parsed };
-    const hasLegacy =
-      merged.options.some((item) => item in LEGACY_OPTION_TITLES) ||
-      [...merged.starters, ...merged.mains, ...merged.desserts].some(
-        (item) => item in LEGACY_MENU_TITLES
-      );
-    if (hasLegacy) {
-      return normalizeSelection(merged);
-    }
-    return merged;
+    return normalizeSelection({ ...EMPTY_SELECTION, ...parsed });
   } catch {
     return EMPTY_SELECTION;
   }

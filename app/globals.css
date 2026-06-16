@@ -729,6 +729,29 @@ header:not(.nav-over-hero) .nav-logo {
   animation-duration: 75s;
 }
 
+.testimonials-track-reverse {
+  animation-direction: reverse;
+}
+
+.testimonials-track-paused {
+  animation-play-state: paused;
+}
+
+.testimonials-marquee-back {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.testimonials-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.testimonials-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .testimonials-track:hover {
   animation-play-state: paused;
 }
