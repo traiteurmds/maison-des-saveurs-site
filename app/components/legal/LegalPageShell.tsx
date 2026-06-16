@@ -42,6 +42,10 @@ export default function LegalPageShell({ label, title, intro, children }: LegalP
         <Link href={LEGAL_ROUTES.privacy} className="hover:text-mds-text">
           Confidentialité
         </Link>
+        <span aria-hidden>·</span>
+        <Link href={LEGAL_ROUTES.cookies} className="hover:text-mds-text">
+          Cookies
+        </Link>
       </nav>
     </div>
   );

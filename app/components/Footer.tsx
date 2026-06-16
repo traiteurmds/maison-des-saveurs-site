@@ -15,6 +15,7 @@ import {
   SERVICE_AREAS,
 } from "../lib/site-seo";
 import { LEGAL_ROUTES } from "../lib/legal";
+import { useCookieConsent } from "./cookies/CookieConsentProvider";
 
 function scrollToTop() {
   if (typeof window !== "undefined") {
@@ -35,10 +36,12 @@ const legalLinks = [
   { href: LEGAL_ROUTES.mentions, label: "Mentions légales" },
   { href: LEGAL_ROUTES.cgv, label: "CGV" },
   { href: LEGAL_ROUTES.privacy, label: "Confidentialité" },
+  { href: LEGAL_ROUTES.cookies, label: "Cookies" },
 ];
 
 export default function Footer() {
   const pathname = usePathname();
+  const cookieConsent = useCookieConsent();
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -216,6 +219,15 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
+            {cookieConsent && (
+              <button
+                type="button"
+                onClick={cookieConsent.openPreferences}
+                className="transition-colors hover:text-mds-text"
+              >
+                Gérer mes cookies
+              </button>
+            )}
           </nav>
         </motion.div>
       </div>

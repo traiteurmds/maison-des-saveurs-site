@@ -1,5 +1,5 @@
 import { GOOGLE_BUSINESS } from "./testimonials";
-import { PHONE_E164, SERVICE_AREAS, SITE_URL } from "./site-seo";
+import { PHONE_E164, SERVICE_AREAS, SITE_URL, SOCIAL_LINKS } from "./site-seo";
 
 export function getStructuredDataGraph() {
   const organizationId = `${SITE_URL}/#organization`;
@@ -13,17 +13,17 @@ export function getStructuredDataGraph() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["LocalBusiness", "FoodEstablishment"],
+        "@type": ["LocalBusiness", "FoodEstablishment", "Caterer"],
         "@id": organizationId,
-        name: "Maison des Saveurs",
+        name: "Maison Des Saveurs",
         alternateName: "MDS Traiteur",
         description:
-          "Traiteur marocain halal à Lyon. Catering pour mariages, événements privés et réceptions professionnelles. Cuisine marocaine traditionnelle.",
+          "Traiteur halal événementiel à Lyon pour mariages, buffets, entreprises et événements privés. Cuisine orientale maison, dressage élégant.",
         url: SITE_URL,
         image: `${SITE_URL}/logo-share.png`,
         address: {
           "@type": "PostalAddress",
-          addressLocality: "Lyon",
+          addressLocality: "Villeurbanne",
           addressRegion: "Auvergne-Rhône-Alpes",
           addressCountry: "FR",
         },
@@ -31,10 +31,15 @@ export function getStructuredDataGraph() {
         priceRange: "€€",
         telephone: PHONE_E164,
         email: "contact.mds.traiteur@gmail.com",
-        servingCuisine: "Moroccan",
+        servesCuisine: ["Marocaine", "Orientale", "Halal"],
+        sameAs: [
+          SOCIAL_LINKS.instagram,
+          SOCIAL_LINKS.tiktok,
+          SOCIAL_LINKS.googleBusiness,
+        ],
         aggregateRating: {
           "@type": "AggregateRating",
-          ratingValue: String(GOOGLE_BUSINESS.rating),
+          ratingValue: "5.0",
           reviewCount: String(GOOGLE_BUSINESS.reviewCount),
           bestRating: "5",
         },
@@ -48,22 +53,14 @@ export function getStructuredDataGraph() {
           ],
         },
       },
-      {
-        "@type": "CateringService",
-        "@id": `${SITE_URL}/#catering`,
-        name: "Maison Des Saveurs — Traiteur événementiel Lyon",
-        description:
-          "Traiteur marocain halal, buffet mariage Lyon, réceptions privées et événements professionnels.",
-        url: SITE_URL,
-        provider: { "@id": organizationId },
-        areaServed,
-        serviceType: [
-          "Traiteur mariage Lyon",
-          "Traiteur buffet Lyon",
-          "Traiteur entreprise Lyon",
-          "Traiteur réception Lyon",
-        ],
-      },
     ],
   };
+}
+
+export function getStructuredDataJson(): string {
+  try {
+    return JSON.stringify(getStructuredDataGraph());
+  } catch {
+    return "{}";
+  }
 }

@@ -36,12 +36,12 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-async function verifyHCaptcha(token: string | null): Promise<boolean> {
-  const secret = process.env.HCAPTCHA_SECRET_KEY;
+async function verifyTurnstile(token: string | null): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) return true;
   if (!token || token.length < 10) return false;
   try {
-    const res = await fetch("https://hcaptcha.com/siteverify", {
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ secret, response: token }),
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
   const phone = typeof raw.phone === "string" ? raw.phone : "";
   const eventDate = typeof raw.eventDate === "string" ? raw.eventDate : "";
   const message = typeof raw.message === "string" ? raw.message : "";
-  const hcaptchaToken = typeof raw.hcaptchaToken === "string" ? raw.hcaptchaToken : null;
+  const turnstileToken = typeof raw.turnstileToken === "string" ? raw.turnstileToken : null;
 
   const nom = sanitizeName(lastName, LIMITS.MAX_NOM);
   const prenom = sanitizeName(firstName, LIMITS.MAX_PRENOM);
@@ -116,8 +116,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Validation échouée.", errors }, { status: 400 });
   }
 
-  const hcaptchaOk = await verifyHCaptcha(hcaptchaToken);
-  if (!hcaptchaOk) {
+  const turnstileOk = await verifyTurnstile(turnstileToken);
+  if (!turnstileOk) {
     return NextResponse.json(
       { error: "Vérification de sécurité échouée. Réessayez." },
       { status: 400 }

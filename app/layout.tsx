@@ -7,7 +7,7 @@ import PageTransition from "./components/PageTransition";
 import Providers from "./components/Providers";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
-import { getStructuredDataGraph } from "./lib/structured-data";
+import { getStructuredDataJson } from "./lib/structured-data";
 import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
 
 const cormorant = Cormorant_Garamond({
@@ -93,7 +93,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = getStructuredDataGraph();
+  const structuredDataJson = getStructuredDataJson();
 
   if (MAINTENANCE_MODE) {
     return (
@@ -115,7 +115,7 @@ export default function RootLayout({
           type="application/ld+json"
           suppressHydrationWarning
         >
-          {JSON.stringify(structuredData)}
+          {structuredDataJson}
         </script>
         <Providers>
           <Navbar />

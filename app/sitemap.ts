@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const legalPages: MetadataRoute.Sitemap = [
     LEGAL_ROUTES.mentions,
     LEGAL_ROUTES.privacy,
+    LEGAL_ROUTES.cookies,
     LEGAL_ROUTES.cgv,
   ].map((path) => ({
     url: `${SITE_URL}${path}`,

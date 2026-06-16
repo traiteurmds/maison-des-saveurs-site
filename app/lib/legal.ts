@@ -33,5 +33,6 @@ export const LEGAL = {
 export const LEGAL_ROUTES = {
   mentions: "/mentions-legales",
   privacy: "/politique-confidentialite",
+  cookies: "/politique-cookies",
   cgv: "/conditions-generales-de-vente",
 } as const;

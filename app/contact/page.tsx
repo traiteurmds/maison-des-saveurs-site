@@ -17,6 +17,7 @@ import {
   validatePhone,
   validateMessage,
 } from "../lib/contact-validation";
+import TurnstileField, { isTurnstileRequired } from "../components/contact/TurnstileField";
 
 const colors = {
   black: "#0B0B0A",
@@ -78,35 +79,9 @@ export default function ContactPage() {
   const [minDate, setMinDate] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const hcaptchaWidgetIdRef = useRef<string | null>(null);
-  const hcaptchaLoadedRef = useRef(false);
-
-  useEffect(() => {
-    const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
-    if (!siteKey || hcaptchaLoadedRef.current) return;
-    const el = document.getElementById("hcaptcha-contact");
-    if (!el) return;
-    const existing = document.querySelector('script[src*="hcaptcha.com"]');
-    if (existing) {
-      hcaptchaLoadedRef.current = true;
-      const w = window as unknown as { hcaptcha?: { render: (el: HTMLElement, opts: { sitekey: string; size: string }) => string } };
-      if (w.hcaptcha?.render) {
-        hcaptchaWidgetIdRef.current = w.hcaptcha.render(el, { sitekey: siteKey, size: "invisible" });
-      }
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "https://js.hcaptcha.com/1/api.js";
-    script.async = true;
-    script.onload = () => {
-      hcaptchaLoadedRef.current = true;
-      const w = window as unknown as { hcaptcha?: { render: (el: HTMLElement, opts: { sitekey: string; size: string }) => string } };
-      if (w.hcaptcha?.render && el) {
-        hcaptchaWidgetIdRef.current = w.hcaptcha.render(el, { sitekey: siteKey, size: "invisible" });
-      }
-    };
-    document.head.appendChild(script);
-  }, []);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileUnavailable, setTurnstileUnavailable] = useState(false);
+  const turnstileRequired = isTurnstileRequired();
 
   useEffect(() => {
     const today = new Date();
@@ -124,7 +99,13 @@ export default function ContactPage() {
     email.trim().length > 0 &&
     phone.trim().length > 0 &&
     message.trim().length > 0;
-  const canSubmit = !loading && !inCooldown && phoneValid && emailValid && requiredFilled;
+  const canSubmit =
+    !loading &&
+    !inCooldown &&
+    phoneValid &&
+    emailValid &&
+    requiredFilled &&
+    (!turnstileRequired || turnstileUnavailable || Boolean(turnstileToken));
 
   const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/\D/g, "").slice(0, LIMITS.PHONE_LENGTH);
@@ -153,28 +134,11 @@ export default function ContactPage() {
     setMessage("");
     setHoneypot("");
     setFieldErrors({});
+    setTurnstileToken(null);
   }, []);
 
-  const getHcaptchaToken = useCallback((): Promise<string | null> => {
-    const siteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
-    if (!siteKey || typeof window === "undefined") return Promise.resolve(null);
-    const w = window as unknown as {
-      hcaptcha?: {
-        getResponse: (widgetId?: string) => string;
-        execute: (widgetId?: string) => Promise<void>;
-      };
-    };
-    if (!w.hcaptcha) return Promise.resolve(null);
-    const widgetId = hcaptchaWidgetIdRef.current ?? undefined;
-    return new Promise((resolve) => {
-      w.hcaptcha
-        ?.execute?.(widgetId)
-        ?.then(() => {
-          const token = w.hcaptcha?.getResponse?.(widgetId) ?? null;
-          resolve(token || null);
-        })
-        ?.catch(() => resolve(null)) ?? resolve(null);
-    });
+  const handleTurnstileToken = useCallback((token: string | null) => {
+    setTurnstileToken(token);
   }, []);
 
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -207,6 +171,13 @@ export default function ContactPage() {
       return;
     }
     setFieldErrors({});
+
+    if (turnstileRequired && !turnstileUnavailable && !turnstileToken) {
+      setFieldErrors({
+        form: "Veuillez compléter la vérification anti-spam avant d'envoyer.",
+      });
+      return;
+    }
 
     const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -356,8 +327,11 @@ export default function ContactPage() {
                     onChange={(e) => setHoneypot(e.target.value)}
                   />
                 </div>
-                {process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && (
-                  <div id="hcaptcha-contact" className="min-h-[1px] overflow-hidden" aria-hidden="true" />
+                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                  <TurnstileField
+                    onTokenChange={handleTurnstileToken}
+                    onUnavailable={() => setTurnstileUnavailable(true)}
+                  />
                 )}
 
                 <div>
