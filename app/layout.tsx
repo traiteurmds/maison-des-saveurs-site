@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Cormorant_Garamond, Outfit, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -100,6 +101,7 @@ export default function RootLayout({
       <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
         <body className="antialiased">
           <MaintenancePage />
+          <Analytics />
         </body>
       </html>
     );
@@ -124,6 +126,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

@@ -17,7 +17,6 @@ import {
 } from "../../lib/cookie-consent";
 import CookieBanner from "./CookieBanner";
 import CookiePreferencesModal from "./CookiePreferencesModal";
-import ConsentAwareAnalytics from "./ConsentAwareAnalytics";
 
 type CookieContextValue = {
   consent: CookieConsent | null;
@@ -64,12 +63,9 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
     persist(createConsent(false));
   }, [persist]);
 
-  const savePreferences = useCallback(
-    (analytics: boolean) => {
-      persist(createConsent(analytics));
-    },
-    [persist]
-  );
+  const savePreferences = useCallback(() => {
+    persist(createConsent(true));
+  }, [persist]);
 
   const openPreferences = useCallback(() => {
     setShowModal(true);
@@ -88,7 +84,6 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
   return (
     <CookieContext.Provider value={contextValue}>
       {children}
-      {ready && consent?.analytics && <ConsentAwareAnalytics />}
       {ready && showBanner && !showModal && (
         <CookieBanner
           onAccept={acceptAll}
@@ -98,7 +93,6 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
       )}
       {ready && showModal && (
         <CookiePreferencesModal
-          initialAnalytics={consent?.analytics ?? false}
           onSave={savePreferences}
           onClose={() => {
             setShowModal(false);

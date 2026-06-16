@@ -31,8 +31,8 @@ export default function PolitiqueCookiesPage() {
             de consentement, panier de sélection).
           </li>
           <li>
-            <strong>Mesure d&apos;audience (Vercel Analytics)</strong> — statistiques anonymes de
-            visite, activés uniquement avec votre accord.
+            <strong>Mesure d&apos;audience (Vercel Web Analytics)</strong> — statistiques anonymes
+            de visite, intégrées via le service Vercel.
           </li>
         </ul>
       </section>
