@@ -7,72 +7,90 @@ import Reveal from "../components/ui/Reveal";
 import TiltCard from "../components/ui/TiltCard";
 import MagneticButton from "../components/ui/MagneticButton";
 import PremiumImage from "../components/ui/PremiumImage";
+import CaftanLightbox from "../components/caftans/CaftanLightbox";
+import CaftanViewButton from "../components/caftans/CaftanViewButton";
 import { useSelection } from "../components/providers/SelectionProvider";
 import { btnWhatsappClass, selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
-import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
-import { CAFTANS } from "../lib/caftans";
+import { IMAGE_SIZES } from "../lib/image-config";
+import { CAFTANS, type CaftanItem } from "../lib/caftans";
 import { cn } from "../lib/utils";
+
+const CAFTAN_QUALITY = 90;
 
 function CaftanCard({
   item,
   index,
   selected,
   onToggle,
+  onView,
 }: {
-  item: (typeof CAFTANS)[0];
+  item: CaftanItem;
   index: number;
   selected: boolean;
   onToggle: () => void;
+  onView: (item: CaftanItem) => void;
 }) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <Reveal delay={index * 0.03}>
-      <TiltCard>
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-pressed={selected}
-          aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${item.title}`}
+    <Reveal delay={index * 0.03} className="h-full">
+      <TiltCard className="h-full">
+        <div
           className={cn(
-            "group w-full overflow-hidden rounded-2xl border text-left transition-all duration-500",
-            selectableCardClass(selected),
-            selectableFocusClass
+            "group relative h-full w-full overflow-hidden rounded-2xl border transition-all duration-500",
+            selectableCardClass(selected)
           )}
         >
-          <div className="relative aspect-[3/4] w-full overflow-hidden">
-            {imageError ? (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--surface-soft)] to-[var(--surface)] text-center text-mds-text">
-                <div>
-                  <p className="font-serif text-2xl font-semibold">Photo {index + 1}</p>
-                  <p className="mt-2 text-sm text-mds-muted">Ajoute {item.image}</p>
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-pressed={selected}
+            aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${item.title}`}
+            className={cn("block w-full text-left", selectableFocusClass)}
+          >
+            <div className="relative aspect-[3/4] w-full overflow-hidden">
+              {imageError ? (
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--surface-soft)] to-[var(--surface)] text-center text-mds-text">
+                  <div>
+                    <p className="font-serif text-base font-semibold md:text-2xl">Photo {index + 1}</p>
+                    <p className="mt-2 text-xs text-mds-muted md:text-sm">Ajoute {item.image}</p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <PremiumImage
-                src={item.image}
-                alt={item.alt}
-                sizes={IMAGE_SIZES.caftanCard}
-                quality={IMAGE_QUALITY.card}
-                objectPosition="center 20%"
-                hover
-                onError={() => setImageError(true)}
-              />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden />
-            {selected && (
+              ) : (
+                <PremiumImage
+                  src={item.image}
+                  alt={item.alt}
+                  sizes={IMAGE_SIZES.caftanCard}
+                  quality={CAFTAN_QUALITY}
+                  objectPosition="center top"
+                  priority={index < 4}
+                  hover
+                  onError={() => setImageError(true)}
+                />
+              )}
               <div
-                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)] shadow-md"
+                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
                 aria-hidden
-              >
-                ✓
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5">
+                <h2 className="font-serif text-base font-semibold leading-tight text-white md:text-2xl">
+                  {item.title}
+                </h2>
               </div>
-            )}
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-              <h2 className="font-serif text-2xl font-semibold leading-tight">{item.title}</h2>
             </div>
-          </div>
-        </button>
+          </button>
+
+          <CaftanViewButton title={item.title} onView={() => onView(item)} />
+
+          {selected && (
+            <div
+              className="pointer-events-none absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--gold)] text-[0.65rem] font-bold text-[var(--black)] shadow-md md:right-3 md:top-3 md:h-8 md:w-8 md:text-xs"
+              aria-hidden
+            >
+              ✓
+            </div>
+          )}
+        </div>
       </TiltCard>
     </Reveal>
   );
@@ -80,6 +98,7 @@ function CaftanCard({
 
 export default function CaftansPage() {
   const { toggleSelection, isSelected, whatsappUrl, counts } = useSelection();
+  const [preview, setPreview] = useState<CaftanItem | null>(null);
 
   return (
     <div className="bg-mds-bg pt-28 pb-24">
@@ -98,7 +117,7 @@ export default function CaftansPage() {
         </Reveal>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <Reveal>
           <div className="mb-12 overflow-hidden rounded-3xl border border-mds-border bg-[var(--surface)] p-8 text-center shadow-[0_20px_48px_var(--mds-shadow)] md:p-10">
             <p className="font-serif text-xs uppercase tracking-[0.3em] text-[var(--gold)]">Partenariat exclusif</p>
@@ -119,7 +138,7 @@ export default function CaftansPage() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-7 xl:grid-cols-4">
           {CAFTANS.map((item, index) => (
             <CaftanCard
               key={item.id}
@@ -127,6 +146,7 @@ export default function CaftansPage() {
               index={index}
               selected={isSelected("caftans", item.title)}
               onToggle={() => toggleSelection("caftans", item.title)}
+              onView={setPreview}
             />
           ))}
         </div>
@@ -172,6 +192,8 @@ export default function CaftansPage() {
           </div>
         </Reveal>
       </section>
+
+      <CaftanLightbox item={preview} onClose={() => setPreview(null)} />
     </div>
   );
 }

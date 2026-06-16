@@ -42,9 +42,7 @@ function GoogleStatsBar() {
   return (
     <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:gap-4">
       <div className="inline-flex items-center gap-2.5 rounded-full border border-[var(--gold)]/40 bg-[var(--surface)] px-5 py-2.5 shadow-[0_10px_32px_var(--mds-shadow)]">
-        <span className="font-serif text-2xl font-semibold text-mds-text">
-          {GOOGLE_BUSINESS.rating.toFixed(1)}
-        </span>
+        <span className="font-serif text-2xl font-semibold text-mds-text">5,0/5</span>
         <StarRating rating={5} size="md" />
       </div>
       <div className="inline-flex items-center rounded-full border border-mds-border bg-[var(--surface)] px-5 py-2.5 text-sm font-medium text-mds-text shadow-[0_10px_32px_var(--mds-shadow)]">

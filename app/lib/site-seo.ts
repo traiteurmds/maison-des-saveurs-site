@@ -1,5 +1,8 @@
 export const SITE_URL = "https://mds-traiteur.fr";
 
+export const EMAIL = "contact.mds.traiteur@gmail.com";
+export const EMAIL_MAILTO = `mailto:${EMAIL}`;
+
 export const PHONE_E164 = "+33758639734";
 export const PHONE_TEL = `tel:${PHONE_E164}`;
 export const PHONE_DISPLAY = "07.58.63.97.34";
@@ -9,40 +12,46 @@ export const SERVICE_AREAS = [
   "Villeurbanne",
   "Bron",
   "Vénissieux",
-  "Genas",
-  "Meyzieu",
   "Décines",
+  "Meyzieu",
   "Saint-Priest",
-  "Annecy",
+  "Genas",
   "Grenoble",
+  "Annecy",
 ] as const;
 
 export const FOOTER_PRESTATIONS = [
   "Mariages",
-  "Réceptions privées",
-  "Événements professionnels",
+  "Hlel",
   "Buffets entreprises",
+  "Repas entreprises",
   "Associations",
   "Universités",
+  "Événements professionnels",
+  "Réceptions privées",
 ] as const;
 
-/** Texte SEO discret — intégré au footer, ton naturel */
 export const FOOTER_SEO_TEXT =
-  "Maison Des Saveurs, traiteur marocain Lyon et traiteur halal Lyon, accompagne vos mariages, réceptions privées et événements professionnels. Traiteur événementiel Lyon, traiteur buffet Lyon, buffet entreprise Lyon, cocktail entreprise Lyon, traiteur association Lyon et traiteur université Lyon. Prestations traiteur réception Lyon et traiteur oriental Lyon dans toute la métropole de Lyon, Villeurbanne, Bron, Vénissieux, Genas, Meyzieu, Décines, Saint-Priest, ainsi qu'Annecy et Grenoble.";
+  "Maison Des Saveurs, traiteur halal événementiel à Lyon, accompagne les mariages, hlel, réceptions privées, buffets d'entreprise, associations, universités et événements professionnels avec une cuisine orientale maison, généreuse et soignée.";
 
 export const SEO_KEYWORDS = [
   "traiteur marocain lyon",
   "traiteur halal lyon",
+  "traiteur oriental lyon",
   "traiteur mariage lyon",
   "traiteur événementiel lyon",
-  "traiteur buffet lyon",
   "traiteur entreprise lyon",
   "buffet entreprise lyon",
-  "cocktail entreprise lyon",
+  "repas entreprise lyon",
   "traiteur association lyon",
   "traiteur université lyon",
-  "traiteur réception lyon",
-  "traiteur oriental lyon",
   "traiteur villeurbanne",
-  "couscous lyon événement",
+  "traiteur grenoble",
+  "traiteur annecy",
 ] as const;
+
+export const SOCIAL_LINKS = {
+  instagram: "https://www.instagram.com/mds.traiteur69/",
+  tiktok: "https://www.tiktok.com/@mds.traiteur",
+  googleBusiness: "https://share.google/uiBTniokmuQrw7QzH",
+} as const;

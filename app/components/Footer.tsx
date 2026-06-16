@@ -8,10 +8,13 @@ import { FaInstagram, FaTiktok } from "react-icons/fa";
 import {
   FOOTER_PRESTATIONS,
   FOOTER_SEO_TEXT,
+  EMAIL,
+  EMAIL_MAILTO,
   PHONE_DISPLAY,
   PHONE_TEL,
   SERVICE_AREAS,
 } from "../lib/site-seo";
+import { LEGAL_ROUTES } from "../lib/legal";
 
 function scrollToTop() {
   if (typeof window !== "undefined") {
@@ -26,6 +29,12 @@ const footerLinks = [
   { href: "/services", label: "Services" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
+];
+
+const legalLinks = [
+  { href: LEGAL_ROUTES.mentions, label: "Mentions légales" },
+  { href: LEGAL_ROUTES.cgv, label: "CGV" },
+  { href: LEGAL_ROUTES.privacy, label: "Confidentialité" },
 ];
 
 export default function Footer() {
@@ -72,8 +81,8 @@ export default function Footer() {
               Maison Des Saveurs
             </Link>
             <p className="max-w-md text-sm leading-relaxed text-mds-muted">
-              Traiteur marocain halal à Lyon. Cuisine d&apos;exception pour mariages, réceptions
-              privées et événements professionnels.
+              Traiteur halal événementiel à Lyon. Cuisine orientale raffinée pour mariages, hlel,
+              réceptions privées et événements professionnels.
             </p>
             <div className="flex items-center gap-4 pt-1">
               <a
@@ -127,7 +136,12 @@ export default function Footer() {
               <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
                 Contact
               </h3>
-              <p className="mt-4 text-sm text-mds-muted">contact.mds.traiteur@gmail.com</p>
+              <a
+                href={EMAIL_MAILTO}
+                className="mt-4 inline-block text-sm text-mds-muted transition-colors hover:text-mds-text"
+              >
+                {EMAIL}
+              </a>
               <a
                 href={PHONE_TEL}
                 className="mt-1 inline-block text-sm text-mds-muted transition-colors hover:text-mds-text"
@@ -159,29 +173,50 @@ export default function Footer() {
                 Zones desservies
               </h3>
               <p className="mt-4 leading-relaxed text-mds-muted">
-                {SERVICE_AREAS.join(" \u2022 ")}
+                {SERVICE_AREAS.join(" · ")}
               </p>
             </div>
           </motion.div>
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="seo-footer-text mt-12 max-w-4xl text-[11px] leading-relaxed text-mds-muted/80"
+          className="seo-footer-text mt-12 max-w-4xl space-y-2 text-[11px] leading-relaxed text-mds-muted/80"
         >
-          {FOOTER_SEO_TEXT}
-        </motion.p>
+          <p>{FOOTER_SEO_TEXT}</p>
+          <p>
+            <span className="text-mds-muted/90">Zones desservies : </span>
+            {SERVICE_AREAS.join(" · ")}
+          </p>
+          <p>
+            <span className="text-mds-muted/90">Prestations : </span>
+            {FOOTER_PRESTATIONS.join(" · ")}
+          </p>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-8 flex flex-col gap-3 border-t border-mds-border pt-8 text-xs text-mds-muted md:flex-row md:items-center md:justify-between"
+          className="mt-8 flex flex-col gap-4 border-t border-mds-border pt-8 text-xs text-mds-muted md:flex-row md:items-center md:justify-between"
         >
           <p>© {new Date().getFullYear()} Maison Des Saveurs. Tous droits réservés.</p>
-          <p className="text-[11px]">Traiteur marocain halal Lyon — Expériences culinaires sur mesure.</p>
+          <nav
+            aria-label="Informations légales"
+            className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]"
+          >
+            {legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition-colors hover:text-mds-text"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </motion.div>
       </div>
     </footer>

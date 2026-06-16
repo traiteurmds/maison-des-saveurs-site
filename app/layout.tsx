@@ -42,11 +42,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Traiteur Marocain à Lyon | Maison des Saveurs",
+    default: "Traiteur Marocain Halal Lyon | Mariage, Buffet & Entreprise",
     template: "%s | Maison des Saveurs",
   },
   description:
-    "Traiteur marocain halal à Lyon. Maison Des Saveurs : couscous, tajines et pâtisseries marocaines pour mariages, événements privés et réceptions professionnelles.",
+    "Traiteur halal à Lyon pour mariages, buffets, entreprises et événements privés. Cuisine maison, dressage élégant et devis rapide.",
   keywords: [...SEO_KEYWORDS],
   alternates: {
     canonical: SITE_URL,
@@ -63,9 +63,9 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Traiteur Marocain à Lyon | Maison des Saveurs",
+    title: "Traiteur Marocain Halal Lyon | Mariage, Buffet & Entreprise",
     description:
-      "Traiteur marocain halal à Lyon. Couscous, tajines et pâtisseries pour mariages, événements privés et réceptions professionnelles.",
+      "Traiteur halal à Lyon pour mariages, buffets, entreprises et événements privés. Cuisine maison, dressage élégant et devis rapide.",
     url: SITE_URL,
     siteName: "Maison des Saveurs",
     images: [
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
         url: "/logo-share.png",
         width: 1200,
         height: 630,
-        alt: "Maison des Saveurs - Traiteur marocain Lyon",
+        alt: "Maison Des Saveurs - Traiteur halal Lyon",
       },
     ],
     locale: "fr_FR",
@@ -81,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Traiteur Marocain à Lyon | Maison des Saveurs",
+    title: "Traiteur Marocain Halal Lyon | Mariage, Buffet & Entreprise",
     description:
-      "Traiteur marocain halal à Lyon. Couscous, tajines et pâtisseries pour mariages, événements privés et réceptions professionnelles.",
+      "Traiteur halal à Lyon pour mariages, buffets, entreprises et événements privés. Cuisine maison, dressage élégant et devis rapide.",
     images: ["/logo-share.png"],
   },
 };

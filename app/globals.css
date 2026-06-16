@@ -769,3 +769,38 @@ header:not(.nav-over-hero) .nav-logo {
     transform: translateX(-50%);
   }
 }
+
+.legal-prose section + section {
+  margin-top: 2.5rem;
+}
+
+.legal-prose h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.75rem;
+}
+
+.legal-prose p,
+.legal-prose li {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+
+.legal-prose ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.legal-prose ul li + li {
+  margin-top: 0.35rem;
+}
+
+.legal-prose .legal-link {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
