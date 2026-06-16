@@ -1,9 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
-
-const PROJECT_ROOT = path.resolve(
-  "C:\\Users\\crypt\\Desktop\\MDS\\maison-des-saveurs-site"
-);
 
 const securityHeaders = [
   {
@@ -50,7 +45,6 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  turbopack: { root: PROJECT_ROOT },
   compress: true,
   poweredByHeader: false,
   images: {
