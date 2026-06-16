@@ -8,6 +8,7 @@ import Providers from "./components/Providers";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getStructuredDataGraph } from "./lib/structured-data";
 import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
 
@@ -126,6 +127,7 @@ export default function RootLayout({
           <Footer />
         </Providers>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
