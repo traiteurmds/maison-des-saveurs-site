@@ -22,7 +22,7 @@ export default function PremiumImage({
   src,
   alt,
   sizes,
-  quality = 78,
+  quality = 85,
   priority = false,
   objectPosition,
   hover = false,

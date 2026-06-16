@@ -9,9 +9,9 @@ export const IMAGE_SIZES = {
 } as const;
 
 export const IMAGE_QUALITY = {
-  card: 78,
-  hero: 82,
-  modal: 85,
+  card: 85,
+  hero: 88,
+  modal: 90,
 } as const;
 
 /** Zoom hover discret — évite le recadrage agressif */

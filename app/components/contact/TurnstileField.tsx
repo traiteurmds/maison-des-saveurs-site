@@ -16,6 +16,7 @@ type TurnstileApi = {
       "expired-callback"?: () => void;
       "error-callback"?: () => void;
       theme?: "light" | "dark" | "auto";
+      size?: "normal" | "compact";
     }
   ) => string;
   reset: (widgetId?: string) => void;
@@ -63,6 +64,7 @@ export default function TurnstileField({ onTokenChange, onUnavailable }: Turnsti
         widgetIdRef.current = turnstile.render(containerRef.current, {
           sitekey: siteKey,
           theme: "light",
+          size: "compact",
           callback: (token) => onTokenChange(token),
           "expired-callback": () => onTokenChange(null),
           "error-callback": markUnavailable,
@@ -124,7 +126,9 @@ export default function TurnstileField({ onTokenChange, onUnavailable }: Turnsti
     );
   }
 
-  return <div ref={containerRef} className="min-h-[65px]" aria-label="Vérification anti-spam" />;
+  return (
+    <div ref={containerRef} className="flex min-h-[56px] justify-start" aria-label="Vérification anti-spam" />
+  );
 }
 
 export function isTurnstileRequired(): boolean {

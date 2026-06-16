@@ -712,7 +712,7 @@ header:not(.nav-over-hero) .nav-logo {
 
 .mobile-call-button {
   left: 14px;
-  bottom: calc(5.85rem + env(safe-area-inset-bottom));
+  bottom: calc(6.25rem + env(safe-area-inset-bottom));
   pointer-events: auto;
 }
 

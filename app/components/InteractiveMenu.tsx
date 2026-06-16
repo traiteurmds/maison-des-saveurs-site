@@ -138,7 +138,7 @@ export default function InteractiveMenu() {
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-105"
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              quality={80}
+                              quality={85}
                               loading="lazy"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-deep-green/60 to-transparent" aria-hidden />
