@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaTiktok, FaTimes } from "react-icons/fa";
 import { cn } from "../lib/utils";
+import NavbarLogo from "./NavbarLogo";
 
 function useScrollToTop() {
   return useCallback(() => {
@@ -88,8 +89,9 @@ export default function Navbar() {
                 if (pathname === "/") e.preventDefault();
                 scrollToTop();
               }}
-              className="nav-link shrink-0 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-[var(--gold)] sm:text-base"
+              className="nav-link flex shrink-0 items-center gap-2 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-[var(--gold)] sm:text-base"
             >
+              <NavbarLogo className="md:hidden" />
               <span className="md:hidden">MDS</span>
               <span className="hidden md:inline">Maison Des Saveurs</span>
             </Link>

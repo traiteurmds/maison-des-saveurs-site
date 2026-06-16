@@ -47,4 +47,40 @@ export const FAQ_ITEMS = [
     answer:
       "Pour obtenir un devis personnalisé, vous pouvez nous contacter via le formulaire du site, par email ou par téléphone pour une réponse plus rapide.",
   },
+  {
+    id: "buffet-entreprise",
+    question: "Proposez-vous des buffets pour entreprises à Lyon ?",
+    answer:
+      "Oui. Nous réalisons des buffets entreprise Lyon, repas d'équipe et cocktails professionnels avec une cuisine orientale halal faite maison, adaptée à votre effectif et à votre lieu.",
+  },
+  {
+    id: "associations-universites",
+    question: "Intervenez-vous pour les associations et universités ?",
+    answer:
+      "Oui. Nous accompagnons régulièrement associations, clubs étudiants et universités pour des réceptions, galas et événements institutionnels à Lyon et dans la métropole.",
+  },
+  {
+    id: "evenements-pro",
+    question: "Faites-vous des événements professionnels ?",
+    answer:
+      "Oui. Séminaires, lancements, fêtes d'entreprise ou réceptions clients : nous proposons un service traiteur professionnel avec dressage élégant et menu sur mesure.",
+  },
+  {
+    id: "buffet-halal",
+    question: "Proposez-vous un buffet halal à Lyon ?",
+    answer:
+      "Oui. Notre buffet halal Lyon comprend entrées, plats signature et desserts orientaux, préparés maison avec des produits frais et un dressage soigné.",
+  },
+  {
+    id: "capacite",
+    question: "Jusqu'à combien de personnes pouvez-vous servir ?",
+    answer:
+      "Nous nous adaptons à la taille de votre événement, des réceptions intimistes aux grandes célébrations. Contactez-nous avec votre nombre d'invités pour un devis précis.",
+  },
+  {
+    id: "grenoble-annecy",
+    question: "Intervenez-vous à Grenoble ou Annecy ?",
+    answer:
+      "Oui. Nous intervenons à Grenoble et Annecy pour les événements importants, en plus de Lyon, Villeurbanne, Bron, Vénissieux, Décines, Meyzieu, Saint-Priest et Genas.",
+  },
 ] as const;

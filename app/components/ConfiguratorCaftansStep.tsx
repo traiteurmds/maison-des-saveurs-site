@@ -2,76 +2,82 @@
 
 import { useState } from "react";
 import PremiumImage from "./ui/PremiumImage";
-import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
+import { IMAGE_SIZES } from "../lib/image-config";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "./ui/Reveal";
-import { CAFTANS } from "../lib/caftans";
+import CaftanLightbox from "./caftans/CaftanLightbox";
+import CaftanViewButton from "./caftans/CaftanViewButton";
+import { CAFTANS, type CaftanItem } from "../lib/caftans";
 import { scrollToConfiguratorStep } from "../lib/configurator-options";
 import { useSelection } from "./providers/SelectionProvider";
 import { selectableCardClass, selectableFocusClass } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 const HOME_CAFTANS = CAFTANS.slice(0, 6);
+const CAFTAN_IMAGE_QUALITY = 90;
 
 function CaftanSelectCard({
-  title,
-  image,
-  alt,
+  item,
   selected,
   onToggle,
+  onView,
+  priority = false,
 }: {
-  title: string;
-  image: string;
-  alt: string;
+  item: CaftanItem;
   selected: boolean;
   onToggle: () => void;
+  onView: (item: CaftanItem) => void;
+  priority?: boolean;
 }) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <motion.button
-      type="button"
-      onClick={onToggle}
-      aria-pressed={selected}
-      aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${title}`}
-      layout
-      animate={selected ? { scale: [1, 1.02, 1] } : { scale: 1 }}
-      transition={{ duration: 0.35 }}
-      className={cn(
-        "overflow-hidden rounded-2xl border text-left transition-all duration-300",
-        selectableCardClass(selected),
-        selectableFocusClass
+    <div className={cn("relative overflow-hidden rounded-2xl border", selectableCardClass(selected))}>
+      <motion.button
+        type="button"
+        onClick={onToggle}
+        aria-pressed={selected}
+        aria-label={`${selected ? "Désélectionner" : "Sélectionner"} ${item.title}`}
+        layout
+        animate={selected ? { scale: [1, 1.02, 1] } : { scale: 1 }}
+        transition={{ duration: 0.35 }}
+        className={cn("block w-full text-left transition-all duration-300", selectableFocusClass)}
+      >
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--surface-soft)]">
+          {!imageError ? (
+            <PremiumImage
+              src={item.image}
+              alt={item.alt}
+              sizes={IMAGE_SIZES.caftanThumb}
+              quality={CAFTAN_IMAGE_QUALITY}
+              objectPosition="center top"
+              priority={priority}
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center font-serif text-sm text-mds-muted">
+              {item.title}
+            </div>
+          )}
+        </div>
+        <p className="p-3 text-center font-serif text-sm font-medium text-mds-text">{item.title}</p>
+      </motion.button>
+
+      <CaftanViewButton title={item.title} onView={() => onView(item)} compact />
+
+      {selected && (
+        <div className="pointer-events-none absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)]">
+          ✓
+        </div>
       )}
-    >
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--surface-soft)]">
-        {!imageError ? (
-          <PremiumImage
-            src={image}
-            alt={alt}
-            sizes={IMAGE_SIZES.caftanThumb}
-            quality={IMAGE_QUALITY.card}
-            objectPosition="center 20%"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center font-serif text-sm text-mds-muted">
-            {title}
-          </div>
-        )}
-        {selected && (
-          <div className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-bold text-[var(--black)]">
-            ✓
-          </div>
-        )}
-      </div>
-      <p className="p-3 text-center font-serif text-sm font-medium text-mds-text">{title}</p>
-    </motion.button>
+    </div>
   );
 }
 
 export default function ConfiguratorCaftansStep() {
   const { toggleSelection, isSelected } = useSelection();
+  const [preview, setPreview] = useState<CaftanItem | null>(null);
 
   return (
     <div>
@@ -88,14 +94,14 @@ export default function ConfiguratorCaftansStep() {
       </Reveal>
 
       <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-        {HOME_CAFTANS.map((item) => (
+        {HOME_CAFTANS.map((item, index) => (
           <CaftanSelectCard
             key={item.id}
-            title={item.title}
-            image={item.image}
-            alt={item.alt}
+            item={item}
             selected={isSelected("caftans", item.title)}
             onToggle={() => toggleSelection("caftans", item.title)}
+            onView={setPreview}
+            priority={index < 2}
           />
         ))}
       </div>
@@ -120,6 +126,8 @@ export default function ConfiguratorCaftansStep() {
           </button>
         </div>
       </Reveal>
+
+      <CaftanLightbox item={preview} onClose={() => setPreview(null)} />
     </div>
   );
 }
