@@ -54,10 +54,5 @@ export function saveConsent(preferences: CookiePreferences): StoredConsent {
     updatedAt: new Date().toISOString(),
   };
   localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(stored));
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event("mds-consent-change"));
-  }
   return stored;
 }
-
-export const CONSENT_CHANGE_EVENT = "mds-consent-change";

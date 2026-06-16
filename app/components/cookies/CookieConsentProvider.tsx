@@ -4,13 +4,12 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
-  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import {
-  CONSENT_CHANGE_EVENT,
   DEFAULT_ACCEPTED,
   DEFAULT_DENIED,
   readConsent,
@@ -36,37 +35,6 @@ type CookieConsentContextValue = {
 
 const CookieConsentContext = createContext<CookieConsentContextValue | null>(null);
 
-function subscribeToConsent(onStoreChange: () => void) {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener(CONSENT_CHANGE_EVENT, onStoreChange);
-  window.addEventListener("storage", onStoreChange);
-  return () => {
-    window.removeEventListener(CONSENT_CHANGE_EVENT, onStoreChange);
-    window.removeEventListener("storage", onStoreChange);
-  };
-}
-
-function getConsentSnapshot(): StoredConsent | null {
-  return readConsent();
-}
-
-function getConsentServerSnapshot(): null {
-  return null;
-}
-
-function subscribeClient(onStoreChange: () => void) {
-  onStoreChange();
-  return () => {};
-}
-
-function getClientSnapshot(): boolean {
-  return true;
-}
-
-function getClientServerSnapshot(): boolean {
-  return false;
-}
-
 export function useCookieConsent() {
   const ctx = useContext(CookieConsentContext);
   if (!ctx) {
@@ -80,16 +48,18 @@ export function useCookieConsentOptional() {
 }
 
 export default function CookieConsentProvider({ children }: { children: ReactNode }) {
-  const consent = useSyncExternalStore(
-    subscribeToConsent,
-    getConsentSnapshot,
-    getConsentServerSnapshot
-  );
-  const hydrated = useSyncExternalStore(subscribeClient, getClientSnapshot, getClientServerSnapshot);
+  const [consent, setConsent] = useState<StoredConsent | null>(null);
+  const [hydrated, setHydrated] = useState(false);
   const [preferencesOpen, setPreferencesOpen] = useState(false);
 
+  useEffect(() => {
+    setConsent(readConsent());
+    setHydrated(true);
+  }, []);
+
   const persist = useCallback((preferences: CookiePreferences) => {
-    saveConsent(preferences);
+    const stored = saveConsent(preferences);
+    setConsent(stored);
     setPreferencesOpen(false);
   }, []);
 
@@ -109,7 +79,14 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
       savePreferences,
       analyticsAllowed: Boolean(consent?.preferences.analytics),
     }),
-    [consent, hydrated, preferencesOpen, acceptAll, rejectAll, savePreferences]
+    [
+      consent,
+      hydrated,
+      preferencesOpen,
+      acceptAll,
+      rejectAll,
+      savePreferences,
+    ]
   );
 
   return (

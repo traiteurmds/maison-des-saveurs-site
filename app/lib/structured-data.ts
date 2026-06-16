@@ -13,23 +13,14 @@ export function getStructuredDataGraph() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "LocalBusiness",
-        additionalType: [
-          "https://schema.org/FoodEstablishment",
-          "https://schema.org/Caterer",
-        ],
+        "@type": ["LocalBusiness", "FoodEstablishment", "Caterer"],
         "@id": organizationId,
         name: LEGAL.tradeName,
         alternateName: "MDS Traiteur",
         description:
           "Traiteur halal événementiel à Lyon et métropole. Cuisine orientale raffinée pour mariages, buffets entreprise, associations, universités et réceptions privées.",
         url: SITE_URL,
-        image: {
-          "@type": "ImageObject",
-          url: `${SITE_URL}/logo-share.png`,
-          width: 1200,
-          height: 630,
-        },
+        image: `${SITE_URL}/logo-share.png`,
         address: {
           "@type": "PostalAddress",
           streetAddress: "5 Place de Croix-Luizet",
@@ -47,14 +38,14 @@ export function getStructuredDataGraph() {
         priceRange: "€€",
         telephone: PHONE_E164,
         email: LEGAL.email,
-        servingCuisine: ["Moroccan", "Middle Eastern"],
+        servingCuisine: ["Moroccan", "Middle Eastern", "Halal"],
         sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok, SOCIAL_LINKS.googleBusiness],
         aggregateRating: {
           "@type": "AggregateRating",
-          ratingValue: 5,
-          reviewCount: 22,
-          bestRating: 5,
-          worstRating: 1,
+          ratingValue: "5.0",
+          reviewCount: "22",
+          bestRating: "5",
+          worstRating: "1",
         },
         hasOfferCatalog: {
           "@type": "OfferCatalog",

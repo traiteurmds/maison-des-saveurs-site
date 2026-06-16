@@ -1,82 +1,36 @@
-# Maison Des Saveurs — Site traiteur
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Site Next.js du traiteur **Maison Des Saveurs** (MDS Traiteur), basé à Villeurbanne / Lyon.
+## Getting Started
 
-## Démarrage
+First, run the development server:
 
 ```bash
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Production : déployé sur [Vercel](https://vercel.com) — HTTP/2 et HTTP/3 gérés automatiquement par la plateforme.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm run lint
-npm run build
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Variables d'environnement
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### EmailJS (formulaire contact)
+## Learn More
 
-```
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
-```
+To learn more about Next.js, take a look at the following resources:
 
-### Cloudflare Turnstile (anti-spam formulaire)
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-Obtenir les clés sur [Cloudflare Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile).
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-```
-NEXT_PUBLIC_TURNSTILE_SITE_KEY=
-TURNSTILE_SECRET_KEY=
-```
+## Deploy on Vercel
 
-- **Site key** : publique, utilisée côté client (`TurnstileField`, mode invisible).
-- **Secret key** : serveur uniquement (`app/lib/turnstile.ts`, route `/api/contact`).
-- Sans clés configurées, la vérification Turnstile est ignorée (dev local).
-- Flux : le client obtient un token → `POST /api/contact` vérifie Turnstile + valide les champs → si OK, EmailJS envoie l'email.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-### Vercel Analytics
-
-Chargé uniquement après consentement cookies (`ConsentAwareAnalytics`).
-
-## SEO & fichiers publics
-
-- `public/llms.txt` — résumé pour assistants IA
-- `app/sitemap.ts` — sitemap (sans `/about`)
-- `app/robots.ts` — robots.txt
-- Schema.org JSON-LD dans `app/layout.tsx` via `app/lib/structured-data.ts`
-
-## Email & délivrabilité (DNS OVH)
-
-**DMARC** : à configurer côté DNS OVH pour améliorer la délivrabilité des emails (`contact.mds.traiteur@gmail.com`). Ce réglage ne se fait pas dans le code du site.
-
-Exemple de records à ajouter chez OVH (adapter selon votre configuration SPF/DKIM existante) :
-
-- SPF : autoriser les serveurs d'envoi légitimes
-- DKIM : signature Gmail/Google Workspace si utilisé
-- DMARC : politique `p=none` puis `p=quarantine` après tests
-
-## Backlinks — checklist (hors code)
-
-À développer manuellement pour renforcer le SEO local :
-
-- [ ] Fiche [Google Business Profile](https://share.google/uiBTniokmuQrw7QzH) à jour (photos, avis, horaires)
-- [ ] [Instagram](https://www.instagram.com/mds.traiteur69/)
-- [ ] [TikTok](https://www.tiktok.com/@mds.traiteur)
-- [ ] Annuaires locaux Lyon / Villeurbanne (PagesJaunes, Yelp, etc.)
-- [ ] Pages partenaires (salles, wedding planners, décorateurs)
-- [ ] Associations, universités, réseaux événementiels
-- [ ] LinkedIn entreprise — uniquement si la page est créée et maintenue
-
-Ne pas lister de réseaux sociaux inexistants (Facebook, YouTube, X…) sur le site.
-
-## Stack
-
-- Next.js 16, React 19, Tailwind CSS v4
-- EmailJS, Cloudflare Turnstile, Vercel Analytics (consent-based)
-- Framer Motion, palette ivoire / noir / doré
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
