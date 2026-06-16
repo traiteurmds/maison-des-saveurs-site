@@ -484,6 +484,13 @@ export default function ContactPage() {
                     "Envoyer la demande"
                   )}
                 </button>
+                <p className="text-center text-xs leading-relaxed text-mds-muted">
+                  En envoyant ce formulaire, vous acceptez notre{" "}
+                  <a href="/politique-confidentialite" className="text-[var(--gold)] underline-offset-4 hover:underline">
+                    politique de confidentialité
+                  </a>
+                  .
+                </p>
               </motion.form>
             ) : (
               <div ref={successMessageRef}>

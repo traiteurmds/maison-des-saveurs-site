@@ -7,7 +7,6 @@ import PageTransition from "./components/PageTransition";
 import Providers from "./components/Providers";
 import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
-import { Analytics } from "@vercel/analytics/react";
 import { getStructuredDataGraph } from "./lib/structured-data";
 import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
 
@@ -125,7 +124,6 @@ export default function RootLayout({
           </main>
           <Footer />
         </Providers>
-        <Analytics />
       </body>
     </html>
   );

@@ -6,17 +6,20 @@ import CursorGlow from "./ui/CursorGlow";
 import SelectionCartDock from "./SelectionCartDock";
 import SelectionToast from "./SelectionToast";
 import MobileCallButton from "./MobileCallButton";
+import CookieConsentProvider from "./cookies/CookieConsentProvider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SelectionProvider>
-      <SmoothScrollProvider>
-        <CursorGlow />
-        {children}
-        <SelectionToast />
-        <SelectionCartDock />
-        <MobileCallButton />
-      </SmoothScrollProvider>
-    </SelectionProvider>
+    <CookieConsentProvider>
+      <SelectionProvider>
+        <SmoothScrollProvider>
+          <CursorGlow />
+          {children}
+          <SelectionToast />
+          <SelectionCartDock />
+          <MobileCallButton />
+        </SmoothScrollProvider>
+      </SelectionProvider>
+    </CookieConsentProvider>
   );
 }
