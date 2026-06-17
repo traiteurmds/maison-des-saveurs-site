@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 import path from "path";
 
-const PROJECT_ROOT = path.resolve(
-  "C:\\Users\\crypt\\Desktop\\MDS\\maison-des-saveurs-site"
-);
+const PROJECT_ROOT = path.resolve(process.cwd());
 
 const isProduction = process.env.NODE_ENV === "production";
 
