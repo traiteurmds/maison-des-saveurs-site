@@ -9,6 +9,7 @@ import MaintenancePage from "./components/MaintenancePage";
 import { MAINTENANCE_MODE } from "./config/maintenance";
 import { getStructuredDataJson } from "./lib/structured-data";
 import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
+import { Analytics } from "@vercel/analytics/next";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -124,6 +125,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
