@@ -715,6 +715,8 @@ header:not(.nav-over-hero) .nav-logo {
   left: 14px;
   bottom: calc(6.25rem + env(safe-area-inset-bottom));
   pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .testimonials-marquee {

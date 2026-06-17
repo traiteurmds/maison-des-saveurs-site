@@ -5,7 +5,7 @@ export const EMAIL_MAILTO = `mailto:${EMAIL}`;
 
 export const PHONE_E164 = "+33758639734";
 export const PHONE_TEL = `tel:${PHONE_E164}`;
-export const PHONE_DISPLAY = "07.58.63.97.34";
+export const PHONE_DISPLAY = "07 58 63 97 34";
 
 export const SERVICE_AREAS = [
   "Lyon",
