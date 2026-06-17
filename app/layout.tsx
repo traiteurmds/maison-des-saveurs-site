@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { Cormorant_Garamond, Outfit, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
@@ -101,7 +102,9 @@ export default function RootLayout({
       <html lang="fr" className={`${cormorant.variable} ${outfit.variable} ${playfair.variable} ${inter.variable}`}>
         <body className="antialiased">
           <MaintenancePage />
-          <Analytics />
+          <Suspense fallback={null}>
+            <Analytics />
+          </Suspense>
         </body>
       </html>
     );
@@ -126,7 +129,9 @@ export default function RootLayout({
           </main>
           <Footer />
         </Providers>
-        <Analytics />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
