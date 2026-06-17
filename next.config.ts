@@ -14,11 +14,27 @@ const securityHeaders = [
           key: "Strict-Transport-Security",
           value: "max-age=31536000; includeSubDomains; preload",
         },
+        {
+          key: "Content-Security-Policy",
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: blob: https:",
+            "font-src 'self' data:",
+            "connect-src 'self' https://challenges.cloudflare.com https://vitals.vercel-insights.com https://*.vercel-insights.com https://api.emailjs.com",
+            "frame-src https://challenges.cloudflare.com",
+            "object-src 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "frame-ancestors 'none'",
+          ].join("; "),
+        },
       ]
     : []),
   {
     key: "X-Frame-Options",
-    value: "SAMEORIGIN",
+    value: "DENY",
   },
   {
     key: "X-Content-Type-Options",
