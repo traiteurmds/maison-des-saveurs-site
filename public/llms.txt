@@ -12,7 +12,7 @@
 - Réceptions privées et associations
 
 ## Zones desservies
-Lyon, Villeurbanne, Bron, Vénissieux, Décines, Meyzieu, Saint-Priest, Genas, Grenoble, Annecy
+Lyon, Villeurbanne, Bron, Vénissieux, Saint-Priest, Décines, Meyzieu, Genas et la métropole lyonnaise. Plus loin (Grenoble, Annecy) sur étude.
 
 ## Contact
 - Site : https://mds-traiteur.fr
@@ -22,6 +22,9 @@ Lyon, Villeurbanne, Bron, Vénissieux, Décines, Meyzieu, Saint-Priest, Genas, G
 
 ## Pages principales
 - https://mds-traiteur.fr/
+- https://mds-traiteur.fr/menu
+- https://mds-traiteur.fr/traiteur-mariage-lyon
+- https://mds-traiteur.fr/traiteur-entreprise-lyon
 - https://mds-traiteur.fr/services
 - https://mds-traiteur.fr/caftans
 - https://mds-traiteur.fr/contact

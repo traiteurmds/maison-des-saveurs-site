@@ -1,615 +1,75 @@
-"use client";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FiClock, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import PageHero from "../components/ui/PageHero";
+import QuoteForm from "../components/contact/QuoteForm";
+import GoogleRating from "../components/ui/GoogleRating";
+import { EMAIL, EMAIL_MAILTO, PHONE_DISPLAY, PHONE_TEL, SOCIAL_LINKS } from "../lib/site-seo";
+import { WHATSAPP_SIMPLE_URL } from "../lib/whatsapp";
 
-import { useState, useCallback, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import emailjs from "@emailjs/browser";
-import { useSelection } from "../components/providers/SelectionProvider";
-import { btnWhatsappClass, selectableFocusClass } from "../lib/whatsapp";
-import { cn } from "../lib/utils";
-import {
-  LIMITS,
-  sanitizeName,
-  sanitizeEmail,
-  sanitizeMessage,
-  validateNom,
-  validatePrenom,
-  validateEmail,
-  validatePhone,
-  validateMessage,
-} from "../lib/contact-validation";
-import TurnstileField, { isTurnstileRequired } from "../components/contact/TurnstileField";
-
-const colors = {
-  black: "#0B0B0A",
-  gold: "#C6A46A",
-  beige: "#F8F5EF",
-  beigeDark: "#F1EAE0",
-  white: "#FFFDF8",
-  border: "rgba(198, 164, 106, 0.28)",
-} as const;
-
-const COOLDOWN_MS = 12_000;
-
-const inputBaseStyle: React.CSSProperties = {
-  width: "100%",
-  maxWidth: "100%",
-  padding: "0.75rem 1rem",
-  fontSize: "1rem",
-  lineHeight: "1.5",
-  color: colors.black,
-  backgroundColor: colors.white,
-  border: "2px solid",
-  borderColor: colors.border,
-  borderRadius: "8px",
-  outline: "none",
-  boxSizing: "border-box",
-  minHeight: "48px",
-};
-
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontFamily: "var(--font-cormorant), Georgia, serif",
-  fontSize: "0.875rem",
-  fontWeight: 500,
-  color: colors.black,
-  marginBottom: "0.5rem",
-};
+const contacts = [
+  { Icon: FiPhone, label: "Téléphone", value: PHONE_DISPLAY, href: PHONE_TEL },
+  { Icon: FaWhatsapp, label: "WhatsApp", value: "Écrire un message", href: WHATSAPP_SIMPLE_URL, external: true },
+  { Icon: FiMail, label: "E-mail", value: EMAIL, href: EMAIL_MAILTO },
+  { Icon: FaInstagram, label: "Instagram", value: "@mds.traiteur69", href: SOCIAL_LINKS.instagram, external: true },
+];
 
 export default function ContactPage() {
-  const { whatsappUrl } = useSelection();
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
-  const successMessageRef = useRef<HTMLDivElement>(null);
-  const submittingRef = useRef(false);
-
-  useEffect(() => {
-    if (sent) {
-      successMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [sent]);
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [message, setMessage] = useState("");
-  const [minDate, setMinDate] = useState("");
-  const [honeypot, setHoneypot] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [turnstileUnavailable, setTurnstileUnavailable] = useState(false);
-  const turnstileRequired = isTurnstileRequired();
-
-  useEffect(() => {
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = String(today.getMonth() + 1).padStart(2, "0");
-    const d = String(today.getDate()).padStart(2, "0");
-    setMinDate(`${y}-${m}-${d}`);
-  }, []);
-
-  const inCooldown = cooldownUntil !== null;
-  const phoneValid = phone.length === LIMITS.PHONE_LENGTH && /^\d+$/.test(phone);
-  const emailValid = validateEmail(sanitizeEmail(email)).valid;
-  const requiredFilled =
-    lastName.trim().length > 0 &&
-    email.trim().length > 0 &&
-    phone.trim().length > 0 &&
-    message.trim().length > 0;
-  const canSubmit =
-    !loading &&
-    !inCooldown &&
-    phoneValid &&
-    emailValid &&
-    requiredFilled &&
-    (!turnstileRequired || turnstileUnavailable || Boolean(turnstileToken));
-
-  const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/\D/g, "").slice(0, LIMITS.PHONE_LENGTH);
-    setPhone(raw);
-    if (phoneError) setPhoneError("");
-    setFieldErrors((prev) => ({ ...prev, phone: "" }));
-  }, [phoneError]);
-
-  const handlePhoneBlur = useCallback(() => {
-    const res = validatePhone(phone);
-    setPhoneError(res.valid ? "" : res.error ?? "");
-    if (!res.valid) setFieldErrors((prev) => ({ ...prev, phone: res.error ?? "" }));
-  }, [phone]);
-
-  const handleMessageChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(sanitizeMessage(e.target.value));
-  }, []);
-
-  const resetForm = useCallback(() => {
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPhone("");
-    setPhoneError("");
-    setEventDate("");
-    setMessage("");
-    setHoneypot("");
-    setFieldErrors({});
-    setTurnstileToken(null);
-  }, []);
-
-  const handleTurnstileToken = useCallback((token: string | null) => {
-    setTurnstileToken(token);
-  }, []);
-
-  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (loading || submittingRef.current || !canSubmit) return;
-
-    if (honeypot) {
-      return;
-    }
-
-    const nom = sanitizeName(lastName, LIMITS.MAX_NOM);
-    const emailSanitized = sanitizeEmail(email);
-    const messageSanitized = sanitizeMessage(message);
-
-    const errs: Record<string, string> = {};
-    const rNom = validateNom(nom);
-    if (!rNom.valid && rNom.error) errs.lastName = rNom.error;
-    const rEmail = validateEmail(emailSanitized);
-    if (!rEmail.valid && rEmail.error) errs.email = rEmail.error;
-    const rPhone = validatePhone(phone);
-    if (!rPhone.valid && rPhone.error) {
-      errs.phone = rPhone.error;
-      setPhoneError(rPhone.error);
-    }
-    const rMessage = validateMessage(messageSanitized);
-    if (!rMessage.valid && rMessage.error) errs.message = rMessage.error;
-
-    if (Object.keys(errs).length > 0) {
-      setFieldErrors(errs);
-      return;
-    }
-    setFieldErrors({});
-
-    if (turnstileRequired && !turnstileUnavailable && !turnstileToken) {
-      setFieldErrors({
-        form: "Veuillez compléter la vérification anti-spam avant d'envoyer.",
-      });
-      return;
-    }
-
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setFieldErrors({
-        form: "Configuration email manquante. Vérifiez les variables d'environnement.",
-      });
-      return;
-    }
-
-    submittingRef.current = true;
-    setLoading(true);
-    setSent(false);
-
-    const templateParams = {
-      name: nom,
-      email: emailSanitized,
-      phone,
-      message: messageSanitized,
-    };
-
-    try {
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-
-      setSent(true);
-      resetForm();
-      setCooldownUntil(Date.now() + COOLDOWN_MS);
-      setTimeout(() => setCooldownUntil(null), COOLDOWN_MS);
-    } catch {
-      setFieldErrors({ form: "Une erreur est survenue. Veuillez réessayer." });
-      setSent(false);
-    } finally {
-      submittingRef.current = false;
-      setLoading(false);
-    }
-  };
-
-  const focusStyle = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.target.style.borderColor = colors.gold;
-    e.target.style.boxShadow = `0 0 0 3px ${colors.gold}40`;
-  }, []);
-
-  const blurStyle = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.target.style.borderColor = colors.border;
-    e.target.style.boxShadow = "none";
-  }, []);
-
   return (
-    <div style={{ paddingTop: "7rem", minHeight: "100vh" }} className="contact-page bg-mds-bg">
-      <style>{`
-        .contact-page input::placeholder,
-        .contact-page textarea::placeholder {
-          color: rgba(111, 106, 96, 0.55);
+    <>
+      <PageHero
+        eyebrow="Devis & contact"
+        title={
+          <>
+            Parlons de votre <em className="text-gold-gradient">événement</em>
+          </>
         }
-        .contact-page input[type="date"] {
-          appearance: none;
-          -webkit-appearance: none;
-        }
-      `}</style>
-
-      <section
-        style={{
-          padding: "4rem 1.5rem",
-          textAlign: "center",
-          background:
-            "radial-gradient(circle at 16% 18%, rgba(198,164,106,0.12), transparent 32%), radial-gradient(circle at 84% 14%, rgba(11,11,10,0.04), transparent 26%), linear-gradient(180deg, #f8f5ef 0%, #f1eae0 100%)",
-          borderBottom: `1px solid ${colors.border}`,
-        }}
+        intro="Trois étapes, une minute : votre demande arrive chez nous complète, et nous pouvons vous répondre avec un devis précis."
       >
-        <p
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "0.75rem",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: colors.gold,
-            margin: 0,
-          }}
-        >
-          Écrivez-nous
-        </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
-            fontWeight: 600,
-            color: colors.black,
-            margin: "0.5rem 0 0",
-          }}
-        >
-          Contact
-        </h1>
-        <p
-          style={{
-            fontSize: "1.125rem",
-            color: colors.black,
-            opacity: 0.85,
-            margin: "1rem 0 0",
-            maxWidth: "36rem",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          Parlez-nous de votre événement. Nous vous répondrons sous 24 h.
-        </p>
-      </section>
+        <GoogleRating />
+      </PageHero>
 
-      <section className="px-6 py-14 md:py-20">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_340px] lg:items-start">
-          <div>
-          <AnimatePresence mode="wait">
-            {!sent ? (
-              <motion.form
-                key="form"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                onSubmit={sendEmail}
-                style={{
-                  backgroundColor: colors.white,
-                  padding: "2.5rem",
-                  borderRadius: "12px",
-                  border: "1px solid rgba(198, 164, 106, 0.22)",
-                  boxShadow: "0 20px 48px rgba(11, 11, 10, 0.08)",
-                  backdropFilter: "blur(10px)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1.5rem",
-                }}
-              >
-                {fieldErrors.form && (
-                  <p style={{ color: colors.gold, fontSize: "0.875rem" }} role="alert">
-                    {fieldErrors.form}
-                  </p>
-                )}
-                <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}>
-                  <label htmlFor="website_url">Ne pas remplir</label>
-                  <input
-                    id="website_url"
-                    type="text"
-                    name="website_url"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
-                  />
-                </div>
-                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-                  <TurnstileField
-                    onTokenChange={handleTurnstileToken}
-                    onUnavailable={() => setTurnstileUnavailable(true)}
-                  />
-                )}
+      <section className="section-tight bg-paper">
+        <div className="container-x grid gap-8 lg:grid-cols-[1fr_380px] lg:items-start lg:gap-12">
+          <QuoteForm />
 
-                <div>
-                  <label htmlFor="lastName" style={labelStyle}>Nom *</label>
-                  <input
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    required
-                    autoComplete="family-name"
-                    placeholder="Nom"
-                    maxLength={LIMITS.MAX_NOM}
-                    value={lastName}
-                    onChange={(e) => setLastName(sanitizeName(e.target.value, LIMITS.MAX_NOM))}
-                    style={inputBaseStyle}
-                    onFocus={focusStyle}
-                    onBlur={blurStyle}
-                  />
-                  {fieldErrors.lastName && (
-                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.lastName}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="email" style={labelStyle}>Email *</label>
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    required
-                    autoComplete="email"
-                    placeholder="vous@exemple.fr"
-                    maxLength={254}
-                    value={email}
-                    onChange={(e) => setEmail(sanitizeEmail(e.target.value))}
-                    style={inputBaseStyle}
-                    onFocus={focusStyle}
-                    onBlur={blurStyle}
-                  />
-                  {fieldErrors.email && (
-                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.email}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="phone" style={labelStyle}>Numéro de téléphone * (10 chiffres)</label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    name="phone"
-                    required
-                    inputMode="numeric"
-                    autoComplete="tel"
-                    placeholder="0612345678"
-                    value={phone}
-                    onChange={handlePhoneChange}
-                    onFocus={focusStyle}
-                    onBlur={(e) => {
-                      handlePhoneBlur();
-                      blurStyle(e);
-                    }}
-                    style={{
-                      ...inputBaseStyle,
-                      borderColor: phoneError ? colors.gold : colors.border,
-                    }}
-                    maxLength={LIMITS.PHONE_LENGTH}
-                  />
-                  {(phoneError || fieldErrors.phone) && (
-                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.375rem" }} role="alert">
-                      {phoneError || fieldErrors.phone}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="message" style={labelStyle}>Message *</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    required
-                    autoComplete="off"
-                    maxLength={LIMITS.MAX_MESSAGE}
-                    placeholder="Décrivez votre événement, le lieu, et vos préférences..."
-                    value={message}
-                    onChange={handleMessageChange}
-                    style={{
-                      ...inputBaseStyle,
-                      resize: "vertical",
-                      minHeight: "120px",
-                      maxWidth: "100%",
-                      wordBreak: "break-word",
-                    }}
-                    onFocus={focusStyle}
-                    onBlur={blurStyle}
-                  />
-                  <p
-                    style={{
-                      fontSize: "0.8125rem",
-                      color: colors.black,
-                      opacity: 0.6,
-                      marginTop: "0.375rem",
-                      textAlign: "right",
-                    }}
-                  >
-                    {message.length} / {LIMITS.MAX_MESSAGE}
-                  </p>
-                  {fieldErrors.message && (
-                    <p style={{ color: colors.gold, fontSize: "0.8125rem", marginTop: "0.25rem" }} role="alert">{fieldErrors.message}</p>
-                  )}
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={!canSubmit || loading}
-                  className="mt-3 inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--black)] px-8 py-3 text-xs font-medium tracking-[0.18em] text-[var(--ivory)] uppercase shadow-md transition-all duration-300 ease-out hover:bg-[var(--charcoal)] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {loading ? (
-                    <>
-                      <span className="h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden />
-                      Envoi en cours...
-                    </>
-                  ) : (
-                    "Envoyer la demande"
-                  )}
-                </button>
-              </motion.form>
-            ) : (
-              <div ref={successMessageRef}>
-                <SuccessConfirmation />
-              </div>
-            )}
-          </AnimatePresence>
-          </div>
-
-          <aside className="glass-card rounded-2xl p-7 lg:sticky lg:top-32">
-            <h2 className="font-serif text-xl font-semibold text-mds-text">Contact direct</h2>
-            <p className="mt-3 text-sm leading-relaxed text-mds-muted">
-              Pour une réponse plus rapide, contactez-nous directement sur WhatsApp.
-            </p>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(btnWhatsappClass, "mt-8", selectableFocusClass)}
-            >
-              Écrire sur WhatsApp
-            </a>
+          <aside className="space-y-5 lg:sticky lg:top-[calc(var(--header-h)+24px)]">
+            <div className="card p-6 md:p-7">
+              <p className="eyebrow">Nous joindre</p>
+              <ul className="mt-5 divide-y divide-line">
+                {contacts.map(({ Icon, label, value, href, external }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="group flex items-center gap-4 py-4"
+                    >
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-gold transition-colors group-hover:bg-ink group-hover:text-ivory">
+                        <Icon aria-hidden />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-xs uppercase tracking-[0.16em] text-muted">{label}</span>
+                        <span className="block truncate font-medium text-ink">{value}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="card space-y-4 p-6 text-sm text-muted md:p-7">
+              <p className="flex gap-3">
+                <FiMapPin className="mt-0.5 shrink-0 text-gold" aria-hidden />
+                <span>
+                  Basés à Villeurbanne, nous intervenons à Lyon et dans toute la métropole. Plus loin sur étude.
+                </span>
+              </p>
+              <p className="flex gap-3">
+                <FiClock className="mt-0.5 shrink-0 text-gold" aria-hidden />
+                <span>Pour un mariage, pensez à réserver votre date le plus tôt possible.</span>
+              </p>
+            </div>
           </aside>
         </div>
       </section>
-
-      <section
-        style={{
-          padding: "3rem 1.5rem",
-          textAlign: "center",
-          background: "linear-gradient(180deg, #f1eae0 0%, #f8f5ef 100%)",
-          borderTop: `1px solid ${colors.border}`,
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "0.75rem",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: colors.black,
-            opacity: 0.75,
-            margin: 0,
-          }}
-        >
-          Ou contactez-nous directement
-        </p>
-        <p
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "1.25rem",
-            color: colors.black,
-            margin: "0.5rem 0 0",
-          }}
-        >
-          contact.mds.traiteur@gmail.com
-        </p>
-        <p
-          style={{
-            fontSize: "1rem",
-            color: colors.black,
-            opacity: 0.85,
-            margin: "0.25rem 0 0",
-          }}
-        >
-          07 58 63 97 34
-        </p>
-      </section>
-    </div>
-  );
-}
-
-function SuccessConfirmation() {
-  return (
-    <motion.div
-      key="success"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        backgroundColor: colors.white,
-        padding: "3rem 2.5rem",
-        borderRadius: "12px",
-        boxShadow: "0 4px 24px rgba(11, 11, 10, 0.08)",
-        textAlign: "center",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "1.5rem",
-      }}
-    >
-      <AnimatedCheckmark />
-      <div style={{ marginTop: "0.5rem" }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "1.75rem",
-            fontWeight: 600,
-            color: colors.black,
-            margin: 0,
-            lineHeight: 1.3,
-          }}
-        >
-          Message envoyé ! Nous vous répondrons sous 24h.
-        </h2>
-        <p
-          style={{
-            fontSize: "1rem",
-            color: colors.black,
-            opacity: 0.85,
-            margin: "0.75rem 0 0",
-            lineHeight: 1.5,
-          }}
-        >
-          Nous vous contacterons très prochainement.
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-function AnimatedCheckmark() {
-  return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      style={{ position: "relative", width: 80, height: 80 }}
-      aria-hidden
-    >
-      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
-        <motion.path
-          d="M 40 4 A 36 36 0 0 1 76 40 A 36 36 0 0 1 40 76 A 36 36 0 0 1 4 40 A 36 36 0 0 1 40 4"
-          stroke="#C6A46A"
-          strokeWidth="3"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        />
-        <motion.path
-          d="M22 40 L34 52 L58 28"
-          stroke="#C6A46A"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 0.35, delay: 0.25, ease: "easeOut" }}
-        />
-      </svg>
-    </motion.div>
+    </>
   );
 }

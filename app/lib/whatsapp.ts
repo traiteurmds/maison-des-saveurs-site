@@ -4,89 +4,118 @@ export type SelectionState = {
   starters: string[];
   mains: string[];
   desserts: string[];
+  buffet: string[];
   options: string[];
   caftans: string[];
 };
+
+export type SelectionCategory = keyof SelectionState;
 
 export const EMPTY_SELECTION: SelectionState = {
   starters: [],
   mains: [],
   desserts: [],
+  buffet: [],
   options: [],
   caftans: [],
 };
 
-export const SELECTION_LABELS: Record<keyof SelectionState, string> = {
+export const SELECTION_LABELS: Record<SelectionCategory, string> = {
   starters: "Entrées",
   mains: "Plats",
   desserts: "Desserts",
-  options: "Options vaisselle & décoration",
+  buffet: "Buffet",
+  options: "Options",
   caftans: "Caftans",
 };
 
-export const MENU_CATEGORIES: (keyof SelectionState)[] = ["starters", "mains", "desserts"];
+export const SELECTION_ORDER: SelectionCategory[] = [
+  "starters",
+  "mains",
+  "buffet",
+  "desserts",
+  "options",
+  "caftans",
+];
 
-const formatItems = (items: string[]) => items.map((item) => `- ${item}`).join("\n");
+export type EventDetails = {
+  name?: string;
+  phone?: string;
+  email?: string;
+  eventType?: string;
+  date?: string;
+  city?: string;
+  guests?: string;
+  tables?: string;
+  message?: string;
+};
 
-export function buildWhatsappMessage(selection: SelectionState) {
-  const sections: string[] = [];
+const list = (items: string[]) => items.map((item) => `- ${item}`).join("\n");
 
-  sections.push(`Bonjour, je souhaite obtenir un devis Maison Des Saveurs.
-
-Nom :
-Prénom :
-Téléphone :
-Date de l'événement :
-Lieu :
-Nombre de personnes :
-Type d'événement :`);
-
-  const menuSections: string[] = [];
-
-  if (selection.starters.length > 0) {
-    menuSections.push(`Entrées :
-${formatItems(selection.starters)}`);
-  }
-
-  if (selection.mains.length > 0) {
-    menuSections.push(`Plats :
-${formatItems(selection.mains)}`);
-  }
-
-  if (selection.desserts.length > 0) {
-    menuSections.push(`Desserts :
-${formatItems(selection.desserts)}`);
-  }
-
-  if (menuSections.length > 0) {
-    sections.push(`Sélection menu :
-${menuSections.join("\n\n")}`);
-  }
-
-  if (selection.options.length > 0) {
-    sections.push(`Options vaisselle & décoration :
-${formatItems(selection.options)}`);
-  }
-
-  if (selection.caftans.length > 0) {
-    sections.push(`Caftans sélectionnés :
-${formatItems(selection.caftans)}`);
-  }
-
-  sections.push(`Message complémentaire :
-
-Merci.`);
-
-  return sections.join("\n\n");
+function formatDate(value?: string) {
+  if (!value) return "";
+  const d = new Date(`${value}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return value;
+  return d.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
-export function getWhatsappUrl(selection: SelectionState) {
-  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(buildWhatsappMessage(selection))}`;
+/** Message de demande de devis, lisible tel quel sur WhatsApp ou par e-mail. */
+export function buildRequestMessage(selection: SelectionState, details: EventDetails = {}) {
+  const blocks: string[] = ["Bonjour Maison Des Saveurs, je souhaite recevoir un devis."];
+
+  const event = [
+    ["Événement", details.eventType],
+    ["Date", formatDate(details.date)],
+    ["Ville / lieu", details.city],
+    ["Nombre d'invités", details.guests],
+    ["Nombre de tables", details.tables],
+  ]
+    .filter(([, v]) => v && String(v).trim())
+    .map(([k, v]) => `${k} : ${v}`);
+
+  if (event.length > 0) blocks.push(event.join("\n"));
+
+  const chosen = SELECTION_ORDER.filter((key) => selection[key].length > 0).map(
+    (key) => `${SELECTION_LABELS[key]} :\n${list(selection[key])}`
+  );
+  if (chosen.length > 0) blocks.push(`Ma sélection\n\n${chosen.join("\n\n")}`);
+
+  if (details.message?.trim()) blocks.push(`Précisions :\n${details.message.trim()}`);
+
+  const contact = [
+    ["Nom", details.name],
+    ["Téléphone", details.phone],
+    ["E-mail", details.email],
+  ]
+    .filter(([, v]) => v && String(v).trim())
+    .map(([k, v]) => `${k} : ${v}`);
+  if (contact.length > 0) blocks.push(contact.join("\n"));
+
+  blocks.push("Merci !");
+  return blocks.join("\n\n");
 }
+
+export function getWhatsappUrl(selection: SelectionState, details: EventDetails = {}) {
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
+    buildRequestMessage(selection, details)
+  )}`;
+}
+
+export const WHATSAPP_SIMPLE_URL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
+  "Bonjour Maison Des Saveurs, je souhaite des informations pour un événement."
+)}`;
 
 export function getSelectionCounts(selection: SelectionState) {
   const menu =
-    selection.starters.length + selection.mains.length + selection.desserts.length;
+    selection.starters.length +
+    selection.mains.length +
+    selection.desserts.length +
+    selection.buffet.length;
   return {
     menu,
     options: selection.options.length,
@@ -98,26 +127,3 @@ export function getSelectionCounts(selection: SelectionState) {
 export function getTotalSelected(selection: SelectionState) {
   return Object.values(selection).reduce((total, items) => total + items.length, 0);
 }
-
-export const selectableCardClass = (selected: boolean) =>
-  selected
-    ? "border-[var(--gold)] bg-[var(--soft-gold)]/30 shadow-[0_0_0_1px_rgba(198,164,106,0.35),0_16px_40px_var(--mds-shadow)]"
-    : "border-mds-border bg-[var(--surface)] shadow-[0_12px_40px_var(--mds-shadow)] hover:border-[var(--gold)]/40";
-
-export const selectableFocusClass =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]";
-
-export const btnPrimaryClass =
-  "inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-[var(--black)] px-6 py-3 text-sm font-medium tracking-wide text-[var(--ivory)] transition-all duration-300 hover:bg-[var(--charcoal)]";
-
-export const btnSecondaryClass =
-  "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-mds-border bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-mds-muted transition-all hover:border-[var(--gold)]/45 hover:text-mds-text";
-
-export const btnGhostClass =
-  "w-full py-2 text-center text-sm text-[var(--gold)] underline-offset-4 transition-colors hover:underline";
-
-/** @deprecated use btnPrimaryClass */
-export const btnWhatsappClass = btnPrimaryClass;
-
-/** @deprecated use btnSecondaryClass */
-export const btnWhatsappSecondaryClass = btnSecondaryClass;

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import LegalPageShell from "../components/legal/LegalPageShell";
 import { LEGAL } from "../lib/legal";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withSocial({
   title: "Politique de confidentialité",
   description: "Politique de confidentialité — Maison Des Saveurs.",
   alternates: { canonical: `${SITE_URL}/politique-confidentialite` },
-};
+});
 
 export default function PolitiqueConfidentialitePage() {
   return (

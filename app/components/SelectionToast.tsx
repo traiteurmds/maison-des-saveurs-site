@@ -1,33 +1,39 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import { FiCheck } from "react-icons/fi";
 import { useSelection } from "./providers/SelectionProvider";
 
 export default function SelectionToast() {
-  const { toastMessage, totalSelected } = useSelection();
-  const reduced = useReducedMotion();
+  const { toastMessage, counts } = useSelection();
 
   return (
-    <AnimatePresence>
-      {toastMessage && (
-        <motion.div
-          initial={reduced ? false : { opacity: 0, y: 12, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={reduced ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }}
-          transition={{ duration: reduced ? 0.01 : 0.35, ease: [0.22, 1, 0.36, 1] }}
-          role="status"
-          aria-live="polite"
-          className="pointer-events-none fixed left-1/2 z-[55] w-[calc(100vw-48px)] max-w-sm -translate-x-1/2 rounded-full border border-mds-border bg-[rgba(255,253,248,0.96)] px-5 py-3 text-center text-sm font-medium text-mds-text shadow-[0_12px_40px_var(--mds-shadow)] backdrop-blur-xl bottom-[calc(5.5rem+env(safe-area-inset-bottom))] lg:bottom-8"
-        >
-          {toastMessage}
-          {totalSelected > 0 && (
-            <span className="mt-0.5 block text-xs text-mds-muted">
-              {totalSelected} élément{totalSelected > 1 ? "s" : ""} sélectionné
-              {totalSelected > 1 ? "s" : ""}
+    <div
+      className="pointer-events-none fixed inset-x-0 z-[45] flex justify-center px-4 bottom-[calc(var(--mobile-bar-h)+env(safe-area-inset-bottom)+12px)] lg:bottom-8"
+      aria-live="polite"
+    >
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-auto flex max-w-md items-center gap-3 rounded-full border border-line-dark bg-ink py-2 pl-3 pr-2 text-sm text-ivory shadow-[0_20px_40px_-12px_rgba(0,0,0,0.5)]"
+          >
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ivory text-ink">
+              <FiCheck aria-hidden />
             </span>
-          )}
-        </motion.div>
-      )}
-    </AnimatePresence>
+            <span className="truncate">{toastMessage}</span>
+            {counts.total > 0 && (
+              <Link href="/contact" className="btn btn-light btn-sm min-h-9 shrink-0 px-4 text-[0.62rem]">
+                Voir ({counts.total})
+              </Link>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

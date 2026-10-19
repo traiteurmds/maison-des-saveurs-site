@@ -34,3 +34,16 @@ export async function copyPhoneNumber(): Promise<boolean> {
     }
   }
 }
+
+/** Saisie du numéro : 10 chiffres maximum, groupés par deux (+33 6… devient 06…). */
+export function formatPhoneInput(value: string): string {
+  let digits = value.replace(/\D/g, "");
+  if (value.trim().startsWith("+")) {
+    // Indicatif en cours de saisie : on garde le « + » jusqu'à reconnaître +33
+    if (digits.length <= 2) return `+${digits}`;
+    if (digits.startsWith("33")) digits = `0${digits.slice(2)}`;
+  } else if (digits.startsWith("33") && digits.length > 10) {
+    digits = `0${digits.slice(2)}`;
+  }
+  return digits.slice(0, 10).replace(/(\d{2})(?=\d)/g, "$1 ");
+}

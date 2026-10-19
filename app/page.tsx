@@ -1,21 +1,31 @@
-"use client";
-
-import VisionHero from "./components/VisionHero";
-import TrustStatsSection from "./components/TrustStatsSection";
-import ReceptionConfiguratorSection from "./components/ReceptionConfiguratorSection";
-import ClientTestimonialsSection from "./components/ClientTestimonialsSection";
-import WhyChooseSection from "./components/WhyChooseSection";
-import HowItWorksSection from "./components/HowItWorksSection";
+import HeroZoom from "./components/home/HeroZoom";
+import Manifesto from "./components/home/Manifesto";
+import PlateShowcase from "./components/home/PlateShowcase";
+import Occasions from "./components/home/Occasions";
+import BigMarquee from "./components/home/BigMarquee";
+import HorizontalGallery from "./components/home/HorizontalGallery";
+import ReviewsQuote from "./components/home/ReviewsQuote";
+import Process from "./components/home/Process";
+import VideoReel from "./components/home/VideoReel";
+import GlobeLyon from "./components/home/GlobeLyon";
+import ZonesFaq from "./components/sections/ZonesFaq";
+import ClosingCta from "./components/home/ClosingCta";
 
 export default function Home() {
   return (
     <>
-      <VisionHero />
-      <TrustStatsSection />
-      <ReceptionConfiguratorSection />
-      <ClientTestimonialsSection />
-      <WhyChooseSection />
-      <HowItWorksSection />
+      <HeroZoom />
+      <Manifesto />
+      <PlateShowcase />
+      <Occasions />
+      <BigMarquee />
+      <HorizontalGallery />
+      <VideoReel />
+      <ReviewsQuote />
+      <Process />
+      <GlobeLyon />
+      <ZonesFaq />
+      <ClosingCta />
     </>
   );
 }

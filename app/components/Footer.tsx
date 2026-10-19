@@ -1,35 +1,41 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useCallback } from "react";
-import { motion } from "framer-motion";
-import { FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaInstagram, FaTiktok, FaWhatsapp, FaGoogle } from "react-icons/fa";
+import { FiMail, FiPhone } from "react-icons/fi";
 import {
-  FOOTER_PRESTATIONS,
-  FOOTER_SEO_TEXT,
   EMAIL,
   EMAIL_MAILTO,
+  EXTENDED_AREAS,
   PHONE_DISPLAY,
   PHONE_TEL,
   SERVICE_AREAS,
+  SOCIAL_LINKS,
 } from "../lib/site-seo";
-import { LEGAL_ROUTES } from "../lib/legal";
+import { LEGAL, LEGAL_ROUTES } from "../lib/legal";
+import { WHATSAPP_SIMPLE_URL } from "../lib/whatsapp";
 import { useCookieConsent } from "./cookies/CookieConsentProvider";
+import { Wordmark } from "./ui/Brand";
 
-function scrollToTop() {
-  if (typeof window !== "undefined") {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-}
-
-const footerLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/#menu", label: "Menu" },
-  { href: "/caftans", label: "Caftans" },
-  { href: "/services", label: "Services" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+const columns = [
+  {
+    title: "Découvrir",
+    links: [
+      { href: "/menu", label: "La carte" },
+      { href: "/gallery", label: "Réalisations" },
+      { href: "/caftans", label: "Caftans" },
+      { href: "/faq", label: "Questions fréquentes" },
+    ],
+  },
+  {
+    title: "Prestations",
+    links: [
+      { href: "/traiteur-mariage-lyon", label: "Mariages et hlel" },
+      { href: "/services#familles", label: "Naissances, aqiqas, anniversaires" },
+      { href: "/traiteur-entreprise-lyon", label: "Entreprises et associations" },
+      { href: "/services", label: "Toutes les prestations" },
+    ],
+  },
 ];
 
 const legalLinks = [
@@ -40,196 +46,103 @@ const legalLinks = [
 ];
 
 export default function Footer() {
-  const pathname = usePathname();
   const cookieConsent = useCookieConsent();
 
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      const linkPath = href.split("#")[0] || "/";
-      if (linkPath === "/#menu" || linkPath === "/") {
-        if (href.includes("#menu") && pathname === "/") {
-          e.preventDefault();
-          document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });
-          return;
-        }
-      }
-      if (pathname === linkPath) {
-        e.preventDefault();
-      }
-      scrollToTop();
-    },
-    [pathname]
-  );
-
   return (
-    <footer className="border-t border-mds-border bg-[var(--surface-soft)] text-mds-text">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4 lg:col-span-2"
-          >
-            <Link
-              href="/"
-              scroll={true}
-              onClick={(e) => {
-                if (pathname === "/") e.preventDefault();
-                scrollToTop();
-              }}
-              className="nav-link inline-block font-serif text-3xl font-semibold tracking-wide text-mds-text"
-            >
-              Maison Des Saveurs
-            </Link>
-            <p className="max-w-md text-sm leading-relaxed text-mds-muted">
-              Traiteur halal événementiel à Lyon. Cuisine orientale raffinée pour mariages, hlel,
-              réceptions privées et événements professionnels.
+    <footer className="relative overflow-hidden bg-linen text-ink">
+      <div className="container-x relative pt-20 pb-8 md:pt-28">
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
+          <div className="max-w-sm">
+            <Wordmark />
+            <p className="mt-6 text-[0.95rem] leading-relaxed text-muted">
+              Cuisine marocaine traditionnelle et halal, préparée avec soin et servie avec
+              générosité pour vos mariages, fêtes de famille et événements professionnels.
             </p>
-            <div className="flex items-center gap-4 pt-1">
-              <a
-                href="https://www.instagram.com/mds.traiteur69/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram Maison Des Saveurs"
-                className="text-xl text-mds-muted transition-transform duration-200 hover:-translate-y-0.5 hover:text-[var(--gold)]"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://www.tiktok.com/@mds.traiteur"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok Maison Des Saveurs"
-                className="text-xl text-mds-muted transition-transform duration-200 hover:-translate-y-0.5 hover:text-[var(--gold)]"
-              >
-                <FaTiktok />
-              </a>
+            <div className="mt-6 flex items-center gap-2">
+              {[
+                { href: SOCIAL_LINKS.instagram, label: "Instagram", Icon: FaInstagram },
+                { href: SOCIAL_LINKS.tiktok, label: "TikTok", Icon: FaTiktok },
+                { href: SOCIAL_LINKS.googleBusiness, label: "Avis Google", Icon: FaGoogle },
+                { href: WHATSAPP_SIMPLE_URL, label: "WhatsApp", Icon: FaWhatsapp },
+              ].map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-line-dark text-ink-3 transition-colors hover:border-ink hover:bg-ink hover:text-ivory"
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="space-y-6 text-sm"
-          >
-            <div>
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
-                Navigation
-              </h3>
-              <ul className="mt-4 space-y-2">
-                {footerLinks.map((link) => (
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h3 className="eyebrow">{col.title}</h3>
+              <ul className="mt-5 space-y-3">
+                {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      scroll={true}
-                      onClick={(e) => handleNavClick(e, link.href)}
-                      className="nav-link text-sm text-mds-muted transition-colors duration-200 hover:text-mds-text"
-                    >
+                    <Link href={link.href} className="link-underline text-[0.95rem] text-ink-3 hover:text-ink">
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-            <div>
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
-                Contact
-              </h3>
-              <a
-                href={EMAIL_MAILTO}
-                className="mt-4 inline-block text-sm text-mds-muted transition-colors hover:text-mds-text"
-              >
-                {EMAIL}
-              </a>
-              <a
-                href={PHONE_TEL}
-                className="mt-1 inline-block text-sm text-mds-muted transition-colors hover:text-mds-text"
-              >
-                {PHONE_DISPLAY}
-              </a>
-            </div>
-          </motion.div>
+          ))}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-6 text-sm"
-          >
-            <div>
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
-                Prestations
-              </h3>
-              <ul className="mt-4 space-y-2 text-mds-muted">
-                {FOOTER_PRESTATIONS.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-serif text-sm font-semibold uppercase tracking-widest text-[var(--gold)]">
-                Zones desservies
-              </h3>
-              <p className="mt-4 leading-relaxed text-mds-muted">
-                {SERVICE_AREAS.join(" · ")}
-              </p>
-            </div>
-          </motion.div>
+          <div>
+            <h3 className="eyebrow">Contact</h3>
+            <ul className="mt-5 space-y-3 text-[0.95rem]">
+              <li>
+                <a href={PHONE_TEL} className="inline-flex items-center gap-2.5 text-ink hover:text-gold">
+                  <FiPhone className="text-gold" aria-hidden /> {PHONE_DISPLAY}
+                </a>
+              </li>
+              <li>
+                <a href={EMAIL_MAILTO} className="inline-flex items-center gap-2.5 break-all text-ink hover:text-gold">
+                  <FiMail className="shrink-0 text-gold" aria-hidden /> {EMAIL}
+                </a>
+              </li>
+            </ul>
+            <p className="mt-6 text-sm leading-relaxed text-muted">
+              <span className="text-ink">Lyon et métropole :</span> {SERVICE_AREAS.join(", ")}.
+              <br />
+              <span className="text-ink">Plus loin sur étude :</span> {EXTENDED_AREAS.join(", ")} et
+              la région.
+            </p>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="seo-footer-text mt-12 max-w-4xl space-y-2 text-[11px] leading-relaxed text-mds-muted/80"
+        <p
+          className="mt-20 select-none whitespace-nowrap text-center font-display text-[min(10.2vw,9.2rem)] leading-[0.8] tracking-[-0.05em] text-ink md:mt-28"
+          aria-hidden
         >
-          <p>{FOOTER_SEO_TEXT}</p>
-          <p>
-            <span className="text-mds-muted/90">Zones desservies : </span>
-            {SERVICE_AREAS.join(" · ")}
-          </p>
-          <p>
-            <span className="text-mds-muted/90">Prestations : </span>
-            {FOOTER_PRESTATIONS.join(" · ")}
-          </p>
-        </motion.div>
+          Maison <em className="text-gold">Des Saveurs</em>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-8 flex flex-col gap-4 border-t border-mds-border pt-8 text-xs text-mds-muted md:flex-row md:items-center md:justify-between"
-        >
-          <p>© {new Date().getFullYear()} Maison Des Saveurs. Tous droits réservés.</p>
-          <nav
-            aria-label="Informations légales"
-            className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]"
-          >
+        <div className="gold-rule mt-10" />
+
+        <div className="mt-8 flex flex-col gap-4 text-xs text-muted md:flex-row md:items-center md:justify-between">
+          <p>
+            © {new Date().getFullYear()} {LEGAL.tradeName} · MDS Traiteur · SIRET {LEGAL.siret}
+          </p>
+          <nav aria-label="Informations légales" className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-mds-text"
-              >
+              <Link key={link.href} href={link.href} className="hover:text-ink">
                 {link.label}
               </Link>
             ))}
             {cookieConsent && (
-              <button
-                type="button"
-                onClick={cookieConsent.openPreferences}
-                className="transition-colors hover:text-mds-text"
-              >
+              <button type="button" onClick={cookieConsent.openPreferences} className="hover:text-ink">
                 Gérer mes cookies
               </button>
             )}
           </nav>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

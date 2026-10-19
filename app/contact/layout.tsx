@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
-  title: "Contact - Traiteur Marocain Lyon Devis",
+export const metadata: Metadata = withSocial({
+  title: "Devis traiteur marocain à Lyon | Contact",
   description:
-    "Contactez Maison des Saveurs, traiteur marocain halal à Lyon et Villeurbanne. Devis gratuit pour mariage, buffet événementiel et événements entreprise.",
+    "Demandez votre devis à Maison Des Saveurs, traiteur marocain halal à Lyon et Villeurbanne : mariage, hlel, naissance, buffet ou repas d'entreprise. Réponse rapide par WhatsApp, téléphone ou e-mail.",
   alternates: { canonical: `${SITE_URL}/contact` },
-};
+});
 
-export default function ContactLayout({
-  children,
-}: { children: React.ReactNode }) {
+export default function ContactLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

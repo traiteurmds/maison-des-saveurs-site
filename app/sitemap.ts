@@ -3,7 +3,7 @@ import { LEGAL_ROUTES } from "./lib/legal";
 import { SITE_URL } from "./lib/site-seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = new Date("2026-10-19");
   const legalPages: MetadataRoute.Sitemap = [
     LEGAL_ROUTES.mentions,
     LEGAL_ROUTES.privacy,
@@ -18,7 +18,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${SITE_URL}/caftans`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/menu`, lastModified: now, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${SITE_URL}/traiteur-mariage-lyon`, lastModified: now, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${SITE_URL}/traiteur-entreprise-lyon`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/caftans`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },

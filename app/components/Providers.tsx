@@ -1,24 +1,23 @@
 "use client";
 
 import { SelectionProvider } from "./providers/SelectionProvider";
-import SmoothScrollProvider from "./providers/SmoothScrollProvider";
 import CookieConsentProvider from "./cookies/CookieConsentProvider";
-import CursorGlow from "./ui/CursorGlow";
-import SelectionCartDock from "./SelectionCartDock";
+import MobileActionBar from "./MobileActionBar";
 import SelectionToast from "./SelectionToast";
-import MobileCallButton from "./MobileCallButton";
+import SmoothScroll from "./SmoothScroll";
+import Preloader from "./Preloader";
+import CustomCursor from "./CustomCursor";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <CookieConsentProvider>
       <SelectionProvider>
-        <SmoothScrollProvider>
-          <CursorGlow />
-          {children}
-          <SelectionToast />
-          <SelectionCartDock />
-          <MobileCallButton />
-        </SmoothScrollProvider>
+        <Preloader />
+        <SmoothScroll />
+        <CustomCursor />
+        {children}
+        <SelectionToast />
+        <MobileActionBar />
       </SelectionProvider>
     </CookieConsentProvider>
   );

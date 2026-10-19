@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import LegalPageShell from "../components/legal/LegalPageShell";
 import { LEGAL } from "../lib/legal";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withSocial({
   title: "Conditions générales de vente",
   description: "CGV — Maison Des Saveurs, traiteur halal Lyon.",
   alternates: { canonical: `${SITE_URL}/conditions-generales-de-vente` },
-};
+});
 
 export default function CgvPage() {
   return (

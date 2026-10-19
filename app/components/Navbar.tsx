@@ -1,258 +1,229 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaInstagram, FaTiktok, FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { FiArrowUpRight, FiPhone } from "react-icons/fi";
 import { cn } from "../lib/utils";
-import NavbarLogo from "./NavbarLogo";
+import { PHONE_DISPLAY, PHONE_TEL, SOCIAL_LINKS } from "../lib/site-seo";
+import { WHATSAPP_SIMPLE_URL } from "../lib/whatsapp";
+import { useSelection } from "./providers/SelectionProvider";
+import { Wordmark } from "./ui/Brand";
 
-function useScrollToTop() {
-  return useCallback(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, []);
-}
-
-function scrollToMenuSection() {
-  if (typeof window === "undefined") return;
-  const el = document.getElementById("menu");
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/#menu", label: "Menu" },
-  { href: "/caftans", label: "Caftans" },
-  { href: "/services", label: "Services" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+/** Cinq entrées seulement : le reste vit dans les pages et le pied de page. */
+const MENU = [
+  { href: "/menu", label: "La carte", image: "/images/plats/couscous-viande.webp", plate: true },
+  { href: "/services", label: "Prestations", image: "/images/realisations/chariot-fruits.jpg" },
+  { href: "/gallery", label: "Réalisations", image: "/images/realisations/salades-et-sauces.jpg" },
+  { href: "/caftans", label: "Caftans", image: "/images/caftans/caftan-01.jpg" },
+  { href: "/contact", label: "Contact", image: "/images/realisations/poulets-pommes-de-terre.jpg" },
 ];
+
+const SECONDARY = [
+  { href: "/traiteur-mariage-lyon", label: "Mariages" },
+  { href: "/traiteur-entreprise-lyon", label: "Entreprises" },
+  { href: "/faq", label: "FAQ" },
+];
+
+const ease = [0.76, 0, 0.24, 1] as const;
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const scrollToTop = useScrollToTop();
+  const [hovered, setHovered] = useState(0);
+  const { counts } = useSelection();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  // Referme le menu à chaque changement de page (y compris bouton retour).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
-  const handleLinkClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    link: (typeof navLinks)[0]
-  ) => {
-    setIsOpen(false);
-    const linkPath = link.href.split("#")[0] || "/";
-    if (link.label === "Menu") {
-      if (pathname === "/") {
-        e.preventDefault();
-        scrollToMenuSection();
-      }
-      return;
-    }
-    if (pathname === linkPath) e.preventDefault();
-    scrollToTop();
-  };
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (open) window.__lenis?.stop();
+    else window.__lenis?.start();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.documentElement.style.overflow = "";
+      window.__lenis?.start();
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-5">
-        <motion.header
-          initial={{ y: -24, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className={cn(
-            "pointer-events-auto w-full max-w-6xl rounded-full border border-mds-border bg-[rgba(255,253,248,0.92)] shadow-[0_8px_40px_var(--mds-shadow)] backdrop-blur-xl transition-all duration-500",
-            scrolled && "shadow-[0_12px_48px_var(--mds-shadow)]"
-          )}
-        >
-          <nav className="flex items-center justify-between gap-3 px-4 py-2.5 md:px-5 md:py-3">
-            <Link
-              href="/"
-              scroll={true}
-              onClick={(e) => {
-                setIsOpen(false);
-                if (pathname === "/") e.preventDefault();
-                scrollToTop();
-              }}
-              className="nav-link flex shrink-0 items-center gap-2 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-[var(--gold)] sm:text-base"
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-[85] transition-[background-color,border-color] duration-500",
+          scrolled && !open ? "border-b border-line bg-paper/80 backdrop-blur-xl backdrop-saturate-150" : "border-b border-transparent"
+        )}
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
+      >
+        <nav className="container-x grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center gap-4" aria-label="Navigation principale">
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="group flex items-center gap-3 justify-self-start text-ink"
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={open}
+          >
+            <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-line-dark transition-colors group-hover:border-ink">
+              <span className={cn("absolute h-px w-[18px] bg-current transition-transform duration-500", open ? "rotate-45" : "-translate-y-[3px]")} />
+              <span className={cn("absolute h-px w-[18px] bg-current transition-transform duration-500", open ? "-rotate-45" : "translate-y-[3px]")} />
+            </span>
+            <span className="hidden text-[0.7rem] font-semibold uppercase tracking-[0.22em] md:inline">
+              {open ? "Fermer" : "Menu"}
+            </span>
+          </button>
+
+          <Link href="/" aria-label="Maison Des Saveurs, accueil" className="justify-self-center">
+            <Wordmark />
+          </Link>
+
+          <div className="flex items-center gap-2 justify-self-end">
+            <a
+              href={PHONE_TEL}
+              aria-label={`Appeler le ${PHONE_DISPLAY}`}
+              className="hidden h-11 w-11 items-center justify-center rounded-full border border-line-dark text-ink transition-colors hover:bg-ink hover:text-ivory md:flex"
             >
-              <NavbarLogo className="md:hidden" />
-              <span className="md:hidden">MDS</span>
-              <span className="hidden md:inline">Maison Des Saveurs</span>
+              <FiPhone aria-hidden />
+            </a>
+            <Link href="/contact" className="btn btn-gold btn-sm hidden sm:inline-flex">
+              Devis
+              {counts.total > 0 && (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-ivory px-1.5 text-[0.66rem] tracking-normal text-ink">
+                  {counts.total}
+                </span>
+              )}
             </Link>
-
-            <ul className="hidden items-center gap-0.5 md:flex">
-              {navLinks.map((link) => {
-                const linkPath = link.href.split("#")[0] || "/";
-                const isActive = pathname === linkPath;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={(e) => handleLinkClick(e, link)}
-                      className={cn(
-                        "rounded-full px-2.5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] transition-all duration-300 lg:px-3 lg:text-[0.7rem]",
-                        isActive
-                          ? "text-[var(--gold)]"
-                          : "text-mds-muted hover:text-mds-text"
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="ml-1">
-                <Link
-                  href="/contact"
-                  onClick={(e) => {
-                    if (pathname === "/contact") e.preventDefault();
-                    scrollToTop();
-                  }}
-                  className="inline-flex rounded-full bg-[var(--black)] px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--ivory)] transition-all hover:bg-[var(--gold)] hover:text-[var(--black)] lg:px-5 lg:text-[0.7rem]"
-                >
-                  Devis
-                </Link>
-              </li>
-            </ul>
-
-            <div className="flex items-center gap-2">
-              <div className="hidden items-center gap-1 sm:flex md:hidden">
-                <a
-                  href="https://www.instagram.com/mds.traiteur69/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-[var(--gold)]"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram className="text-sm" />
-                </a>
-                <a
-                  href="https://www.tiktok.com/@mds.traiteur"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-[var(--gold)]"
-                  aria-label="TikTok"
-                >
-                  <FaTiktok className="text-sm" />
-                </a>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsOpen(true)}
-                className="flex h-9 w-9 flex-col items-center justify-center gap-1 rounded-full border border-mds-border bg-[var(--surface)] md:hidden"
-                aria-label="Ouvrir le menu"
-              >
-                <span className="h-0.5 w-4 bg-mds-text" />
-                <span className="h-0.5 w-4 bg-mds-text" />
-                <span className="h-0.5 w-4 bg-mds-text" />
-              </button>
-            </div>
-          </nav>
-        </motion.header>
-      </div>
+          </div>
+        </nav>
+      </header>
 
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] md:hidden"
+            className="fixed inset-0 z-[80] flex flex-col bg-paper text-ink"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.9, ease }}
             role="dialog"
             aria-modal="true"
-            aria-label="Menu de navigation"
+            aria-label="Menu"
+            style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-mds-text/20 backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
-              aria-hidden
-            />
-
-            <motion.div
-              initial={{ y: "-100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-100%" }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex h-full flex-col bg-[var(--background)]/97 backdrop-blur-xl"
-            >
-              <div className="flex items-center justify-between border-b border-mds-border px-6 py-5">
-                <span className="font-serif text-lg font-semibold text-mds-text">Menu</span>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-mds-border bg-[var(--surface)] text-mds-text transition-colors hover:border-[var(--gold)] hover:text-[var(--gold)]"
-                  aria-label="Fermer le menu"
-                >
-                  <FaTimes className="text-base" />
-                </button>
-              </div>
-
-              <nav className="flex flex-1 flex-col justify-center px-8 py-10">
-                <ul className="space-y-1">
-                  {navLinks.map((link, i) => {
-                    const linkPath = link.href.split("#")[0] || "/";
-                    const isActive = pathname === linkPath;
-                    return (
-                      <motion.li
-                        key={link.href}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.05 * i, duration: 0.35 }}
+            <div className="h-[var(--header-h)] shrink-0" />
+            <div className="container-x grid flex-1 gap-10 overflow-y-auto py-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+              <nav aria-label="Pages">
+                <ul>
+                  {MENU.map((link, i) => (
+                    <li key={link.href} className="overflow-hidden border-b border-line">
+                      <motion.div
+                        initial={{ y: "110%" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: "110%" }}
+                        transition={{ duration: 0.9, ease, delay: 0.25 + i * 0.06 }}
                       >
                         <Link
                           href={link.href}
-                          onClick={(e) => handleLinkClick(e, link)}
-                          className={cn(
-                            "block border-b border-mds-border/60 py-4 font-serif text-2xl tracking-wide transition-colors",
-                            isActive ? "text-[var(--gold)]" : "text-mds-text hover:text-[var(--gold)]"
-                          )}
+                          onClick={() => setOpen(false)}
+                          onMouseEnter={() => setHovered(i)}
+                          onFocus={() => setHovered(i)}
+                          className="group flex items-baseline justify-between gap-6 py-3 md:py-4"
                         >
-                          {link.label}
+                          <span className="flex items-baseline gap-4 md:gap-6">
+                            <span className="w-6 font-sans text-[0.66rem] tabular-nums tracking-widest text-muted">
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span
+                              className={cn(
+                                "font-display text-[2.6rem] leading-[1.02] tracking-[-0.035em] transition-[color,transform] duration-500 md:text-[4.6rem] lg:group-hover:translate-x-4",
+                                pathname === link.href ? "italic text-gold" : "group-hover:italic group-hover:text-gold"
+                              )}
+                            >
+                              {link.label}
+                            </span>
+                          </span>
+                          <FiArrowUpRight className="shrink-0 text-xl text-muted transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-ink" aria-hidden />
                         </Link>
-                      </motion.li>
-                    );
-                  })}
+                      </motion.div>
+                    </li>
+                  ))}
                 </ul>
+                <motion.div
+                  className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-ink-3"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  {SECONDARY.map((l) => (
+                    <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="link-underline hover:text-ink">
+                      {l.label}
+                    </Link>
+                  ))}
+                </motion.div>
               </nav>
 
-              <div className="flex items-center justify-center gap-6 border-t border-mds-border px-6 py-6">
-                <a
-                  href="https://www.instagram.com/mds.traiteur69/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl text-mds-muted transition-colors hover:text-[var(--gold)]"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram />
+              {/* Aperçu visuel (ordinateur) */}
+              <div className="relative hidden aspect-[4/5] max-h-[68vh] w-full justify-self-end overflow-hidden lg:block lg:max-w-[440px]">
+                <AnimatePresence mode="popLayout">
+                  <motion.div
+                    key={MENU[hovered].image}
+                    className={cn("absolute inset-0", MENU[hovered].plate && "bg-terracotta")}
+                    initial={{ clipPath: "inset(100% 0 0 0)" }}
+                    animate={{ clipPath: "inset(0% 0 0 0)" }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease }}
+                  >
+                    {MENU[hovered].plate ? (
+                      <div className="absolute inset-[12%] animate-[spin_30s_linear_infinite]">
+                        <Image src={MENU[hovered].image} alt="" fill sizes="440px" className="object-contain drop-shadow-[0_14px_16px_rgba(0,0,0,0.28)]" />
+                      </div>
+                    ) : (
+                      <Image src={MENU[hovered].image} alt="" fill sizes="440px" className="object-cover" />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            <motion.div
+              className="container-x flex flex-col gap-4 border-t border-line py-5 sm:flex-row sm:items-center sm:justify-between"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="grid grid-cols-2 gap-3 sm:flex">
+                <a href={PHONE_TEL} className="btn btn-outline btn-sm">
+                  <FiPhone aria-hidden /> {PHONE_DISPLAY}
                 </a>
-                <a
-                  href="https://www.tiktok.com/@mds.traiteur"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl text-mds-muted transition-colors hover:text-[var(--gold)]"
-                  aria-label="TikTok"
-                >
-                  <FaTiktok />
+                <a href={WHATSAPP_SIMPLE_URL} target="_blank" rel="noopener noreferrer" className="btn btn-gold btn-sm">
+                  <FaWhatsapp aria-hidden /> WhatsApp
+                </a>
+              </div>
+              <div className="flex items-center gap-2 text-ink-3">
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-2 hover:text-gold">
+                  <FaInstagram className="text-xl" />
+                </a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="p-2 hover:text-gold">
+                  <FaTiktok className="text-xl" />
                 </a>
               </div>
             </motion.div>
