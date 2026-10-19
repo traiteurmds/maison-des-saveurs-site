@@ -107,7 +107,7 @@ export default function PlateShowcase() {
         )}
       >
         {/* En-tête */}
-        <div className="container-x relative z-30 flex items-start justify-between pt-[calc(var(--header-h)+1.25rem)] max-md:pb-3">
+        <div className="container-x relative z-30 flex shrink-0 items-start justify-between pt-[calc(var(--header-h)+1.25rem)] max-md:pb-3">
           <p className={cn("eyebrow", light && "on-dark")}>Nos signatures</p>
           <p className="font-display text-xl tabular-nums md:text-2xl">
             {String(index + 1).padStart(2, "0")}
@@ -116,7 +116,7 @@ export default function PlateShowcase() {
         </div>
 
         {/* Téléphone : le nom au-dessus de l'assiette, toujours lisible */}
-        <div className="relative z-20 h-[19vw] overflow-hidden md:hidden" aria-hidden>
+        <div className="relative z-20 h-[19vw] shrink-0 overflow-hidden md:hidden" aria-hidden>
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.p
               key={slide.name}
@@ -152,7 +152,7 @@ export default function PlateShowcase() {
         </motion.div>
 
         {/* Assiette qui tourne */}
-        <div className="relative z-10 flex flex-1 items-center justify-center [perspective:1400px]">
+        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center [perspective:1400px]">
           <motion.div
             style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
             className="relative aspect-square w-[min(76vw,40svh)] md:w-[min(42vw,62svh)]"
@@ -188,7 +188,7 @@ export default function PlateShowcase() {
         </div>
 
         {/* Description et action */}
-        <div className="container-x relative z-30 pb-[calc(var(--mobile-bar-h)+1.5rem)] lg:pb-10">
+        <div className="container-x relative z-30 shrink-0 pb-[calc(var(--mobile-bar-h)+1.5rem)] lg:pb-10">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -203,7 +203,7 @@ export default function PlateShowcase() {
                 <p className="mt-2 hidden text-[0.98rem] leading-relaxed opacity-90 sm:block">{dish.description}</p>
               </motion.div>
             </AnimatePresence>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-nowrap gap-3 md:flex-wrap">
               <button
                 type="button"
                 onClick={() => toggleSelection(category, dish.title)}
@@ -214,7 +214,9 @@ export default function PlateShowcase() {
                 {selected ? "Dans ma demande" : "Ajouter à ma demande"}
               </button>
               <Link href="/menu" className={cn("btn btn-sm", light ? "btn-ghost-light" : "btn-outline")}>
-                Toute la carte <FiArrowUpRight aria-hidden />
+                <span className="hidden sm:inline">Toute la carte</span>
+                <span className="sm:hidden">La carte</span>
+                <FiArrowUpRight aria-hidden />
               </Link>
             </div>
           </div>

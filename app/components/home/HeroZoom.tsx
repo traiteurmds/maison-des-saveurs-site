@@ -49,7 +49,7 @@ export default function HeroZoom() {
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
   // Arc de départ → plein écran
-  const start = mobile ? { t: 37, s: 14, b: 25 } : { t: 34, s: 36, b: 0 };
+  const start = mobile ? { t: 43, s: 14, b: 15 } : { t: 34, s: 36, b: 0 };
   const open = useTransform(p, (v) => {
     const k = reduced ? 1 : Math.min(1, v / 0.62);
     return 1 - Math.pow(1 - k, 3);
@@ -147,7 +147,7 @@ export default function HeroZoom() {
         {/* Côtés : texte d'accroche et appel à l'action */}
         <motion.div
           style={{ opacity: sideOpacity }}
-          className="container-x absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-6 pb-[calc(var(--mobile-bar-h)+1rem)] md:pb-10"
+          className="container-x absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-6 pb-6 md:pb-10"
         >
           <motion.div
             className="max-w-[17rem] md:max-w-[22vw]"
@@ -155,7 +155,7 @@ export default function HeroZoom() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease, delay: delay + 0.7 }}
           >
-            <p className="text-[0.9rem] leading-relaxed text-ink-3 md:hidden">
+            <p className="hidden">
               Couscous, pastillas, rfissa et salades royales pour vos mariages, vos fêtes de famille et vos
               événements d&apos;entreprise.
             </p>
@@ -239,7 +239,7 @@ function HeroFilm({
     <>
       <motion.div
         className="absolute inset-0"
-        style={mobile ? undefined : { top: boxTop, left: boxSide, right: boxSide, bottom: 0 }}
+        style={mobile ? { top: "0%", left: "0%", right: "0%", bottom: 0 } : { top: boxTop, left: boxSide, right: boxSide, bottom: 0 }}
       >
       <Image
         src="/videos/hero-portrait.jpg"
