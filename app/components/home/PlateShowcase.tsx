@@ -107,7 +107,7 @@ export default function PlateShowcase() {
         )}
       >
         {/* En-tête */}
-        <div className="container-x relative z-30 flex items-start justify-between pt-[calc(var(--header-h)+1.25rem)]">
+        <div className="container-x relative z-30 flex items-start justify-between pt-[calc(var(--header-h)+1.25rem)] max-md:pb-3">
           <p className={cn("eyebrow", light && "on-dark")}>Nos signatures</p>
           <p className="font-display text-xl tabular-nums md:text-2xl">
             {String(index + 1).padStart(2, "0")}
@@ -115,8 +115,27 @@ export default function PlateShowcase() {
           </p>
         </div>
 
-        {/* Nom géant derrière l'assiette */}
-        <motion.div style={{ x: nameX }} className="pointer-events-none absolute inset-x-0 top-1/2 z-0 -translate-y-1/2">
+        {/* Téléphone : le nom au-dessus de l'assiette, toujours lisible */}
+        <div className="relative z-20 h-[19vw] overflow-hidden md:hidden" aria-hidden>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.p
+              key={slide.name}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ duration: 0.8, ease }}
+              className="text-center font-display text-[17vw] italic leading-[1.1] tracking-[-0.04em]"
+            >
+              {slide.name}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+
+        {/* Ordinateur : nom géant derrière l'assiette */}
+        <motion.div
+          style={{ x: nameX }}
+          className="pointer-events-none absolute inset-x-0 top-1/2 z-0 hidden -translate-y-1/2 md:block"
+        >
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.p
               key={slide.name}
@@ -136,7 +155,7 @@ export default function PlateShowcase() {
         <div className="relative z-10 flex flex-1 items-center justify-center [perspective:1400px]">
           <motion.div
             style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
-            className="relative aspect-square w-[min(82vw,52svh)] md:w-[min(42vw,62svh)]"
+            className="relative aspect-square w-[min(76vw,40svh)] md:w-[min(42vw,62svh)]"
           >
             {/* Ombre portée au sol */}
             <div

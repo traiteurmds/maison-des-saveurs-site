@@ -3,13 +3,14 @@ import PageHero from "../components/ui/PageHero";
 import GalleryGrid from "../components/sections/GalleryGrid";
 import FinalCta from "../components/sections/FinalCta";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withSocial({
   title: "Réalisations : nos plats en photos",
   description:
     "Couscous, pastilla, salade royale, buffets et plateaux de fruits : les réalisations de Maison Des Saveurs, traiteur marocain halal à Lyon, en photos.",
   alternates: { canonical: `${SITE_URL}/gallery` },
-};
+});
 
 export default function GalleryPage() {
   return (

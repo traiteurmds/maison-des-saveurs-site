@@ -1,4 +1,3 @@
-import { GOOGLE_BUSINESS } from "./testimonials";
 import { EMAIL, PHONE_E164, SERVICE_AREAS, SITE_URL, SOCIAL_LINKS } from "./site-seo";
 
 export function getStructuredDataGraph() {
@@ -55,7 +54,7 @@ export function getStructuredDataGraph() {
         },
       },
       {
-        "@type": ["LocalBusiness", "FoodEstablishment", "Caterer"],
+        "@type": ["LocalBusiness", "FoodEstablishment"],
         "@id": organizationId,
         name: "Maison Des Saveurs",
         alternateName: "MDS Traiteur",
@@ -71,7 +70,6 @@ export function getStructuredDataGraph() {
           addressCountry: "FR",
         },
         areaServed,
-        priceRange: "€€",
         telephone: PHONE_E164,
         email: EMAIL,
         servesCuisine: ["Marocaine", "Orientale", "Halal"],
@@ -80,12 +78,6 @@ export function getStructuredDataGraph() {
           SOCIAL_LINKS.tiktok,
           SOCIAL_LINKS.googleBusiness,
         ],
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "5.0",
-          reviewCount: String(GOOGLE_BUSINESS.reviewCount),
-          bestRating: "5",
-        },
         parentOrganization: { "@id": `${SITE_URL}/#organization-entity` },
         hasOfferCatalog: {
           "@type": "OfferCatalog",
@@ -98,25 +90,13 @@ export function getStructuredDataGraph() {
           ],
         },
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": `${SITE_URL}/#breadcrumb-home`,
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Accueil",
-            item: SITE_URL,
-          },
-        ],
-      },
     ],
   };
 }
 
 export function getStructuredDataJson(): string {
   try {
-    return JSON.stringify(getStructuredDataGraph());
+    return JSON.stringify(getStructuredDataGraph()).replace(/</g, "\\u003c");
   } catch {
     return "{}";
   }

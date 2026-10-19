@@ -36,16 +36,20 @@ export default function CookieConsentProvider({ children }: { children: ReactNod
   const [showBanner, setShowBanner] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  // Lecture du choix enregistré après l'hydratation (le stockage n'existe pas côté serveur)
   useEffect(() => {
-    try {
-      const stored = readCookieConsent();
-      setConsent(stored);
-      setShowBanner(!stored);
-    } catch {
-      setDisabled(true);
-    } finally {
-      setReady(true);
-    }
+    const id = requestAnimationFrame(() => {
+      try {
+        const stored = readCookieConsent();
+        setConsent(stored);
+        setShowBanner(!stored);
+      } catch {
+        setDisabled(true);
+      } finally {
+        setReady(true);
+      }
+    });
+    return () => cancelAnimationFrame(id);
   }, []);
 
   const persist = useCallback((next: CookieConsent) => {

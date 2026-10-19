@@ -10,13 +10,14 @@ import JourJ from "../components/sections/JourJ";
 import FinalCta from "../components/sections/FinalCta";
 import { SERVICE_OPTIONS } from "../lib/menu-data";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withSocial({
   title: "Prestations traiteur à Lyon : mariages, familles, entreprises",
   description:
     "Toutes les prestations de Maison Des Saveurs, traiteur marocain halal à Lyon : mariages et hlel, naissances et aqiqas, anniversaires, buffets d'entreprise, service en salle, vaisselle et décoration.",
   alternates: { canonical: `${SITE_URL}/services` },
-};
+});
 
 const blocks = [
   {
@@ -60,6 +61,7 @@ export default function ServicesPage() {
         }
         intro="Des fêtes de famille aux grands mariages, en passant par les événements d'entreprise : une même exigence de goût, de générosité et de présentation."
         image="/images/realisations/salades-composees-buffet.jpg"
+        imageAlt="Buffet de salades composées dressé par Maison Des Saveurs"
       />
 
       <section className="section bg-paper">

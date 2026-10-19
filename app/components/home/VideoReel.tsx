@@ -16,9 +16,11 @@ function useCardMetrics() {
     const measure = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const h = Math.min(vh * (vw < 768 ? 0.56 : 0.64), 620);
-      const w = (h * 9) / 16;
-      setM({ w, h, cover: Math.max(vw / w, vh / h) * 1.02, gap: vw < 768 ? 14 : 40 });
+      const mobile = vw < 768;
+      // Téléphone : trois cartes plus petites, qui se chevauchent légèrement, pour tout voir
+      const w = mobile ? Math.min((vw - 16) / 2.7, (vh * 0.42 * 9) / 16) : (Math.min(vh * 0.64, 620) * 9) / 16;
+      const h = (w * 16) / 9;
+      setM({ w, h, cover: Math.max(vw / w, vh / h) * 1.02, gap: mobile ? -w * 0.14 : 40 });
     };
     measure();
     window.addEventListener("resize", measure);
@@ -88,7 +90,7 @@ export default function VideoReel() {
         </motion.div>
 
         {/* Cartes vidéo */}
-        <div className="absolute inset-0 flex items-center justify-center pt-[8svh] [transform-style:preserve-3d]">
+        <div className="absolute inset-0 flex items-center justify-center pt-[14svh] md:pt-[8svh] [transform-style:preserve-3d]">
           {CLIPS.map((clip, i) => (
             <VideoCard
               key={clip.src}
@@ -208,7 +210,7 @@ function VideoCard({
         />
       </motion.div>
       <figcaption
-        className={`absolute inset-x-0 -bottom-9 text-center font-display text-lg italic transition-opacity duration-500 md:text-xl ${
+        className={`absolute inset-x-0 -bottom-7 text-center font-display text-[0.95rem] italic transition-opacity duration-500 md:-bottom-9 md:text-xl ${
           showLabel ? "opacity-100" : "opacity-0"
         }`}
       >

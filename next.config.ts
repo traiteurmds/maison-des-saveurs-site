@@ -13,16 +13,20 @@ const securityHeaders = [
           key: "Content-Security-Policy",
           value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com",
+            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://va.vercel-scripts.com",
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data: blob: https:",
             "font-src 'self' data:",
+            "media-src 'self'",
+            "worker-src 'self' blob:",
+            "manifest-src 'self'",
             "connect-src 'self' https://challenges.cloudflare.com https://vitals.vercel-insights.com https://*.vercel-insights.com https://api.emailjs.com",
             "frame-src https://challenges.cloudflare.com",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
+            "upgrade-insecure-requests",
           ].join("; "),
         },
       ]
@@ -41,7 +45,11 @@ const securityHeaders = [
   },
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=()",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
+  },
+  {
+    key: "Cross-Origin-Opener-Policy",
+    value: "same-origin-allow-popups",
   },
 ];
 
@@ -61,15 +69,6 @@ const nextConfig: NextConfig = {
       {
         source: "/favicon.ico",
         headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
-      },
-      {
-        source: "/_next/static/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
       },
       {
         source: "/images/:path*",

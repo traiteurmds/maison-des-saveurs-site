@@ -14,13 +14,14 @@ import FaqAccordion from "../components/sections/FaqAccordion";
 import FinalCta from "../components/sections/FinalCta";
 import { FAQ_ITEMS } from "../lib/faq-data";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
-  title: "Traiteur mariage marocain à Lyon, halal | Mariage et hlel",
+export const metadata: Metadata = withSocial({
+  title: "Traiteur mariage marocain halal à Lyon",
   description:
     "Traiteur pour mariage marocain et hlel à Lyon : salade royale, pastilla, viande aux pruneaux, couscous, service en salle, vaisselle et décoration de table. Cuisine halal, devis sur mesure.",
   alternates: { canonical: `${SITE_URL}/traiteur-mariage-lyon` },
-};
+});
 
 const features = [
   {
@@ -61,6 +62,7 @@ export default function MariagePage() {
         }
         intro="Traiteur marocain halal à Lyon, nous préparons et servons le repas de votre mariage ou de votre hlel avec la générosité et l'élégance qu'il mérite."
         image="/images/realisations/salades-composees-crevettes.jpg"
+        imageAlt="Salades composées aux crevettes servies lors d'une réception"
         imagePosition="center 40%"
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

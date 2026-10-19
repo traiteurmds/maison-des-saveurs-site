@@ -49,10 +49,15 @@ export default function HeroZoom() {
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
   // Arc de départ → plein écran
-  const start = mobile ? { t: 43, s: 14, b: 15 } : { t: 34, s: 36, b: 0 };
-  const clip = useTransform(p, (v) => {
+  const start = mobile ? { t: 37, s: 14, b: 25 } : { t: 34, s: 36, b: 0 };
+  const open = useTransform(p, (v) => {
     const k = reduced ? 1 : Math.min(1, v / 0.62);
-    const e = 1 - Math.pow(1 - k, 3);
+    return 1 - Math.pow(1 - k, 3);
+  });
+  // Cadre de la vidéo verticale sur ordinateur : il suit l'arche pour rester net
+  const boxTop = useTransform(open, (e) => `${start.t * (1 - e)}%`);
+  const boxSide = useTransform(open, (e) => `${start.s * (1 - e)}%`);
+  const clip = useTransform(open, (e) => {
     const t = start.t * (1 - e);
     const s = start.s * (1 - e);
     const b = start.b * (1 - e);
@@ -117,7 +122,7 @@ export default function HeroZoom() {
           transition={{ duration: 1.4, ease, delay: delay + 0.2 }}
         >
           <motion.div className="absolute inset-0" style={{ scale: imgScale }}>
-            <HeroFilm mobile={mobile} reduced={Boolean(reduced)} progress={p} />
+            <HeroFilm mobile={mobile} reduced={Boolean(reduced)} progress={p} boxTop={boxTop} boxSide={boxSide} />
           </motion.div>
           <motion.div
             className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/35 to-ink/70"
@@ -142,7 +147,7 @@ export default function HeroZoom() {
         {/* Côtés : texte d'accroche et appel à l'action */}
         <motion.div
           style={{ opacity: sideOpacity }}
-          className="container-x absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-6 pb-6 md:pb-10"
+          className="container-x absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-6 pb-[calc(var(--mobile-bar-h)+1rem)] md:pb-10"
         >
           <motion.div
             className="max-w-[17rem] md:max-w-[22vw]"
@@ -150,11 +155,11 @@ export default function HeroZoom() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease, delay: delay + 0.7 }}
           >
-            <p className="hidden text-[0.95rem] leading-relaxed text-ink-3 md:block">
+            <p className="text-[0.9rem] leading-relaxed text-ink-3 md:hidden">
               Couscous, pastillas, rfissa et salades royales pour vos mariages, vos fêtes de famille et vos
               événements d&apos;entreprise.
             </p>
-            <span className="mt-5 hidden items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-ink-3 md:inline-flex">
+            <span className="hidden items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-ink-3 md:inline-flex">
               <FiArrowDown className="animate-bounce" aria-hidden /> Défiler
             </span>
           </motion.div>
@@ -180,12 +185,24 @@ export default function HeroZoom() {
  * (et tout l'écran sur téléphone) ; sur ordinateur, la version horizontale prend le relais
  * pendant que l'arche s'ouvre, et n'est chargée qu'à ce moment-là.
  */
-function HeroFilm({ mobile, reduced, progress }: { mobile: boolean; reduced: boolean; progress: MotionValue<number> }) {
+function HeroFilm({
+  mobile,
+  reduced,
+  progress,
+  boxTop,
+  boxSide,
+}: {
+  mobile: boolean;
+  reduced: boolean;
+  progress: MotionValue<number>;
+  boxTop: MotionValue<string>;
+  boxSide: MotionValue<string>;
+}) {
   const portraitRef = useRef<HTMLVideoElement>(null);
   const landscapeRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [wantLandscape, setWantLandscape] = useState(false);
-  const landscapeOpacity = useTransform(progress, [0.1, 0.38], [0, 1]);
+  const landscapeOpacity = useTransform(progress, [0.04, 0.3], [0, 1]);
 
   useMotionValueEvent(progress, "change", (v) => {
     if (v > 0.01 && !mobile && !wantLandscape) setWantLandscape(true);
@@ -220,6 +237,10 @@ function HeroFilm({ mobile, reduced, progress }: { mobile: boolean; reduced: boo
 
   return (
     <>
+      <motion.div
+        className="absolute inset-0"
+        style={mobile ? undefined : { top: boxTop, left: boxSide, right: boxSide, bottom: 0 }}
+      >
       <Image
         src="/videos/hero-portrait.jpg"
         alt="Poulet nappé de sauce, préparé par Maison Des Saveurs"
@@ -243,6 +264,7 @@ function HeroFilm({ mobile, reduced, progress }: { mobile: boolean; reduced: boo
           aria-hidden
         />
       )}
+      </motion.div>
       {!mobile && (
         <motion.div className="absolute inset-0" style={{ opacity: landscapeOpacity }}>
           {wantLandscape && (

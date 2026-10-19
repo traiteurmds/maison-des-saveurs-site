@@ -32,7 +32,12 @@ export default function PageHero({
   const rise = (delay: number) =>
     reduced
       ? {}
-      : { initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 }, transition: { duration: 1, ease, delay } };
+      : {
+          // Opacité de départ non nulle : le titre compte comme affiché dès le premier rendu (LCP)
+          initial: { opacity: 0.01, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 1, ease, delay },
+        };
 
   return (
     <section

@@ -11,13 +11,14 @@ import FaqAccordion from "../components/sections/FaqAccordion";
 import FinalCta from "../components/sections/FinalCta";
 import { FAQ_ITEMS } from "../lib/faq-data";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withSocial({
   title: "Traiteur entreprise à Lyon : buffets et repas halal",
   description:
     "Buffets salés, repas d'équipe et événements professionnels à Lyon : Maison Des Saveurs, traiteur marocain halal pour entreprises, associations, universités et clubs. Devis rapide.",
   alternates: { canonical: `${SITE_URL}/traiteur-entreprise-lyon` },
-};
+});
 
 const formats = [
   {
@@ -73,6 +74,7 @@ export default function EntreprisePage() {
         }
         intro="Repas d'entreprise, buffets, événements associatifs et universitaires à Lyon : une cuisine marocaine halal, généreuse, livrée et servie avec sérieux."
         image="/images/realisations/buffet-salades-composees.jpg"
+        imageAlt="Buffet de salades composées pour un événement professionnel"
         imagePosition="center 50%"
       >
         <Link href="/contact" className="btn btn-gold">

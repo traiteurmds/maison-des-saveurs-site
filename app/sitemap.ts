@@ -3,7 +3,7 @@ import { LEGAL_ROUTES } from "./lib/legal";
 import { SITE_URL } from "./lib/site-seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = new Date("2026-10-19");
   const legalPages: MetadataRoute.Sitemap = [
     LEGAL_ROUTES.mentions,
     LEGAL_ROUTES.privacy,

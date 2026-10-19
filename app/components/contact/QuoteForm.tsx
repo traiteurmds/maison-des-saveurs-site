@@ -304,7 +304,7 @@ export default function QuoteForm() {
         <div className="mt-7 grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="name" className="field-label">Nom et prénom</label>
-            <input id="name" autoComplete="name" className="field" value={details.name ?? ""} onChange={(e) => set("name", sanitizeName(e.target.value, LIMITS.MAX_NOM))} aria-invalid={Boolean(errors.name)} />
+            <input id="name" autoComplete="name" className="field" value={details.name ?? ""} maxLength={LIMITS.MAX_NOM} onChange={(e) => set("name", e.target.value.slice(0, LIMITS.MAX_NOM))} aria-invalid={Boolean(errors.name)} />
             {errors.name && <p className="mt-1.5 text-sm text-[#a5442f]" role="alert">{errors.name}</p>}
           </div>
           <div>
@@ -319,7 +319,7 @@ export default function QuoteForm() {
           </div>
           <div className="sm:col-span-2">
             <label htmlFor="message" className="field-label">Précisions <span className="font-normal text-muted">(allergies, horaires, budget…)</span></label>
-            <textarea id="message" className="field" value={details.message ?? ""} onChange={(e) => set("message", sanitizeMessage(e.target.value))} />
+            <textarea id="message" className="field" maxLength={LIMITS.MAX_MESSAGE} value={details.message ?? ""} onChange={(e) => set("message", e.target.value.slice(0, LIMITS.MAX_MESSAGE))} />
           </div>
         </div>
         {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && emailConfigured && (

@@ -6,13 +6,14 @@ import PageHero from "../components/ui/PageHero";
 import Reveal from "../components/ui/Reveal";
 import CaftansGrid from "../components/caftans/CaftansGrid";
 import { SITE_URL } from "../lib/site-seo";
+import { withSocial } from "../lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withSocial({
   title: "Caftans marocains à Lyon : location et vente",
   description:
     "Collection de caftans MDS x Lamia Créations : location et vente de caftans marocains pour mariages, hlels et fêtes à Lyon, avec essayage sur demande.",
   alternates: { canonical: `${SITE_URL}/caftans` },
-};
+});
 
 export default function CaftansPage() {
   return (
@@ -26,6 +27,7 @@ export default function CaftansPage() {
         }
         intro="Une sélection raffinée de caftans pour vos plus beaux événements. Location et vente, avec un accompagnement personnalisé et un essayage sur demande."
         image="/images/caftans/caftan-03.jpg"
+        imageAlt="Caftan marocain proposé par Maison Des Saveurs à Lyon"
         imagePosition="center 20%"
       >
         <a
