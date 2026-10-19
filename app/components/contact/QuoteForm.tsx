@@ -40,7 +40,7 @@ function todayIso() {
 function StepTitle({ n, title, hint }: { n: number; title: string; hint?: string }) {
   return (
     <div className="flex items-start gap-4">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink font-display text-lg text-gold-bright">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink font-display text-lg text-ivory">
         {n}
       </span>
       <div>
@@ -163,7 +163,7 @@ export default function QuoteForm() {
         className="card flex flex-col items-center p-10 text-center md:p-14"
         role="status"
       >
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-ink text-2xl text-gold-bright">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-ink text-2xl text-ivory">
           <FiCheck />
         </span>
         <h2 className="display-md mt-6 text-ink">Merci, votre demande est bien partie</h2>
@@ -263,7 +263,7 @@ export default function QuoteForm() {
                           className="chip is-active gap-2 pr-3"
                           aria-label={`Retirer ${item}`}
                         >
-                          {item} <FiX className="text-gold-bright" aria-hidden />
+                          {item} <FiX className="text-ivory/70" aria-hidden />
                         </button>
                       </li>
                     ))}
@@ -329,15 +329,15 @@ export default function QuoteForm() {
       </fieldset>
 
       {/* Envoi */}
-      <div className="card bg-ink-texture border-line-dark p-6 text-ivory md:p-8">
+      <div className="card bg-linen p-6 text-ink md:p-8">
         <p className="font-display text-2xl">Envoyer ma demande</p>
-        <p className="mt-2 text-sm text-muted-light">
+        <p className="mt-2 text-sm text-muted">
           Le message se prépare automatiquement avec toutes vos informations
           {counts.total > 0 ? ` et vos ${counts.total} choix` : ""}.
         </p>
         <AnimatePresence>
           {(errors.form || status === "error") && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-4 text-sm text-gold-bright" role="alert">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-4 text-sm text-gold" role="alert">
               {errors.form ?? "L'envoi par e-mail a échoué. Réessayez ou passez par WhatsApp."}
             </motion.p>
           )}
@@ -346,15 +346,15 @@ export default function QuoteForm() {
           <button type="submit" className="btn btn-gold">
             <FaWhatsapp aria-hidden /> Envoyer sur WhatsApp
           </button>
-          <button type="button" onClick={sendEmail} disabled={status === "sending" || cooldown} className={cn("btn btn-ghost-light", (status === "sending" || cooldown) && "opacity-60")}>
+          <button type="button" onClick={sendEmail} disabled={status === "sending" || cooldown} className={cn("btn btn-outline", (status === "sending" || cooldown) && "opacity-60")}>
             <FiMail aria-hidden /> {status === "sending" ? "Envoi…" : "Envoyer par e-mail"}
           </button>
         </div>
         <details className="group mt-6 text-sm">
-          <summary className="cursor-pointer list-none text-muted-light hover:text-ivory">
+          <summary className="cursor-pointer list-none text-muted hover:text-ink">
             <span className="underline underline-offset-4">Voir le message qui sera envoyé</span>
           </summary>
-          <pre className="mt-4 max-h-80 overflow-auto whitespace-pre-wrap rounded-2xl border border-line-dark bg-ivory/5 p-4 font-sans text-[0.85rem] leading-relaxed text-ivory/85">
+          <pre className="mt-4 max-h-80 overflow-auto whitespace-pre-wrap border border-line bg-ivory/70 p-4 font-sans text-[0.85rem] leading-relaxed text-ink-3">
             {message}
           </pre>
         </details>

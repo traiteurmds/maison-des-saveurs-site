@@ -93,13 +93,13 @@ export default function MenuBrowser() {
                     aria-pressed={selected}
                     className={cn(
                       "flex h-full w-full items-start gap-4 rounded-[18px] border p-5 text-left transition-all duration-300",
-                      selected ? "border-ink bg-ink text-ivory" : "border-line bg-[#fffdf9] hover:border-gold"
+                      selected ? "border-ink bg-ink text-ivory" : "border-line bg-ivory hover:border-gold"
                     )}
                   >
                     <span
                       className={cn(
                         "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border",
-                        selected ? "border-gold-bright bg-gold-bright text-ink" : "border-line text-gold"
+                        selected ? "border-ivory bg-ivory text-ink" : "border-line text-gold"
                       )}
                       aria-hidden
                     >
@@ -118,7 +118,7 @@ export default function MenuBrowser() {
           </ul>
 
           <Reveal className="mt-14">
-            <div className="flex flex-col items-start justify-between gap-6 rounded-[var(--radius)] border border-line bg-[#fffdf9] p-7 shadow-[var(--shadow)] md:flex-row md:items-center md:p-9">
+            <div className="flex flex-col items-start justify-between gap-6 rounded-[var(--radius)] border border-line bg-ivory p-7 shadow-[var(--shadow)] md:flex-row md:items-center md:p-9">
               <div>
                 <p className="font-display text-3xl text-ink">
                   {counts.total === 0

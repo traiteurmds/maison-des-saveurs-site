@@ -32,7 +32,7 @@ export default function CaftansPage() {
           href="https://www.tiktok.com/@lamia.creations"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-ghost-light"
+          className="btn btn-outline"
         >
           <FaTiktok aria-hidden /> Lamia Créations sur TikTok
         </a>

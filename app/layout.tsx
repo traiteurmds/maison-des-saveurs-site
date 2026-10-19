@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Bodoni_Moda, Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -11,18 +11,16 @@ import { MAINTENANCE_MODE } from "./config/maintenance";
 import { getStructuredDataJson } from "./lib/structured-data";
 import { SEO_KEYWORDS, SITE_URL } from "./lib/site-seo";
 
-const display = Cormorant_Garamond({
+const display = Bodoni_Moda({
   variable: "--font-display-face",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const body = DM_Sans({
+const body = Manrope({
   variable: "--font-body-face",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -30,7 +28,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0f0e0c",
+  themeColor: "#f5f0e8",
 };
 
 const DESCRIPTION =
@@ -88,8 +86,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   }
 
   return (
-    <html lang="fr" className={fontVars}>
+    <html lang="fr" className={fontVars} suppressHydrationWarning>
       <body className="antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('mds-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-seen')}catch(e){}",
+          }}
+        />
         <script
           type="application/ld+json"
           suppressHydrationWarning

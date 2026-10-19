@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 
 export function Stars({ className }: { className?: string }) {
   return (
-    <span className={cn("inline-flex gap-0.5 text-gold-bright", className)} aria-hidden>
+    <span className={cn("inline-flex gap-0.5 text-gold", className)} aria-hidden>
       {Array.from({ length: 5 }).map((_, i) => (
         <FaStar key={i} />
       ))}
@@ -12,21 +12,22 @@ export function Stars({ className }: { className?: string }) {
   );
 }
 
-export default function GoogleRating({ tone = "dark", className }: { tone?: "dark" | "light"; className?: string }) {
+/** Note Google réelle (lien vers la fiche). `light` : sur photo ou fond coloré. */
+export default function GoogleRating({ tone = "ink", className }: { tone?: "ink" | "light"; className?: string }) {
   return (
     <a
       href={GOOGLE_BUSINESS.profileUrl}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "inline-flex items-center gap-3 rounded-full border px-4 py-2 text-sm transition-colors",
-        tone === "dark"
-          ? "border-line-dark bg-ivory/5 text-ivory hover:border-gold-bright"
-          : "border-line bg-white/70 text-ink hover:border-gold",
+        "inline-flex items-center gap-3 rounded-full border px-4 py-2 text-[0.82rem] transition-colors",
+        tone === "light"
+          ? "border-ivory/35 bg-ivory/10 text-ivory backdrop-blur hover:border-ivory"
+          : "border-line-dark text-ink hover:border-ink",
         className
       )}
     >
-      <Stars className="text-[0.8rem]" />
+      <Stars className={cn("text-[0.72rem]", tone === "light" && "text-ivory")} />
       <span>
         <strong className="font-semibold">5,0</strong> sur Google · {GOOGLE_BUSINESS.reviewCount} avis
       </span>

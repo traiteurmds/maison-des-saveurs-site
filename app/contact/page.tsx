@@ -43,7 +43,7 @@ export default function ContactPage() {
                       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="group flex items-center gap-4 py-4"
                     >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-gold transition-colors group-hover:bg-ink group-hover:text-gold-bright">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-gold transition-colors group-hover:bg-ink group-hover:text-ivory">
                         <Icon aria-hidden />
                       </span>
                       <span className="min-w-0">

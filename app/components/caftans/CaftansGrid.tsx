@@ -48,7 +48,7 @@ export default function CaftansGrid() {
                     <span
                       className={cn(
                         "flex h-9 w-9 items-center justify-center rounded-full",
-                        selected ? "bg-gold-bright text-ink" : "border border-ivory/40 bg-ink/40 text-ivory backdrop-blur"
+                        selected ? "bg-ivory text-ink" : "border border-ivory/40 bg-ink/40 text-ivory backdrop-blur"
                       )}
                       aria-hidden
                     >

@@ -33,7 +33,7 @@ export default function DishCard({ dish, priority = false }: { dish: Dish; prior
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent" aria-hidden />
         {dish.signature && (
-          <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-gold-bright backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-full bg-ivory/90 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-ink backdrop-blur">
             Signature
           </span>
         )}
@@ -41,7 +41,7 @@ export default function DishCard({ dish, priority = false }: { dish: Dish; prior
           <motion.span
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-gold-bright text-ink shadow-lg"
+            className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-ink text-ivory shadow-lg"
             aria-hidden
           >
             <FiCheck />

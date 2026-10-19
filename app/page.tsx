@@ -1,29 +1,27 @@
-import HomeHero from "./components/sections/HomeHero";
-import ProofBar from "./components/sections/ProofBar";
-import DishMarquee from "./components/sections/DishMarquee";
-import Prestations from "./components/sections/Prestations";
-import SignatureDishes from "./components/sections/SignatureDishes";
-import ChefSection from "./components/sections/ChefSection";
-import JourJ from "./components/sections/JourJ";
-import Reviews from "./components/sections/Reviews";
-import PhotoStrip from "./components/sections/PhotoStrip";
+import HeroZoom from "./components/home/HeroZoom";
+import Manifesto from "./components/home/Manifesto";
+import PlateShowcase from "./components/home/PlateShowcase";
+import Occasions from "./components/home/Occasions";
+import BigMarquee from "./components/home/BigMarquee";
+import HorizontalGallery from "./components/home/HorizontalGallery";
+import ReviewsQuote from "./components/home/ReviewsQuote";
+import Process from "./components/home/Process";
 import ZonesFaq from "./components/sections/ZonesFaq";
-import FinalCta from "./components/sections/FinalCta";
+import ClosingCta from "./components/home/ClosingCta";
 
 export default function Home() {
   return (
     <>
-      <HomeHero />
-      <ProofBar />
-      <Prestations />
-      <DishMarquee />
-      <SignatureDishes />
-      <ChefSection />
-      <JourJ />
-      <Reviews />
-      <PhotoStrip />
+      <HeroZoom />
+      <Manifesto />
+      <PlateShowcase />
+      <Occasions />
+      <BigMarquee />
+      <HorizontalGallery />
+      <ReviewsQuote />
+      <Process />
       <ZonesFaq />
-      <FinalCta />
+      <ClosingCta />
     </>
   );
 }

@@ -20,7 +20,7 @@ export default function MobileActionBar() {
   return (
     <>
       <div
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-line-dark bg-ink/95 text-ivory backdrop-blur-xl lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/90 text-ink backdrop-blur-xl lg:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="mx-auto flex h-[var(--mobile-bar-h)] max-w-lg items-stretch px-2">
@@ -35,7 +35,7 @@ export default function MobileActionBar() {
               }
             }}
           >
-            <FiPhone className="text-lg text-gold-bright" aria-hidden />
+            <FiPhone className="text-lg text-ink" aria-hidden />
             Appeler
           </a>
           <a
@@ -44,15 +44,15 @@ export default function MobileActionBar() {
             rel="noopener noreferrer"
             className={itemClass}
           >
-            <FaWhatsapp className="text-lg text-gold-bright" aria-hidden />
+            <FaWhatsapp className="text-lg text-ink" aria-hidden />
             WhatsApp
           </a>
           <div className="flex flex-[1.4] items-center py-2.5 pl-1">
-            <Link href="/contact" className="btn btn-gold h-full min-h-0 w-full gap-2 px-3 text-[0.8rem]">
+            <Link href="/contact" className="btn btn-gold h-full min-h-0 w-full gap-2 px-3 text-[0.66rem]">
               <FiFileText aria-hidden />
               Mon devis
               {counts.total > 0 && (
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1.5 text-[0.66rem] text-ivory">
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-ivory px-1.5 text-[0.66rem] tracking-normal text-ink">
                   {counts.total}
                 </span>
               )}

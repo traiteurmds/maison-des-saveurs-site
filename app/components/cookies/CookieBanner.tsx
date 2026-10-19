@@ -21,11 +21,11 @@ export default function CookieBanner({ onAccept, onReject, onCustomize }: Cookie
       initial={reducedMotion ? false : { opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-3 z-[70] mx-auto max-w-xl rounded-[18px] border border-line-dark bg-ink/95 p-4 text-ivory backdrop-blur shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] bottom-[calc(var(--mobile-bar-h)+env(safe-area-inset-bottom)+12px)] sm:p-6 lg:bottom-6 lg:left-6 lg:right-auto lg:mx-0"
+      className="fixed inset-x-3 z-[70] mx-auto max-w-xl rounded-[6px] border border-line bg-ivory/95 p-4 text-ink backdrop-blur shadow-[0_30px_60px_-24px_rgba(29,25,21,0.35)] bottom-[calc(var(--mobile-bar-h)+env(safe-area-inset-bottom)+12px)] sm:p-6 lg:bottom-6 lg:left-6 lg:right-auto lg:mx-0"
     >
-      <p className="text-[0.78rem] leading-snug text-ivory/85 sm:text-sm sm:leading-relaxed">
+      <p className="text-[0.78rem] leading-snug text-ink-3 sm:text-sm sm:leading-relaxed">
         Cookies nécessaires et mesure d&apos;audience anonyme pour améliorer le site.{" "}
-        <Link href={LEGAL_ROUTES.cookies} className="text-gold-bright underline underline-offset-2">
+        <Link href={LEGAL_ROUTES.cookies} className="text-gold underline underline-offset-2">
           En savoir plus
         </Link>
       </p>
@@ -33,10 +33,10 @@ export default function CookieBanner({ onAccept, onReject, onCustomize }: Cookie
         <button type="button" onClick={onAccept} className="btn btn-gold btn-sm">
           Accepter
         </button>
-        <button type="button" onClick={onReject} className="btn btn-ghost-light btn-sm">
+        <button type="button" onClick={onReject} className="btn btn-outline btn-sm">
           Refuser
         </button>
-        <button type="button" onClick={onCustomize} className="btn btn-sm px-3 text-ivory/70 hover:text-ivory">
+        <button type="button" onClick={onCustomize} className="btn btn-sm px-3 text-muted hover:text-ink">
           Personnaliser
         </button>
       </div>

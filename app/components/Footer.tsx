@@ -49,13 +49,12 @@ export default function Footer() {
   const cookieConsent = useCookieConsent();
 
   return (
-    <footer className="bg-ink-texture relative overflow-hidden text-ivory">
-      <div className="zellige pointer-events-none absolute inset-0 opacity-40" aria-hidden />
-      <div className="container-x relative pt-20 pb-10">
+    <footer className="relative overflow-hidden bg-linen text-ink">
+      <div className="container-x relative pt-20 pb-8 md:pt-28">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
           <div className="max-w-sm">
-            <Wordmark tone="light" />
-            <p className="mt-6 text-[0.95rem] leading-relaxed text-muted-light">
+            <Wordmark />
+            <p className="mt-6 text-[0.95rem] leading-relaxed text-muted">
               Cuisine marocaine traditionnelle et halal, préparée avec soin et servie avec
               générosité pour vos mariages, fêtes de famille et événements professionnels.
             </p>
@@ -72,7 +71,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-line-dark text-ivory/80 transition-colors hover:border-gold-bright hover:text-gold-bright"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-line-dark text-ink-3 transition-colors hover:border-ink hover:bg-ink hover:text-ivory"
                 >
                   <Icon />
                 </a>
@@ -82,11 +81,11 @@ export default function Footer() {
 
           {columns.map((col) => (
             <div key={col.title}>
-              <h3 className="eyebrow on-dark">{col.title}</h3>
+              <h3 className="eyebrow">{col.title}</h3>
               <ul className="mt-5 space-y-3">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="link-underline text-[0.95rem] text-ivory/80 hover:text-ivory">
+                    <Link href={link.href} className="link-underline text-[0.95rem] text-ink-3 hover:text-ink">
                       {link.label}
                     </Link>
                   </li>
@@ -96,42 +95,49 @@ export default function Footer() {
           ))}
 
           <div>
-            <h3 className="eyebrow on-dark">Contact</h3>
+            <h3 className="eyebrow">Contact</h3>
             <ul className="mt-5 space-y-3 text-[0.95rem]">
               <li>
-                <a href={PHONE_TEL} className="inline-flex items-center gap-2.5 text-ivory/90 hover:text-gold-bright">
-                  <FiPhone className="text-gold-bright" aria-hidden /> {PHONE_DISPLAY}
+                <a href={PHONE_TEL} className="inline-flex items-center gap-2.5 text-ink hover:text-gold">
+                  <FiPhone className="text-gold" aria-hidden /> {PHONE_DISPLAY}
                 </a>
               </li>
               <li>
-                <a href={EMAIL_MAILTO} className="inline-flex items-center gap-2.5 break-all text-ivory/90 hover:text-gold-bright">
-                  <FiMail className="shrink-0 text-gold-bright" aria-hidden /> {EMAIL}
+                <a href={EMAIL_MAILTO} className="inline-flex items-center gap-2.5 break-all text-ink hover:text-gold">
+                  <FiMail className="shrink-0 text-gold" aria-hidden /> {EMAIL}
                 </a>
               </li>
             </ul>
-            <p className="mt-6 text-sm leading-relaxed text-muted-light">
-              <span className="text-ivory/90">Lyon et métropole :</span> {SERVICE_AREAS.join(", ")}.
+            <p className="mt-6 text-sm leading-relaxed text-muted">
+              <span className="text-ink">Lyon et métropole :</span> {SERVICE_AREAS.join(", ")}.
               <br />
-              <span className="text-ivory/90">Plus loin sur étude :</span> {EXTENDED_AREAS.join(", ")} et
+              <span className="text-ink">Plus loin sur étude :</span> {EXTENDED_AREAS.join(", ")} et
               la région.
             </p>
           </div>
         </div>
 
-        <div className="gold-rule mt-16 opacity-40" />
+        <p
+          className="mt-20 select-none whitespace-nowrap text-center font-display text-[min(10.2vw,9.2rem)] leading-[0.8] tracking-[-0.05em] text-ink md:mt-28"
+          aria-hidden
+        >
+          Maison <em className="text-gold">Des Saveurs</em>
+        </p>
 
-        <div className="mt-8 flex flex-col gap-4 text-xs text-muted-light md:flex-row md:items-center md:justify-between">
+        <div className="gold-rule mt-10" />
+
+        <div className="mt-8 flex flex-col gap-4 text-xs text-muted md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {LEGAL.tradeName} · MDS Traiteur · SIRET {LEGAL.siret}
           </p>
           <nav aria-label="Informations légales" className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {legalLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="hover:text-ivory">
+              <Link key={link.href} href={link.href} className="hover:text-ink">
                 {link.label}
               </Link>
             ))}
             {cookieConsent && (
-              <button type="button" onClick={cookieConsent.openPreferences} className="hover:text-ivory">
+              <button type="button" onClick={cookieConsent.openPreferences} className="hover:text-ink">
                 Gérer mes cookies
               </button>
             )}

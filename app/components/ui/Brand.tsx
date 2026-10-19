@@ -14,7 +14,7 @@ export function Monogram({ className }: { className?: string }) {
         textAnchor="middle"
         fontSize="11.5"
         fontFamily="var(--font-display)"
-        fontWeight="600"
+        fontWeight="500"
         fill="currentColor"
         letterSpacing="0.5"
       >
@@ -27,11 +27,11 @@ export function Monogram({ className }: { className?: string }) {
 export function Wordmark({ className, tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
-      <Monogram className={tone === "light" ? "text-gold-bright" : "text-gold"} />
+      <Monogram className={tone === "light" ? "text-ivory" : "text-gold"} />
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-display text-[1.32rem] font-semibold tracking-[0.01em] md:text-[1.45rem]",
+            "font-display text-[1.28rem] font-normal tracking-[-0.01em] md:text-[1.4rem]",
             tone === "light" ? "text-ivory" : "text-ink"
           )}
         >
@@ -39,8 +39,8 @@ export function Wordmark({ className, tone = "dark" }: { className?: string; ton
         </span>
         <span
           className={cn(
-            "mt-1 text-[0.58rem] font-semibold uppercase tracking-[0.32em]",
-            tone === "light" ? "text-gold-bright/90" : "text-gold"
+            "mt-1 text-[0.54rem] font-semibold uppercase tracking-[0.32em]",
+            tone === "light" ? "text-ivory/75" : "text-muted"
           )}
         >
           Traiteur marocain · Lyon

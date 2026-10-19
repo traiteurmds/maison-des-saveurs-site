@@ -27,7 +27,7 @@ export default function FaqAccordion({ items }: { items: FaqItem[] }) {
                 <span
                   className={cn(
                     "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line text-gold transition-transform duration-300",
-                    open && "rotate-45 border-gold bg-ink text-gold-bright"
+                    open && "rotate-45 border-ink bg-ink text-ivory"
                   )}
                   aria-hidden
                 >
