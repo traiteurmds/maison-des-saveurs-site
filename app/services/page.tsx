@@ -24,7 +24,7 @@ const blocks = [
     eyebrow: "Mariages · Hlel · Fiançailles",
     title: "Mariages et hlel",
     text: "Le repas de votre plus beau jour, servi en grands plats à partager, avec service en salle, vaisselle élégante et décoration de table si vous le souhaitez.",
-    image: "/images/menu/viande-pruneaux.jpg",
+    image: "/images/realisations/viande-pruneaux-amandes.jpg",
     href: "/traiteur-mariage-lyon",
     cta: "Le traiteur mariage",
   },
@@ -59,7 +59,7 @@ export default function ServicesPage() {
           </>
         }
         intro="Des fêtes de famille aux grands mariages, en passant par les événements d'entreprise : une même exigence de goût, de générosité et de présentation."
-        image="/images/menu/couscous-viande.jpg"
+        image="/images/realisations/salades-composees-buffet.jpg"
       />
 
       <section className="section bg-paper">

@@ -3,6 +3,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { FAQ_ITEMS } from "../../lib/faq-data";
 import Reveal from "../ui/Reveal";
 import FaqAccordion from "./FaqAccordion";
+import TitleReveal from "../ui/TitleReveal";
 
 const HOME_FAQ = ["zones", "halal", "service", "acompte", "reservation"];
 
@@ -12,9 +13,9 @@ export default function ZonesFaq() {
       <div className="container-x grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <Reveal>
           <p className="eyebrow">Questions fréquentes</p>
-          <h2 className="display-lg mt-5 text-ink">
+          <TitleReveal className="display-lg mt-5 text-ink">
             Tout ce qu&apos;il faut <em className="text-gold">savoir avant de réserver</em>
-          </h2>
+          </TitleReveal>
         </Reveal>
 
         <Reveal delay={0.1}>

@@ -574,3 +574,15 @@ select.field {
     font-size: min(17vw, 36vh);
   }
 }
+
+/* Micro-interaction : la flèche des boutons et liens avance au survol */
+@media (hover: hover) {
+  .btn svg,
+  .link-underline svg {
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn:hover svg:last-child,
+  .link-underline:hover svg:last-child {
+    transform: translateX(4px);
+  }
+}

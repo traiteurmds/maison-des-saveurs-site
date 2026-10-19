@@ -16,10 +16,10 @@ import { Wordmark } from "./ui/Brand";
 /** Cinq entrées seulement : le reste vit dans les pages et le pied de page. */
 const MENU = [
   { href: "/menu", label: "La carte", image: "/images/plats/couscous-viande.webp", plate: true },
-  { href: "/services", label: "Prestations", image: "/images/menu/viande-pruneaux.jpg" },
-  { href: "/gallery", label: "Réalisations", image: "/images/menu/salade-royale.jpg" },
+  { href: "/services", label: "Prestations", image: "/images/realisations/chariot-fruits.jpg" },
+  { href: "/gallery", label: "Réalisations", image: "/images/realisations/salades-et-sauces.jpg" },
   { href: "/caftans", label: "Caftans", image: "/images/caftans/caftan-01.jpg" },
-  { href: "/contact", label: "Contact", image: "/images/menu/gateaux-marocains.jpg" },
+  { href: "/contact", label: "Contact", image: "/images/realisations/poulets-pommes-de-terre.jpg" },
 ];
 
 const SECONDARY = [

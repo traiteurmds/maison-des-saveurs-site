@@ -74,7 +74,7 @@ export default function VideoReel() {
   useMotionValueEvent(p, "change", (v) => setLabelsOn(v > 0.72));
 
   return (
-    <section ref={ref} className="relative bg-paper" style={{ height: "380vh" }} aria-label="En cuisine : nos vidéos">
+    <section ref={ref} className="relative h-[300vh] bg-paper md:h-[380vh]" aria-label="En cuisine : nos vidéos">
       <div className="sticky top-0 h-[100svh] overflow-hidden [perspective:1600px]">
         {/* Titre final */}
         <motion.div

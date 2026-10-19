@@ -7,6 +7,12 @@ import { FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
 import Reveal from "../ui/Reveal";
 
 const PHOTOS = [
+  { src: "/images/realisations/plateaux-fruits-melon.jpg", w: 1050, h: 1400, title: "Plateaux de fruits frais" },
+  { src: "/images/realisations/salades-composees-crevettes.jpg", w: 1050, h: 1400, title: "Salades composées aux crevettes" },
+  { src: "/images/realisations/pastillas-individuelles.jpg", w: 788, h: 1400, title: "Pastillas individuelles" },
+  { src: "/images/realisations/buffet-snacking.jpg", w: 1000, h: 1333, title: "Buffet salé snacking en réception" },
+  { src: "/images/realisations/poulets-sauce-service.jpg", w: 788, h: 1400, title: "Poulets nappés de leur sauce" },
+  { src: "/images/realisations/chariot-fruits.jpg", w: 788, h: 1400, title: "Plateaux de fruits prêts à servir" },
   { src: "/images/realisations/salades-composees-plateaux.jpg", w: 1056, h: 1400, title: "Salades composées sur plateaux" },
   { src: "/images/realisations/couscous-viande-legumes.jpg", w: 1050, h: 1400, title: "Couscous à la viande et aux légumes" },
   { src: "/images/realisations/viande-pruneaux-amandes.jpg", w: 788, h: 1400, title: "Viande aux pruneaux et amandes" },

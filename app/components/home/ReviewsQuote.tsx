@@ -14,6 +14,7 @@ import {
 import { FaGoogle, FaStar } from "react-icons/fa";
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import { GOOGLE_BUSINESS, TESTIMONIALS } from "../../lib/testimonials";
+import TitleReveal from "../ui/TitleReveal";
 
 /** Avis Google authentiques, recopiés mot pour mot. */
 const FEATURED_IDS = [
@@ -151,9 +152,9 @@ export default function ReviewsQuote() {
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
           <div>
             <p className="eyebrow">Ils nous ont fait confiance</p>
-            <h2 className="display-xl mt-5 max-w-3xl">
+            <TitleReveal className="display-xl mt-5 max-w-3xl">
               Des invités conquis, <em className="text-gold-gradient">des mots qui nous touchent</em>
-            </h2>
+            </TitleReveal>
           </div>
           <a
             href={GOOGLE_BUSINESS.profileUrl}

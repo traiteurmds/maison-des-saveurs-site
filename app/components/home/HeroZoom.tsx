@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { FiArrowDown, FiArrowRight } from "react-icons/fi";
 import GoogleRating from "../ui/GoogleRating";
 import { getIntroDelay } from "./useIntroDelay";
@@ -59,7 +59,7 @@ export default function HeroZoom() {
     const r = 999 * (1 - e);
     return `inset(${t}% ${s}% ${b}% ${s}% round ${r}px ${r}px ${mobile ? r * 0.02 : 0}px ${mobile ? r * 0.02 : 0}px)`;
   });
-  const imgScale = useTransform(p, [0, 0.62], [1.35, 1]);
+  const imgScale = useTransform(p, [0, 0.62], [1.12, 1]);
   const titleY = useTransform(p, [0, 0.5], ["0%", "-60%"]);
   const titleOpacity = useTransform(p, [0, 0.35], [1, 0]);
   const sideOpacity = useTransform(p, [0, 0.18], [1, 0]);
@@ -67,7 +67,7 @@ export default function HeroZoom() {
   const captionY = useTransform(p, [0.6, 0.85], [60, 0]);
 
   return (
-    <section ref={ref} className="relative h-[240vh] bg-paper" aria-label="Accueil">
+    <section ref={ref} className="relative h-[200vh] bg-paper md:h-[240vh]" aria-label="Accueil">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         {/* Titre géant */}
         <motion.div
@@ -117,16 +117,7 @@ export default function HeroZoom() {
           transition={{ duration: 1.4, ease, delay: delay + 0.2 }}
         >
           <motion.div className="absolute inset-0" style={{ scale: imgScale }}>
-            <Image
-              src="/images/menu/couscous-viande.jpg"
-              alt="Couscous à la viande servi par Maison Des Saveurs"
-              fill
-              priority
-              sizes="100vw"
-              quality={80}
-              className="object-cover"
-              style={{ objectPosition: "center 45%" }}
-            />
+            <HeroFilm mobile={mobile} reduced={Boolean(reduced)} progress={p} />
           </motion.div>
           <motion.div
             className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/35 to-ink/70"
@@ -180,5 +171,100 @@ export default function HeroZoom() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Film d'accueil : montage de vraies vidéos de nos prestations (poulet nappé de sauce,
+ * buffet de réception, dressage du couscous). La version verticale remplit l'arche
+ * (et tout l'écran sur téléphone) ; sur ordinateur, la version horizontale prend le relais
+ * pendant que l'arche s'ouvre, et n'est chargée qu'à ce moment-là.
+ */
+function HeroFilm({ mobile, reduced, progress }: { mobile: boolean; reduced: boolean; progress: MotionValue<number> }) {
+  const portraitRef = useRef<HTMLVideoElement>(null);
+  const landscapeRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [wantLandscape, setWantLandscape] = useState(false);
+  const landscapeOpacity = useTransform(progress, [0.1, 0.38], [0, 1]);
+
+  useMotionValueEvent(progress, "change", (v) => {
+    if (v > 0.01 && !mobile && !wantLandscape) setWantLandscape(true);
+  });
+
+  // Lecture seulement quand l'accueil est à l'écran
+  useEffect(() => {
+    if (reduced) return;
+    const videos = [portraitRef.current, landscapeRef.current].filter(Boolean) as HTMLVideoElement[];
+    const io = new IntersectionObserver(([entry]) => {
+      videos.forEach((v) => (entry.isIntersecting ? v.play().catch(() => {}) : v.pause()));
+    });
+    if (videos[0]) io.observe(videos[0]);
+    return () => io.disconnect();
+  }, [reduced, wantLandscape]);
+
+  // Les deux films restent calés sur le même instant
+  useEffect(() => {
+    const a = portraitRef.current;
+    const b = landscapeRef.current;
+    if (!a || !b) return;
+    const sync = () => {
+      if (Math.abs(b.currentTime - a.currentTime) > 0.25) b.currentTime = a.currentTime;
+    };
+    b.addEventListener("loadeddata", sync);
+    const id = window.setInterval(sync, 2000);
+    return () => {
+      b.removeEventListener("loadeddata", sync);
+      window.clearInterval(id);
+    };
+  }, [wantLandscape]);
+
+  return (
+    <>
+      <Image
+        src="/videos/hero-portrait.jpg"
+        alt="Poulet nappé de sauce, préparé par Maison Des Saveurs"
+        fill
+        priority
+        sizes="(max-width: 767px) 100vw, 40vw"
+        quality={80}
+        className="object-cover"
+      />
+      {!reduced && (
+        <video
+          ref={portraitRef}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${playing ? "opacity-100" : "opacity-0"}`}
+          src="/videos/hero-portrait.mp4"
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="auto"
+          onPlaying={() => setPlaying(true)}
+          aria-hidden
+        />
+      )}
+      {!mobile && (
+        <motion.div className="absolute inset-0" style={{ opacity: landscapeOpacity }}>
+          {wantLandscape && (
+            <>
+              <Image src="/videos/hero-paysage.jpg" alt="" fill sizes="100vw" quality={80} className="object-cover" />
+              {!reduced && (
+                <video
+                  ref={landscapeRef}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src="/videos/hero-paysage.mp4"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="auto"
+                  aria-hidden
+                />
+              )}
+            </>
+          )}
+        </motion.div>
+      )}
+    </>
   );
 }

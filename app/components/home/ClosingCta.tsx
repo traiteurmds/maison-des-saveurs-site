@@ -8,6 +8,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FiArrowRight, FiPhone } from "react-icons/fi";
 import { PHONE_DISPLAY, PHONE_TEL } from "../../lib/site-seo";
 import { WHATSAPP_SIMPLE_URL } from "../../lib/whatsapp";
+import TitleReveal from "../ui/TitleReveal";
 
 export default function ClosingCta({
   title = (
@@ -36,9 +37,9 @@ export default function ClosingCta({
       </motion.div>
       <div className="container-x py-[clamp(6rem,14vw,12rem)]">
         <p className="eyebrow on-dark">Votre événement</p>
-        <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.8rem,7.4vw,7.2rem)] leading-[0.95] tracking-[-0.04em]">
+        <TitleReveal className="mt-6 max-w-4xl font-display text-[clamp(2.8rem,7.4vw,7.2rem)] leading-[0.95] tracking-[-0.04em]">
           {title}
-        </h2>
+        </TitleReveal>
         <p className="mt-8 max-w-md text-[1.02rem] leading-relaxed text-ivory/80">
           {text}
         </p>

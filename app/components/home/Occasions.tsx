@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import { cn } from "../../lib/utils";
 import Reveal from "../ui/Reveal";
+import TitleReveal from "../ui/TitleReveal";
 
 const OCCASIONS = [
   {
@@ -13,8 +14,8 @@ const OCCASIONS = [
     tag: "Mariages · Hlels · Fiançailles",
     title: "Le repas de votre plus beau jour",
     text: "Grands plats à partager, salade royale, pastillas et service à table pour une réception à la hauteur de l'événement.",
-    image: "/images/menu/viande-pruneaux.jpg",
-    position: "center 55%",
+    image: "/images/realisations/poulets-citron-olives.jpg",
+    position: "center 60%",
   },
   {
     href: "/services#familles",
@@ -29,8 +30,8 @@ const OCCASIONS = [
     tag: "Entreprises · Associations · Universités",
     title: "Des buffets qui rassemblent vos équipes",
     text: "Buffets salés snacking ou orientaux, repas d'équipe et soirées associatives, livrés et dressés.",
-    image: "/images/menu/mini-sales.jpg",
-    position: "center 40%",
+    image: "/images/realisations/buffet-pastillas-salades.jpg",
+    position: "center 45%",
   },
 ];
 
@@ -43,9 +44,9 @@ export default function Occasions() {
         <Reveal className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="eyebrow">Nos prestations</p>
-            <h2 className="display-xl mt-5 max-w-4xl">
+            <TitleReveal className="display-xl mt-5 max-w-4xl">
               Une cuisine, <em className="text-gold-gradient">mille occasions</em>
-            </h2>
+            </TitleReveal>
           </div>
           <p className="lead max-w-sm">
             Chaque réception est différente. Le menu, les quantités et le service s&apos;adaptent à votre événement.

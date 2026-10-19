@@ -95,7 +95,7 @@ export default function GlobeLyon() {
   }, [reduced]);
 
   return (
-    <section ref={ref} className="relative bg-paper" style={{ height: "230vh" }} aria-label="Nos zones d'intervention">
+    <section ref={ref} className="relative h-[190vh] bg-paper md:h-[230vh]" aria-label="Nos zones d'intervention">
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         {/* Grille de fond façon instrument */}
         <div

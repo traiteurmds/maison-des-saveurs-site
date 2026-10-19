@@ -132,7 +132,7 @@ export const DISHES: Dish[] = [
     title: "Buffet salé snacking",
     description:
       "Des bouchées gourmandes qui plaisent à tous les âges, parfaites pour un cocktail, un anniversaire ou un buffet d'entreprise.",
-    image: "/images/menu/mini-sales.jpg",
+    image: "/images/realisations/buffet-snacking.jpg",
     alt: "Buffet de mini salés, mini burgers et pièces individuelles",
     category: "buffet",
     pieces: ["Mini burgers", "Mini bagels", "Mini navettes au thon", "Mini pizzas", "Mini wraps"],

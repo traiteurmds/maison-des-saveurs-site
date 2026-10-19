@@ -5,16 +5,17 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
+import TitleReveal from "../ui/TitleReveal";
 
 const PHOTOS = [
   { src: "/images/realisations/salades-composees-plateaux.jpg", label: "Salades composées", ratio: "aspect-[3/4]", pos: "center 60%" },
   { src: "/images/realisations/couscous-viande-legumes.jpg", label: "Couscous à la viande", ratio: "aspect-[4/5]", pos: "center 30%" },
   { src: "/images/realisations/viande-pruneaux-amandes.jpg", label: "Viande aux pruneaux", ratio: "aspect-[3/4]", pos: "center 55%" },
   { src: "/images/realisations/pastilla-fruits-de-mer.jpg", label: "Pastilla aux fruits de mer", ratio: "aspect-[4/5]", pos: "center 70%" },
-  { src: "/images/realisations/plateaux-fruits.jpg", label: "Plateaux de fruits", ratio: "aspect-[3/4]", pos: "center 70%" },
+  { src: "/images/realisations/plateaux-fruits-melon.jpg", label: "Plateaux de fruits", ratio: "aspect-[3/4]", pos: "center 40%" },
   { src: "/images/realisations/poulet-olives-amandes.jpg", label: "Poulet olives et amandes", ratio: "aspect-[4/5]", pos: "center 45%" },
   { src: "/images/realisations/service-baklawa.jpg", label: "Le service des pâtisseries", ratio: "aspect-[3/4]", pos: "center 45%" },
-  { src: "/images/realisations/poulets-citron-olives.jpg", label: "Poulets au citron", ratio: "aspect-[4/5]", pos: "center 60%" },
+  { src: "/images/realisations/pastillas-individuelles.jpg", label: "Pastillas individuelles", ratio: "aspect-[4/5]", pos: "center 60%" },
 ];
 
 /** Galerie : défilement horizontal piloté par le scroll vertical sur ordinateur, glissement natif sur mobile. */
@@ -62,9 +63,9 @@ export default function HorizontalGallery() {
             <div className="flex w-[30vw] shrink-0 flex-col justify-between self-stretch py-4">
               <div>
                 <p className="eyebrow">Réalisations</p>
-                <h2 className="display-xl mt-6">
+                <TitleReveal className="display-xl mt-6">
                   Nos plats, <em className="text-gold-gradient">tels qu&apos;ils arrivent</em> sur vos tables
-                </h2>
+                </TitleReveal>
               </div>
               <Link href="/gallery" className="btn btn-outline self-start">
                 Voir la galerie <FiArrowUpRight aria-hidden />
@@ -79,9 +80,9 @@ export default function HorizontalGallery() {
       <section className="section bg-sand lg:hidden" aria-label="Réalisations">
         <div className="container-x">
           <p className="eyebrow">Réalisations</p>
-          <h2 className="display-xl mt-5">
+          <TitleReveal className="display-xl mt-5">
             Nos plats, <em className="text-gold-gradient">tels qu&apos;ils arrivent</em> sur vos tables
-          </h2>
+          </TitleReveal>
         </div>
         <div className="snap-row mt-10 gap-4 px-[clamp(1.25rem,4vw,3rem)] pb-2">{cards}</div>
         <div className="container-x mt-8">

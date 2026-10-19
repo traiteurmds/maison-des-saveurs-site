@@ -72,7 +72,7 @@ export default function EntreprisePage() {
           </>
         }
         intro="Repas d'entreprise, buffets, événements associatifs et universitaires à Lyon : une cuisine marocaine halal, généreuse, livrée et servie avec sérieux."
-        image="/images/menu/mini-sales.jpg"
+        image="/images/realisations/buffet-salades-composees.jpg"
         imagePosition="center 50%"
       >
         <Link href="/contact" className="btn btn-gold">

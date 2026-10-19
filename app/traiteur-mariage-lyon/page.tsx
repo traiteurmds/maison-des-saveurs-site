@@ -60,8 +60,8 @@ export default function MariagePage() {
           </>
         }
         intro="Traiteur marocain halal à Lyon, nous préparons et servons le repas de votre mariage ou de votre hlel avec la générosité et l'élégance qu'il mérite."
-        image="/images/menu/viande-pruneaux.jpg"
-        imagePosition="center 55%"
+        image="/images/realisations/salades-composees-crevettes.jpg"
+        imagePosition="center 40%"
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Link href="/contact" className="btn btn-gold">
