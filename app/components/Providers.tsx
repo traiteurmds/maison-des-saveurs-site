@@ -6,6 +6,7 @@ import MobileActionBar from "./MobileActionBar";
 import SelectionToast from "./SelectionToast";
 import SmoothScroll from "./SmoothScroll";
 import Preloader from "./Preloader";
+import CustomCursor from "./CustomCursor";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -13,6 +14,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <SelectionProvider>
         <Preloader />
         <SmoothScroll />
+        <CustomCursor />
         {children}
         <SelectionToast />
         <MobileActionBar />

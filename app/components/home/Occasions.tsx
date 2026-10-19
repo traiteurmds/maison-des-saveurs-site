@@ -61,6 +61,7 @@ export default function Occasions() {
                 href={o.href}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
+                data-cursor="view"
                 className={cn(
                   "group relative isolate flex min-h-[460px] overflow-hidden text-ivory transition-[flex-grow] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] lg:min-h-0",
                   open ? "lg:flex-[3.2]" : "lg:flex-1"

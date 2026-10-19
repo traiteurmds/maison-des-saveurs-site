@@ -55,7 +55,8 @@ export default function GalleryGrid() {
             <button
               type="button"
               onClick={() => setIndex(i)}
-              className="group relative block w-full overflow-hidden rounded-[16px] bg-sand"
+              data-cursor="view"
+              className="group relative block w-full overflow-hidden bg-sand"
               aria-label={`Agrandir : ${p.title}`}
             >
               <Image

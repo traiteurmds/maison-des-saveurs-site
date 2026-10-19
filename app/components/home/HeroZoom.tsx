@@ -92,18 +92,18 @@ export default function HeroZoom() {
               <GoogleRating />
             </motion.div>
           </div>
-          <h1 className="mt-4 font-display font-normal leading-[0.86] tracking-[-0.045em] text-ink md:mt-6">
+          <h1 className="mt-4 font-display font-normal leading-[0.86] tracking-[-0.045em] text-ink md:mt-6 md:whitespace-nowrap">
             <span className="sr-only">Maison Des Saveurs, traiteur marocain halal à Lyon</span>
             <Letters
               text="Maison"
               delay={delay}
-              className="block text-[19vw] md:inline md:text-[min(9.4vw,10rem)]"
+              className="block text-[19vw] md:inline md:text-[min(9.3vw,8.6rem)]"
             />
-            <span className="hidden md:inline md:text-[min(9.4vw,10rem)]">&nbsp;</span>
+            <span className="hidden md:inline md:text-[min(9.3vw,8.6rem)]">&nbsp;</span>
             <Letters
               text="Des Saveurs"
               delay={delay + 0.15}
-              className="block text-right text-[17vw] italic text-gold md:inline md:text-[min(9.4vw,10rem)]"
+              className="block text-right text-[17vw] italic text-gold md:inline md:text-[min(9.3vw,8.6rem)]"
             />
           </h1>
         </motion.div>
@@ -141,7 +141,7 @@ export default function HeroZoom() {
         >
           <p className="eyebrow eyebrow-center on-dark">Mariages · Hlels · Naissances · Entreprises</p>
           <p className="display-xl mt-6 max-w-5xl">
-            La générosité de la table <em>marocaine</em>
+            La générosité de la table <em>traditionnelle</em>
           </p>
           <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-ivory/85 md:text-lg">
             Une cuisine faite maison, halal, préparée par une cheffe aux plus de 30 ans d&apos;expérience.

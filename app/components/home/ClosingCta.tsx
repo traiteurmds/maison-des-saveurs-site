@@ -26,7 +26,7 @@ export default function ClosingCta({
   const y = useTransform(scrollYProgress, [0, 1], ["12%", "-12%"]);
 
   return (
-    <section ref={ref} className="on-dark relative isolate overflow-hidden bg-majorelle text-ivory">
+    <section ref={ref} className="on-dark relative isolate overflow-hidden bg-clay-deep text-ivory">
       <motion.div
         style={{ rotate, y }}
         className="pointer-events-none absolute -right-[30vw] top-1/2 -z-10 aspect-square w-[85vw] -translate-y-1/2 opacity-95 md:-right-[12vw] md:w-[52vw]"

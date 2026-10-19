@@ -2,7 +2,7 @@
 
 /* ──────────────────────────────────────────────
    Maison Des Saveurs — design system v2
-   Ivoire · lin · expresso · cognac
+   Ivoire · lin · expresso · terracotta · safran
    ────────────────────────────────────────────── */
 
 :root {
@@ -13,18 +13,17 @@
   --ivory: #fbf8f3;
   --sand: #ebe2d4;
   --sand-2: #ddd0bc;
-  --gold: #9a5a34;
-  --gold-bright: #c98a5c;
-  --gold-soft: #f0e2d3;
+  --gold: #a8492a;
+  --gold-bright: #cf9535;
+  --gold-soft: #f2e0d4;
   --muted: #6f655b;
   --muted-light: #a39888;
   --line: rgba(29, 25, 21, 0.12);
   --line-dark: rgba(29, 25, 21, 0.2);
-  --saffron: #e0a93e;
-  --terracotta: #c0583b;
-  --majorelle: #2b3f92;
-  --olive: #6c7146;
-  --rose: #d6a092;
+  /* Palette de marque : terracotta du logo, safran, argile profonde */
+  --saffron: #cf9535;
+  --terracotta: #b2532e;
+  --clay-deep: #6b2e17;
   --shadow: 0 1px 2px rgba(29, 25, 21, 0.04), 0 18px 40px -22px rgba(29, 25, 21, 0.25);
   --shadow-lg: 0 2px 6px rgba(29, 25, 21, 0.05), 0 40px 80px -30px rgba(29, 25, 21, 0.35);
   --radius: 4px;
@@ -66,9 +65,7 @@
   --color-line-dark: var(--line-dark);
   --color-saffron: var(--saffron);
   --color-terracotta: var(--terracotta);
-  --color-majorelle: var(--majorelle);
-  --color-olive: var(--olive);
-  --color-rose: var(--rose);
+  --color-clay-deep: var(--clay-deep);
   --color-mds-bg: var(--mds-bg);
   --color-mds-card: var(--mds-card);
   --color-mds-text: var(--mds-text);
@@ -358,14 +355,14 @@ img {
 .bg-ink-texture,
 .bg-linen {
   background-color: var(--sand);
-  background-image: radial-gradient(ellipse 60% 55% at 90% 0%, rgba(201, 138, 92, 0.18), transparent 60%),
-    radial-gradient(ellipse 55% 50% at 0% 100%, rgba(224, 169, 62, 0.12), transparent 60%);
+  background-image: radial-gradient(ellipse 60% 55% at 90% 0%, rgba(178, 83, 46, 0.12), transparent 60%),
+    radial-gradient(ellipse 55% 50% at 0% 100%, rgba(207, 149, 53, 0.12), transparent 60%);
 }
 
 /* Motif zellige — étoile à 8 branches, très discret */
 .zellige,
 .zellige-light {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%239a5a34' stroke-width='0.6' stroke-opacity='0.12'%3E%3Cpath d='M36 6l8.5 21.5L66 36l-21.5 8.5L36 66l-8.5-21.5L6 36l21.5-8.5z'/%3E%3Cpath d='M15 15h42v42H15z' transform='rotate(45 36 36)'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23a8492a' stroke-width='0.6' stroke-opacity='0.12'%3E%3Cpath d='M36 6l8.5 21.5L66 36l-21.5 8.5L36 66l-8.5-21.5L6 36l21.5-8.5z'/%3E%3Cpath d='M15 15h42v42H15z' transform='rotate(45 36 36)'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 88px 88px;
 }
 

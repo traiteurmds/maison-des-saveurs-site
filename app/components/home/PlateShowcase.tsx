@@ -6,9 +6,11 @@ import { useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
+  useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion";
 import { FiArrowUpRight, FiCheck, FiPlus } from "react-icons/fi";
@@ -31,7 +33,7 @@ const SLIDES: Slide[] = [
     name: "Couscous",
     kicker: "Le plat de fête",
     plate: "/images/plats/couscous-viande.webp",
-    bg: "#e0a93e",
+    bg: "#cf9535",
     fg: "dark",
   },
   {
@@ -39,7 +41,7 @@ const SLIDES: Slide[] = [
     name: "Pastilla",
     kicker: "L'entrée d'apparat",
     plate: "/images/plats/pastilla.webp",
-    bg: "#2b3f92",
+    bg: "#b2532e",
     fg: "light",
   },
   {
@@ -47,7 +49,7 @@ const SLIDES: Slide[] = [
     name: "Rfissa",
     kicker: "La tradition des naissances",
     plate: "/images/plats/rfissa.webp",
-    bg: "#b4502f",
+    bg: "#6b2e17",
     fg: "light",
   },
 ];
@@ -68,6 +70,17 @@ export default function PlateShowcase() {
   const rotate = useTransform(p, [0, 1], [0, reduced ? 0 : 300]);
   const nameX = useTransform(p, [0, 1], ["6%", "-6%"]);
 
+  // Inclinaison 3D qui suit la souris (ordinateur)
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const tiltX = useSpring(useTransform(my, [-0.5, 0.5], [16, -16]), { stiffness: 120, damping: 18 });
+  const tiltY = useSpring(useTransform(mx, [-0.5, 0.5], [-16, 16]), { stiffness: 120, damping: 18 });
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (reduced || e.pointerType !== "mouse") return;
+    mx.set(e.clientX / window.innerWidth - 0.5);
+    my.set(e.clientY / window.innerHeight - 0.5);
+  };
+
   useMotionValueEvent(p, "change", (v) => {
     const i = Math.min(n - 1, Math.max(0, Math.floor(v * n)));
     if (i !== index) setIndex(i);
@@ -84,6 +97,7 @@ export default function PlateShowcase() {
       ref={ref}
       style={{ backgroundColor: bg, height: `${n * 100 + 40}vh` }}
       className="relative"
+      onPointerMove={onPointerMove}
       aria-label="Nos plats signatures"
     >
       <div
@@ -119,17 +133,28 @@ export default function PlateShowcase() {
         </motion.div>
 
         {/* Assiette qui tourne */}
-        <div className="relative z-10 flex flex-1 items-center justify-center">
-          <motion.div style={{ rotate }} className="relative aspect-square w-[min(82vw,52svh)] md:w-[min(42vw,62svh)]">
+        <div className="relative z-10 flex flex-1 items-center justify-center [perspective:1400px]">
+          <motion.div
+            style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+            className="relative aspect-square w-[min(82vw,52svh)] md:w-[min(42vw,62svh)]"
+          >
+            {/* Ombre portée au sol */}
+            <div
+              className="absolute inset-x-[8%] bottom-[-9%] h-[18%] rounded-[50%] bg-black/35 blur-2xl"
+              style={{ transform: "translateZ(-80px)" }}
+              aria-hidden
+            />
             <AnimatePresence initial={false}>
               <motion.div
                 key={slide.plate}
                 className="absolute inset-0"
-                initial={{ opacity: 0, scale: 0.7, rotate: -90, y: "30%" }}
-                animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, rotate: 90, y: "-30%" }}
-                transition={{ duration: 1, ease }}
+                style={{ transformStyle: "preserve-3d" }}
+                initial={{ opacity: 0, scale: 0.75, rotateX: 72, y: "45%" }}
+                animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
+                exit={{ opacity: 0, scale: 0.85, rotateX: -60, y: "-40%" }}
+                transition={{ duration: 1.1, ease }}
               >
+                <motion.div style={{ rotate }} className="absolute inset-0">
                 <Image
                   src={slide.plate}
                   alt={dish.alt}
@@ -138,6 +163,7 @@ export default function PlateShowcase() {
                   quality={85}
                   className="object-contain drop-shadow-[0_45px_50px_rgba(0,0,0,0.38)]"
                 />
+                </motion.div>
               </motion.div>
             </AnimatePresence>
           </motion.div>

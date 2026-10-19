@@ -37,7 +37,7 @@ export default function HorizontalGallery() {
   }, []);
 
   const cards = PHOTOS.map((p, i) => (
-    <figure key={p.src} className={`group shrink-0 ${i % 2 ? "lg:mt-24" : ""}`}>
+    <figure key={p.src} data-cursor="view" className={`group shrink-0 ${i % 2 ? "lg:mt-24" : ""}`}>
       <div className={`img-zoom relative ${p.ratio} w-[72vw] overflow-hidden bg-sand sm:w-[44vw] lg:w-[26vw]`}>
         <Image src={p.src} alt={p.label} fill sizes="(max-width: 1024px) 72vw, 26vw" quality={78} className="object-cover" style={{ objectPosition: p.pos }} />
       </div>
