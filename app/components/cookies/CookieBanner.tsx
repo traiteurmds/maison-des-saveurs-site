@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
+import { LEGAL_ROUTES } from "../../lib/legal";
 
 type CookieBannerProps = {
   onAccept: () => void;
@@ -8,56 +10,36 @@ type CookieBannerProps = {
   onCustomize: () => void;
 };
 
+/** Bandeau discret en bas de page : ne bloque pas la lecture du site. */
 export default function CookieBanner({ onAccept, onReject, onCustomize }: CookieBannerProps) {
   const reducedMotion = useReducedMotion();
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
+    <motion.div
+      role="region"
       aria-label="Préférences cookies"
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-[var(--black)]/20 p-4 backdrop-blur-[8px]"
+      initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-3 z-[70] mx-auto max-w-xl rounded-[18px] border border-line-dark bg-ink/95 p-4 text-ivory backdrop-blur shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] bottom-[calc(var(--mobile-bar-h)+env(safe-area-inset-bottom)+12px)] sm:p-6 lg:bottom-6 lg:left-6 lg:right-auto lg:mx-0"
     >
-      <motion.div
-        initial={reducedMotion ? false : { opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: reducedMotion ? 0.01 : 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="w-[92%] max-w-[520px] rounded-[28px] border border-[rgba(198,164,106,0.38)] bg-[var(--ivory)] p-6 shadow-[0_28px_72px_rgba(11,11,10,0.14)] sm:p-8"
-      >
-        <h2 className="font-serif text-xl font-semibold leading-snug text-mds-text sm:text-2xl">
-          Maison Des Saveurs respecte votre vie privée.
-        </h2>
-        <p className="mt-3 text-sm leading-relaxed text-mds-muted sm:text-base">
-          Nous utilisons uniquement des cookies nécessaires et des outils statistiques afin
-          d&apos;améliorer votre expérience.
-        </p>
-
-        <div className="mt-6 flex flex-col gap-3">
-          <button
-            type="button"
-            onClick={onAccept}
-            className="min-h-[48px] w-full rounded-full bg-[var(--black)] px-6 py-3 text-sm font-semibold tracking-[0.12em] text-[var(--ivory)] uppercase transition-colors hover:bg-[var(--charcoal)]"
-          >
-            Accepter
-          </button>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <button
-              type="button"
-              onClick={onCustomize}
-              className="min-h-[44px] flex-1 rounded-full border border-[rgba(198,164,106,0.35)] bg-[var(--ivory)] px-5 py-2.5 text-sm font-medium tracking-wide text-mds-text transition-colors hover:border-[var(--gold)]/55"
-            >
-              Personnaliser
-            </button>
-            <button
-              type="button"
-              onClick={onReject}
-              className="min-h-[44px] flex-1 rounded-full border border-mds-border bg-[var(--surface-soft)] px-5 py-2.5 text-sm font-medium tracking-wide text-mds-muted transition-colors hover:text-mds-text"
-            >
-              Refuser
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+      <p className="text-[0.78rem] leading-snug text-ivory/85 sm:text-sm sm:leading-relaxed">
+        Cookies nécessaires et mesure d&apos;audience anonyme pour améliorer le site.{" "}
+        <Link href={LEGAL_ROUTES.cookies} className="text-gold-bright underline underline-offset-2">
+          En savoir plus
+        </Link>
+      </p>
+      <div className="mt-3 flex flex-nowrap items-center gap-2">
+        <button type="button" onClick={onAccept} className="btn btn-gold btn-sm">
+          Accepter
+        </button>
+        <button type="button" onClick={onReject} className="btn btn-ghost-light btn-sm">
+          Refuser
+        </button>
+        <button type="button" onClick={onCustomize} className="btn btn-sm px-3 text-ivory/70 hover:text-ivory">
+          Personnaliser
+        </button>
+      </div>
+    </motion.div>
   );
 }

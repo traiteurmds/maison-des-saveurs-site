@@ -3,9 +3,9 @@ import FaqJsonLd from "../components/FaqJsonLd";
 import { SITE_URL } from "../lib/site-seo";
 
 export const metadata: Metadata = {
-  title: "Questions fréquentes",
+  title: "Questions fréquentes | Traiteur marocain halal Lyon",
   description:
-    "FAQ traiteur marocain Lyon : mariages, événements privés, zones desservies, menus personnalisés et devis Maison Des Saveurs.",
+    "FAQ Maison Des Saveurs, traiteur marocain halal à Lyon : zones desservies, réservation, service le jour J, options, acompte, allergies et devis.",
   alternates: { canonical: `${SITE_URL}/faq` },
 };
 

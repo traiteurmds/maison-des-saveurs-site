@@ -20,7 +20,7 @@ export const IMAGE_HOVER_SCALE = "group-hover:scale-[1.03]";
 /** Points focaux par fichier — préserve le sujet principal au crop 4:3 */
 export const IMAGE_FOCAL: Record<string, string> = {
   "/images/menu/salade-variee.jpg": "center 45%",
-  "/images/menu/salade-royale.jpg": "center 65%",
+  "/images/menu/salade-royale.jpg": "center 72%",
   "/images/menu/mini-sales.jpg": "center 55%",
   "/images/menu/couscous-viande.jpg": "center 50%",
   "/images/menu/couscous-poulet.jpg": "center 50%",

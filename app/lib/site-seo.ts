@@ -7,22 +7,35 @@ export const PHONE_E164 = "+33758639734";
 export const PHONE_TEL = `tel:${PHONE_E164}`;
 export const PHONE_DISPLAY = "07 58 63 97 34";
 
+/** Communes desservies habituellement */
 export const SERVICE_AREAS = [
   "Lyon",
   "Villeurbanne",
   "Bron",
   "Vénissieux",
+  "Saint-Priest",
   "Décines",
   "Meyzieu",
-  "Saint-Priest",
   "Genas",
-  "Grenoble",
-  "Annecy",
+] as const;
+
+/** Prestations plus éloignées : étudiées selon la date, le trajet et le volume */
+export const EXTENDED_AREAS = ["Grenoble", "Annecy"] as const;
+
+export const NAV_LINKS = [
+  { href: "/menu", label: "La carte" },
+  { href: "/traiteur-mariage-lyon", label: "Mariages" },
+  { href: "/traiteur-entreprise-lyon", label: "Entreprises" },
+  { href: "/services", label: "Prestations" },
+  { href: "/gallery", label: "Réalisations" },
+  { href: "/caftans", label: "Caftans" },
+  { href: "/faq", label: "FAQ" },
 ] as const;
 
 export const FOOTER_PRESTATIONS = [
-  "Mariages",
-  "Hlel",
+  "Mariages et hlel",
+  "Naissances et aqiqas",
+  "Anniversaires",
   "Buffets entreprises",
   "Repas entreprises",
   "Associations",

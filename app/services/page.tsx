@@ -1,93 +1,106 @@
-"use client";
-
-import PremiumImage from "../components/ui/PremiumImage";
-import { IMAGE_QUALITY, IMAGE_SIZES } from "../lib/image-config";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { FaHeart, FaUsers, FaBriefcase } from "react-icons/fa";
+import { FiArrowRight } from "react-icons/fi";
+import PageHero from "../components/ui/PageHero";
+import SectionHeading from "../components/ui/SectionHeading";
 import Reveal from "../components/ui/Reveal";
-import MagneticButton from "../components/ui/MagneticButton";
+import FeatureGrid from "../components/sections/FeatureGrid";
+import JourJ from "../components/sections/JourJ";
+import FinalCta from "../components/sections/FinalCta";
+import { SERVICE_OPTIONS } from "../lib/menu-data";
+import { SITE_URL } from "../lib/site-seo";
 
-const services = [
+export const metadata: Metadata = {
+  title: "Prestations traiteur à Lyon : mariages, familles, entreprises",
+  description:
+    "Toutes les prestations de Maison Des Saveurs, traiteur marocain halal à Lyon : mariages et hlel, naissances et aqiqas, anniversaires, buffets d'entreprise, service en salle, vaisselle et décoration.",
+  alternates: { canonical: `${SITE_URL}/services` },
+};
+
+const blocks = [
   {
-    title: "Traiteur mariages Lyon",
-    description:
-      "Nous accompagnons tous les mariages à Lyon et dans ses alentours, quels que soient vos traditions, votre culture ou le style de votre réception. Chaque mariage est unique, et nous mettons tout notre savoir-faire au service de votre union pour créer une expérience culinaire exceptionnelle. De la réception au dessert, nous assurons une prestation complète, élégante et parfaitement maîtrisée, afin que le repas de votre plus beau jour reste gravé dans les mémoires.",
-    image: "/images/services/mariage.png",
-    imageAlt: "Traiteur mariage marocain haut de gamme",
-    icon: FaHeart,
+    id: "mariages",
+    eyebrow: "Mariages · Hlel · Fiançailles",
+    title: "Mariages et hlel",
+    text: "Le repas de votre plus beau jour, servi en grands plats à partager, avec service en salle, vaisselle élégante et décoration de table si vous le souhaitez.",
+    image: "/images/menu/viande-pruneaux.jpg",
+    href: "/traiteur-mariage-lyon",
+    cta: "Le traiteur mariage",
   },
   {
-    title: "Traiteur Événements",
-    description:
-      "Anniversaires, fêtes familiales, événements associatifs ou célébrations spéciales : nous vous accompagnons pour tous vos moments importants. Nous nous adaptons à votre lieu, à votre nombre d'invités et à votre budget afin de proposer une prestation sur mesure, généreuse et élégante. Chaque événement est pensé pour rassembler vos proches autour d'une cuisine authentique et mémorable.",
-    image: "/images/services/evenement.png",
-    imageAlt: "Service traiteur pour événements et réceptions",
-    icon: FaUsers,
+    id: "familles",
+    eyebrow: "Naissances · Aqiqas · Baptêmes · Anniversaires",
+    title: "Fêtes de famille",
+    text: "Rfissa pour une naissance, couscous pour réunir la famille, buffet salé pour un anniversaire : nous adaptons le menu et les quantités à vos invités, chez vous ou en salle.",
+    image: "/images/menu/rfissa.jpg",
+    href: "/contact",
+    cta: "Demander un devis",
   },
   {
-    title: "Traiteur Professionnel",
-    description:
-      "Repas d'entreprise, événements internes, célébrations professionnelles ou rassemblements d'équipe : Maison Des Saveurs se déplace directement dans vos locaux ou sur le lieu de votre choix. Nous organisons des prestations adaptées à vos besoins afin de réunir vos collaborateurs autour d'un moment convivial et fédérateur à travers le repas. Buffet, service à table ou formule personnalisée, nous assurons une organisation sérieuse et raffinée.",
-    image: "/images/services/professionnel.jpg",
-    imageAlt: "Service traiteur pour entreprises et événements professionnels",
-    icon: FaBriefcase,
+    id: "entreprises",
+    eyebrow: "Entreprises · Associations · Universités",
+    title: "Événements professionnels",
+    text: "Buffets salés, repas d'équipe, soirées associatives et événements étudiants, livrés dans vos locaux ou sur le lieu de votre choix.",
+    image: "/images/menu/mini-sales.jpg",
+    href: "/traiteur-entreprise-lyon",
+    cta: "Le traiteur entreprise",
   },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="bg-mds-bg pt-28">
-      <section className="relative overflow-hidden border-b border-mds-border py-16 md:py-24">
-        <div className="mds-pattern pointer-events-none absolute inset-0 opacity-15" aria-hidden />
-        <Reveal className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <p className="font-serif text-sm uppercase tracking-[0.3em] text-[var(--gold)]">Ce que nous proposons</p>
-          <h1 className="lux-heading mt-3 font-serif text-5xl font-semibold text-mds-text md:text-6xl">Nos services</h1>
-        </Reveal>
-      </section>
+    <>
+      <PageHero
+        eyebrow="Nos prestations"
+        title={
+          <>
+            Chaque occasion <em className="text-gold-gradient">mérite sa table</em>
+          </>
+        }
+        intro="Des fêtes de famille aux grands mariages, en passant par les événements d'entreprise : une même exigence de goût, de générosité et de présentation."
+        image="/images/menu/couscous-viande.jpg"
+      />
 
-      <section className="py-14 md:py-20">
-        <div className="mx-auto max-w-7xl space-y-16 px-6 lg:px-8">
-          {services.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <Reveal key={service.title} delay={0.05 * i}>
-                <article className="glass-card service-card-hover overflow-hidden rounded-3xl p-6 md:p-8">
-                  <div className={`grid items-center gap-10 md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`}>
-                    <div className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl md:aspect-[5/4] ${i % 2 === 1 ? "md:[direction:ltr]" : ""}`}>
-                      <PremiumImage
-                        src={service.image}
-                        alt={service.imageAlt}
-                        sizes={IMAGE_SIZES.serviceHero}
-                        quality={IMAGE_QUALITY.hero}
-                        hover
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--black)]/25 to-transparent" aria-hidden />
-                    </div>
-                    <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
-                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 text-[var(--gold)]">
-                        <Icon aria-hidden />
-                      </div>
-                      <h2 className="font-serif text-2xl font-semibold text-mds-text md:text-3xl">{service.title}</h2>
-                      <p className="mt-4 leading-relaxed text-mds-muted">{service.description}</p>
-                    </div>
-                  </div>
-                </article>
+      <section className="section bg-paper">
+        <div className="container-x space-y-20 md:space-y-28">
+          {blocks.map((b, i) => (
+            <div key={b.id} id={b.id} className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <Reveal className={`relative aspect-[4/3] overflow-hidden rounded-[var(--radius)] bg-sand shadow-[var(--shadow-lg)] ${i % 2 ? "lg:order-2" : ""}`}>
+                <Image src={b.image} alt={b.title} fill sizes="(max-width: 1024px) 100vw, 600px" quality={80} className="object-cover" />
               </Reveal>
-            );
-          })}
+              <Reveal delay={0.08}>
+                <p className="eyebrow">{b.eyebrow}</p>
+                <h2 className="display-lg mt-5 text-ink">{b.title}</h2>
+                <p className="lead mt-6">{b.text}</p>
+                <Link href={b.href} className="btn btn-ink mt-8">
+                  {b.cta} <FiArrowRight aria-hidden />
+                </Link>
+              </Reveal>
+            </div>
+          ))}
         </div>
-
-        <Reveal className="mt-20 text-center">
-          <MagneticButton className="inline-block">
-            <Link
-              href="/contact"
-              className="btn-premium btn-cta-signature inline-flex min-h-[52px] items-center justify-center rounded-full bg-[var(--black)] px-10 py-4 font-medium tracking-widest text-[var(--ivory)] transition-all hover:bg-[var(--charcoal)]"
-            >
-              Demander un devis
-            </Link>
-          </MagneticButton>
-        </Reveal>
       </section>
-    </div>
+
+      <section className="section bg-ivory">
+        <div className="container-x">
+          <SectionHeading
+            eyebrow="Options et services"
+            title={
+              <>
+                Une réception <em className="text-gold">clé en main</em>
+              </>
+            }
+            intro="Livraison, réchauffage, dressage et service : composez la prestation dont vous avez besoin. Chaque option est chiffrée dans votre devis."
+          />
+          <div className="mt-12">
+            <FeatureGrid features={SERVICE_OPTIONS.map((o) => ({ title: o.title, text: o.description }))} />
+          </div>
+        </div>
+      </section>
+
+      <JourJ />
+      <FinalCta />
+    </>
   );
 }

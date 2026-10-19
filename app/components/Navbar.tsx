@@ -2,260 +2,193 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaInstagram, FaTiktok, FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { FiPhone, FiX } from "react-icons/fi";
 import { cn } from "../lib/utils";
-import NavbarLogo from "./NavbarLogo";
-
-function useScrollToTop() {
-  return useCallback(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, []);
-}
-
-function scrollToMenuSection() {
-  if (typeof window === "undefined") return;
-  const el = document.getElementById("menu");
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/#menu", label: "Menu" },
-  { href: "/caftans", label: "Caftans" },
-  { href: "/services", label: "Services" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
-];
+import { NAV_LINKS, PHONE_DISPLAY, PHONE_TEL, SOCIAL_LINKS } from "../lib/site-seo";
+import { WHATSAPP_SIMPLE_URL } from "../lib/whatsapp";
+import { useSelection } from "./providers/SelectionProvider";
+import { Wordmark } from "./ui/Brand";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const scrollToTop = useScrollToTop();
+  const { counts } = useSelection();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  // Referme le menu mobile à chaque changement de page (y compris bouton retour).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
-  const handleLinkClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    link: (typeof navLinks)[0]
-  ) => {
-    setIsOpen(false);
-    const linkPath = link.href.split("#")[0] || "/";
-    if (link.label === "Menu") {
-      if (pathname === "/") {
-        e.preventDefault();
-        scrollToMenuSection();
-      }
-      return;
-    }
-    if (pathname === linkPath) e.preventDefault();
-    scrollToTop();
-  };
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [open]);
+
+  // Toutes les pages s'ouvrent sur un bandeau sombre : texte clair tant qu'on n'a pas défilé.
+  const solid = scrolled;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-6 md:pt-5">
-        <motion.header
-          initial={{ y: -24, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className={cn(
-            "pointer-events-auto w-full max-w-6xl rounded-full border border-mds-border bg-[rgba(255,253,248,0.92)] shadow-[0_8px_40px_var(--mds-shadow)] backdrop-blur-xl transition-all duration-500",
-            scrolled && "shadow-[0_12px_48px_var(--mds-shadow)]"
-          )}
-        >
-          <nav className="flex items-center justify-between gap-3 px-4 py-2.5 md:px-5 md:py-3">
-            <Link
-              href="/"
-              scroll={true}
-              onClick={(e) => {
-                setIsOpen(false);
-                if (pathname === "/") e.preventDefault();
-                scrollToTop();
-              }}
-              className="nav-link flex shrink-0 items-center gap-2 font-serif text-sm font-semibold tracking-wide text-mds-text transition-colors hover:text-[var(--gold)] sm:text-base"
-            >
-              <NavbarLogo className="md:hidden" />
-              <span className="md:hidden">MDS</span>
-              <span className="hidden md:inline">Maison Des Saveurs</span>
-            </Link>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,border-color] duration-500",
+          solid
+            ? "border-b border-line bg-paper/85 shadow-[0_8px_30px_-18px_rgba(15,14,12,0.35)] backdrop-blur-xl backdrop-saturate-150"
+            : "border-b border-transparent bg-gradient-to-b from-ink/70 to-transparent"
+        )}
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
+      >
+        <nav className="container-x flex h-[var(--header-h)] items-center justify-between gap-6" aria-label="Navigation principale">
+          <Link href="/" aria-label="Maison Des Saveurs, accueil" className="shrink-0">
+            <Wordmark tone={solid ? "dark" : "light"} />
+          </Link>
 
-            <ul className="hidden items-center gap-0.5 md:flex">
-              {navLinks.map((link) => {
-                const linkPath = link.href.split("#")[0] || "/";
-                const isActive = pathname === linkPath;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={(e) => handleLinkClick(e, link)}
-                      className={cn(
-                        "rounded-full px-2.5 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] transition-all duration-300 lg:px-3 lg:text-[0.7rem]",
-                        isActive
-                          ? "text-[var(--gold)]"
-                          : "text-mds-muted hover:text-mds-text"
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="ml-1">
+          <ul className="hidden items-center gap-1 xl:flex">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
                 <Link
-                  href="/contact"
-                  onClick={(e) => {
-                    if (pathname === "/contact") e.preventDefault();
-                    scrollToTop();
-                  }}
-                  className="inline-flex rounded-full bg-[var(--black)] px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--ivory)] transition-all hover:bg-[var(--gold)] hover:text-[var(--black)] lg:px-5 lg:text-[0.7rem]"
+                  href={link.href}
+                  className={cn(
+                    "whitespace-nowrap rounded-full px-2.5 py-2 text-[0.86rem] font-medium transition-colors 2xl:px-3",
+                    solid ? "text-ink-3 hover:text-gold" : "text-ivory/85 hover:text-gold-bright",
+                    isActive(link.href) && (solid ? "text-gold" : "text-gold-bright")
+                  )}
+                  aria-current={isActive(link.href) ? "page" : undefined}
                 >
-                  Devis
+                  {link.label}
                 </Link>
               </li>
-            </ul>
+            ))}
+          </ul>
 
-            <div className="flex items-center gap-2">
-              <div className="hidden items-center gap-1 sm:flex md:hidden">
-                <a
-                  href="https://www.instagram.com/mds.traiteur69/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-[var(--gold)]"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram className="text-sm" />
-                </a>
-                <a
-                  href="https://www.tiktok.com/@mds.traiteur"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-mds-muted hover:text-[var(--gold)]"
-                  aria-label="TikTok"
-                >
-                  <FaTiktok className="text-sm" />
-                </a>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsOpen(true)}
-                className="flex h-9 w-9 flex-col items-center justify-center gap-1 rounded-full border border-mds-border bg-[var(--surface)] md:hidden"
-                aria-label="Ouvrir le menu"
-              >
-                <span className="h-0.5 w-4 bg-mds-text" />
-                <span className="h-0.5 w-4 bg-mds-text" />
-                <span className="h-0.5 w-4 bg-mds-text" />
-              </button>
-            </div>
-          </nav>
-        </motion.header>
-      </div>
+          <div className="flex items-center gap-2">
+            <a
+              href={PHONE_TEL}
+              className={cn(
+                "hidden items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-[0.86rem] font-medium transition-colors 2xl:inline-flex",
+                solid ? "text-ink-3 hover:text-gold" : "text-ivory/85 hover:text-gold-bright"
+              )}
+            >
+              <FiPhone aria-hidden />
+              {PHONE_DISPLAY}
+            </a>
+            <Link href="/contact" className="btn btn-gold btn-sm hidden sm:inline-flex">
+              Demander un devis
+              {counts.total > 0 && (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1.5 text-[0.68rem] text-ivory">
+                  {counts.total}
+                </span>
+              )}
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className={cn(
+                "flex h-11 w-11 items-center justify-center rounded-full border transition-colors xl:hidden",
+                solid ? "border-line bg-white/60 text-ink" : "border-ivory/25 text-ivory"
+              )}
+              aria-label="Ouvrir le menu"
+              aria-expanded={open}
+            >
+              <span className="flex w-[18px] flex-col gap-[5px]" aria-hidden>
+                <span className="h-px w-full bg-current" />
+                <span className="h-px w-full bg-current" />
+                <span className="h-px w-2/3 bg-current" />
+              </span>
+            </button>
+          </div>
+        </nav>
+      </header>
 
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
+            className="bg-ink-texture fixed inset-0 z-[80] flex flex-col text-ivory xl:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] md:hidden"
             role="dialog"
             aria-modal="true"
-            aria-label="Menu de navigation"
+            aria-label="Menu"
+            style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-mds-text/20 backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
-              aria-hidden
-            />
+            <div className="zellige pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+            <div className="container-x relative flex h-[var(--header-h)] items-center justify-between">
+              <Link href="/" onClick={() => setOpen(false)} aria-label="Accueil">
+                <Wordmark tone="light" />
+              </Link>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25"
+                aria-label="Fermer le menu"
+              >
+                <FiX className="text-xl" />
+              </button>
+            </div>
 
-            <motion.div
-              initial={{ y: "-100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-100%" }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex h-full flex-col bg-[var(--background)]/97 backdrop-blur-xl"
-            >
-              <div className="flex items-center justify-between border-b border-mds-border px-6 py-5">
-                <span className="font-serif text-lg font-semibold text-mds-text">Menu</span>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-mds-border bg-[var(--surface)] text-mds-text transition-colors hover:border-[var(--gold)] hover:text-[var(--gold)]"
-                  aria-label="Fermer le menu"
-                >
-                  <FaTimes className="text-base" />
-                </button>
-              </div>
-
-              <nav className="flex flex-1 flex-col justify-center px-8 py-10">
-                <ul className="space-y-1">
-                  {navLinks.map((link, i) => {
-                    const linkPath = link.href.split("#")[0] || "/";
-                    const isActive = pathname === linkPath;
-                    return (
-                      <motion.li
-                        key={link.href}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.05 * i, duration: 0.35 }}
+            <nav className="container-x relative flex flex-1 flex-col justify-center overflow-y-auto py-6">
+              <ul>
+                {[{ href: "/", label: "Accueil" }, ...NAV_LINKS, { href: "/contact", label: "Devis & contact" }].map(
+                  (link, i) => (
+                    <motion.li
+                      key={link.href}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.04 * i + 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "flex items-baseline gap-4 border-b border-line-dark py-3.5 font-display text-[2rem] leading-tight transition-colors",
+                          pathname === link.href ? "text-gold-bright" : "text-ivory hover:text-gold-bright"
+                        )}
                       >
-                        <Link
-                          href={link.href}
-                          onClick={(e) => handleLinkClick(e, link)}
-                          className={cn(
-                            "block border-b border-mds-border/60 py-4 font-serif text-2xl tracking-wide transition-colors",
-                            isActive ? "text-[var(--gold)]" : "text-mds-text hover:text-[var(--gold)]"
-                          )}
-                        >
-                          {link.label}
-                        </Link>
-                      </motion.li>
-                    );
-                  })}
-                </ul>
-              </nav>
+                        <span className="w-6 text-[0.7rem] font-sans tracking-widest text-gold-bright/70">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        {link.label}
+                      </Link>
+                    </motion.li>
+                  )
+                )}
+              </ul>
+            </nav>
 
-              <div className="flex items-center justify-center gap-6 border-t border-mds-border px-6 py-6">
-                <a
-                  href="https://www.instagram.com/mds.traiteur69/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl text-mds-muted transition-colors hover:text-[var(--gold)]"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram />
+            <div className="container-x relative grid grid-cols-2 gap-3 pb-6">
+              <a href={PHONE_TEL} className="btn btn-ghost-light">
+                <FiPhone aria-hidden /> Appeler
+              </a>
+              <a href={WHATSAPP_SIMPLE_URL} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
+                <FaWhatsapp aria-hidden /> WhatsApp
+              </a>
+              <div className="col-span-2 mt-2 flex items-center justify-center gap-6 text-ivory/70">
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-2 hover:text-gold-bright">
+                  <FaInstagram className="text-xl" />
                 </a>
-                <a
-                  href="https://www.tiktok.com/@mds.traiteur"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl text-mds-muted transition-colors hover:text-[var(--gold)]"
-                  aria-label="TikTok"
-                >
-                  <FaTiktok />
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="p-2 hover:text-gold-bright">
+                  <FaTiktok className="text-xl" />
                 </a>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

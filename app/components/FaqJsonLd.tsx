@@ -7,16 +7,10 @@ export default function FaqJsonLd() {
     mainEntity: FAQ_ITEMS.map((item) => ({
       "@type": "Question",
       name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
     })),
   };
-
   return (
-    <script type="application/ld+json" suppressHydrationWarning>
-      {JSON.stringify(schema)}
-    </script>
+    <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
   );
 }
