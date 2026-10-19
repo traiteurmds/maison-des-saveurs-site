@@ -193,7 +193,7 @@ export default function Navbar() {
                   >
                     {MENU[hovered].plate ? (
                       <div className="absolute inset-[12%] animate-[spin_30s_linear_infinite]">
-                        <Image src={MENU[hovered].image} alt="" fill sizes="440px" className="object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.35)]" />
+                        <Image src={MENU[hovered].image} alt="" fill sizes="440px" className="object-contain drop-shadow-[0_14px_16px_rgba(0,0,0,0.28)]" />
                       </div>
                     ) : (
                       <Image src={MENU[hovered].image} alt="" fill sizes="440px" className="object-cover" />

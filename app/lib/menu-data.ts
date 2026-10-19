@@ -104,7 +104,7 @@ export const DISHES: Dish[] = [
     title: "Poulet olives",
     description:
       "Poulet marocain aux olives et citron confit, nappé de sa sauce dorée, servi sur plat traditionnel.",
-    image: "/images/menu/poulet-olives.jpg",
+    image: "/images/realisations/poulet-olives-amandes.jpg",
     alt: "Poulet aux olives et citron confit, traiteur marocain Lyon",
     category: "plats",
     signature: true,

@@ -3,18 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const PHOTOS = [
-  { src: "/images/menu/salade-royale.jpg", label: "Salade royale", ratio: "aspect-[3/4]", pos: "center 70%" },
-  { src: "/images/menu/couscous.jpg", label: "Couscous", ratio: "aspect-[4/5]", pos: "center" },
-  { src: "/images/menu/assiette-fruits.jpg", label: "Plateau de fruits", ratio: "aspect-[3/4]", pos: "center" },
-  { src: "/images/menu/viande-pruneaux.jpg", label: "Viande aux pruneaux", ratio: "aspect-[4/5]", pos: "center 60%" },
-  { src: "/images/menu/mini-sales.jpg", label: "Buffet salé", ratio: "aspect-[3/4]", pos: "center" },
-  { src: "/images/menu/couscous-poulet.jpg", label: "Couscous poulet", ratio: "aspect-[4/5]", pos: "center" },
-  { src: "/images/menu/gateaux-marocains.jpg", label: "Gâteaux marocains", ratio: "aspect-[3/4]", pos: "center 65%" },
-  { src: "/images/menu/salade-variee.jpg", label: "Salade variée", ratio: "aspect-[4/5]", pos: "center" },
+  { src: "/images/realisations/salades-composees-plateaux.jpg", label: "Salades composées", ratio: "aspect-[3/4]", pos: "center 60%" },
+  { src: "/images/realisations/couscous-viande-legumes.jpg", label: "Couscous à la viande", ratio: "aspect-[4/5]", pos: "center 30%" },
+  { src: "/images/realisations/viande-pruneaux-amandes.jpg", label: "Viande aux pruneaux", ratio: "aspect-[3/4]", pos: "center 55%" },
+  { src: "/images/realisations/pastilla-fruits-de-mer.jpg", label: "Pastilla aux fruits de mer", ratio: "aspect-[4/5]", pos: "center 70%" },
+  { src: "/images/realisations/plateaux-fruits.jpg", label: "Plateaux de fruits", ratio: "aspect-[3/4]", pos: "center 70%" },
+  { src: "/images/realisations/poulet-olives-amandes.jpg", label: "Poulet olives et amandes", ratio: "aspect-[4/5]", pos: "center 45%" },
+  { src: "/images/realisations/service-baklawa.jpg", label: "Le service des pâtisseries", ratio: "aspect-[3/4]", pos: "center 45%" },
+  { src: "/images/realisations/poulets-citron-olives.jpg", label: "Poulets au citron", ratio: "aspect-[4/5]", pos: "center 60%" },
 ];
 
 /** Galerie : défilement horizontal piloté par le scroll vertical sur ordinateur, glissement natif sur mobile. */
@@ -24,6 +24,11 @@ export default function HorizontalGallery() {
   const [distance, setDistance] = useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+  // Les cartes s'inclinent selon la vitesse de défilement, puis se redressent
+  const reduced = useReducedMotion();
+  const { scrollY } = useScroll();
+  const velocity = useVelocity(scrollY);
+  const skewX = useSpring(useTransform(velocity, [-2500, 0, 2500], reduced ? [0, 0, 0] : [7, 0, -7]), { stiffness: 220, damping: 40 });
 
   useEffect(() => {
     const measure = () => {
@@ -53,7 +58,7 @@ export default function HorizontalGallery() {
       {/* Ordinateur : section épinglée */}
       <section ref={ref} className="relative hidden bg-sand lg:block" style={{ height: `calc(100vh + ${distance}px)` }} aria-label="Réalisations">
         <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
-          <motion.div ref={trackRef} style={{ x }} className="flex items-start gap-10 pl-[clamp(1.25rem,4vw,3rem)] pr-[8vw]">
+          <motion.div ref={trackRef} style={{ x, skewX }} className="flex items-start gap-10 pl-[clamp(1.25rem,4vw,3rem)] pr-[8vw]">
             <div className="flex w-[30vw] shrink-0 flex-col justify-between self-stretch py-4">
               <div>
                 <p className="eyebrow">Réalisations</p>

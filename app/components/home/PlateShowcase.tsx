@@ -140,15 +140,14 @@ export default function PlateShowcase() {
           >
             {/* Ombre portée au sol */}
             <div
-              className="absolute inset-x-[8%] bottom-[-9%] h-[18%] rounded-[50%] bg-black/35 blur-2xl"
+              className="absolute inset-x-[18%] bottom-[-5%] h-[7%] rounded-[50%] bg-black/25 blur-xl"
               style={{ transform: "translateZ(-80px)" }}
               aria-hidden
             />
             <AnimatePresence initial={false}>
               <motion.div
                 key={slide.plate}
-                className="absolute inset-0"
-                style={{ transformStyle: "preserve-3d" }}
+                className="absolute inset-0 drop-shadow-[0_16px_16px_rgba(30,12,4,0.3)]"
                 initial={{ opacity: 0, scale: 0.75, rotateX: 72, y: "45%" }}
                 animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
                 exit={{ opacity: 0, scale: 0.85, rotateX: -60, y: "-40%" }}
@@ -161,7 +160,7 @@ export default function PlateShowcase() {
                   fill
                   sizes="(max-width: 768px) 82vw, 42vw"
                   quality={85}
-                  className="object-contain drop-shadow-[0_45px_50px_rgba(0,0,0,0.38)]"
+                  className="object-contain"
                 />
                 </motion.div>
               </motion.div>

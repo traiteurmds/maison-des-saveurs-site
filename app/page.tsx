@@ -6,6 +6,8 @@ import BigMarquee from "./components/home/BigMarquee";
 import HorizontalGallery from "./components/home/HorizontalGallery";
 import ReviewsQuote from "./components/home/ReviewsQuote";
 import Process from "./components/home/Process";
+import VideoReel from "./components/home/VideoReel";
+import GlobeLyon from "./components/home/GlobeLyon";
 import ZonesFaq from "./components/sections/ZonesFaq";
 import ClosingCta from "./components/home/ClosingCta";
 
@@ -18,8 +20,10 @@ export default function Home() {
       <Occasions />
       <BigMarquee />
       <HorizontalGallery />
+      <VideoReel />
       <ReviewsQuote />
       <Process />
+      <GlobeLyon />
       <ZonesFaq />
       <ClosingCta />
     </>

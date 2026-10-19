@@ -32,7 +32,7 @@ export default function ClosingCta({
         className="pointer-events-none absolute -right-[30vw] top-1/2 -z-10 aspect-square w-[85vw] -translate-y-1/2 opacity-95 md:-right-[12vw] md:w-[52vw]"
         aria-hidden
       >
-        <Image src="/images/plats/couscous.webp" alt="" fill sizes="52vw" className="object-contain drop-shadow-[0_50px_60px_rgba(0,0,0,0.45)]" />
+        <Image src="/images/plats/couscous.webp" alt="" fill sizes="52vw" className="object-contain drop-shadow-[0_18px_18px_rgba(0,0,0,0.3)]" />
       </motion.div>
       <div className="container-x py-[clamp(6rem,14vw,12rem)]">
         <p className="eyebrow on-dark">Votre événement</p>

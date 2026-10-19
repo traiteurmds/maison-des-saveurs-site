@@ -24,6 +24,7 @@ import {
   validatePhone,
 } from "../../lib/contact-validation";
 import { cn } from "../../lib/utils";
+import { formatPhoneInput } from "../../lib/phone-utils";
 import { useSelection } from "../providers/SelectionProvider";
 import TurnstileField, { isTurnstileRequired } from "./TurnstileField";
 
@@ -308,7 +309,7 @@ export default function QuoteForm() {
           </div>
           <div>
             <label htmlFor="phone" className="field-label">Téléphone</label>
-            <input id="phone" type="tel" inputMode="numeric" autoComplete="tel" placeholder="06 12 34 56 78" className="field" value={details.phone ?? ""} onChange={(e) => set("phone", e.target.value.replace(/[^\d ]/g, "").slice(0, 14))} aria-invalid={Boolean(errors.phone)} />
+            <input id="phone" type="tel" inputMode="numeric" autoComplete="tel" placeholder="06 12 34 56 78" className="field" value={details.phone ?? ""} maxLength={14} onChange={(e) => set("phone", formatPhoneInput(e.target.value))} aria-invalid={Boolean(errors.phone)} />
             {errors.phone && <p className="mt-1.5 text-sm text-[#a5442f]" role="alert">{errors.phone}</p>}
           </div>
           <div className="sm:col-span-2">
