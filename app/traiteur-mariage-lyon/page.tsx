@@ -141,6 +141,24 @@ export default function MariagePage() {
 
       <Reviews />
 
+      <section className="section-tight border-t border-line bg-ivory">
+        <Reveal className="container-x grid items-end gap-8 lg:grid-cols-[1fr_auto] lg:gap-16">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Le Journal</p>
+            <h2 className="display-md mt-5 text-ink">
+              Préparer le repas de votre mariage&nbsp;: <em className="text-gold">notre guide</em>
+            </h2>
+            <p className="lead mt-5">
+              Nombre d&apos;invités, format, menu, besoins alimentaires, contraintes de la salle : les questions à se
+              poser, dans l&apos;ordre, avant de choisir son traiteur.
+            </p>
+          </div>
+          <Link href="/journal/repas-de-mariage" className="btn btn-outline self-start lg:self-end">
+            Lire le guide <FiArrowRight aria-hidden />
+          </Link>
+        </Reveal>
+      </section>
+
       <section className="section bg-paper">
         <div className="container-x max-w-4xl">
           <SectionHeading eyebrow="Vos questions" title="Mariage : ce qu'on nous demande souvent" />

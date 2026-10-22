@@ -25,6 +25,7 @@ const MENU = [
 const SECONDARY = [
   { href: "/traiteur-mariage-lyon", label: "Mariages" },
   { href: "/traiteur-entreprise-lyon", label: "Entreprises" },
+  { href: "/journal", label: "Le Journal" },
   { href: "/faq", label: "FAQ" },
 ];
 

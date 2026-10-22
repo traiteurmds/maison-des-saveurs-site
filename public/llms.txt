@@ -30,6 +30,12 @@ Lyon, Villeurbanne, Bron, Vénissieux, Saint-Priest, Décines, Meyzieu, Genas et
 - https://mds-traiteur.fr/contact
 - https://mds-traiteur.fr/faq
 - https://mds-traiteur.fr/gallery
+- https://mds-traiteur.fr/journal
+
+## Le Journal
+- https://mds-traiteur.fr/journal/histoire-de-notre-cheffe : l'histoire de notre cheffe et de Maison Des Saveurs
+- https://mds-traiteur.fr/journal/epices-marocaines : les épices de la cuisine marocaine
+- https://mds-traiteur.fr/journal/repas-de-mariage : préparer le repas d'un mariage
 
 ## Pages légales
 - https://mds-traiteur.fr/mentions-legales
