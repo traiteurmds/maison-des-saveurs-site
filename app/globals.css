@@ -586,3 +586,128 @@ select.field {
     transform: translateX(4px);
   }
 }
+
+@layer components {
+/* ── Le Journal : mise en page de lecture ── */
+.journal-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 4.4vw, 4.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.journal-prose {
+  color: var(--ink-2);
+  font-size: clamp(1.04rem, 1.2vw, 1.13rem);
+  line-height: 1.85;
+}
+.journal-prose > p,
+.journal-prose > ul,
+.journal-prose > ol {
+  text-wrap: pretty;
+}
+.journal-prose > * + * {
+  margin-top: 1.35em;
+}
+.journal-prose > p:first-child::first-letter {
+  float: left;
+  margin: 0.08em 0.14em 0 -0.02em;
+  font-family: var(--font-display);
+  font-size: 4.6em;
+  line-height: 0.82;
+  color: var(--terracotta);
+}
+.journal-prose > h2 {
+  margin-top: 2.6em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.85rem, 3vw, 2.55rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+  scroll-margin-top: calc(var(--header-h) + 2rem);
+}
+.journal-prose > h3 {
+  margin-top: 2em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2vw, 1.6rem);
+  line-height: 1.2;
+  color: var(--gold);
+}
+.journal-prose > h2 + *,
+.journal-prose > h3 + * {
+  margin-top: 0.8em;
+}
+.journal-prose a:not(.btn) {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--terracotta);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 0.3s ease;
+}
+.journal-prose a:not(.btn):hover {
+  color: var(--terracotta);
+}
+.journal-prose strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+.journal-prose em {
+  font-style: italic;
+}
+.journal-prose ul,
+.journal-prose ol {
+  padding-left: 0;
+  list-style: none;
+}
+.journal-prose ul > li,
+.journal-prose ol > li {
+  position: relative;
+  padding-left: 1.9rem;
+}
+.journal-prose li + li {
+  margin-top: 0.75em;
+}
+.journal-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.35rem;
+  top: 0.78em;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--terracotta);
+}
+.journal-prose ol {
+  counter-reset: journal;
+}
+.journal-prose ol > li {
+  counter-increment: journal;
+}
+.journal-prose ol > li::before {
+  content: counter(journal, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  font-family: var(--font-display);
+  font-size: 0.95em;
+  color: var(--gold);
+}
+}
+
+/* Colonne de lecture : les figures débordent de la colonne de texte selon la place disponible */
+.journal-col {
+  container-type: inline-size;
+}
+.bleed-lg {
+  margin-inline: calc(min(170px, max(0px, (100cqw - 680px) / 2)) * -1);
+}
+.bleed-sm {
+  margin-inline: calc(min(80px, max(0px, (100cqw - 680px) / 2)) * -1);
+}

@@ -10,6 +10,7 @@ import VideoReel from "./components/home/VideoReel";
 import GlobeLyon from "./components/home/GlobeLyon";
 import ZonesFaq from "./components/sections/ZonesFaq";
 import ClosingCta from "./components/home/ClosingCta";
+import JournalTeaser from "./components/home/JournalTeaser";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <VideoReel />
       <ReviewsQuote />
       <Process />
+      <JournalTeaser />
       <GlobeLyon />
       <ZonesFaq />
       <ClosingCta />

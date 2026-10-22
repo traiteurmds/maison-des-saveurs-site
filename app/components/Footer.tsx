@@ -24,6 +24,7 @@ const columns = [
       { href: "/menu", label: "La carte" },
       { href: "/gallery", label: "Réalisations" },
       { href: "/caftans", label: "Caftans" },
+      { href: "/journal", label: "Le Journal" },
       { href: "/faq", label: "Questions fréquentes" },
     ],
   },
