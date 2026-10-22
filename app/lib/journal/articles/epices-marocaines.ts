@@ -11,7 +11,7 @@ export const epicesMarocaines: Article = {
   dek: "Gingembre, safran, cumin, cannelle… Les épices ne sont pas là pour cacher les saveurs, mais pour les révéler. Petit voyage dans les parfums qui font le caractère de la cuisine marocaine.",
   excerpt:
     "Parfum, intensité, piquant : comprendre les épices marocaines, leurs associations et l'art du dosage.",
-  publishedAt: "2026-10-22",
+  publishedAt: "2026-07-24",
   hero: {
     ...IMG.pruneaux,
     caption: "Viande aux pruneaux et aux amandes, l'un des grands classiques du sucré-salé marocain.",
@@ -48,12 +48,16 @@ export const epicesMarocaines: Article = {
       type: "p",
       text: "Un plat peut donc être très parfumé sans être piquant du tout. C'est même le cas de la plupart des grands plats de fête.",
     },
-    { type: "h2", id: "nuancier", text: "Le nuancier des épices marocaines" },
+    { type: "h2", id: "nuancier", text: "Le nuancier des épices et des parfums marocains" },
     {
       type: "p",
-      text: "Voici les épices que l'on rencontre le plus souvent dans la cuisine marocaine, avec leur nom courant en darija. Les transcriptions varient d'une région à l'autre, tout comme les usages.",
+      text: "Voici quinze épices et parfums que l'on rencontre souvent dans la cuisine marocaine, avec leur nom courant en darija. Ce n'est qu'un début : chaque famille garde les siens, et les transcriptions varient d'une région à l'autre, tout comme les usages.",
     },
     { type: "spices" },
+    {
+      type: "p",
+      text: "Le smen mérite une mention à part. Ce beurre salé et maturé n'est pas une épice, mais il joue le même rôle : une petite cuillère, et un couscous ou un tajine prend une profondeur que rien d'autre ne donne. Comme les épices, il se dose avec respect.",
+    },
     {
       type: "p",
       text: "À ces épices s'ajoutent des herbes fraîches qui jouent un rôle tout aussi important : la coriandre et le persil, hachés en abondance, ainsi que l'ail, l'oignon, le citron confit et les olives. Ce sont eux qui apportent la fraîcheur et l'acidité qui équilibrent la chaleur des épices.",

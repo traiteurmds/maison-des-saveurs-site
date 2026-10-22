@@ -11,7 +11,7 @@ export const repasDeMariage: Article = {
   dek: "Le repas occupe une place à part dans une journée de mariage. Voici, étape par étape, comment le préparer sereinement, et les questions à se poser avant de choisir son traiteur.",
   excerpt:
     "Invités, format, menu, besoins alimentaires, contraintes du lieu : le guide pour préparer un repas de mariage généreux et bien organisé.",
-  publishedAt: "2026-10-22",
+  publishedAt: "2026-09-18",
   hero: {
     ...IMG.buffetSalades,
     caption: "Salades composées dressées pour une grande réception.",
@@ -39,6 +39,15 @@ export const repasDeMariage: Article = {
     {
       type: "p",
       text: "Dans les mariages marocains, la générosité de la table fait partie de l'accueil. On veut que personne ne manque de rien, que les plats arrivent beaux et que chacun se sente reçu. Le repas ne fait pas à lui seul la réussite d'une fête, mais il y contribue pleinement, et c'est souvent lui dont on se souvient en parlant de la soirée.",
+    },
+    { type: "h2", id: "generosite", text: "La générosité, premier signe d'accueil" },
+    {
+      type: "p",
+      text: "Dans un mariage marocain, on juge rarement un repas à la complexité de ses assiettes. On se souvient d'une table où les plats arrivaient pleins, où l'on pouvait se resservir, où personne n'avait à surveiller sa part. La générosité est la première manière de dire à vos invités qu'ils sont les bienvenus.",
+    },
+    {
+      type: "p",
+      text: "C'est aussi une question de respect envers ceux qui ont fait le déplacement, parfois de loin, pour être à vos côtés. Un plat généreux, bien présenté, posé au centre de la table, crée immédiatement une atmosphère de partage : on se passe les plats, on se sert les uns les autres, on parle. C'est souvent là que naissent les plus beaux souvenirs de la soirée.",
     },
     { type: "h2", id: "invites-et-format", text: "Commencer par les invités et le format" },
     {

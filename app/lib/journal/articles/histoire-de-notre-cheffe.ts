@@ -11,10 +11,10 @@ export const histoireDeNotreCheffe: Article = {
   dek: "Avant d'être des recettes, nos plats sont des souvenirs. Voici l'histoire de la cheffe qui leur donne vie, et de la maison qu'elle met aujourd'hui au service de vos plus belles réceptions.",
   excerpt:
     "Une passion née dans l'enfance, transmise de génération en génération, devenue un métier. Le récit fondateur de Maison Des Saveurs.",
-  publishedAt: "2026-10-22",
+  publishedAt: "2026-06-12",
   hero: {
-    ...IMG.sauceService,
-    caption: "Le geste juste, au moment juste : une sauce nappée en cuisine avant le service.",
+    ...IMG.cheffeIllustration,
+    caption: "La toque et le tajine : l'univers de notre cheffe, en illustration.",
   },
   keywords: ["cheffe cuisine marocaine Lyon", "traiteur marocain Lyon", "cuisine marocaine traditionnelle", "savoir-faire culinaire"],
   related: ["epices-marocaines", "repas-de-mariage"],
@@ -43,6 +43,14 @@ export const histoireDeNotreCheffe: Article = {
     {
       type: "p",
       text: "Cette curiosité des premières années ne l'a jamais quittée. Avec le temps, elle est devenue une exigence.",
+    },
+    {
+      type: "figure",
+      layout: "portrait",
+      image: {
+        ...IMG.sauceService,
+        caption: "Le geste juste, au moment juste : une sauce nappée en cuisine avant le service.",
+      },
     },
     { type: "h2", id: "transmission", text: "De génération en génération" },
     {
@@ -99,6 +107,23 @@ export const histoireDeNotreCheffe: Article = {
         caption: "Une table de réception dressée avec générosité.",
       },
     },
+    { type: "h2", id: "plat-genereux", text: "Un plat généreux, une manière de dire bienvenue" },
+    {
+      type: "p",
+      text: "Chez nous, la générosité n'est pas un détail. C'est la première chose que l'on remarque en arrivant à table, et souvent la dernière dont on se souvient en repartant.",
+    },
+    {
+      type: "p",
+      text: "Un plat généreux, c'est un plat qui n'a pas peur d'être partagé. Une semoule qui monte en dôme au milieu du plat, des pruneaux et des amandes qui brillent sur la viande, une pastilla assez grande pour que chacun se resserve sans gêne. C'est une promesse silencieuse faite à chaque invité : ici, personne ne manquera de rien.",
+    },
+    {
+      type: "p",
+      text: "Notre cheffe cuisine avec cette conviction : quand on reçoit, on ne compte pas. Servir généreusement, c'est dire à ceux qui sont assis autour de la table qu'ils comptent. Et c'est peut-être cela, plus que tout, que vos invités emporteront avec eux.",
+    },
+    {
+      type: "quote",
+      text: "Quand on reçoit, on ne compte pas. Un plat généreux, c'est une façon de dire à chacun qu'il est le bienvenu.",
+    },
     { type: "h2", id: "maison-des-saveurs", text: "Une maison récente, le savoir-faire d'une vie" },
     {
       type: "p",
@@ -141,6 +166,10 @@ export const histoireDeNotreCheffe: Article = {
     {
       type: "p",
       text: "C'est cet esprit que nous souhaitons apporter à chacune de vos réceptions : une cuisine généreuse, soignée, fidèle à ses racines, préparée par une cheffe qui connaît la valeur du travail bien fait.",
+    },
+    {
+      type: "p",
+      text: "Si vous lisez ces lignes en pensant à un mariage, à une naissance ou à une grande fête de famille, sachez que votre histoire nous intéresse autant que votre menu. Racontez-la-nous : c'est souvent là que commencent les plus belles tables.",
     },
     {
       type: "cta",

@@ -5,6 +5,13 @@ import type { JournalImage } from "./types";
  * Aucune image de banque d'images : tant qu'un sujet n'a pas sa photo, on ne l'illustre pas.
  */
 export const JOURNAL_IMAGES = {
+  cheffeIllustration: {
+    src: "/images/journal/cheffe-illustration.jpg",
+    alt: "Illustration : une toque de chef au-dessus d'un tajine fumant, entourée d'épices",
+    width: 1200,
+    height: 1500,
+    position: "center 62%",
+  },
   sauceService: {
     src: "/images/realisations/poulets-sauce-service.jpg",
     alt: "Une louche nappe de sauce un poulet aux olives, en cuisine, avant le service",
