@@ -31,7 +31,7 @@ export const RUBRIQUES: Rubrique[] = withTypo([
     short: "La maison",
     description: "Le parcours de notre cheffe, la transmission et l'esprit de Maison Des Saveurs.",
     link: { href: "/services", label: "Nos prestations" },
-    upcoming: ["De génération en génération : quand la cuisine devient un héritage"],
+    upcoming: [],
   },
   {
     id: "cuisine-marocaine",
@@ -52,7 +52,7 @@ export const RUBRIQUES: Rubrique[] = withTypo([
     short: "Mariages",
     description: "Guides et repères pour préparer le repas d'un mariage, d'un hlel ou d'une grande fête de famille.",
     link: { href: "/traiteur-mariage-lyon", label: "Le traiteur mariage" },
-    upcoming: ["Comment choisir son traiteur de mariage à Lyon", "Buffet ou repas servi à table : comment choisir ?"],
+    upcoming: ["Comment choisir son traiteur de mariage à Lyon"],
   },
   {
     id: "art-de-recevoir",
@@ -61,7 +61,7 @@ export const RUBRIQUES: Rubrique[] = withTypo([
     short: "Art de recevoir",
     description: "Composer un buffet, estimer les quantités, organiser le déroulé d'une réception.",
     link: { href: "/services", label: "Nos prestations" },
-    upcoming: ["Composer un buffet élégant pour une réception"],
+    upcoming: ["Buffet ou repas servi à table : comment choisir ?"],
   },
   {
     id: "conseils",
